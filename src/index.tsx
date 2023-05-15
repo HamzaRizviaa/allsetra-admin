@@ -1,12 +1,33 @@
+import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { store } from "data/store";
+import { store } from "app/store";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import theme from "data/theme";
+import theme from "app/theme";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import React from "react";
+import { Toast } from "@vilocnv/allsetra-core";
+
+// Azure AD B2C
+import {
+  PublicClientApplication,
+  EventType,
+  EventMessage,
+  AuthenticationResult,
+} from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react";
+import { msalConfig } from "app/integrations/azure/authConfig";
+
+export const msalInstance = new PublicClientApplication(msalConfig);
+
+msalInstance.addEventCallback((event: EventMessage) => {
+  if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
+    const payload = event.payload as AuthenticationResult;
+    const account = payload.account;
+    msalInstance.setActiveAccount(account);
+  }
+});
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 
@@ -15,9 +36,11 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          {/* <CssBaseline /> */}
-          <App />
+          <MsalProvider instance={msalInstance}>
+            <App />
+          </MsalProvider>
         </ThemeProvider>
+        <Toast />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
