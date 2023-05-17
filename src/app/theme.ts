@@ -50,22 +50,28 @@ const theme: Theme = createTheme({
       color: "#fff",
     },
     subtitle1: {
-      fontSize: 12,
+      fontSize: 18,
       fontWeight: 700,
       lineHeight: "16px",
       color: "#fff",
+    },
+    subtitle2: {
+      fontSize: 14,
+      fontWeight: 500,
+      lineHeight: "16px",
+      color: "#323946",
     },
     body1: {
       fontSize: 16,
       lineHeight: "24px",
       fontWeight: 400,
-      color: "#fff",
+      color: "#323946",
     },
     body2: {
-      fontSize: 12,
+      fontSize: 14,
       lineHeight: "16px",
       fontWeight: 400,
-      color: "#fff",
+      color: "#323946",
     },
   },
 });

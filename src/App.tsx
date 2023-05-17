@@ -4,11 +4,13 @@ import { Routes, Route } from "react-router-dom";
 import UnprotectedRoute from "components/routes/UnprotectedRoute/UnprotectedRoute";
 import ProtectedRoute from "components/routes/ProtectedRoute/ProtectedRoute";
 
-// PROTECTED PAGES
+// UNPROTECTED PAGES
 import Auth from "pages/Auth";
 import NotFound from "pages/NotFound";
 
-// UNPROTECTED PAGES
+// ADMIN PROTECTED PAGES
+import AccountManager from "pages/admin/AccountManager";
+import AccountDetails from "pages/admin/AccountDetails";
 
 const App: FC = () => {
   return (
@@ -19,7 +21,11 @@ const App: FC = () => {
 
       <Route path="/dashboard" element={<ProtectedRoute redirectTo="/" />}>
         <Route index element={<div />} />
-        <Route path="/dashboard/alerts" element={<div />} />
+        <Route path="/dashboard/account-manager" element={<AccountManager />} />
+        <Route
+          path="/dashboard/account-manager/details"
+          element={<AccountDetails />}
+        />
       </Route>
 
       <Route path="*" element={<NotFound />} />

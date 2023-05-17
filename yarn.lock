@@ -1694,6 +1694,13 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.11.16.tgz#20d4dbeb011d0d76417fdda777d8ef2c842dc543"
   integrity sha512-GxRfZ/HquQ/1nUc9qQVGReP6oOMS8/3QjPJ+23a7TMrxl2wjlmXrMNn7tRa30vZcGcDgEG+J0aseefUN0AoawQ==
 
+"@mui/icons-material@^5.11.16":
+  version "5.11.16"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.11.16.tgz#417fa773c56672e39d6ccfed9ac55591985f0d38"
+  integrity sha512-oKkx9z9Kwg40NtcIajF9uOXhxiyTZrrm9nmIJ4UjkU2IdHpd4QVLbCc/5hZN/y0C6qzi2Zlxyr9TGddQx2vx2A==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+
 "@mui/material@^5.11.16":
   version "5.11.16"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.11.16.tgz#958cb7bcfa71d889c2585516f012ab3363af843c"
@@ -2248,6 +2255,11 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
+"@types/lodash@^4.14.194":
+  version "4.14.194"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.194.tgz#b71eb6f7a0ff11bff59fc987134a093029258a76"
+  integrity sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==
+
 "@types/mime@*":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.1.tgz#5f8f2bca0a5863cb69bc0b0acd88c96cb1d4ae10"
@@ -2506,10 +2518,10 @@
     "@typescript-eslint/types" "5.57.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vilocnv/allsetra-core@^0.0.21":
-  version "0.0.21"
-  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.0.21/cb09dfc9282029f52ab2894761d73562cc9806f8#cb09dfc9282029f52ab2894761d73562cc9806f8"
-  integrity sha512-hnD3O04LoCgSCplCOzYIQi+RizG+sVYTAJ7JoYksmOILNO+zqIPursm3cO36affAfyO8mMbULyxaPPWxhlus1Q==
+"@vilocnv/allsetra-core@^0.0.30":
+  version "0.0.30"
+  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.0.30/81a6e5f4fbcdd33bb0e4ad0b33bee2045165e632#81a6e5f4fbcdd33bb0e4ad0b33bee2045165e632"
+  integrity sha512-7dCfcGwYxW1d6O4mXFfotTZvlGG/Lyh/XdvQm+8Zpu/Gg5ZDm+6pgktITA5FL40/3nYKaxUtMrg7ESiGa+fNjw==
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
