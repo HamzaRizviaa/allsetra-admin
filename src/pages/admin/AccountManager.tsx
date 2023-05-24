@@ -41,19 +41,19 @@ const Accounts: FC = () => {
   }, []);
 
   const handleViewAccount = (account: any) => {
-    dispatch(setActiveAccountId(account.id));
+    dispatch(setActiveAccountId(account.uniqueId));
     navigate({
       pathname: "/dashboard/account-manager/details",
-      search: createSearchParams({ accountId: account.id }).toString(),
+      search: createSearchParams({ accountId: account.uniqueId }).toString(),
     });
   };
 
   const handleActivateAccount = async (account: any) => {
-    account && dispatch(activateAccountThunk(account.id));
+    account && dispatch(activateAccountThunk(account.uniqueId));
   };
 
   const openDeleteConfirmationModal = (account: any) => {
-    setSelectedAccountId(account.id);
+    setSelectedAccountId(account.uniqueId);
     setOpenDeleteModal(true);
   };
 
@@ -106,6 +106,8 @@ const Accounts: FC = () => {
               onClick: openDeleteConfirmationModal,
             },
           ]}
+          // @ts-ignore
+          getRowId={(row: any) => row.uniqueId}
         />
       </Box>
       <AddAccountForm

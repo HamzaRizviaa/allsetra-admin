@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Stack } from "@mui/material";
-import FormikInputField from "@vilocnv/allsetra-core";
-import FormikSelectField from "@vilocnv/allsetra-core";
+import { FormikInputField, FormikSelectField } from "@vilocnv/allsetra-core";
 
 interface Props {
   objectTypeIcons: Array<any>;

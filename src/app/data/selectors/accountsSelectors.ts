@@ -7,12 +7,10 @@ export const selectAccountsReducerLoading = (state: RootState) =>
 export const selectActiveAccountId = (state: RootState) =>
   state.rootReducer.accountsReducer.activeAccountId;
 
-export const selectAllAccounts = (state: RootState) => {
-  const { allAccounts } = state.rootReducer.accountsReducer;
-  return allAccounts.length ? allAccounts[0].children : [];
-};
+export const selectAllAccounts = (state: RootState) =>
+  state.rootReducer.accountsReducer.allAccounts;
 
-export const selectCustomerUsers = (state: RootState) =>
+export const selectAccountUsers = (state: RootState) =>
   state.rootReducer.accountsReducer.accountUsers;
 
 export const selectActiveAccount = createSelector(

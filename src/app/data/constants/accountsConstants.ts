@@ -5,12 +5,19 @@ import { TableColumnProps } from "@vilocnv/allsetra-core";
 //
 export const ALL_ACCOUNTS_TABLE_COLUMNS: TableColumnProps[] = [
   { field: "name", headerName: "Name", flex: 1 },
-  { field: "createdBy", headerName: "Created By", flex: 1 },
-  { field: "isDeleted", headerName: "Is Deactivated", flex: 1 },
+  { field: "isDeleted", headerName: "Status", flex: 1 },
+  { field: "customerType", headerName: "Type", flex: 1 },
+  { field: "usersCount", headerName: "# of users", flex: 1 },
 ];
 
 export const ACCOUNT_USERS_TABLE_COLUMNS: TableColumnProps[] = [
-  { field: "name", headerName: "Name", flex: 1 },
+  {
+    field: "fullName",
+    headerName: "Full name",
+    flex: 1,
+    valueGetter: (params: any) =>
+      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+  },
   { field: "email", headerName: "Email", flex: 1 },
   { field: "phone", headerName: "Phone Number", flex: 1 },
 ];
