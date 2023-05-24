@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Box, useTheme } from "@mui/material";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
-import { Formik, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import InnerForm from "./children/InnerForm";
 
 // DATA
@@ -59,22 +59,24 @@ const AssignUserToAccountForm: FC<Props> = ({
         validateOnMount
       >
         {({ handleSubmit, isSubmitting }) => (
-          <Modal
-            open={open}
-            onClose={onClose}
-            title="Assign user"
-            primaryBtnProps={{
-              type: "submit",
-              text: "Assign user",
-              loading: isSubmitting,
-              // @ts-ignore
-              onClick: handleSubmit,
-            }}
-            secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
-            theme={theme}
-          >
-            <InnerForm accountId={accountId} roles={roles} />
-          </Modal>
+          <Form>
+            <Modal
+              open={open}
+              onClose={onClose}
+              title="Assign user"
+              primaryBtnProps={{
+                type: "submit",
+                text: "Assign user",
+                loading: isSubmitting,
+                // @ts-ignore
+                onClick: handleSubmit,
+              }}
+              secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
+              theme={theme}
+            >
+              <InnerForm accountId={accountId} roles={roles} />
+            </Modal>
+          </Form>
         )}
       </Formik>
     </Box>
