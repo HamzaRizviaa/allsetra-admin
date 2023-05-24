@@ -31,6 +31,12 @@ class AccountsService {
     return await axiosInstance.get(`/accounts/${accountId}/users`);
   };
 
+  static getAvailableUsersForAccount = async (accountId: string) => {
+    return await axiosInstance.get(
+      `/accounts/${accountId}/users/available-users`
+    );
+  };
+
   static createUserAndAssociateToAccount = async (
     accountId: string,
     data: any

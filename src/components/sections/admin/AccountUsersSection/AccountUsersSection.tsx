@@ -1,16 +1,19 @@
-import { FC, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { FC, useState } from "react";
+import { FormikHelpers } from "formik";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Table } from "@vilocnv/allsetra-core";
+import { Table, AddUserForm, types } from "@vilocnv/allsetra-core";
+import AssignUserToAccountForm from "components/forms/accounts/AssignUserToAccountForm/AssignUserToAccountForm";
 
 // Data
-import { useAppDispatch, useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
 import {
   getAccountAssociatedUsersThunk,
+  getAllRolesThunk,
   removeUserFromAccountThunk,
+  createUserAndAssociateToAccountThunk,
 } from "app/features";
-import { selectActiveAccount, selectCustomerUsers } from "app/data/selectors";
+import { selectAccountUsers, selectAllRoles } from "app/data/selectors";
 import { ACCOUNT_USERS_TABLE_COLUMNS } from "app/data/constants";
 
 interface Props {
@@ -19,34 +22,84 @@ interface Props {
 
 const AccountUsersSection: FC<Props> = ({ accountId }) => {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
   const dispatch = useAppDispatch();
-  const customerUsers = useAppSelector(selectCustomerUsers);
 
-  useEffect(() => {
-    dispatch(getAccountAssociatedUsersThunk(accountId || ""));
-  }, [searchParams]);
+  // Global State
+  const accountUsers = useAppSelector(selectAccountUsers);
+  const roles = useAppSelector(selectAllRoles);
+
+  // Local State
+  const [assignUserModal, setAssignUserModal] = useState(false);
+  const [addUserModal, setAddUserModal] = useState(false);
+
+  useDispatchOnMount(getAccountAssociatedUsersThunk, accountId);
+
+  useDispatchOnMount(getAllRolesThunk, roles.length ? undefined : true);
+
+  const toggleAssignUserModal = () => setAssignUserModal(!assignUserModal);
+
+  const toggleAddUserModal = () => setAddUserModal(!addUserModal);
 
   const handleRemoveCustomerUser = (user: any) => {
-    const customerId = searchParams.get("customerId");
-    // user && dispatch(removeCustomerUserThunk({ customerId, userId: user.id }));
+    user &&
+      dispatch(
+        removeUserFromAccountThunk({ accountId, userId: user.uniqueId })
+      );
+  };
+
+  const addUserHandler = async (
+    values: types.IAddUser,
+    formikHelpers: FormikHelpers<types.IAddUser>
+  ) => {
+    formikHelpers.setSubmitting(true);
+
+    const { type } = await dispatch(
+      createUserAndAssociateToAccountThunk({
+        accountId,
+        values: { ...values, phone: `${values.phone}`, preferredLanguage: "" },
+      })
+    );
+
+    if (type === "accounts/createUserAndAssociateToAccountThunk/fulfilled") {
+      toggleAddUserModal();
+    }
+
+    formikHelpers.setSubmitting(false);
   };
 
   return (
     <Box>
       <Table
         columns={ACCOUNT_USERS_TABLE_COLUMNS}
-        rows={customerUsers}
+        rows={accountUsers}
         actions={[{ name: "Remove User", onClick: handleRemoveCustomerUser }]}
         searchPlaceholder="Search user"
         primaryButton={{
           text: "Add user",
           variant: "outlined",
           startIcon: <AddIcon />,
+          onClick: toggleAddUserModal,
         }}
-        secondaryButton={{ text: "Assign user", variant: "outlined" }}
+        secondaryButton={{
+          text: "Assign user",
+          variant: "outlined",
+          onClick: toggleAssignUserModal,
+        }}
+        // @ts-ignore
+        getRowId={(row: any) => row.uniqueId}
+      />
+      <AssignUserToAccountForm
+        open={assignUserModal}
+        onClose={toggleAssignUserModal}
+        accountId={accountId}
+        roles={roles}
+      />
+      <AddUserForm
+        open={addUserModal}
+        onClose={toggleAddUserModal}
+        onSubmit={addUserHandler}
+        roles={roles}
+        theme={theme}
       />
     </Box>
   );

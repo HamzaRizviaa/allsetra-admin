@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Box, Theme } from "@mui/material";
-import { ModalProps } from "@vilocnv/allsetra-core";
-import { Modal } from "@vilocnv/allsetra-core";
+import { Modal, ModalProps } from "@vilocnv/allsetra-core";
 import { Formik, FormikHelpers } from "formik";
 import InnerForm from "./children/InnerForm";
 import { IAddDeviceType } from "app/data/types/deviceTypes";
