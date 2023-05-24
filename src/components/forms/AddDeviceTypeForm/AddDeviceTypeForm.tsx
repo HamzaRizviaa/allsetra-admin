@@ -4,11 +4,11 @@ import { ModalProps } from "@vilocnv/allsetra-core";
 import { Modal } from "@vilocnv/allsetra-core";
 import { Formik, FormikHelpers } from "formik";
 import InnerForm from "./children/InnerForm";
-import { IAddDeviceType } from "data/types/deviceTypes";
+import { IAddDeviceType } from "app/data/types/deviceTypes";
 import {
   addDeviceTypeFormModalInitialValues,
   addDeviceTypeValidationSchema,
-} from "data/helpers/deviceHelpers";
+} from "app/data/helpers/deviceHelpers";
 
 export type AddDeviceProps = Pick<ModalProps, "title" | "open" | "onClose"> & {
   initialValues?: IAddDeviceType;

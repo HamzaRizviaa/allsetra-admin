@@ -6,7 +6,10 @@ import { Table } from "@vilocnv/allsetra-core";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
-import { getAccountUsersThunk, removeAccountUserThunk } from "app/features";
+import {
+  getAccountAssociatedUsersThunk,
+  removeUserFromAccountThunk,
+} from "app/features";
 import { selectActiveAccount, selectCustomerUsers } from "app/data/selectors";
 import { ACCOUNT_USERS_TABLE_COLUMNS } from "app/data/constants";
 
@@ -23,7 +26,7 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
   const customerUsers = useAppSelector(selectCustomerUsers);
 
   useEffect(() => {
-    dispatch(getAccountUsersThunk(accountId || ""));
+    dispatch(getAccountAssociatedUsersThunk(accountId || ""));
   }, [searchParams]);
 
   const handleRemoveCustomerUser = (user: any) => {

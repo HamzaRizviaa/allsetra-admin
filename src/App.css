@@ -1,7 +1,25 @@
+@font-face {
+  font-family: "Gilroy";
+  src: url("assets/fonts/Gilroy-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-weight: bold;
+  src: url("assets/fonts/Gilroy-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-weight: light;
+  src: url("assets/fonts/Gilroy-Light.ttf") format("truetype");
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Gilroy" !important;
 }
 
 a {

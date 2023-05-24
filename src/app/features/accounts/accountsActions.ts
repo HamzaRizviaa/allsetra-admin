@@ -77,11 +77,13 @@ export const activateAccountThunk = createAsyncThunk(
 //
 // Account User Actions
 //
-export const getAccountUsersThunk = createAsyncThunk(
-  "accounts/getAccountUsersThunk",
+export const getAccountAssociatedUsersThunk = createAsyncThunk(
+  "accounts/getAccountAssociatedUsersThunk",
   async (accountId: string) => {
     try {
-      const response = await AccountsService.getAccountUsers(accountId);
+      const response = await AccountsService.getAccountAssociatedUsers(
+        accountId
+      );
 
       if (response.status === 200) {
         return response.data;
@@ -93,18 +95,18 @@ export const getAccountUsersThunk = createAsyncThunk(
   }
 );
 
-export const removeAccountUserThunk = createAsyncThunk(
-  "accounts/removeAccountUserThunk",
+export const removeUserFromAccountThunk = createAsyncThunk(
+  "accounts/removeUserFromAccountThunk",
   async ({ accountId, userId }: any, { dispatch }) => {
     try {
-      const response = await AccountsService.removeAccountUser(
+      const response = await AccountsService.removeUserFromAccount(
         accountId,
         userId
       );
 
       if (response.status === 202) {
         toast.success("User has been removed from the Account");
-        dispatch(getAccountUsersThunk(accountId));
+        dispatch(getAccountAssociatedUsersThunk(accountId));
       }
 
       return response;
