@@ -56,7 +56,7 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
     const { type } = await dispatch(
       createUserAndAssociateToAccountThunk({
         accountId,
-        values: { ...values, phone: `${values.phone}`, preferredLanguage: "" },
+        values: { ...values, phone: `${values.phone}` },
       })
     );
 
