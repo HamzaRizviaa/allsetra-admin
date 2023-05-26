@@ -18,6 +18,26 @@ export const getAllAccountsThunk = createAsyncThunk(
   }
 );
 
+export const getAccountsByQueryThunk = createAsyncThunk(
+  "accounts/getAccountsByQueryThunk",
+  async (data) => {
+    try {
+      const response = await AccountsService.getAccountsByQuery({
+        page: 0,
+        itemsPerPage: 10,
+      });
+      console.log({ response });
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const createAccountThunk = createAsyncThunk(
   "accounts/createAccountThunk",
   async (data: any) => {

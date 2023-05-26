@@ -10,6 +10,10 @@ class AccountsService {
     return await axiosInstance.get(`/accounts/${accountId}`);
   };
 
+  static getAccountsByQuery = async (data: any) => {
+    return await axiosInstance.post("/accounts/search", data);
+  };
+
   static createAccount = async (data: any) => {
     return await axiosInstance.post("/accounts", data);
   };

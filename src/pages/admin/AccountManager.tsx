@@ -20,6 +20,7 @@ import {
   deactivateAccountThunk,
   setActiveAccountId,
   createAccountThunk,
+  getAccountsByQueryThunk,
 } from "app/features";
 import { ALL_ACCOUNTS_TABLE_COLUMNS } from "app/data/constants";
 
@@ -38,6 +39,7 @@ const Accounts: FC = () => {
 
   useEffect(() => {
     dispatch(getAllAccountsThunk());
+    dispatch(getAccountsByQueryThunk());
   }, []);
 
   const handleViewAccount = (account: any) => {
