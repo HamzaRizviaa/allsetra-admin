@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,13 +9,13 @@ import {
   AddAccountForm,
   DeleteConfirmationModal,
   types,
+  useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
-import { selectAllAccounts } from "app/data/selectors";
+import { selectAccountsState } from "app/data/selectors";
 import {
-  getAllAccountsThunk,
   activateAccountThunk,
   deactivateAccountThunk,
   setActiveAccountId,
@@ -30,19 +30,19 @@ const Accounts: FC = () => {
   const dispatch = useAppDispatch();
 
   // Global State
-  const allAccounts = useAppSelector(selectAllAccounts);
+  const { totalAccounts, allAccounts, loading } =
+    useAppSelector(selectAccountsState);
 
   // Local State
-  const [selectedAccountId, setSelectedAccountId] = useState(null); // Boolean state for selected table row
+  const [selectedAccountId, setSelectedAccountId] = useState<string | null>(
+    null
+  );
   const [open, setOpen] = useState(false); // Boolean state for AddaccountForm Modal
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
-  useEffect(() => {
-    dispatch(getAllAccountsThunk());
-    dispatch(getAccountsByQueryThunk());
-  }, []);
+  useDispatchOnParams(getAccountsByQueryThunk);
 
-  const handleViewAccount = (account: any) => {
+  const handleViewAccount = (account: types.IAccount) => {
     dispatch(setActiveAccountId(account.uniqueId));
     navigate({
       pathname: "/dashboard/account-manager/details",
@@ -50,11 +50,11 @@ const Accounts: FC = () => {
     });
   };
 
-  const handleActivateAccount = async (account: any) => {
+  const handleActivateAccount = async (account: types.IAccount) => {
     account && dispatch(activateAccountThunk(account.uniqueId));
   };
 
-  const openDeleteConfirmationModal = (account: any) => {
+  const openDeleteConfirmationModal = (account: types.IAccount) => {
     setSelectedAccountId(account.uniqueId);
     setOpenDeleteModal(true);
   };
@@ -93,23 +93,23 @@ const Accounts: FC = () => {
       <Box mx={4}>
         <Table
           columns={ALL_ACCOUNTS_TABLE_COLUMNS}
-          rows={allAccounts ?? []}
+          data={allAccounts}
+          progressPending={loading}
+          paginationTotalRows={totalAccounts}
+          onRowClicked={handleViewAccount}
           searchPlaceholder="Search account"
-          actions={[
-            { name: "View Account", onClick: handleViewAccount },
+          cellActions={[
             {
               name: "Activate account",
-              when: (row) => row.isDeleted === true,
+              when: (row: types.IAccount) => row.isDeleted === true,
               onClick: handleActivateAccount,
             },
             {
               name: "Deactivate account",
-              when: (row) => row.isDeleted === false,
+              when: (row: types.IAccount) => row.isDeleted === false,
               onClick: openDeleteConfirmationModal,
             },
           ]}
-          // @ts-ignore
-          getRowId={(row: any) => row.uniqueId}
         />
       </Box>
       <AddAccountForm

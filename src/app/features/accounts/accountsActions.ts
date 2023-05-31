@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AccountsService } from "app/data/services";
-import { toast } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAllAccountsThunk = createAsyncThunk(
   "accounts/getAllAccountsThunk",
@@ -20,13 +20,9 @@ export const getAllAccountsThunk = createAsyncThunk(
 
 export const getAccountsByQueryThunk = createAsyncThunk(
   "accounts/getAccountsByQueryThunk",
-  async (data) => {
+  async (params: types.IRecordsAggregationBody) => {
     try {
-      const response = await AccountsService.getAccountsByQuery({
-        page: 0,
-        itemsPerPage: 10,
-      });
-      console.log({ response });
+      const response = await AccountsService.getAccountsByQuery(params);
 
       if (response.status === 200) {
         return response.data;

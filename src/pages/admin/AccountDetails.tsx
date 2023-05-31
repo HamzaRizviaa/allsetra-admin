@@ -55,7 +55,7 @@ const AccountDetails: FC = () => {
           onChange={setTabSelectedIndex}
           headings={ACCOUNT_DETAILS_TABS_HEADINGS}
         >
-          <Box mx={4}>
+          <Box mx={2}>
             <TabPanel value={tabSelectedIndex} index={0}>
               <AccountDetailsSection />
             </TabPanel>

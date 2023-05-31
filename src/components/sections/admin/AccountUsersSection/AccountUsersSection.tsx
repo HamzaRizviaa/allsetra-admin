@@ -71,8 +71,10 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
     <Box>
       <Table
         columns={ACCOUNT_USERS_TABLE_COLUMNS}
-        rows={accountUsers}
-        actions={[{ name: "Remove User", onClick: handleRemoveCustomerUser }]}
+        data={accountUsers}
+        cellActions={[
+          { name: "Remove User", onClick: handleRemoveCustomerUser },
+        ]}
         searchPlaceholder="Search user"
         primaryButton={{
           text: "Add user",
@@ -85,8 +87,6 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
           variant: "outlined",
           onClick: toggleAssignUserModal,
         }}
-        // @ts-ignore
-        getRowId={(row: any) => row.uniqueId}
       />
       <AssignUserToAccountForm
         open={assignUserModal}

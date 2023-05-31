@@ -22,8 +22,12 @@ const InnerForm: FC<Props> = ({ accountId, roles }) => {
   );
 
   const shouldDisplayDallasKey = () => {
-    const role = roles.find((role) => role.id === values.role);
-    return role ? role.name === "Driver" : false;
+    if (roles) {
+      const role = roles.find((role) => role.id === values.role);
+      return role ? role.name === "Driver" : false;
+    } else {
+      return false;
+    }
   };
 
   return (

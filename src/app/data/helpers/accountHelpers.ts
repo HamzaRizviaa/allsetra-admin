@@ -14,7 +14,7 @@ export const accountAssignUserValidationSchema: Yup.Schema<IAccountAssignUser> =
       .trim()
       .label("Dallas Key")
       .when("role", {
-        is: (val: string) => val === "driver",
+        is: (val: string) => val === "9efb5cd2-ffc2-4792-9d02-dd33dc6d4c3e",
         then: (schema) => schema.required(),
         otherwise: (schema) => schema,
       }),
