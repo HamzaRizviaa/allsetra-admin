@@ -1,4 +1,4 @@
-import { TableColumn } from "@vilocnv/allsetra-core";
+import { StatusBadge, TableColumn } from "@vilocnv/allsetra-core";
 import { IField } from "../types";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,6 +11,11 @@ export const ALL_FIELD_TABLE_COLUMNS: TableColumn<IField>[] = [
   {
     name: "Field label",
     selector: (row: IField) => row.label,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: IField) => <StatusBadge isDeactivated={row.isDeleted} />,
     sortable: true,
   },
   {

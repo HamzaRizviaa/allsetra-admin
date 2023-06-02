@@ -31,7 +31,7 @@ const FieldManager = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Usednfor DeleteConfirmationModal Modal
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null); // Used for storing the field id of the selected field
 
-  useDispatchOnParams(getFieldsByQueryThunk);
+  useDispatchOnParams(getFieldsByQueryThunk, { searchByField: "label" });
 
   const openDeleteConfirmationModal = (field: IField) => {
     setSelectedFieldId(field.uniqueId);
@@ -65,12 +65,10 @@ const FieldManager = () => {
           data={allFields}
           progressPending={loading}
           paginationTotalRows={totalFields}
-          //   onRowClicked={handleViewAccount}
           searchPlaceholder="Search field"
           cellActions={[
             {
               name: "Update field",
-              // onClick: handleActivateAccount,
             },
             {
               name: "Deactivate field",
@@ -85,12 +83,6 @@ const FieldManager = () => {
           ]}
         />
       </Box>
-      {/* <AddAccountForm
-        open={open}
-        onClose={() => setOpen(false)}
-        theme={theme}
-        onSubmit={addAccountHandler}
-      /> */}
       <DeleteConfirmationModal
         open={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}

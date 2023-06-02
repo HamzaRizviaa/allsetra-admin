@@ -1,6 +1,6 @@
 import axiosInstance from "app/axiosInstance";
 
-class FieldsService {
+class Fields {
   static getAllFields = async () => {
     return await axiosInstance.get("/fields");
   };
@@ -30,4 +30,4 @@ class FieldsService {
   };
 }
 
-export default FieldsService;
+export default Fields;
