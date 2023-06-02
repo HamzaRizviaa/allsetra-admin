@@ -78,7 +78,7 @@ export const activateAccountThunk = createAsyncThunk(
       const response = await AccountsService.reactivateAccount(accountId);
 
       if (response.status === 202) {
-        toast.success("Account has been activated");
+        toast.success("Account has been reactivated");
         dispatch(getAllAccountsThunk());
       }
 
