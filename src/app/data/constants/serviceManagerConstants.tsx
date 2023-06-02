@@ -1,11 +1,16 @@
 import { Stack } from "@mui/material";
-import { TableColumn, Badge } from "@vilocnv/allsetra-core";
+import { TableColumn, Badge, StatusBadge } from "@vilocnv/allsetra-core";
 
 //
 // TABLE HEADERS
 //
 export const ALL_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
   { name: "Service Name", selector: (row: any) => row.name, sortable: true },
+  {
+    name: "Status",
+    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
   {
     name: "Service Fields",
     selector: (row: any) => row.fields,
