@@ -12,6 +12,7 @@ import NotFound from "pages/NotFound";
 import AccountManager from "pages/admin/AccountManager";
 import AccountDetails from "pages/admin/AccountManager/AccountDetails";
 import ServiceManager from "pages/admin/ServiceManager";
+import FieldManager from "pages/admin/FieldManager";
 
 const App: FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: FC = () => {
           element={<AccountDetails />}
         />
         <Route path="/dashboard/service-manager" element={<ServiceManager />} />
+        <Route path="/dashboard/field-manager" element={<FieldManager />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
