@@ -10,7 +10,8 @@ import NotFound from "pages/NotFound";
 
 // ADMIN PROTECTED PAGES
 import AccountManager from "pages/admin/AccountManager";
-import AccountDetails from "pages/admin/AccountDetails";
+import AccountDetails from "pages/admin/AccountManager/AccountDetails";
+import ServiceManager from "pages/admin/ServiceManager";
 
 const App: FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: FC = () => {
           path="/dashboard/account-manager/details"
           element={<AccountDetails />}
         />
+        <Route path="/dashboard/service-manager" element={<ServiceManager />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

@@ -1,6 +1,6 @@
 import axiosInstance from "app/axiosInstance";
 
-class AccountsService {
+class Accounts {
   // Account Endpoints
   static getAllAccounts = async () => {
     return await axiosInstance.get("/accounts");
@@ -64,4 +64,4 @@ class AccountsService {
   };
 }
 
-export default AccountsService;
+export default Accounts;

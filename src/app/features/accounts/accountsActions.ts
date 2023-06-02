@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AccountsService } from "app/data/services";
+import { Accounts } from "app/data/services";
 import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAllAccountsThunk = createAsyncThunk(
   "accounts/getAllAccountsThunk",
   async () => {
     try {
-      const response = await AccountsService.getAllAccounts();
+      const response = await Accounts.getAllAccounts();
 
       if (response.status === 200) {
         return response.data;
@@ -22,7 +22,7 @@ export const getAccountsByQueryThunk = createAsyncThunk(
   "accounts/getAccountsByQueryThunk",
   async (params: types.IRecordsAggregationBody) => {
     try {
-      const response = await AccountsService.getAccountsByQuery(params);
+      const response = await Accounts.getAccountsByQuery(params);
 
       if (response.status === 200) {
         return response.data;
@@ -38,7 +38,7 @@ export const createAccountThunk = createAsyncThunk(
   "accounts/createAccountThunk",
   async (data: any) => {
     try {
-      const response = await AccountsService.createAccount(data);
+      const response = await Accounts.createAccount(data);
 
       if (response.status === 202) {
         toast.success("Account has been created");
@@ -56,7 +56,7 @@ export const deactivateAccountThunk = createAsyncThunk(
   "accounts/deactivateAccountThunk",
   async (accountId: string, { dispatch }) => {
     try {
-      const response = await AccountsService.deactivateAccount(accountId);
+      const response = await Accounts.deactivateAccount(accountId);
 
       if (response.status === 202) {
         toast.success("Account has been deactivated");
@@ -75,7 +75,7 @@ export const activateAccountThunk = createAsyncThunk(
   "accounts/activateAccountThunk",
   async (accountId: string, { dispatch }) => {
     try {
-      const response = await AccountsService.reactivateAccount(accountId);
+      const response = await Accounts.reactivateAccount(accountId);
 
       if (response.status === 202) {
         toast.success("Account has been activated");
@@ -97,7 +97,7 @@ export const getAccountAssociatedUsersThunk = createAsyncThunk(
   "accounts/getAccountAssociatedUsersThunk",
   async (accountId: string) => {
     try {
-      const response = await AccountsService.getAccountAssociatedUsers(
+      const response = await Accounts.getAccountAssociatedUsers(
         accountId
       );
 
@@ -115,7 +115,7 @@ export const getAvailableUsersForAccountThunk = createAsyncThunk(
   "accounts/getAvailableUsersForAccountThunk",
   async (accountId: string) => {
     try {
-      const response = await AccountsService.getAvailableUsersForAccount(
+      const response = await Accounts.getAvailableUsersForAccount(
         accountId
       );
 
@@ -133,7 +133,7 @@ export const removeUserFromAccountThunk = createAsyncThunk(
   "accounts/removeUserFromAccountThunk",
   async ({ accountId, userId }: any, { dispatch }) => {
     try {
-      const response = await AccountsService.removeUserFromAccount(
+      const response = await Accounts.removeUserFromAccount(
         accountId,
         userId
       );
@@ -155,7 +155,7 @@ export const associateUserToAccountThunk = createAsyncThunk(
   "accounts/associateUserToAccountThunk",
   async ({ accountId, userId, data }: any, { dispatch }) => {
     try {
-      const response = await AccountsService.associateUserToAccount(
+      const response = await Accounts.associateUserToAccount(
         accountId,
         userId,
         data
@@ -178,7 +178,7 @@ export const createUserAndAssociateToAccountThunk = createAsyncThunk(
   "accounts/createUserAndAssociateToAccountThunk",
   async ({ accountId, values }: any, { dispatch }) => {
     try {
-      const response = await AccountsService.createUserAndAssociateToAccount(
+      const response = await Accounts.createUserAndAssociateToAccount(
         accountId,
         values
       );

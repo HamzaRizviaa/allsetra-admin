@@ -82,7 +82,7 @@ const Accounts: FC = () => {
     <Box>
       <Topbar
         theme={theme}
-        title="Accounts"
+        title="Account manager"
         primaryButton={{
           variant: "outlined",
           text: "Add account",

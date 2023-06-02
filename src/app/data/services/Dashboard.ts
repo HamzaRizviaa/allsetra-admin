@@ -1,9 +1,9 @@
 import axiosInstance from "app/axiosInstance";
 
-class DashboardService {
+class Dashboard {
   static getAllRoles = async () => {
     return await axiosInstance.get("/roles");
   };
 }
 
-export default DashboardService;
+export default Dashboard;

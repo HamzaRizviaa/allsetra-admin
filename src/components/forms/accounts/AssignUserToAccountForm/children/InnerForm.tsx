@@ -6,7 +6,7 @@ import { useFormikContext } from "formik";
 // DATA
 import { useFetch } from "hooks";
 import { IAccountAssignUser } from "app/data/types";
-import { AccountsService } from "app/data/services";
+import { Accounts } from "app/data/services";
 
 interface Props {
   accountId: string | null;
@@ -17,7 +17,7 @@ const InnerForm: FC<Props> = ({ accountId, roles }) => {
   const { values } = useFormikContext<IAccountAssignUser>();
 
   const { data: availableUsers, loading: availableUsersLoading } = useFetch(
-    AccountsService.getAvailableUsersForAccount,
+    Accounts.getAvailableUsersForAccount,
     accountId
   );
 

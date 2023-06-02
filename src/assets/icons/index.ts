@@ -17,6 +17,7 @@ import { ReactComponent as CloseSvg } from "./drawer/close-icon.svg";
 import { ReactComponent as OpenSvg } from "./drawer/open-icon.svg";
 import { ReactComponent as BarsSvg } from "./drawer/bars-icon.svg";
 import { ReactComponent as CrossSvg } from "./drawer/cross-icon.svg";
+import { ReactComponent as ServiceBlueIcon } from "./drawer/service-blue-icon.svg";
 
 // Common Icons
 import { ReactComponent as Add } from "./common/Add.svg";
@@ -55,4 +56,5 @@ export {
   CartIcon,
   SelectInputRemove,
   SelectInputClear,
+  ServiceBlueIcon,
 };

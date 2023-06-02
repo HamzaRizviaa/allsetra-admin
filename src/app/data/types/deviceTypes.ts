@@ -3,3 +3,9 @@ export interface IAddDeviceType {
   objectTypeIcon: string;
   supportedDeviceTypes: string;
 }
+
+export interface IAddDeviceTypeToServcie {
+  deviceTypeId: string;
+  requiredModulesId: Array<string>;
+  optionalModulesId?: Array<string>;
+}

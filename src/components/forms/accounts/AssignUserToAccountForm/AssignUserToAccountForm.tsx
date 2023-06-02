@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { omit } from "lodash";
 import { Box, useTheme } from "@mui/material";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -12,7 +13,6 @@ import {
   accountAssignUserValidationSchema,
 } from "app/data/helpers";
 import { associateUserToAccountThunk } from "app/features";
-import { omit } from "lodash";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
   accountId: string | null;
