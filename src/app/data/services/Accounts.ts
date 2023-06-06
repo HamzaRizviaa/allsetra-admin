@@ -1,4 +1,5 @@
 import axiosInstance from "app/axiosInstance";
+import { types } from "@vilocnv/allsetra-core";
 
 class Accounts {
   // Account Endpoints
@@ -10,7 +11,7 @@ class Accounts {
     return await axiosInstance.get(`/accounts/${accountId}`);
   };
 
-  static getAccountsByQuery = async (data: any) => {
+  static getAccountsByQuery = async (data: types.IRecordsAggregationBody) => {
     return await axiosInstance.post("/accounts/search", data);
   };
 
@@ -61,6 +62,94 @@ class Accounts {
 
   static removeUserFromAccount = async (accountId: string, userId: string) => {
     return await axiosInstance.delete(`/accounts/${accountId}/users/${userId}`);
+  };
+
+  // Account Services Endpoints
+  static getAccountServices = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/services/search`,
+      data
+    );
+  };
+
+  static assignServiceToAccount = async (accountId: string, data: any) => {
+    return await axiosInstance.post(`/accounts/${accountId}/services`, data);
+  };
+
+  static removeServiceFromAccount = async (
+    accountId: string,
+    serviceId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/services/${serviceId}`
+    );
+  };
+
+  // Account Device Types Endpoints
+  static getAccountDeviceTypes = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/devicetypes/search`,
+      data
+    );
+  };
+
+  static assignDeviceTypeToAccount = async (accountId: string, data: any) => {
+    return await axiosInstance.post(`/accounts/${accountId}/devicetypes`, data);
+  };
+
+  static removeDeviceTypeFromAccount = async (
+    accountId: string,
+    devicetypeId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/devicetypes/${devicetypeId}`
+    );
+  };
+
+  // Account Object Types Endpoints
+  static getAccountObjectTypes = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/objecttypes/search`,
+      data
+    );
+  };
+
+  static assignObjectTypeToAccount = async (
+    accountId: string,
+    objectTypeId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/objecttypes/${objectTypeId}`
+    );
+  };
+
+  static removeObjectTypeFromAccount = async (
+    accountId: string,
+    objectTypeId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/objecttypes/${objectTypeId}`
+    );
+  };
+
+  // Account Objects Endpoints
+  static getAccountObjects = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/objects/search`,
+      data
+    );
   };
 }
 

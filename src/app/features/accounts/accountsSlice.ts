@@ -3,7 +3,10 @@ import {
   getAllAccountsThunk,
   getAccountsByQueryThunk,
   getAccountAssociatedUsersThunk,
-} from "./accountsActions";
+  getAccountServicesThunk,
+  getAccountDeviceTypesThunk,
+  getAccountObjectTypesThunk,
+} from "./actions";
 
 export interface IAccountsState {
   loading: boolean;
@@ -13,8 +16,12 @@ export interface IAccountsState {
   activeAccountId: string | null;
   allAccounts: Array<any>;
 
-  // Account Users State
+  // Account Details State
+  totalRecords: number | null;
   accountUsers: Array<any>;
+  accountServices: Array<any>;
+  accountDeviceTypes: Array<any>;
+  accountObjectTypes: Array<any>;
 }
 
 const initialState: IAccountsState = {
@@ -22,7 +29,11 @@ const initialState: IAccountsState = {
   totalAccounts: null,
   activeAccountId: null,
   allAccounts: [],
+  totalRecords: null,
   accountUsers: [],
+  accountServices: [],
+  accountDeviceTypes: [],
+  accountObjectTypes: [],
 };
 
 const accountsSlice = createSlice({
@@ -63,7 +74,7 @@ const accountsSlice = createSlice({
       state.loading = false;
     });
 
-    // Get Accounts Users Action Cases
+    // Get Account Users Action Cases
     builder.addCase(getAccountAssociatedUsersThunk.pending, (state) => {
       state.loading = true;
     });
@@ -79,10 +90,55 @@ const accountsSlice = createSlice({
     builder.addCase(getAccountAssociatedUsersThunk.rejected, (state) => {
       state.loading = false;
     });
+
+    // Get Account Services Action Cases
+    builder.addCase(getAccountServicesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAccountServicesThunk.fulfilled, (state, action) => {
+      state.accountServices = action.payload?.results || [];
+      state.totalRecords = action.payload?.rowCount || 0;
+      state.loading = false;
+    });
+
+    builder.addCase(getAccountServicesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Account Device Types Action Cases
+    builder.addCase(getAccountDeviceTypesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAccountDeviceTypesThunk.fulfilled, (state, action) => {
+      state.accountDeviceTypes = action.payload?.results || [];
+      state.totalRecords = action.payload?.rowCount || 0;
+      state.loading = false;
+    });
+
+    builder.addCase(getAccountDeviceTypesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Account Object Types Action Cases
+    builder.addCase(getAccountObjectTypesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAccountObjectTypesThunk.fulfilled, (state, action) => {
+      state.accountObjectTypes = action.payload?.results || [];
+      state.totalRecords = action.payload?.rowCount || 0;
+      state.loading = false;
+    });
+
+    builder.addCase(getAccountObjectTypesThunk.rejected, (state) => {
+      state.loading = false;
+    });
   },
 });
 
-export * from "./accountsActions";
+export * from "./actions";
 export const { setActiveAccountId } = accountsSlice.actions;
 
 export default accountsSlice.reducer;

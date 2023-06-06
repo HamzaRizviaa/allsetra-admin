@@ -11,7 +11,10 @@ import { ACCOUNT_DETAILS_TABS_HEADINGS } from "app/data/constants";
 
 // Sections
 import AccountDetailsSection from "components/sections/admin/AccountDetailsSection/AccountDetailsSection";
-import AccountUsersSection from "components/sections/admin/AccountUsersSection/AccountUsersSection";
+import AccountServices from "components/sections/admin/AccountSubSections/AccountServices";
+import AccountDeviceTypes from "components/sections/admin/AccountSubSections/AccountDeviceTypes";
+import AccountObjectTypes from "components/sections/admin/AccountSubSections/AccountObjectTypes";
+import AccountUsers from "components/sections/admin/AccountSubSections/AccountUsers";
 
 const AccountDetails: FC = () => {
   const theme = useTheme();
@@ -60,16 +63,16 @@ const AccountDetails: FC = () => {
               <AccountDetailsSection />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={1}>
-              <h1>Services</h1>
+              <AccountServices accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={2}>
-              <h1>Device Types</h1>
+              <AccountDeviceTypes accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={3}>
-              <h1>Object Types</h1>
+              <AccountObjectTypes accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={4}>
-              <AccountUsersSection accountId={accountId} />
+              <AccountUsers accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={5}>
               <h1>Devices</h1>

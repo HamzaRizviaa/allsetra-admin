@@ -1,4 +1,20 @@
-import { TableColumn, StatusBadge, types } from "@vilocnv/allsetra-core";
+import { Stack } from "@mui/material";
+import { TableColumn, StatusBadge, Badge, types } from "@vilocnv/allsetra-core";
+
+//
+// TAB PANES HEADINGS
+//
+export const ACCOUNT_DETAILS_TABS_HEADINGS: string[] = [
+  "Details",
+  "Services",
+  "Device Types",
+  "Object Types",
+  "Users",
+  "Devices",
+  "Objects",
+  "Alarms",
+  "Installations",
+];
 
 //
 // TABLE HEADERS
@@ -44,17 +60,73 @@ export const ACCOUNT_USERS_TABLE_COLUMNS: TableColumn<types.IUser>[] = [
   },
 ];
 
-//
-// TAB PANES HEADINGS
-//
-export const ACCOUNT_DETAILS_TABS_HEADINGS: string[] = [
-  "Details",
-  "Services",
-  "Device Types",
-  "Object Types",
-  "Users",
-  "Devices",
-  "Objects",
-  "Alarms",
-  "Installations",
+export const ACCOUNT_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
+  {
+    name: "Name",
+    selector: (row: any) => row.name,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
+  {
+    name: "Service Fields",
+    selector: (row: any) => row.fieldsCount,
+    sortable: true,
+  },
+  {
+    name: "Linked Device Types",
+    selector: (row: any) => row.serviceDeviceTypes,
+    format: (row: any) => (
+      <Stack my={1} gap={1} flexWrap={"wrap"}>
+        {row.serviceDeviceTypes.map(({ deviceType }: any) => (
+          <Badge colorScheme="info">{deviceType.deviceName}</Badge>
+        ))}
+      </Stack>
+    ),
+  },
+  {
+    name: "Linked Object Types",
+    selector: (row: any) => row.objectTypesCount,
+    sortable: true,
+  },
+];
+
+export const ACCOUNT_DEVICE_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
+  {
+    name: "Device Name",
+    selector: (row: any) => row.deviceName,
+    sortable: true,
+  },
+  {
+    name: "Manufacturer Name",
+    selector: (row: any) => row.deviceManufacturer,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
+];
+
+export const ACCOUNT_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
+  {
+    name: "Full name",
+    selector: (row: any) => `${row.firstName || ""} ${row.lastName || ""}`,
+    sortable: true,
+  },
+  { name: "Email", selector: (row: any) => row.email, sortable: true },
+  {
+    name: "Status",
+    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
+  {
+    name: "Phone Number",
+    selector: (row: any) => row.phone,
+    sortable: true,
+  },
 ];

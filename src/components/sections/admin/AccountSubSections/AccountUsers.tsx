@@ -20,12 +20,12 @@ interface Props {
   accountId: string | null;
 }
 
-const AccountUsersSection: FC<Props> = ({ accountId }) => {
+const AccountUsers: FC<Props> = ({ accountId }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
   // Global State
-  const accountUsers = useAppSelector(selectAccountUsers);
+  const { accountUsers } = useAppSelector(selectAccountUsers);
   const roles = useAppSelector(selectAllRoles);
 
   // Local State
@@ -40,7 +40,7 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
 
   const toggleAddUserModal = () => setAddUserModal(!addUserModal);
 
-  const handleRemoveCustomerUser = (user: any) => {
+  const removeUserHandler = (user: any) => {
     user &&
       dispatch(
         removeUserFromAccountThunk({ accountId, userId: user.uniqueId })
@@ -73,7 +73,7 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
         columns={ACCOUNT_USERS_TABLE_COLUMNS}
         data={accountUsers}
         cellActions={[
-          { name: "Remove User", onClick: handleRemoveCustomerUser },
+          { name: "Remove User", onClick: removeUserHandler },
         ]}
         searchPlaceholder="Search user"
         primaryButton={{
@@ -105,4 +105,4 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
   );
 };
 
-export default AccountUsersSection;
+export default AccountUsers;
