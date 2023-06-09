@@ -19,12 +19,7 @@ export type Props = Omit<ModalProps, "title" | "children"> & {
   roles: Array<any>;
 };
 
-const AssignUserToAccountForm: FC<Props> = ({
-  open,
-  onClose,
-  accountId,
-  roles,
-}) => {
+const AssignUserForm: FC<Props> = ({ open, onClose, accountId, roles }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
@@ -44,6 +39,7 @@ const AssignUserToAccountForm: FC<Props> = ({
 
     if (type === "accounts/associateUserToAccountThunk/fulfilled") {
       onClose();
+      formikHelpers.resetForm();
     }
 
     formikHelpers.setSubmitting(false);
@@ -58,7 +54,7 @@ const AssignUserToAccountForm: FC<Props> = ({
         enableReinitialize
         validateOnMount
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isSubmitting, isValid }) => (
           <Form>
             <Modal
               open={open}
@@ -68,6 +64,7 @@ const AssignUserToAccountForm: FC<Props> = ({
                 type: "submit",
                 text: "Assign user",
                 loading: isSubmitting,
+                disabled: !isValid,
                 // @ts-ignore
                 onClick: handleSubmit,
               }}
@@ -83,4 +80,4 @@ const AssignUserToAccountForm: FC<Props> = ({
   );
 };
 
-export default AssignUserToAccountForm;
+export default AssignUserForm;

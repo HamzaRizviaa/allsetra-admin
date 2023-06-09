@@ -3,7 +3,7 @@ import { FormikHelpers } from "formik";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Table, AddUserForm, types } from "@vilocnv/allsetra-core";
-import AssignUserToAccountForm from "components/forms/accounts/AssignUserToAccountForm/AssignUserToAccountForm";
+import AssignUserForm from "components/forms/accounts/AssignUserForm/AssignUserForm";
 
 // Data
 import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
@@ -88,7 +88,7 @@ const AccountUsers: FC<Props> = ({ accountId }) => {
           onClick: toggleAssignUserModal,
         }}
       />
-      <AssignUserToAccountForm
+      <AssignUserForm
         open={assignUserModal}
         onClose={toggleAssignUserModal}
         accountId={accountId}

@@ -34,7 +34,7 @@ export const assignObjectTypeToAccountThunk = createAsyncThunk(
       );
 
       if (response.status === 202) {
-        toast.success("Device type has been assigned to the account");
+        toast.success("Object type has been assigned to the account");
       }
 
       return response;
@@ -55,7 +55,7 @@ export const removeObjectTypeFromAccountThunk = createAsyncThunk(
       );
 
       if (response.status === 202) {
-        toast.success("Device type has been removed from the account");
+        toast.success("Object type has been removed from the account");
       }
 
       return response;

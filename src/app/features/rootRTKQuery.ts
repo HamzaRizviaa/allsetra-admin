@@ -1,18 +1,27 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+import { AzureMsal } from "app/data/services";
 
 const rootRtkQuery = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
+    baseUrl: process.env.REACT_APP_API_BASE_URL,
 
-    prepareHeaders: (headers) => {
-      headers.set("Content-Type", "application/json");
-      // if no auth needed remove the token
-      if (headers.has("No-Auth")) {
-        headers.delete("Authorization");
-        headers.delete("No-Auth");
+    prepareHeaders: async (headers) => {
+      try {
+        const accessTokenResponse = await AzureMsal.acquireToken();
+
+        if (accessTokenResponse) {
+          headers.set("Content-Type", "application/json");
+          headers.set("Authorization", `bearer ${accessTokenResponse.idToken}`);
+          headers.set(
+            "X-Subscription",
+            process.env.REACT_APP_API_HEADER_SUBSCRIPTION || ""
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        return headers;
       }
-      return headers;
     },
   }),
   endpoints: () => ({}),

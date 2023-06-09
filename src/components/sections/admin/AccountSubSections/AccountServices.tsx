@@ -7,6 +7,7 @@ import {
   types,
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
+import AssignServiceForm from "components/forms/accounts/AssignServiceForm/AssignServiceForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -77,6 +78,12 @@ const AccountServices: FC<Props> = ({ accountId }) => {
           startIcon: <AddIcon />,
           onClick: toggleAssignServiceModal,
         }}
+      />
+      <AssignServiceForm
+        open={assignServiceModal}
+        onClose={toggleAssignServiceModal}
+        accountId={accountId}
+        subscriptions={[]}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

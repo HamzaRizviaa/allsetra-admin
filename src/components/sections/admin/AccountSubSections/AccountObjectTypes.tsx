@@ -4,9 +4,9 @@ import AddIcon from "@mui/icons-material/Add";
 import {
   DeleteConfirmationModal,
   Table,
-  types,
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
+import AssignObjectTypeForm from "components/forms/accounts/AssignObjectTypeForm/AssignObjectTypeForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -77,6 +77,11 @@ const AccountObjectTypes: FC<Props> = ({ accountId }) => {
           startIcon: <AddIcon />,
           onClick: toggleAssignObjectTypeModal,
         }}
+      />
+      <AssignObjectTypeForm
+        open={assignObjectTypeModal}
+        onClose={toggleAssignObjectTypeModal}
+        accountId={accountId}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

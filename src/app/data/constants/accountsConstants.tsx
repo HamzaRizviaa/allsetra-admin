@@ -114,19 +114,28 @@ export const ACCOUNT_DEVICE_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
 
 export const ACCOUNT_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
   {
-    name: "Full name",
-    selector: (row: any) => `${row.firstName || ""} ${row.lastName || ""}`,
+    name: "Name",
+    selector: (row: any) => row.name,
     sortable: true,
   },
-  { name: "Email", selector: (row: any) => row.email, sortable: true },
   {
     name: "Status",
     cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
     sortable: true,
   },
   {
-    name: "Phone Number",
-    selector: (row: any) => row.phone,
+    name: "# of Objects",
+    selector: (row: any) => `${row.objectsCount} objects`,
+    sortable: true,
+  },
+  {
+    name: "# of Services",
+    selector: (row: any) => `${row.servicesCount} services`,
+    sortable: true,
+  },
+  {
+    name: "# of Fields",
+    selector: (row: any) => `${row.fieldsCount} fields`,
     sortable: true,
   },
 ];
