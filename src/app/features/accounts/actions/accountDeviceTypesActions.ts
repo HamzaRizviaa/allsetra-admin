@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 
 export const getAccountDeviceTypesThunk = createAsyncThunk(
   "accounts/getAccountDeviceTypesThunk",
@@ -26,7 +26,7 @@ export const getAccountDeviceTypesThunk = createAsyncThunk(
 
 export const assignDeviceTypeToAccountThunk = createAsyncThunk(
   "accounts/assignDeviceTypeToAccountThunk",
-  async ({ accountId, data }: any) => {
+  async ({ accountId, data }: any, { dispatch }) => {
     try {
       const response = await Accounts.assignDeviceTypeToAccount(
         accountId,
@@ -35,6 +35,12 @@ export const assignDeviceTypeToAccountThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Device type has been assigned to the account");
+        dispatch(
+          getAccountDeviceTypesThunk({
+            accountId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
       }
 
       return response;
@@ -47,7 +53,7 @@ export const assignDeviceTypeToAccountThunk = createAsyncThunk(
 
 export const removeDeviceTypeFromAccountThunk = createAsyncThunk(
   "accounts/removeDeviceTypeFromAccountThunk",
-  async ({ accountId, deviceTypeId }: any) => {
+  async ({ accountId, deviceTypeId }: any, { dispatch }) => {
     try {
       const response = await Accounts.removeDeviceTypeFromAccount(
         accountId,
@@ -56,6 +62,12 @@ export const removeDeviceTypeFromAccountThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Device type has been removed from the account");
+        dispatch(
+          getAccountDeviceTypesThunk({
+            accountId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
       }
 
       return response;

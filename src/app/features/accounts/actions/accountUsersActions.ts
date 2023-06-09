@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast } from "@vilocnv/allsetra-core";
 
 export const getAccountAssociatedUsersThunk = createAsyncThunk(
   "accounts/getAccountAssociatedUsersThunk",

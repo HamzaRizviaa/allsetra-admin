@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 
 export const getAllAccountsThunk = createAsyncThunk(
   "accounts/getAllAccountsThunk",
@@ -36,12 +36,13 @@ export const getAccountsByQueryThunk = createAsyncThunk(
 
 export const createAccountThunk = createAsyncThunk(
   "accounts/createAccountThunk",
-  async (data: any) => {
+  async (data: any, { dispatch }) => {
     try {
       const response = await Accounts.createAccount(data);
 
       if (response.status === 202) {
         toast.success("Account has been created");
+        dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;
@@ -60,7 +61,7 @@ export const deactivateAccountThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Account has been deactivated");
-        dispatch(getAllAccountsThunk());
+        dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;
@@ -79,7 +80,7 @@ export const activateAccountThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Account has been reactivated");
-        dispatch(getAllAccountsThunk());
+        dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;

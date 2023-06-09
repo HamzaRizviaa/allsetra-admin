@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 
 export const getAccountObjectTypesThunk = createAsyncThunk(
   "accounts/getAccountObjectTypesThunk",
@@ -26,15 +26,21 @@ export const getAccountObjectTypesThunk = createAsyncThunk(
 
 export const assignObjectTypeToAccountThunk = createAsyncThunk(
   "accounts/assignObjectTypeToAccountThunk",
-  async ({ accountId, objectTypeId }: any) => {
+  async ({ accountId, data }: any, { dispatch }) => {
     try {
       const response = await Accounts.assignObjectTypeToAccount(
         accountId,
-        objectTypeId
+        data
       );
 
       if (response.status === 202) {
         toast.success("Object type has been assigned to the account");
+        dispatch(
+          getAccountObjectTypesThunk({
+            accountId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
       }
 
       return response;
@@ -47,7 +53,7 @@ export const assignObjectTypeToAccountThunk = createAsyncThunk(
 
 export const removeObjectTypeFromAccountThunk = createAsyncThunk(
   "accounts/removeObjectTypeFromAccountThunk",
-  async ({ accountId, objectTypeId }: any) => {
+  async ({ accountId, objectTypeId }: any, { dispatch }) => {
     try {
       const response = await Accounts.removeObjectTypeFromAccount(
         accountId,
@@ -56,6 +62,12 @@ export const removeObjectTypeFromAccountThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Object type has been removed from the account");
+        dispatch(
+          getAccountObjectTypesThunk({
+            accountId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
       }
 
       return response;

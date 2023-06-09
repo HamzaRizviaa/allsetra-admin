@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Modal, ModalProps, FormikSelectField } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
+import { ServiceBlueIcon } from "assets/icons";
 
 // DATA
 import { useAppDispatch } from "hooks";
@@ -10,7 +11,10 @@ import {
   accountAssignServiceInitialValues,
   accountAssignServiceValidationSchema,
 } from "app/data/helpers";
-import { assignServiceToAccountThunk } from "app/features";
+import {
+  assignServiceToAccountThunk,
+  useGetAvailableServicesForAccountQuery,
+} from "app/features";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
   accountId: string | null;
@@ -25,6 +29,8 @@ const AssignServiceForm: FC<Props> = ({
 }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+
+  const { data, isLoading } = useGetAvailableServicesForAccountQuery(accountId);
 
   const onSubmitHandler = async (
     values: IAccountAssignService,
@@ -59,6 +65,9 @@ const AssignServiceForm: FC<Props> = ({
               open={open}
               onClose={onClose}
               title="Assign service"
+              subTitle={"Some description if needed."}
+              headerIcon={<ServiceBlueIcon />}
+              headerIconBgColor={theme.palette.primary.light}
               primaryBtnProps={{
                 type: "submit",
                 text: "Assign service",
@@ -74,9 +83,10 @@ const AssignServiceForm: FC<Props> = ({
                 <FormikSelectField
                   label="Service type"
                   name="serviceId"
-                  options={[]}
+                  options={data || []}
                   optionLabelKey="name"
                   optionValueKey="uniqueId"
+                  loading={isLoading}
                   required
                 />
                 <FormikSelectField

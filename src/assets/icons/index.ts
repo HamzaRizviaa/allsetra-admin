@@ -18,6 +18,8 @@ import { ReactComponent as OpenSvg } from "./drawer/open-icon.svg";
 import { ReactComponent as BarsSvg } from "./drawer/bars-icon.svg";
 import { ReactComponent as CrossSvg } from "./drawer/cross-icon.svg";
 import { ReactComponent as ServiceBlueIcon } from "./drawer/service-blue-icon.svg";
+import { ReactComponent as DevicetypeBlueIcon } from "./drawer/devicetype-blue-icon.svg";
+import { ReactComponent as ObjecttypeBlueIcon } from "./drawer/objecttype-blue-icon.svg";
 
 // Common Icons
 import { ReactComponent as Add } from "./common/Add.svg";
@@ -57,4 +59,6 @@ export {
   SelectInputRemove,
   SelectInputClear,
   ServiceBlueIcon,
+  DevicetypeBlueIcon,
+  ObjecttypeBlueIcon,
 };

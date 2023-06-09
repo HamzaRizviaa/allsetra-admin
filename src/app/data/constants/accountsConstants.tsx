@@ -97,17 +97,29 @@ export const ACCOUNT_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
 export const ACCOUNT_DEVICE_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
   {
     name: "Device Name",
-    selector: (row: any) => row.deviceName,
+    selector: (row: any) => row.name,
     sortable: true,
   },
   {
     name: "Manufacturer Name",
-    selector: (row: any) => row.deviceManufacturer,
+    selector: (row: any) => row.deviceManufacturerName || "",
     sortable: true,
   },
   {
     name: "Status",
     cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
+  {
+    name: "Device Profiles",
+    selector: (row: any) => row.deviceProfiles,
+    format: (row: any) => (
+      <Stack my={1} gap={1} flexWrap={"wrap"}>
+        {row.deviceProfiles.map(({ profileName }: any) => (
+          <Badge colorScheme="info">{profileName}</Badge>
+        ))}
+      </Stack>
+    ),
     sortable: true,
   },
 ];

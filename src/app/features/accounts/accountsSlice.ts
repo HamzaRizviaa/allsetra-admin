@@ -139,6 +139,7 @@ const accountsSlice = createSlice({
 });
 
 export * from "./actions";
+export * from "./accountsQueries";
 export const { setActiveAccountId } = accountsSlice.actions;
 
 export default accountsSlice.reducer;

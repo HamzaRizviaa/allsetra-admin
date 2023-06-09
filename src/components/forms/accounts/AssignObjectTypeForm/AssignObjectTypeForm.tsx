@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Modal, ModalProps, FormikSelectField } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
+import {ObjecttypeBlueIcon} from "assets/icons"
 
 // DATA
 import { useAppDispatch } from "hooks";
@@ -10,7 +11,10 @@ import {
   accountAssignObjectTypeInitialValues,
   accountAssignObjectTypeValidationSchema,
 } from "app/data/helpers";
-import { assignObjectTypeToAccountThunk } from "app/features";
+import {
+  assignObjectTypeToAccountThunk,
+  useGetAvailableObjectTypesForAccountQuery,
+} from "app/features";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
   accountId: string | null;
@@ -19,6 +23,9 @@ export type Props = Omit<ModalProps, "title" | "children"> & {
 const AssignObjectTypeForm: FC<Props> = ({ open, onClose, accountId }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+
+  const { data, isLoading } =
+    useGetAvailableObjectTypesForAccountQuery(accountId);
 
   const onSubmitHandler = async (
     values: IAccountAssignObjectType,
@@ -53,6 +60,9 @@ const AssignObjectTypeForm: FC<Props> = ({ open, onClose, accountId }) => {
               open={open}
               onClose={onClose}
               title="Assign object type"
+              subTitle={"Some description if needed."}
+              headerIcon={<ObjecttypeBlueIcon />}
+              headerIconBgColor={theme.palette.primary.light}
               primaryBtnProps={{
                 type: "submit",
                 text: "Assign object type",
@@ -68,9 +78,10 @@ const AssignObjectTypeForm: FC<Props> = ({ open, onClose, accountId }) => {
                 <FormikSelectField
                   label="Object type"
                   name="objectTypeId"
-                  options={[]}
+                  options={data}
                   optionLabelKey="name"
                   optionValueKey="uniqueId"
+                  loading={isLoading}
                   required
                 />
               </Stack>

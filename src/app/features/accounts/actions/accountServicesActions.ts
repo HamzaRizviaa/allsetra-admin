@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 
 export const getAccountServicesThunk = createAsyncThunk(
   "accounts/getAccountServicesThunk",
@@ -26,12 +26,18 @@ export const getAccountServicesThunk = createAsyncThunk(
 
 export const assignServiceToAccountThunk = createAsyncThunk(
   "accounts/assignServiceToAccountThunk",
-  async ({ accountId, data }: any) => {
+  async ({ accountId, data }: any, { dispatch }) => {
     try {
       const response = await Accounts.assignServiceToAccount(accountId, data);
 
       if (response.status === 202) {
         toast.success("Service has been assigned to the account");
+        dispatch(
+          getAccountServicesThunk({
+            accountId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
       }
 
       return response;
@@ -44,7 +50,7 @@ export const assignServiceToAccountThunk = createAsyncThunk(
 
 export const removeServiceFromAccountThunk = createAsyncThunk(
   "accounts/removeServiceFromAccountThunk",
-  async ({ accountId, serviceId }: any) => {
+  async ({ accountId, serviceId }: any, { dispatch }) => {
     try {
       const response = await Accounts.removeServiceFromAccount(
         accountId,
@@ -53,6 +59,12 @@ export const removeServiceFromAccountThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Service has been removed from the account");
+        dispatch(
+          getAccountServicesThunk({
+            accountId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
       }
 
       return response;

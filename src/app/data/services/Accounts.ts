@@ -123,13 +123,8 @@ class Accounts {
     );
   };
 
-  static assignObjectTypeToAccount = async (
-    accountId: string,
-    objectTypeId: string
-  ) => {
-    return await axiosInstance.post(
-      `/accounts/${accountId}/objecttypes/${objectTypeId}`
-    );
+  static assignObjectTypeToAccount = async (accountId: string, data: any) => {
+    return await axiosInstance.post(`/accounts/${accountId}/objecttypes`, data);
   };
 
   static removeObjectTypeFromAccount = async (

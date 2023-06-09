@@ -91,11 +91,6 @@ const Accounts: FC = () => {
         }}
       />
       <Box mx={4}>
-        <img
-          src={
-          'https://afd-identity-b32vqo77nvvyu-hng8fcdzfnfwg3g8.z01.azurefd.net/admin/v1/icons/c9e248e2-8015-4e21-8d1d-50791670ba59/file?X-Subscription=b82594b8-8798-4e62-a945-a493ec71c035'
-          }
-        />
         <Table
           columns={ALL_ACCOUNTS_TABLE_COLUMNS}
           data={allAccounts}

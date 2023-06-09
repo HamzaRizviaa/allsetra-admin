@@ -25,7 +25,7 @@ const AccountUsers: FC<Props> = ({ accountId }) => {
   const dispatch = useAppDispatch();
 
   // Global State
-  const { accountUsers } = useAppSelector(selectAccountUsers);
+  const { accountUsers, loading } = useAppSelector(selectAccountUsers);
   const roles = useAppSelector(selectAllRoles);
 
   // Local State
@@ -72,9 +72,8 @@ const AccountUsers: FC<Props> = ({ accountId }) => {
       <Table
         columns={ACCOUNT_USERS_TABLE_COLUMNS}
         data={accountUsers}
-        cellActions={[
-          { name: "Remove User", onClick: removeUserHandler },
-        ]}
+        progressPending={loading}
+        cellActions={[{ name: "Remove User", onClick: removeUserHandler }]}
         searchPlaceholder="Search user"
         primaryButton={{
           text: "Add user",
