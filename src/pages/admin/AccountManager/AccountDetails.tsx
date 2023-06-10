@@ -41,16 +41,20 @@ const AccountDetails: FC = () => {
         title="Account"
         breadcrumbTitle={capitalize(activeAccount?.name) ?? "Go Back"}
         breadcrumbRedirectTo={() => navigate(-1)}
-        primaryButton={{
-          variant: "contained",
-          text: "Save Changes",
-          onClick: () => {},
-        }}
-        secondaryButton={{
-          variant: "text",
-          text: "Cancel",
-          onClick: () => {},
-        }}
+        {...(tabSelectedIndex === 0
+          ? {
+              primaryButton: {
+                variant: "contained",
+                text: "Save Changes",
+                onClick: () => {},
+              },
+              secondaryButton: {
+                variant: "text",
+                text: "Cancel",
+                onClick: () => {},
+              },
+            }
+          : null)}
       />
       <Box>
         <TabPanes
