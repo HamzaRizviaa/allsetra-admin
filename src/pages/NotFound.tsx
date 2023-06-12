@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const NotFound: FC = () => {
   return (
     <div>
-      <h1>NotFound</h1>
+      <h1>Page not found</h1>
       <Link to="/" style={{ color: "blue" }}>
         Go Back
       </Link>
