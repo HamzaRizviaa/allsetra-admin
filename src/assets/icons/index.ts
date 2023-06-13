@@ -32,6 +32,7 @@ import { ReactComponent as SearchIcon } from "./common/Search.svg";
 import { ReactComponent as CartIcon } from "./common/cart-icon.svg";
 import { ReactComponent as SelectInputRemove } from "./common/SelectInputRemove.svg";
 import { ReactComponent as SelectInputClear } from "./common/SelectInputClear.svg";
+import { ReactComponent as ObjectBlueIcon } from "./common/ObjectBlueIcon.svg";
 
 export {
   LogoDarkSvg,
@@ -60,6 +61,7 @@ export {
   SelectInputRemove,
   SelectInputClear,
   ServiceBlueIcon,
+  ObjectBlueIcon,
   FieldsFormIcon,
   DevicetypeBlueIcon,
   ObjecttypeBlueIcon,

@@ -3,3 +3,4 @@ export * from "./accountsSelectors";
 export * from "./serviceManagerSelectors";
 export * from "./deviceManagerSelectors";
 export * from "./fieldSelectors";
+export * from "./objectTypesSelectors";

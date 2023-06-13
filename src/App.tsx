@@ -13,6 +13,7 @@ import AccountManager from "pages/admin/AccountManager";
 import AccountDetails from "pages/admin/AccountManager/AccountDetails";
 import ServiceManager from "pages/admin/ServiceManager";
 import FieldManager from "pages/admin/FieldManager";
+import ObjectTypesManager from "pages/admin/ObjectTypesManager";
 
 const App: FC = () => {
   return (
@@ -30,6 +31,10 @@ const App: FC = () => {
         />
         <Route path="/dashboard/service-manager" element={<ServiceManager />} />
         <Route path="/dashboard/field-manager" element={<FieldManager />} />
+        <Route
+          path="/dashboard/object-types"
+          element={<ObjectTypesManager />}
+        />
       </Route>
 
       <Route path="*" element={<NotFound />} />

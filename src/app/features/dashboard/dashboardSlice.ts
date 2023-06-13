@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAllRolesThunk } from "./dashboardActions";
+import { getAllIconsThunk, getAllRolesThunk } from "./dashboardActions";
 
 export interface IDashboardState {
   loading: boolean;
   isDrawerCollapsed: boolean;
   roles: Array<any>;
+  icons: Array<any>;
 }
 
 const initialState: IDashboardState = {
   loading: false,
   isDrawerCollapsed: false,
   roles: [],
+  icons: [],
 };
 
 const dashboardSlice = createSlice({
@@ -33,6 +35,20 @@ const dashboardSlice = createSlice({
     });
 
     builder.addCase(getAllRolesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get All Icons Action Cases
+    builder.addCase(getAllIconsThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllIconsThunk.fulfilled, (state, action) => {
+      state.icons = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getAllIconsThunk.rejected, (state) => {
       state.loading = false;
     });
   },

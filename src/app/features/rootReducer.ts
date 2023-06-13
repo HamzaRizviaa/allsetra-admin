@@ -4,6 +4,7 @@ import accountsReducer from "./accounts/accountsSlice";
 import serviceManagerReducer from "./serviceManager/serviceManagerSlice";
 import deviceManagerReducer from "./deviceManager/deviceManagerSlice";
 import fieldsReducer from "./fields/fieldsSlice";
+import objectTypesReducer from "./objectTypes/objectTypesSlice";
 
 const rootReducer = combineReducers({
   dashboardReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   serviceManagerReducer,
   deviceManagerReducer,
   fieldsReducer,
+  objectTypesReducer,
 });
 
 export default rootReducer;

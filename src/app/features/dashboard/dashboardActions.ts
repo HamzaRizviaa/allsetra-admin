@@ -16,3 +16,19 @@ export const getAllRolesThunk = createAsyncThunk(
     }
   }
 );
+
+export const getAllIconsThunk = createAsyncThunk(
+  "dashboard/getAllIconsThunk",
+  async () => {
+    try {
+      const response = await Dashboard.getAllIcons();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
