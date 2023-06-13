@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ServiceManager } from "app/data/services";
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 
 export const getServicesByQueryThunk = createAsyncThunk(
   "serviceManager/getServicesByQueryThunk",
@@ -20,7 +20,7 @@ export const getServicesByQueryThunk = createAsyncThunk(
 
 export const createOrUpdateServiceThunk = createAsyncThunk(
   "serviceManager/createOrUpdateServiceThunk",
-  async (data: any) => {
+  async (data: any, { dispatch }) => {
     try {
       const response = data.uniqueId
         ? await ServiceManager.updateService(data.uniqueId, data)
@@ -30,6 +30,8 @@ export const createOrUpdateServiceThunk = createAsyncThunk(
         data.uniqueId
           ? toast.success("Service has been updated")
           : toast.success("Service has been created");
+
+        dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;
@@ -42,12 +44,13 @@ export const createOrUpdateServiceThunk = createAsyncThunk(
 
 export const deactivateServiceThunk = createAsyncThunk(
   "serviceManager/deactivateServiceThunk",
-  async (serviceId: string) => {
+  async (serviceId: string, { dispatch }) => {
     try {
       const response = await ServiceManager.deactivateService(serviceId);
 
       if (response.status === 202) {
         toast.success("Service has been deactivated");
+        dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;
@@ -60,12 +63,13 @@ export const deactivateServiceThunk = createAsyncThunk(
 
 export const activateServiceThunk = createAsyncThunk(
   "serviceManager/activateServiceThunk",
-  async (serviceId: string) => {
+  async (serviceId: string, { dispatch }) => {
     try {
       const response = await ServiceManager.activateService(serviceId);
 
       if (response.status === 202) {
         toast.success("Service has been activated");
+        dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;

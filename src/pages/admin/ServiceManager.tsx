@@ -1,7 +1,6 @@
-import { FC, useState } from "react";
+import { FC, useState, useCallback } from "react";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { FormikHelpers } from "formik";
 import {
   Table,
   Topbar,
@@ -9,14 +8,13 @@ import {
   types,
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
-import ServiceForm from "components/forms/ServiceForm/ServiceForm";
+import ServiceForm from "components/forms/admin/ServiceForm/ServiceForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectServicManagerState } from "app/data/selectors";
 import {
   getServicesByQueryThunk,
-  createOrUpdateServiceThunk,
   deactivateServiceThunk,
   activateServiceThunk,
 } from "app/features";
@@ -32,41 +30,27 @@ const ServiceManager: FC = () => {
   );
 
   // Local State
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
-    null
-  );
-  const [open, setOpen] = useState(false);
+  const [selectedService, setSelectedService] =
+    useState<types.IAdminService | null>(null);
+  const [openServiceForm, setOpenServiceForm] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   useDispatchOnParams(getServicesByQueryThunk);
 
-  const handleActivateService = async (service: any) => {
-    service && dispatch(activateServiceThunk(service.uniqueId));
-  };
-
-  const openDeleteConfirmationModal = (service: any) => {
-    setSelectedServiceId(service.uniqueId);
+  const openDeleteConfirmationModal = (service: types.IAdminService) => {
+    setSelectedService(service);
     setOpenDeleteModal(true);
   };
 
-  const handleDeactivateService = () => {
-    selectedServiceId && dispatch(deactivateServiceThunk(selectedServiceId));
+  const handleActivateService = useCallback((service: types.IAdminService) => {
+    dispatch(activateServiceThunk(service?.uniqueId || ""));
+  }, []);
+
+  const handleDeactivateService = useCallback(() => {
+    selectedService &&
+      dispatch(deactivateServiceThunk(selectedService.uniqueId));
     setOpenDeleteModal(false);
-  };
-
-  const addAccountHandler = async (
-    values: any,
-    formikHelpers: FormikHelpers<any>
-  ) => {
-    formikHelpers.setSubmitting(true);
-    const { type } = await dispatch(createOrUpdateServiceThunk(values));
-
-    if (type === "serviceManager/createOrUpdateServiceThunk/fulfilled") {
-      setOpen(false);
-    }
-
-    formikHelpers.setSubmitting(false);
-  };
+  }, [selectedService]);
 
   return (
     <Box>
@@ -77,7 +61,7 @@ const ServiceManager: FC = () => {
           variant: "outlined",
           text: "Add service",
           startIcon: <AddIcon />,
-          onClick: () => setOpen(true),
+          onClick: () => setOpenServiceForm(true),
         }}
       />
       <Box mx={4}>
@@ -90,18 +74,22 @@ const ServiceManager: FC = () => {
           cellActions={[
             {
               name: "Activate service",
-              when: (row: types.IAccount) => row.isDeleted === true,
+              when: (row: types.IAdminService) => row.isDeleted === true,
               onClick: handleActivateService,
             },
             {
               name: "Deactivate service",
-              when: (row: types.IAccount) => row.isDeleted === false,
+              when: (row: types.IAdminService) => row.isDeleted === false,
               onClick: openDeleteConfirmationModal,
             },
           ]}
         />
       </Box>
-      <ServiceForm open={open} onClose={() => setOpen(false)} />
+      <ServiceForm
+        open={openServiceForm}
+        onClose={() => setOpenServiceForm(false)}
+        initialValues={selectedService}
+      />
       <DeleteConfirmationModal
         open={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}

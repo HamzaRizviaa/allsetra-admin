@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { omit } from "lodash";
 import { IAddService } from "../types";
 
 export const addServiceInitialValues: IAddService = {
@@ -6,28 +7,32 @@ export const addServiceInitialValues: IAddService = {
   description: "",
   fields: [],
   deviceTypes: [],
+  deviceModules: {},
 };
-
-const addDeviceTypeToServiceValidationSchema: Yup.Schema = Yup.object({
-  deviceTypeId: Yup.string().required(),
-  requiredModulesId: Yup.array()
-    .of(Yup.string())
-    .min(1)
-    .required()
-    .label("Require modules"),
-  optionalModulesId: Yup.array()
-    .of(Yup.string())
-    .required()
-    .label("Optional modules"),
-});
 
 export const addServiceValidationSchema: Yup.Schema = Yup.object({
   name: Yup.string().trim().required().label("Service name"),
   description: Yup.string().trim().required().label("Service description"),
   fields: Yup.array().of(Yup.string()).min(1).required().label("Fields"),
   deviceTypes: Yup.array()
-    .of(addDeviceTypeToServiceValidationSchema)
+    .of(Yup.string())
     .min(1)
     .required()
     .label("Device Types"),
 });
+
+export const formatServiceFormDataForApi = (values: IAddService) => {
+  const deviceTypes = values.deviceTypes.map((deviceTypeId: string) => ({
+    deviceTypeId: deviceTypeId,
+    requiredModulesId: values.deviceModules[deviceTypeId].requiredModulesId,
+    optionalModulesId: values.deviceModules[deviceTypeId].optionalModulesId,
+  }));
+
+  return omit(
+    {
+      ...values,
+      deviceTypes,
+    },
+    ["deviceModules"]
+  );
+};

@@ -11,6 +11,7 @@ import { IAddService } from "app/data/types";
 import {
   addServiceInitialValues,
   addServiceValidationSchema,
+  formatServiceFormDataForApi,
 } from "app/data/helpers";
 import { createOrUpdateServiceThunk } from "app/features";
 import InnerForm from "./children/InnerForm";
@@ -36,7 +37,9 @@ const ServiceForm: FC<Props> = ({ open, onClose, initialValues }) => {
   ) => {
     formikHelpers.setSubmitting(true);
 
-    const { type } = await dispatch(createOrUpdateServiceThunk(values));
+    const formattedData = formatServiceFormDataForApi(values);
+
+    const { type } = await dispatch(createOrUpdateServiceThunk(formattedData));
 
     if (type === "serviceManager/createOrUpdateServiceThunk/fulfilled") {
       onClose();

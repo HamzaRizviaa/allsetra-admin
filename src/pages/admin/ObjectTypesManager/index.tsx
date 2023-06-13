@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FormikHelpers } from "formik";
@@ -7,7 +6,6 @@ import {
   Table,
   Topbar,
   DeleteConfirmationModal,
-  types,
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
 
@@ -16,9 +14,6 @@ import { useAppDispatch, useAppSelector } from "hooks";
 import { selectObjectTypesState } from "app/data/selectors";
 import {
   activateAccountThunk,
-  setActiveAccountId,
-  createAccountThunk,
-  getAccountsByQueryThunk,
   getObjectTypesByQueryThunk,
   deactivateObjectTypeThunk,
   createOrUpdateObjectTypeThunk,
@@ -28,7 +23,6 @@ import { IAddObjectType, IObjectType } from "app/data/types";
 import ObjectTypeForm from "components/forms/ObjectTypeForm/ObjectTypeForm";
 
 const ObjectTypesManager: FC = () => {
-  const navigate = useNavigate();
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
@@ -41,18 +35,10 @@ const ObjectTypesManager: FC = () => {
   const [selectedObjectTypeId, setSelectedObjectTypeId] = useState<
     string | null
   >(null);
-  const [open, setOpen] = useState(false); // Boolean state for AddaccountForm Modal
-  const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
+  const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   useDispatchOnParams(getObjectTypesByQueryThunk);
-
-  const handleViewAccount = (account: types.IAccount) => {
-    // dispatch(setActiveAccountId(account.uniqueId));
-    // navigate({
-    //   pathname: "/dashboard/account-manager/details",
-    //   search: createSearchParams({ accountId: account.uniqueId }).toString(),
-    // });
-  };
 
   const handleActivateObjectType = async (objectType: IObjectType) => {
     objectType && dispatch(activateAccountThunk(objectType.uniqueId));
@@ -101,7 +87,6 @@ const ObjectTypesManager: FC = () => {
           data={allObjectTypes}
           progressPending={loading}
           paginationTotalRows={totalObjectTypes}
-          onRowClicked={handleViewAccount}
           searchPlaceholder="Search object type"
           cellActions={[
             {
