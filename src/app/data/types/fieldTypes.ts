@@ -14,3 +14,11 @@ export interface IField {
   onlyNumbers: boolean;
   uniqueId: string;
 }
+
+export interface IAddField {
+  label: string;
+  isRequired: boolean;
+  onlyNumbers: boolean;
+  fieldType: string;
+  maxLength: string;
+}

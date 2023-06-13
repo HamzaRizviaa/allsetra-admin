@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import {
   Topbar,
@@ -11,20 +11,28 @@ import AddIcon from "@mui/icons-material/Add";
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
 import { ALL_FIELD_TABLE_COLUMNS } from "app/data/constants/fieldConstants";
-import { selectFieldsState } from "app/data/selectors/fieldSelectors";
+import {
+  selectFeildTypesState,
+  selectFieldsState,
+} from "app/data/selectors/fieldSelectors";
 import {
   reactivateFieldThunk,
   deactivateFieldThunk,
   getFieldsByQueryThunk,
+  getSpecificFieldThunk,
 } from "app/features";
 import { IField } from "app/data/types";
+import AddFieldsForm from "components/forms/admin/AddFieldsForm/AddFieldsForm";
+import { isEmpty } from "lodash";
 
 const FieldManager = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
   // Global States
-  const { allFields, totalFields, loading } = useAppSelector(selectFieldsState);
+  const { allFields, totalFields, loading, specificField } =
+    useAppSelector(selectFieldsState);
+  const { allFieldTypes } = useAppSelector(selectFeildTypesState);
 
   // Local States
   const [open, setOpen] = useState(false); // Used for AddField Modal
@@ -47,6 +55,22 @@ const FieldManager = () => {
     field && dispatch(reactivateFieldThunk(field.uniqueId));
   };
 
+  const handleUpdateField = (field: IField) => {
+    field && dispatch(getSpecificFieldThunk(field.uniqueId));
+    setSelectedFieldId(field.uniqueId);
+    setOpen(true);
+  };
+
+  const formValues = useMemo(
+    () => (selectedFieldId && !isEmpty(specificField) ? specificField : null),
+    [selectedFieldId, specificField]
+  );
+
+  const tableColumns = useMemo(
+    () => ALL_FIELD_TABLE_COLUMNS(allFieldTypes),
+    [allFieldTypes]
+  );
+
   return (
     <Box>
       <Topbar
@@ -61,7 +85,7 @@ const FieldManager = () => {
       />
       <Box mx={4}>
         <Table
-          columns={ALL_FIELD_TABLE_COLUMNS}
+          columns={tableColumns}
           data={allFields}
           progressPending={loading}
           paginationTotalRows={totalFields}
@@ -69,6 +93,7 @@ const FieldManager = () => {
           cellActions={[
             {
               name: "Update field",
+              onClick: handleUpdateField,
             },
             {
               name: "Deactivate field",
@@ -83,6 +108,13 @@ const FieldManager = () => {
           ]}
         />
       </Box>
+      <AddFieldsForm
+        open={open}
+        onClose={() => setOpen(false)}
+        // @ts-ignore
+        fieldTypes={allFieldTypes}
+        initialValues={formValues}
+      />
       <DeleteConfirmationModal
         open={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}

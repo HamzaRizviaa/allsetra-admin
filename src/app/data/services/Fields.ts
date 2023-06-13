@@ -28,6 +28,11 @@ class Fields {
   static reactivateField = async (fieldId: string) => {
     return await axiosInstance.patch(`/fields/${fieldId}/activate`);
   };
+
+  //field types
+  static getAllFieldTypes = async () => {
+    return await axiosInstance.get("/fieldTypes");
+  };
 }
 
 export default Fields;

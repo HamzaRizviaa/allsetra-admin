@@ -34,6 +34,22 @@ export const getFieldsByQueryThunk = createAsyncThunk(
   }
 );
 
+export const getSpecificFieldThunk = createAsyncThunk(
+  "fields/getSpecificFieldThunk",
+  async (fieldId: string) => {
+    try {
+      const response = await Fields.getSpecificField(fieldId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const deactivateFieldThunk = createAsyncThunk(
   "fields/deactivateFieldThunk",
   async (fieldId: string, { dispatch }) => {
@@ -65,6 +81,45 @@ export const reactivateFieldThunk = createAsyncThunk(
       }
 
       return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const createOrUpdateFieldThunk = createAsyncThunk(
+  "fields/createOrUpdateFieldThunk",
+  async (data: any, { dispatch }) => {
+    try {
+      const response = data.uniqueId
+        ? await Fields.updateField(data.uniqueId, data)
+        : await Fields.createField(data);
+
+      if (response.status === 202) {
+        data.uniqueId
+          ? toast.success("Field has been updated")
+          : toast.success("Field has been created");
+        dispatch(getAllFieldsThunk());
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getAllFieldTypesThunk = createAsyncThunk(
+  "fields/getAllFieldTypesThunk",
+  async () => {
+    try {
+      const response = await Fields.getAllFieldTypes();
+
+      if (response.status === 200) {
+        return response.data;
+      }
     } catch (e: any) {
       console.error(e);
       throw new Error(e);
