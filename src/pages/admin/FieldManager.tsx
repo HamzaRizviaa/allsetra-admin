@@ -30,8 +30,13 @@ const FieldManager = () => {
   const dispatch = useAppDispatch();
 
   // Global States
-  const { allFields, totalFields, loading, specificField } =
-    useAppSelector(selectFieldsState);
+  const {
+    allFields,
+    totalFields,
+    loading,
+    specificField,
+    specificFieldLoading,
+  } = useAppSelector(selectFieldsState);
   const { allFieldTypes } = useAppSelector(selectFeildTypesState);
 
   // Local States
@@ -114,6 +119,7 @@ const FieldManager = () => {
         // @ts-ignore
         fieldTypes={allFieldTypes}
         initialValues={formValues}
+        loading={specificFieldLoading}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

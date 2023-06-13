@@ -23,6 +23,7 @@ const AddFieldsForm: FC<Props> = ({
   onClose,
   initialValues,
   fieldTypes,
+  loading,
 }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
@@ -74,6 +75,7 @@ const AddFieldsForm: FC<Props> = ({
               onClick: handleSubmit,
             }}
             secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
+            loading={loading}
             theme={theme}
           >
             <InnerForm fieldTypes={fieldTypes} />
