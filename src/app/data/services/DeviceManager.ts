@@ -12,6 +12,27 @@ class DeviceManager {
   ) => {
     return await axiosInstance.post("/deviceTypes/search", data);
   };
+
+  // Device Types Profiles Endpoints
+
+  static getDeviceTypesProfiles = async (
+    data: types.IRecordsAggregationBody,
+    deviceTypeId: string
+  ) => {
+    return await axiosInstance.post(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/search`,
+      data
+    );
+  };
+
+  static removeProfileFromDeviceType = async (
+    deviceTypeId: string,
+    deviceTypeProfileId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/${deviceTypeProfileId}`
+    );
+  };
 }
 
 export default DeviceManager;

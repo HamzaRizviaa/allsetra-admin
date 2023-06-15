@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { DeviceManager } from "app/data/services";
-import { types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 
 //
 // Device Types Actions
@@ -30,6 +30,60 @@ export const getDeviceTypesByQueryThunk = createAsyncThunk(
       if (response.status === 200) {
         return response.data;
       }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+//Device Types Profiles
+
+export const getDeviceTypesProfilesThunk = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfilesThunk",
+  async ({
+    params,
+    deviceTypeId,
+  }: {
+    params: types.IRecordsAggregationBody;
+    deviceTypeId: string;
+  }) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfiles(
+        params,
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const removeProfileFromDeviceTypeThunk = createAsyncThunk(
+  "accounts/removeProfileFromDeviceTypeThunk",
+  async ({ deviceTypeId, deviceTypeProfileId }: any, { dispatch }) => {
+    try {
+      const response = await DeviceManager.removeProfileFromDeviceType(
+        deviceTypeId,
+        deviceTypeProfileId
+      );
+
+      if (response.status === 202) {
+        toast.success("Profile has been removed from the device type");
+        dispatch(
+          getDeviceTypesProfilesThunk({
+            deviceTypeId,
+            params: utils.getCommonParamsForApi(),
+          })
+        );
+      }
+
+      return response;
     } catch (e: any) {
       console.error(e);
       throw new Error(e);

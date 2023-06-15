@@ -17,6 +17,10 @@ import FieldManager from "pages/admin/FieldManager";
 import SubscriptionManager from "pages/admin/SubscriptionManager";
 import ObjectTypesManager from "pages/admin/ObjectTypesManager";
 
+//DeviceTypes routes
+import DeviceTypes from "pages/deviceManager/DeviceTypes";
+import DeviceTypeDetails from "pages/deviceManager/DeviceTypes/DeviceTypesDetails";
+
 const App: FC = () => {
   return (
     <Routes>
@@ -33,6 +37,11 @@ const App: FC = () => {
         />
         <Route path="/dashboard/service-manager" element={<ServiceManager />} />
         <Route path="/dashboard/field-manager" element={<FieldManager />} />
+        <Route path="/dashboard/device-types" element={<DeviceTypes />} />
+        <Route
+          path="/dashboard/device-types/details"
+          element={<DeviceTypeDetails />}
+        />
         <Route
           path="/dashboard/object-types"
           element={<ObjectTypesManager />}
