@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Modal, ModalProps, FormikSelectField } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
 import { ServiceBlueIcon } from "assets/icons";
 
 // DATA
-import { useAppDispatch } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import { IAccountAssignService } from "app/data/types";
 import {
   accountAssignServiceInitialValues,
@@ -13,24 +13,28 @@ import {
 } from "app/data/helpers";
 import {
   assignServiceToAccountThunk,
+  getAllSubscriptionsThunk,
   useGetAvailableServicesForAccountQuery,
 } from "app/features";
+import { selectSubscriptionsState } from "app/data/selectors";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
   accountId: string | null;
-  subscriptions: Array<any>;
 };
 
-const AssignServiceForm: FC<Props> = ({
-  open,
-  onClose,
-  accountId,
-  subscriptions,
-}) => {
+const AssignServiceForm: FC<Props> = ({ open, onClose, accountId }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
+  const { allSubscriptions, loading: subscriptionsLoading } = useAppSelector(
+    selectSubscriptionsState
+  );
+
   const { data, isLoading } = useGetAvailableServicesForAccountQuery(accountId);
+
+  useEffect(() => {
+    dispatch(getAllSubscriptionsThunk());
+  }, []);
 
   const onSubmitHandler = async (
     values: IAccountAssignService,
@@ -92,10 +96,12 @@ const AssignServiceForm: FC<Props> = ({
                 <FormikSelectField
                   label="Subscriptions"
                   name="subscriptions"
-                  options={subscriptions}
+                  options={allSubscriptions || []}
                   optionLabelKey="name"
                   optionValueKey="uniqueId"
+                  loading={subscriptionsLoading}
                   multiple
+                  searchable
                   required
                 />
               </Stack>

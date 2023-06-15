@@ -10,13 +10,13 @@ import {
 // Account Users Helpers
 //
 export const accountAssignUserInitialValues: IAccountAssignUser = {
-  userId: "",
+  userEmail: "",
   role: "",
 };
 
 export const accountAssignUserValidationSchema: Yup.Schema<IAccountAssignUser> =
   Yup.object({
-    userId: Yup.string().trim().required().label("User email"),
+    userEmail: Yup.string().email().trim().required().label("User email"),
     role: Yup.string().trim().required().label("Role"),
     dallasKey: Yup.string()
       .trim()

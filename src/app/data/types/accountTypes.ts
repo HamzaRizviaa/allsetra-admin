@@ -3,7 +3,7 @@
 //
 
 export interface IAccountAssignUser {
-  userId: string;
+  userEmail: string;
   role: string;
   dallasKey?: string;
 }

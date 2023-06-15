@@ -1,28 +1,27 @@
 import { FC } from "react";
+import { isEmpty } from "lodash";
 import { Stack } from "@mui/material";
 import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
 import { useFormikContext } from "formik";
 
 // DATA
-import { useFetch } from "hooks";
 import { IAccountAssignUser } from "app/data/types";
-import { Accounts } from "app/data/services";
 
 interface Props {
-  accountId: string | null;
   roles: Array<any>;
+  availableUsers: Array<any> | null;
+  availableUsersLoading: boolean;
 }
 
-const InnerForm: FC<Props> = ({ accountId, roles }) => {
+const InnerForm: FC<Props> = ({
+  roles,
+  availableUsers,
+  availableUsersLoading,
+}) => {
   const { values } = useFormikContext<IAccountAssignUser>();
 
-  const { data: availableUsers, loading: availableUsersLoading } = useFetch(
-    Accounts.getAvailableUsersForAccount,
-    accountId
-  );
-
   const shouldDisplayDallasKey = () => {
-    if (roles) {
+    if (!isEmpty(roles)) {
       const role = roles.find((role) => role.id === values.role);
       return role ? role.name === "Driver" : false;
     } else {
@@ -34,13 +33,13 @@ const InnerForm: FC<Props> = ({ accountId, roles }) => {
     <Stack spacing={2}>
       <FormikSelectField
         label="Assigned user email"
-        name="userId"
-        options={availableUsers}
+        name="userEmail"
+        options={availableUsers || []}
         optionLabelKey="email"
-        optionValueKey="uniqueId"
-        emptyOptionsText="There are no available users."
+        optionValueKey="email"
         loading={availableUsersLoading}
         required
+        searchable
       />
       <FormikSelectField
         label="Role"

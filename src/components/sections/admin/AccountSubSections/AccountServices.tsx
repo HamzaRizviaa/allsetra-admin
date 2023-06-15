@@ -83,7 +83,6 @@ const AccountServices: FC<Props> = ({ accountId }) => {
         open={assignServiceModal}
         onClose={toggleAssignServiceModal}
         accountId={accountId}
-        subscriptions={[]}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

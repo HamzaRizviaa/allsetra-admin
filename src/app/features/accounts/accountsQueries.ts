@@ -2,6 +2,12 @@ import rootRtkQuery from "../rootRTKQuery";
 
 const accountsQueries = rootRtkQuery.injectEndpoints({
   endpoints: (builder) => ({
+    getAvailableUsersForAccount: builder.query<any, string | null>({
+      query: (accountId) => `/accounts/${accountId}/users/available-users`,
+      transformResponse: (response: any) => {
+        return response;
+      },
+    }),
     getAvailableServicesForAccount: builder.query<any, string | null>({
       query: (accountId) =>
         `/accounts/${accountId}/services/available-services`,
@@ -28,6 +34,7 @@ const accountsQueries = rootRtkQuery.injectEndpoints({
 });
 
 export const {
+  useGetAvailableUsersForAccountQuery,
   useGetAvailableServicesForAccountQuery,
   useGetAvailableDeviceTypesForAccountQuery,
   useGetAvailableObjectTypesForAccountQuery,
