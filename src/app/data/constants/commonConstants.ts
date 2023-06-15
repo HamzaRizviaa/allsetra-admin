@@ -4,6 +4,7 @@ import {
   AlertSvg,
   GeozonesSvg,
   ObjectsSvg,
+  SubscriptionSvg,
   // MembersSvg,
   // CustomersSvg,
   // GroupsSvg,
@@ -35,6 +36,11 @@ export const DRAWER_SUB_MENU_LISTS: { [x: string]: Array<IDrawerMenuItem> } = {
       name: "Field manager",
       icon: ObjectsSvg,
       path: "/dashboard/field-manager",
+    },
+    {
+      name: "Subscription manager",
+      icon: SubscriptionSvg,
+      path: "/dashboard/subscription-manager",
     },
   ],
   "Device Manager": [

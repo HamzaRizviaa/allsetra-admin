@@ -2,6 +2,10 @@ import axiosInstance from "app/axiosInstance";
 import { types } from "@vilocnv/allsetra-core";
 
 class ServiceManager {
+  static getAllServices = async () => {
+    return await axiosInstance.get("/services");
+  };
+
   static getServicesByQuery = async (data: types.IRecordsAggregationBody) => {
     return await axiosInstance.post("/services/search", data);
   };

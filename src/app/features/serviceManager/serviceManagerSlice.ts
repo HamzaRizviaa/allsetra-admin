@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getServicesByQueryThunk } from "./serviceManagerActions";
+import {
+  getAllServicesThunk,
+  getServicesByQueryThunk,
+} from "./serviceManagerActions";
 
 export interface IServiceManagerState {
   loading: boolean;
   totalServices: number | null;
   services: Array<any>;
+  allServices: Array<any>;
 }
 
 const initialState: IServiceManagerState = {
   loading: false,
   totalServices: null,
   services: [],
+  allServices: [],
 };
 
 const serviceManagerSlice = createSlice({
@@ -30,6 +35,21 @@ const serviceManagerSlice = createSlice({
     });
 
     builder.addCase(getServicesByQueryThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get all Services Action Cases
+    builder.addCase(getAllServicesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllServicesThunk.fulfilled, (state, action) => {
+      console.log("HERERE", action.payload);
+      state.allServices = action.payload || [];
+      state.loading = false;
+    });
+
+    builder.addCase(getAllServicesThunk.rejected, (state) => {
       state.loading = false;
     });
   },

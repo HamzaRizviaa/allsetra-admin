@@ -1,17 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAllIconsThunk, getAllRolesThunk } from "./dashboardActions";
+import {
+  getAllCurrenciesThunk,
+  getAllRolesThunk,
+  getAllIconsThunk,
+} from "./dashboardActions";
 
 export interface IDashboardState {
   loading: boolean;
+  idToken: string | null;
+  userEmail: string | null;
   isDrawerCollapsed: boolean;
   roles: Array<any>;
+  currencies: Array<any>;
   icons: Array<any>;
 }
 
 const initialState: IDashboardState = {
   loading: false,
+  idToken: null,
+  userEmail: null,
   isDrawerCollapsed: false,
   roles: [],
+  currencies: [],
   icons: [],
 };
 
@@ -19,6 +29,12 @@ const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
   reducers: {
+    setIdToken: (state, action: PayloadAction<string | null>) => {
+      state.idToken = action.payload;
+    },
+    setUserEmail: (state, action: PayloadAction<string | null>) => {
+      state.userEmail = action.payload;
+    },
     setDrawerCollapseState: (state, action: PayloadAction<boolean>) => {
       state.isDrawerCollapsed = action.payload;
     },
@@ -35,6 +51,20 @@ const dashboardSlice = createSlice({
     });
 
     builder.addCase(getAllRolesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get All Currencies Action Cases
+    builder.addCase(getAllCurrenciesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllCurrenciesThunk.fulfilled, (state, action) => {
+      state.currencies = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getAllCurrenciesThunk.rejected, (state) => {
       state.loading = false;
     });
 
@@ -55,5 +85,6 @@ const dashboardSlice = createSlice({
 });
 
 export * from "./dashboardActions";
-export const { setDrawerCollapseState } = dashboardSlice.actions;
+export const { setIdToken, setUserEmail, setDrawerCollapseState } =
+  dashboardSlice.actions;
 export default dashboardSlice.reducer;

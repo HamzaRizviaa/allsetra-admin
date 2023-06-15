@@ -17,6 +17,22 @@ export const getAllRolesThunk = createAsyncThunk(
   }
 );
 
+export const getAllCurrenciesThunk = createAsyncThunk(
+  "dashboard/getAllCurrenciesThunk",
+  async () => {
+    try {
+      const response = await Dashboard.getAllCurrencies();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const getAllIconsThunk = createAsyncThunk(
   "dashboard/getAllIconsThunk",
   async () => {

@@ -5,6 +5,10 @@ class Dashboard {
     return await axiosInstance.get("/roles");
   };
 
+  static getAllCurrencies = async () => {
+    return await axiosInstance.get("/currencies");
+  };
+
   static getAllIcons = async () => {
     return await axiosInstance.get("/icons");
   };

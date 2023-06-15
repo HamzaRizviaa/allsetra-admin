@@ -1,11 +1,26 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 
+export const selectIdToken = (state: RootState) =>
+  state.rootReducer.dashboardReducer.idToken;
+
+export const selectUserEmail = (state: RootState) =>
+  state.rootReducer.dashboardReducer.userEmail;
+
+export const selectActiveUserDetails = createSelector(
+  selectIdToken,
+  selectUserEmail,
+  (idToken, userEmail) => ({ idToken, userEmail })
+);
+
 export const selectIsDrawerCollapsed = (state: RootState) =>
   state.rootReducer.dashboardReducer.isDrawerCollapsed;
 
 export const selectAllRoles = (state: RootState) =>
   state.rootReducer.dashboardReducer.roles;
+
+export const selectAllCurrencies = (state: RootState) =>
+  state.rootReducer.dashboardReducer.currencies;
 
 export const selectAllIcons = (state: RootState) =>
   state.rootReducer.dashboardReducer.icons;

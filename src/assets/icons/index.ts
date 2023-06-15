@@ -18,6 +18,7 @@ import { ReactComponent as OpenSvg } from "./drawer/open-icon.svg";
 import { ReactComponent as BarsSvg } from "./drawer/bars-icon.svg";
 import { ReactComponent as CrossSvg } from "./drawer/cross-icon.svg";
 import { ReactComponent as ServiceBlueIcon } from "./drawer/service-blue-icon.svg";
+import { ReactComponent as SubscriptionSvg } from "./drawer/subscription-icon.svg";
 import { ReactComponent as FieldsFormIcon } from "./drawer/fields-form-icon.svg";
 import { ReactComponent as DevicetypeBlueIcon } from "./drawer/devicetype-blue-icon.svg";
 import { ReactComponent as ObjecttypeBlueIcon } from "./drawer/objecttype-blue-icon.svg";
@@ -33,6 +34,7 @@ import { ReactComponent as CartIcon } from "./common/cart-icon.svg";
 import { ReactComponent as SelectInputRemove } from "./common/SelectInputRemove.svg";
 import { ReactComponent as SelectInputClear } from "./common/SelectInputClear.svg";
 import { ReactComponent as ObjectBlueIcon } from "./common/ObjectBlueIcon.svg";
+import { ReactComponent as SubscriptionBlueIcon } from "./common/SubscriptionBlueIcon.svg";
 
 export {
   LogoDarkSvg,
@@ -61,8 +63,10 @@ export {
   SelectInputRemove,
   SelectInputClear,
   ServiceBlueIcon,
+  SubscriptionSvg,
   ObjectBlueIcon,
   FieldsFormIcon,
   DevicetypeBlueIcon,
   ObjecttypeBlueIcon,
+  SubscriptionBlueIcon,
 };

@@ -2,6 +2,22 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ServiceManager } from "app/data/services";
 import { toast, types, utils } from "@vilocnv/allsetra-core";
 
+export const getAllServicesThunk = createAsyncThunk(
+  "serviceManager/getAllServicesThunk",
+  async () => {
+    try {
+      const response = await ServiceManager.getAllServices();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const getServicesByQueryThunk = createAsyncThunk(
   "serviceManager/getServicesByQueryThunk",
   async (params: types.IRecordsAggregationBody) => {

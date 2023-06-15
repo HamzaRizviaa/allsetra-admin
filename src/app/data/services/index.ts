@@ -4,4 +4,5 @@ export { default as Accounts } from "./Accounts";
 export { default as ServiceManager } from "./ServiceManager";
 export { default as DeviceManager } from "./DeviceManager";
 export { default as Fields } from "./Fields";
+export { default as Subscriptions } from "./Subscriptions";
 export { default as ObjectTypes } from "./ObjectTypes";
