@@ -30,25 +30,29 @@ const App: FC = () => {
 
       <Route path="/dashboard" element={<ProtectedRoute redirectTo="/" />}>
         <Route index element={<Map />} />
+
+        {/* Admin Manager Routes */}
         <Route path="/dashboard/account-manager" element={<AccountManager />} />
         <Route
           path="/dashboard/account-manager/details"
           element={<AccountDetails />}
         />
-        <Route path="/dashboard/service-manager" element={<ServiceManager />} />
-        <Route path="/dashboard/field-manager" element={<FieldManager />} />
-        <Route path="/dashboard/device-types" element={<DeviceTypes />} />
-        <Route
-          path="/dashboard/device-types/details"
-          element={<DeviceTypeDetails />}
-        />
         <Route
           path="/dashboard/object-types"
           element={<ObjectTypesManager />}
         />
+        <Route path="/dashboard/service-manager" element={<ServiceManager />} />
         <Route
           path="/dashboard/subscription-manager"
           element={<SubscriptionManager />}
+        />
+        <Route path="/dashboard/field-manager" element={<FieldManager />} />
+
+        {/* Device Manager Routes */}
+        <Route path="/dashboard/device-types" element={<DeviceTypes />} />
+        <Route
+          path="/dashboard/device-types/details"
+          element={<DeviceTypeDetails />}
         />
       </Route>
 

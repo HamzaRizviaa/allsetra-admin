@@ -28,7 +28,7 @@ const DeviceTypesDetailsSection: FC<Props> = ({ initialValues }) => {
           <h4>Device name</h4>
           <FormikInputField name="name" placeholder="Device name" disabled />
           <h4>Device picture:</h4>
-          <FormikDropzone name="devicePicture" fieldTitle="" />
+          {/* <FormikDropzone name="devicePicture" fieldTitle="" /> */}
         </Stack>
       </Form>
     </Formik>
