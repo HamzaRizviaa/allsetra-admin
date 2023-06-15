@@ -62,8 +62,6 @@ const InnerForm: FC = () => {
     }));
   };
 
-  console.log("HERE", deviceRender(deviceTypes));
-
   useEffect(() => {
     dispatch(getAllObjectTypesThunk());
     dispatch(getAllIconsThunk());
@@ -73,8 +71,6 @@ const InnerForm: FC = () => {
   useEffect(() => {
     iconRender(icons);
   }, [icons]);
-
-  console.log({ values });
 
   return (
     <Stack spacing={2}>
@@ -86,9 +82,6 @@ const InnerForm: FC = () => {
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={objectTypesLoading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
       />
       <FormikSelectField
@@ -98,9 +91,6 @@ const InnerForm: FC = () => {
         optionLabelKey="label"
         optionValueKey="value"
         loading={iconLoading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
       />
       <FormikSelectField
@@ -110,13 +100,6 @@ const InnerForm: FC = () => {
         optionLabelKey="label"
         optionValueKey="value"
         loading={deviceTypesLoading}
-        onChange={(value: any) => {
-          const tempDeviceTypes = value.map((deviceType: any) => {
-            return { deviceTypeId: deviceType };
-          });
-          console.log("HERERE", value);
-          setFieldValue("deviceTypes", tempDeviceTypes);
-        }}
         required
         multiple
       />
@@ -128,12 +111,9 @@ const InnerForm: FC = () => {
         optionLabelKey="url"
         optionValueKey="uniqueId"
         loading={iconLoading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
       />
-      {values.parentObjectId !== "" ? (
+      {values.parentObjectId !== "" && (
         <FormikSelectField
           label="Supported services"
           name="services"
@@ -141,16 +121,10 @@ const InnerForm: FC = () => {
           optionLabelKey="label"
           optionValueKey="value"
           loading={iconLoading}
-          onChange={(value) => {
-            console.log(value);
-          }}
           required
           multiple
         />
-      ) : (
-        ""
       )}
-
       {/* <FieldArray
         name="deviceTypes"
         render={(props) => <DeviceTypeFields {...props} />}

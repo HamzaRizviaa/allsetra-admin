@@ -44,7 +44,6 @@ const serviceManagerSlice = createSlice({
     });
 
     builder.addCase(getAllServicesThunk.fulfilled, (state, action) => {
-      console.log("HERERE", action.payload);
       state.allServices = action.payload || [];
       state.loading = false;
     });

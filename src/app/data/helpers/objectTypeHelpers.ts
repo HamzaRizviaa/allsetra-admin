@@ -5,14 +5,10 @@ export const objectTypeDataFormatterForService = (
   values: IAddObjectType,
   deviceTypes: any
 ) => {
-  console.log("Formatter values", values.deviceTypes);
-  console.log("DEVICE TYPES", deviceTypes);
-
   deviceTypes.map((device: any, index: number) => {
     const filteredDevices = deviceTypes.filter(
       (item: any) => item === device[index].deviceProfiles[index].deviceTypeId
     );
-    console.log("FILTER", filteredDevices);
   });
 };
 
