@@ -10,7 +10,11 @@ import {
 } from "app/data/helpers/fieldHelpers";
 import InnerForm from "./children/InnerForm";
 import { FieldsFormIcon } from "assets/icons";
-import { createOrUpdateFieldThunk, getAllFieldTypesThunk } from "app/features";
+import {
+  createOrUpdateFieldThunk,
+  getAllFieldTypesThunk,
+  resetSpecificField,
+} from "app/features";
 import { useAppDispatch } from "hooks";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
@@ -35,6 +39,10 @@ const AddFieldsForm: FC<Props> = ({
   useEffect(() => {
     dispatch(getAllFieldTypesThunk());
   }, []);
+
+  useEffect(() => {
+    !open && dispatch(resetSpecificField());
+  }, [open]);
 
   const addFieldHandler = async (
     values: IField,
