@@ -33,6 +33,18 @@ class DeviceManager {
       `/deviceTypes/${deviceTypeId}/deviceprofiles/${deviceTypeProfileId}`
     );
   };
+
+  // Device Types Modules Endpoints
+
+  static getDeviceTypesModules = async (
+    data: types.IRecordsAggregationBody,
+    deviceTypeId: string
+  ) => {
+    return await axiosInstance.post(
+      `/devicetypes/${deviceTypeId}/devicemodules/search`,
+      data
+    );
+  };
 }
 
 export default DeviceManager;

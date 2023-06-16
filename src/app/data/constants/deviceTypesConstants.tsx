@@ -1,5 +1,5 @@
 import { StatusBadge, TableColumn } from "@vilocnv/allsetra-core";
-import { IDeviceType, IDeviceTypeProfile } from "../types";
+import { IDeviceType, IDeviceTypeModule, IDeviceTypeProfile } from "../types";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -61,6 +61,25 @@ export const ALL_DEVICETYPESPROFILE_TABLE_COLUMNS: TableColumn<IDeviceTypeProfil
     {
       name: "Description",
       cell: (row: IDeviceTypeProfile) => row.description,
+      sortable: true,
+    },
+  ];
+
+export const ALL_DEVICETYPESMODULES_TABLE_COLUMNS: TableColumn<IDeviceTypeModule>[] =
+  [
+    {
+      name: "Module",
+      selector: (row: IDeviceTypeModule) => row.moduleName,
+      sortable: true,
+    },
+    {
+      name: "Required module",
+      cell: (row: IDeviceTypeModule) =>
+        row.isRequired ? (
+          <CheckIcon style={{ color: "#148E20" }} />
+        ) : (
+          <CloseIcon style={{ color: "#CC1010" }} />
+        ),
       sortable: true,
     },
   ];

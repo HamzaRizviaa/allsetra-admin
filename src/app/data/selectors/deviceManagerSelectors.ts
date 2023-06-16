@@ -22,6 +22,9 @@ export const selectDeviceTypesTotalRecords = (state: RootState) =>
 export const selectDeviceTypesProfiles = (state: RootState) =>
   state.rootReducer.deviceManagerReducer.deviceTypesProfiles;
 
+export const selectDeviceTypesModules = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesModules;
+
 export const selectDeviceTypesState = createSelector(
   selectDeviceManagerReducerLoading,
   selectTotalDeviceTypes,
@@ -52,5 +55,17 @@ export const selectDeviceTypesProfileState = createSelector(
     loading,
     totalRecords,
     deviceTypesProfiles,
+  })
+);
+
+//Device Types Modules selectors
+export const selectDeviceTypesModulesState = createSelector(
+  selectDeviceManagerReducerLoading,
+  selectDeviceTypesTotalRecords,
+  selectDeviceTypesModules,
+  (loading, totalRecords, deviceTypesModules) => ({
+    loading,
+    totalRecords,
+    deviceTypesModules,
   })
 );

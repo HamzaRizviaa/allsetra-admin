@@ -12,6 +12,7 @@ import { DEVICETYPES_DETAILS_TABS_HEADINGS } from "app/data/constants/deviceType
 // Sections
 import DeviceTypesDetailsSection from "components/sections/deviceManager/DeviceTypesDetailsSection/DeviceTypesDetailsSection";
 import DeviceTypesProfilesSection from "components/sections/deviceManager/DeviceTypesProfilesSection/DeviceTypesProfilesSection";
+import DeviceTypesModulesSection from "components/sections/deviceManager/DeviceTypesModulesSection/DeviceTypesModulesSection";
 
 const DeviceTypeDetails: FC = () => {
   const theme = useTheme();
@@ -63,7 +64,7 @@ const DeviceTypeDetails: FC = () => {
               <DeviceTypesProfilesSection deviceTypeId={deviceTypeId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={2}>
-              <h1>Module List</h1>
+              <DeviceTypesModulesSection deviceTypeId={deviceTypeId} />
             </TabPanel>
           </Box>
         </TabPanes>

@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   getAllDeviceTypesThunk,
   getDeviceTypesByQueryThunk,
+  getDeviceTypesModulesThunk,
   getDeviceTypesProfilesThunk,
 } from "./deviceManagerActions";
 
@@ -12,6 +13,7 @@ export interface IDeviceManagerState {
   activeDeviceTypeId: string | null;
   totalRecords: number | null;
   deviceTypesProfiles: Array<any>;
+  deviceTypesModules: Array<any>;
 }
 
 const initialState: IDeviceManagerState = {
@@ -21,6 +23,7 @@ const initialState: IDeviceManagerState = {
   activeDeviceTypeId: null,
   totalRecords: null,
   deviceTypesProfiles: [],
+  deviceTypesModules: [],
 };
 
 const deviceManagerSlice = createSlice({
@@ -73,6 +76,21 @@ const deviceManagerSlice = createSlice({
     });
 
     builder.addCase(getDeviceTypesProfilesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get DeviceTypes Modules Action Cases
+    builder.addCase(getDeviceTypesModulesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getDeviceTypesModulesThunk.fulfilled, (state, action) => {
+      state.totalRecords = action.payload?.rowCount || 0;
+      state.deviceTypesModules = action.payload?.results || [];
+      state.loading = false;
+    });
+
+    builder.addCase(getDeviceTypesModulesThunk.rejected, (state) => {
       state.loading = false;
     });
   },

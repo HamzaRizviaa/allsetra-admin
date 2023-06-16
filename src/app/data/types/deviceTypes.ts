@@ -66,3 +66,10 @@ export interface IDeviceTypeProfile {
     }
   ];
 }
+
+export interface IDeviceTypeModule {
+  isDeleted: boolean;
+  uniqueId: string;
+  moduleName: string;
+  isRequired: boolean;
+}

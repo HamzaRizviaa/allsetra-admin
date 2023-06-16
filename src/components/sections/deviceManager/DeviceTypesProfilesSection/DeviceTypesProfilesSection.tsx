@@ -8,7 +8,7 @@ import {
 } from "@vilocnv/allsetra-core";
 
 // Data
-import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import {
   getDeviceTypesProfilesThunk,
   removeProfileFromDeviceTypeThunk,

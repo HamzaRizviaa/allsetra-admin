@@ -90,3 +90,30 @@ export const removeProfileFromDeviceTypeThunk = createAsyncThunk(
     }
   }
 );
+
+//Device Types Modules
+
+export const getDeviceTypesModulesThunk = createAsyncThunk(
+  "deviceManager/getDeviceTypesModulesThunk",
+  async ({
+    params,
+    deviceTypeId,
+  }: {
+    params: types.IRecordsAggregationBody;
+    deviceTypeId: string;
+  }) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesModules(
+        params,
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
