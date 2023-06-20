@@ -1,7 +1,10 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const Map: FC<any> = () => {
-  return <div>Map</div>;
+  const { t, i18n } = useTranslation();
+
+  return <div>{t("drawerMenuLinks.map")}</div>;
 };
 
 export default Map;

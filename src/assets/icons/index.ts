@@ -7,9 +7,7 @@ import { ReactComponent as LogoSmallSvg } from "./logos/logo-small.svg";
 import { ReactComponent as AlertSvg } from "./drawer/alerts-icon.svg";
 import { ReactComponent as CustomersSvg } from "./drawer/customers-icon.svg";
 import { ReactComponent as GeozonesSvg } from "./drawer/geozones-icon.svg";
-import { ReactComponent as GroupsSvg } from "./drawer/groups-icon.svg";
 import { ReactComponent as MapSvg } from "./drawer/map-icon.svg";
-import { ReactComponent as MembersSvg } from "./drawer/members-icon.svg";
 import { ReactComponent as ObjectsSvg } from "./drawer/objects-icon.svg";
 import { ReactComponent as SupportSvg } from "./drawer/support-icon.svg";
 import { ReactComponent as LogoutSvg } from "./drawer/logout-icon.svg";
@@ -22,6 +20,12 @@ import { ReactComponent as SubscriptionSvg } from "./drawer/subscription-icon.sv
 import { ReactComponent as FieldsFormIcon } from "./drawer/fields-form-icon.svg";
 import { ReactComponent as DevicetypeBlueIcon } from "./drawer/devicetype-blue-icon.svg";
 import { ReactComponent as ObjecttypeBlueIcon } from "./drawer/objecttype-blue-icon.svg";
+import { ReactComponent as DevicesIcon } from "./drawer/devices-icon.svg";
+import { ReactComponent as AccountsIcon } from "./drawer/accounts-icon.svg";
+import { ReactComponent as ObjectTypesIcon } from "./drawer/object-types-icon.svg";
+import { ReactComponent as ServicesIcon } from "./drawer/services-icon.svg";
+import { ReactComponent as FieldsIcon } from "./drawer/fields-icon.svg";
+import { ReactComponent as DeviceTypesIcon } from "./drawer/device-types-icon.svg";
 
 // Common Icons
 import { ReactComponent as Add } from "./common/Add.svg";
@@ -43,9 +47,7 @@ export {
   AlertSvg,
   CustomersSvg,
   GeozonesSvg,
-  GroupsSvg,
   MapSvg,
-  MembersSvg,
   ObjectsSvg,
   SupportSvg,
   LogoutSvg,
@@ -69,4 +71,10 @@ export {
   DevicetypeBlueIcon,
   ObjecttypeBlueIcon,
   SubscriptionBlueIcon,
+  DevicesIcon,
+  AccountsIcon,
+  ServicesIcon,
+  FieldsIcon,
+  ObjectTypesIcon,
+  DeviceTypesIcon,
 };

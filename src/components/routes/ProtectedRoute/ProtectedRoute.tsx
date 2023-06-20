@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC, Fragment } from "react";
+import { FC, Fragment, useMemo } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import {
@@ -9,10 +9,12 @@ import {
 } from "@azure/msal-react";
 import { DashboardLayout } from "@vilocnv/allsetra-core";
 
+// DATA
+import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { setDrawerCollapseState } from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
-import { DRAWER_MENU_ITEMS, DRAWER_SUB_MENU_LISTS } from "app/data/constants";
+import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
 
 export interface ProtectedRouteProps {
   redirectTo: string;
@@ -25,6 +27,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   const dispatch = useAppDispatch();
   const isDrawerCollapsed = useAppSelector(selectIsDrawerCollapsed);
 
+  const { t, i18n } = useTranslation();
+
   const toggleDrawerCollapseState = () => {
     dispatch(setDrawerCollapseState(!isDrawerCollapsed));
   };
@@ -32,6 +36,13 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   const handleLogout = () => {
     instance.logoutRedirect({ postLogoutRedirectUri: "/" });
   };
+
+  const { drawerMenuItems, drawerSubMenuLists } = useMemo(() => {
+    return {
+      drawerMenuItems: getDrawerMenuItems(t),
+      drawerSubMenuLists: getDrawerSubMenuLists(),
+    };
+  }, [i18n]);
 
   return (
     <Fragment>
@@ -44,10 +55,10 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
           isDrawerCollapsed={isDrawerCollapsed}
           toggleDrawerCollapseState={toggleDrawerCollapseState}
           appLogoType={"admin"}
-          menuList={DRAWER_MENU_ITEMS}
-          subLists={DRAWER_SUB_MENU_LISTS}
-          activeLinkTextColor={theme.palette.primary.main}
-          activeLinkBgColor={theme.palette.primary.light}
+          menuList={drawerMenuItems}
+          subLists={drawerSubMenuLists}
+          activeLinkTextColor={theme.palette.primary.light}
+          activeLinkBgColor={theme.palette.primary.dark}
           onSupportClick={() => {}}
           onLogoutClick={handleLogout}
         />

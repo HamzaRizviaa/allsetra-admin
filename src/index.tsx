@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "app/store";
@@ -9,6 +9,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Toast } from "@vilocnv/allsetra-core";
 import { setIdToken, setUserEmail } from "app/features";
+import "app/integrations/i18n/index";
 
 // Azure AD B2C
 import {
@@ -37,14 +38,16 @@ const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <MsalProvider instance={msalInstance}>
-            <App />
-          </MsalProvider>
-        </ThemeProvider>
-        <Toast />
-      </BrowserRouter>
+      <Suspense fallback="Suspense fallback loading...">
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <MsalProvider instance={msalInstance}>
+              <App />
+            </MsalProvider>
+          </ThemeProvider>
+          <Toast />
+        </BrowserRouter>
+      </Suspense>
     </Provider>
   </React.StrictMode>
 );
