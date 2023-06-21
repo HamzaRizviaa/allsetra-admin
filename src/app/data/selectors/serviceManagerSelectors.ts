@@ -13,6 +13,12 @@ export const selectAllServices = (state: RootState) =>
 export const selectAllTheServices = (state: RootState) =>
   state.rootReducer.serviceManagerReducer.allServices;
 
+export const selectSpecificServiceLoading = (state: RootState) =>
+  state.rootReducer.serviceManagerReducer.specificServiceLoading;
+
+export const selectSpecificService = (state: RootState) =>
+  state.rootReducer.serviceManagerReducer.specificService;
+
 export const selectServicManagerState = createSelector(
   selectServiceReducerLoading,
   selectTotalServices,
@@ -23,5 +29,14 @@ export const selectServicManagerState = createSelector(
     totalServices,
     services,
     allServices,
+  })
+);
+
+export const selectSpecificServiceState = createSelector(
+  selectSpecificServiceLoading,
+  selectSpecificService,
+  (specificServiceLoading, specificService) => ({
+    specificServiceLoading,
+    specificService,
   })
 );

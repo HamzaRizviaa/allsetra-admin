@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllServicesThunk,
   getServicesByQueryThunk,
+  getSpecificServiceByIdThunk,
 } from "./serviceManagerActions";
 
 export interface IServiceManagerState {
@@ -9,6 +10,8 @@ export interface IServiceManagerState {
   totalServices: number | null;
   services: Array<any>;
   allServices: Array<any>;
+  specificServiceLoading: boolean;
+  specificService: any;
 }
 
 const initialState: IServiceManagerState = {
@@ -16,6 +19,8 @@ const initialState: IServiceManagerState = {
   totalServices: null,
   services: [],
   allServices: [],
+  specificServiceLoading: false,
+  specificService: null,
 };
 
 const serviceManagerSlice = createSlice({
@@ -50,6 +55,20 @@ const serviceManagerSlice = createSlice({
 
     builder.addCase(getAllServicesThunk.rejected, (state) => {
       state.loading = false;
+    });
+
+    // Get specifc service by id
+    builder.addCase(getSpecificServiceByIdThunk.pending, (state) => {
+      state.specificServiceLoading = true;
+    });
+
+    builder.addCase(getSpecificServiceByIdThunk.fulfilled, (state, action) => {
+      state.specificService = action.payload;
+      state.specificServiceLoading = false;
+    });
+
+    builder.addCase(getSpecificServiceByIdThunk.rejected, (state) => {
+      state.specificServiceLoading = false;
     });
   },
 });

@@ -10,6 +10,10 @@ class ServiceManager {
     return await axiosInstance.post("/services/search", data);
   };
 
+  static getSpecificServiceById = async (serviceId: string) => {
+    return await axiosInstance.get(`/Services/${serviceId}`);
+  };
+
   static createService = async (data: any) => {
     return await axiosInstance.post("/services", data);
   };

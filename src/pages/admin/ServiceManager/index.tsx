@@ -1,5 +1,6 @@
-import { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback, useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
+import { isEmpty } from "lodash";
 import AddIcon from "@mui/icons-material/Add";
 import {
   Table,
@@ -10,15 +11,20 @@ import {
 } from "@vilocnv/allsetra-core";
 import ServiceForm from "components/forms/admin/ServiceForm/ServiceForm";
 
-// Data
+// DATA
 import { useAppDispatch, useAppSelector } from "hooks";
-import { selectServicManagerState } from "app/data/selectors";
+import {
+  selectServicManagerState,
+  selectSpecificServiceState,
+} from "app/data/selectors";
 import {
   getServicesByQueryThunk,
   deactivateServiceThunk,
   activateServiceThunk,
+  getSpecificServiceByIdThunk,
 } from "app/features";
 import { ALL_SERVICES_TABLE_COLUMNS } from "app/data/constants";
+import { formatServiceDataForForm } from "app/data/helpers";
 
 const ServiceManager: FC = () => {
   const theme = useTheme();
@@ -28,17 +34,21 @@ const ServiceManager: FC = () => {
   const { totalServices, services, loading } = useAppSelector(
     selectServicManagerState
   );
+  const { specificService, specificServiceLoading } = useAppSelector(
+    selectSpecificServiceState
+  );
 
   // Local State
-  const [selectedService, setSelectedService] =
-    useState<types.IAdminService | null>(null);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
+    null
+  );
   const [openServiceForm, setOpenServiceForm] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   useDispatchOnParams(getServicesByQueryThunk);
 
   const openDeleteConfirmationModal = (service: types.IAdminService) => {
-    setSelectedService(service);
+    setSelectedServiceId(service.uniqueId);
     setOpenDeleteModal(true);
   };
 
@@ -47,10 +57,29 @@ const ServiceManager: FC = () => {
   }, []);
 
   const handleDeactivateService = useCallback(() => {
-    selectedService &&
-      dispatch(deactivateServiceThunk(selectedService.uniqueId));
+    if (!selectedServiceId) return;
+    dispatch(deactivateServiceThunk(selectedServiceId || ""));
     setOpenDeleteModal(false);
-  }, [selectedService]);
+  }, [selectedServiceId]);
+
+  const handleAddService = useCallback(() => {
+    setSelectedServiceId(null);
+    setOpenServiceForm(true);
+  }, []);
+
+  const handleEditService = useCallback((service: types.IAdminService) => {
+    dispatch(getSpecificServiceByIdThunk(service.uniqueId));
+    setSelectedServiceId(service.uniqueId);
+    setOpenServiceForm(true);
+  }, []);
+
+  const formInitialValues = useMemo(
+    () =>
+      selectedServiceId && !isEmpty(specificService)
+        ? formatServiceDataForForm(specificService)
+        : null,
+    [selectedServiceId, specificService]
+  );
 
   return (
     <Box>
@@ -61,7 +90,7 @@ const ServiceManager: FC = () => {
           variant: "outlined",
           text: "Add service",
           startIcon: <AddIcon />,
-          onClick: () => setOpenServiceForm(true),
+          onClick: handleAddService,
         }}
       />
       <Box mx={4}>
@@ -72,6 +101,7 @@ const ServiceManager: FC = () => {
           paginationTotalRows={totalServices}
           searchPlaceholder="Search service"
           cellActions={[
+            { name: "Edit service", onClick: handleEditService },
             {
               name: "Activate service",
               when: (row: types.IAdminService) => row.isDeleted === true,
@@ -88,7 +118,8 @@ const ServiceManager: FC = () => {
       <ServiceForm
         open={openServiceForm}
         onClose={() => setOpenServiceForm(false)}
-        initialValues={selectedService}
+        initialValues={formInitialValues}
+        loading={specificServiceLoading}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

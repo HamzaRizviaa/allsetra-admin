@@ -34,6 +34,22 @@ export const getServicesByQueryThunk = createAsyncThunk(
   }
 );
 
+export const getSpecificServiceByIdThunk = createAsyncThunk(
+  "serviceManager/getSpecificServiceByIdThunk",
+  async (serviceId: string) => {
+    try {
+      const response = await ServiceManager.getSpecificServiceById(serviceId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const createOrUpdateServiceThunk = createAsyncThunk(
   "serviceManager/createOrUpdateServiceThunk",
   async (data: any, { dispatch }) => {

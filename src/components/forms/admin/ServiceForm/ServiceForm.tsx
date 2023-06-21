@@ -1,5 +1,4 @@
-import { FC, useMemo } from "react";
-import { isEmpty } from "lodash";
+import { FC } from "react";
 import { Box, useTheme } from "@mui/material";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -20,16 +19,11 @@ export type Props = Omit<ModalProps, "title" | "children"> & {
   initialValues?: any;
 };
 
-const ServiceForm: FC<Props> = ({ open, onClose, initialValues }) => {
+const ServiceForm: FC<Props> = ({ open, onClose, initialValues, ...rest }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const isEdit = initialValues?.uniqueId;
   const text = isEdit ? "Edit service" : "Add service";
-
-  const formInitialValues = useMemo(
-    () => (!isEmpty(initialValues) ? initialValues : addServiceInitialValues),
-    [initialValues]
-  );
 
   const onSubmitHandler = async (
     values: IAddService,
@@ -43,6 +37,7 @@ const ServiceForm: FC<Props> = ({ open, onClose, initialValues }) => {
 
     if (type === "serviceManager/createOrUpdateServiceThunk/fulfilled") {
       onClose();
+      formikHelpers.resetForm();
     }
 
     formikHelpers.setSubmitting(false);
@@ -51,17 +46,20 @@ const ServiceForm: FC<Props> = ({ open, onClose, initialValues }) => {
   return (
     <Box>
       <Formik
-        initialValues={formInitialValues}
+        initialValues={initialValues || addServiceInitialValues}
         validationSchema={addServiceValidationSchema}
         onSubmit={onSubmitHandler}
         enableReinitialize
         validateOnMount
       >
-        {({ handleSubmit, isSubmitting, dirty, isValid }) => (
+        {({ handleSubmit, isSubmitting, dirty, isValid, resetForm }) => (
           <Form>
             <Modal
               open={open}
-              onClose={onClose}
+              onClose={() => {
+                onClose();
+                resetForm();
+              }}
               headerIcon={<ServiceBlueIcon />}
               headerIconBgColor={theme.palette.primary.light}
               title={text}
@@ -74,8 +72,15 @@ const ServiceForm: FC<Props> = ({ open, onClose, initialValues }) => {
                 // @ts-ignore
                 onClick: handleSubmit,
               }}
-              secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
+              secondaryBtnProps={{
+                text: "Cancel",
+                onClick: () => {
+                  onClose();
+                  resetForm();
+                },
+              }}
               theme={theme}
+              {...rest}
             >
               <InnerForm />
             </Modal>

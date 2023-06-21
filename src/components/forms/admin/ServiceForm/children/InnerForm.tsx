@@ -92,6 +92,7 @@ const InnerForm: FC = () => {
         loading={fieldsLoading}
         multiple
         required
+        searchable
       />
     </Stack>
   );

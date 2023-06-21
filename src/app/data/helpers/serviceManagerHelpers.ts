@@ -36,3 +36,31 @@ export const formatServiceFormDataForApi = (values: IAddService) => {
     ["deviceModules"]
   );
 };
+
+export const formatServiceDataForForm = (service: any) => {
+  const fields = service.fields.map((field: any) => field.uniqueId);
+  const deviceTypes: string[] = [];
+  const deviceModules: any = {};
+
+  service.serviceDeviceTypes.map((item: any) => {
+    deviceTypes.push(item.deviceType.uniqueId);
+    
+    deviceModules[item.deviceType.uniqueId] = {
+      requiredModulesId: item.requiredModules.map(
+        (module: any) => module.uniqueId
+      ),
+      optionalModulesId: item.optionalModules.map(
+        (module: any) => module.uniqueId
+      ),
+    };
+  });
+
+  return {
+    uniqueId: service.uniqueId,
+    name: service.name,
+    description: service.description,
+    fields,
+    deviceTypes,
+    deviceModules,
+  };
+};
