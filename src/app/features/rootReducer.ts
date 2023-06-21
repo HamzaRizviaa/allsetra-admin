@@ -6,6 +6,7 @@ import deviceManagerReducer from "./deviceManager/deviceManagerSlice";
 import fieldsReducer from "./fields/fieldsSlice";
 import subscriptionReducer from "./subscriptions/subscriptionsSlice";
 import objectTypesReducer from "./objectTypes/objectTypesSlice";
+import alarmDeskReducer from "./alarmDesk/alarmDeskSlice";
 
 const rootReducer = combineReducers({
   dashboardReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   fieldsReducer,
   subscriptionReducer,
   objectTypesReducer,
+  alarmDeskReducer,
 });
 
 export default rootReducer;

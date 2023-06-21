@@ -74,6 +74,7 @@ const InnerForm: FC = () => {
         loading={deviceTypesLoading}
         onChange={deviceTypeChangeHandler}
         multiple
+        searchable
         required
       />
       <FieldArray

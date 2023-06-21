@@ -5,3 +5,4 @@ export * from "./deviceManagerSelectors";
 export * from "./fieldSelectors";
 export * from "./objectTypesSelectors";
 export * from "./subscriptionsSelectors";
+export * from "./alarmDeskSelectors";

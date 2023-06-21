@@ -6,3 +6,4 @@ export { default as DeviceManager } from "./DeviceManager";
 export { default as Fields } from "./Fields";
 export { default as Subscriptions } from "./Subscriptions";
 export { default as ObjectTypes } from "./ObjectTypes";
+export { default as AlarmDesk } from "./AlarmDesk";

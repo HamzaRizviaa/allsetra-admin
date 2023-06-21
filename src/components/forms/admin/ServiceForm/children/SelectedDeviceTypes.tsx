@@ -57,6 +57,7 @@ const SelectedDeviceTypes: FC<Props> = ({ form, deviceTypes }) => {
             optionLabelKey="moduleName"
             optionValueKey="uniqueId"
             multiple
+            searchable
           />
           <FormikSelectField
             label="Optional modules"
@@ -65,6 +66,7 @@ const SelectedDeviceTypes: FC<Props> = ({ form, deviceTypes }) => {
             optionLabelKey="moduleName"
             optionValueKey="uniqueId"
             multiple
+            searchable
           />
         </Stack>
       ))}

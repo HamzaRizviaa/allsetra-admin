@@ -8,8 +8,11 @@ import ProtectedRoute from "components/routes/ProtectedRoute/ProtectedRoute";
 import Auth from "pages/Auth";
 import NotFound from "pages/NotFound";
 
-// ADMIN PROTECTED PAGES
+// PROTECTED PAGES
 import Map from "pages/Map";
+import AlarmDesk from "pages/AlarmDesk";
+
+// ADMIN PROTECTED ROUTES 
 import AccountManager from "pages/admin/AccountManager";
 import AccountDetails from "pages/admin/AccountManager/AccountDetails";
 import ServiceManager from "pages/admin/ServiceManager";
@@ -17,7 +20,7 @@ import FieldManager from "pages/admin/FieldManager";
 import SubscriptionManager from "pages/admin/SubscriptionManager";
 import ObjectTypesManager from "pages/admin/ObjectTypesManager";
 
-//DeviceTypes routes
+// DEVICE TYEPS PROTECTED ROUTES
 import DeviceTypes from "pages/deviceManager/DeviceTypes";
 import DeviceTypeDetails from "pages/deviceManager/DeviceTypes/DeviceTypesDetails";
 
@@ -30,6 +33,7 @@ const App: FC = () => {
 
       <Route path="/dashboard" element={<ProtectedRoute redirectTo="/" />}>
         <Route index element={<Map />} />
+        <Route path="/dashboard/alarm-desk" element={<AlarmDesk />} />
 
         {/* Admin Manager Routes */}
         <Route path="/dashboard/account-manager" element={<AccountManager />} />
