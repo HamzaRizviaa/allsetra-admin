@@ -20,7 +20,7 @@ export const ACCOUNT_DETAILS_TABS_HEADINGS: string[] = [
 // TABLE HEADERS
 //
 export const ALL_ACCOUNTS_TABLE_COLUMNS: TableColumn<types.IAccount>[] = [
-  { name: "name", selector: (row: types.IAccount) => row.name, sortable: true },
+  { name: "Name", selector: (row: types.IAccount) => row.name, sortable: true },
   {
     name: "Status",
     cell: (row: types.IAccount) => (
