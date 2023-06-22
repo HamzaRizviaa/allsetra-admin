@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Stack, useTheme } from "@mui/material";
 import {
-  FormikCheckbox,
   FormikInputField,
   FormikSelectField,
   Modal,

@@ -1,9 +1,7 @@
-import React from 'react'
+import { FC } from "react";
 
-const AlarmSendSMSForm = () => {
-  return (
-    <div>AlarmSendSMSForm</div>
-  )
-}
+const AlarmSendSMSForm: FC = () => {
+  return <div>AlarmSendSMSForm</div>;
+};
 
-export default AlarmSendSMSForm
+export default AlarmSendSMSForm;
