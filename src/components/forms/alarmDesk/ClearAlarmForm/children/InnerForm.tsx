@@ -51,7 +51,7 @@ const InnerForm: FC<Props> = ({ open, onClose, ...rest }) => {
         <FormikSelectField
           label="Reason"
           name="reason"
-          options={clearAlarmReasons}
+          options={clearAlarmReasons || []}
           loading={isLoading}
           optionLabelKey="reason"
           optionValueKey="uniqueId"

@@ -20,11 +20,6 @@ export const ALL_ALARMS_TABLE_COLUMNS: TableColumn<IAlarm>[] = [
   },
   { name: "SCM", sortable: true, selector: (row: IAlarm) => row.hasScmService },
   {
-    name: "Positon",
-    sortable: true,
-    selector: (row: IAlarm) => row.location,
-  },
-  {
     name: "Ignition",
     sortable: true,
     cell: (row: IAlarm) => (
