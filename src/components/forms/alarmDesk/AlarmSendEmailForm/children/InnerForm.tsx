@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Stack, useTheme } from "@mui/material";
+import { isEmpty } from "lodash";
 import {
   FormikInputField,
   FormikSelectField,
@@ -20,7 +21,9 @@ const InnerForm: FC<Props> = ({ open, onClose, alarmId, ...rest }) => {
   const { resetForm, isSubmitting, isValid, handleSubmit } =
     useFormikContext<IAlarmSendEmail>();
 
-  const { data, isLoading } = useGetAlarmPersonsForAlarmQuery(alarmId || "");
+  const { data, isLoading } = useGetAlarmPersonsForAlarmQuery(alarmId, {
+    skip: isEmpty(alarmId),
+  });
 
   const onCloseHandler = () => {
     onClose();
