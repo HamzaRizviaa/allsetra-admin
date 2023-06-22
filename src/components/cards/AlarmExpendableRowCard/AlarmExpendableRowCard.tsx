@@ -1,16 +1,31 @@
 import { FC } from "react";
-import { Button } from "@vilocnv/allsetra-core";
-import { Box, Stack } from "@mui/material";
+import { Button, Table } from "@vilocnv/allsetra-core";
+import { Stack } from "@mui/material";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import { AlarmCardContainer } from "./AlarmExpendableRowCard.styled";
+import {
+  AlarmCardContainer,
+  CommnetsBox,
+} from "./AlarmExpendableRowCard.styled";
+
+// DATA
+import { IAlarm } from "app/data/types";
+import { ALARM_COMMENTS_TABLE_COLUMNS } from "app/data/constants";
 
 export interface AlarmExpendableRowCardProps {
-  data: any;
+  data: IAlarm;
+  toggleSendEmailModal: () => void;
+  toggleClearAlarmModal: () => void;
+  toggleReportTheftModal: () => void;
 }
 
-const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = (props) => {
-  console.log({ props });
+const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
+  data,
+  toggleSendEmailModal,
+  toggleClearAlarmModal,
+  toggleReportTheftModal,
+}) => {
+  console.log({ data });
 
   return (
     <AlarmCardContainer>
@@ -20,7 +35,11 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = (props) => {
         alignItems={"center"}
       >
         <Stack direction={"row"} spacing={2}>
-          <Button variant={"outlined"} size={"small"}>
+          <Button
+            variant={"outlined"}
+            size={"small"}
+            onClick={toggleSendEmailModal}
+          >
             Email
           </Button>
           <Button variant={"outlined"} size={"small"}>
@@ -32,6 +51,7 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = (props) => {
             variant={"contained"}
             size={"small"}
             startIcon={<NotificationsOffIcon />}
+            onClick={toggleClearAlarmModal}
           >
             Clear Alarm
           </Button>
@@ -40,11 +60,25 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = (props) => {
             color={"error"}
             size={"small"}
             startIcon={<ReportProblemIcon />}
+            onClick={toggleReportTheftModal}
           >
             Report Theft
           </Button>
         </Stack>
       </Stack>
+      <CommnetsBox>
+        <Table
+          title="Comments"
+          columns={ALARM_COMMENTS_TABLE_COLUMNS}
+          data={data?.comments || []}
+          cellActions={[
+            {
+              name: "Delete comment",
+              onClick: () => {},
+            },
+          ]}
+        />
+      </CommnetsBox>
     </AlarmCardContainer>
   );
 };

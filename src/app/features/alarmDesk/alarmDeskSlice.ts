@@ -44,6 +44,7 @@ const alarmDeskSlice = createSlice({
 });
 
 export * from "./alarmDeskActions";
+export * from "./alarmDeskQueries";
 export const { setActiveAlarmId } = alarmDeskSlice.actions;
 
 export default alarmDeskSlice.reducer;
