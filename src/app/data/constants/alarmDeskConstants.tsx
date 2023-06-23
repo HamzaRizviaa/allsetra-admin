@@ -1,4 +1,5 @@
 import { TableColumn, Badge } from "@vilocnv/allsetra-core";
+import { capitalize } from "lodash";
 import moment from "moment";
 import { IAlarm } from "../types";
 
@@ -10,8 +11,7 @@ export const ALL_ALARMS_TABLE_COLUMNS: TableColumn<IAlarm>[] = [
   {
     name: "Date",
     sortable: true,
-    //@ts-ignore
-    selector: (row: IAlarm) => moment().toNow(row.created),
+    selector: (row: IAlarm) => capitalize(moment(row.created).fromNow()),
   },
   {
     name: "Alarm Type",
@@ -42,6 +42,10 @@ export const ALARM_COMMENTS_TABLE_COLUMNS: TableColumn<any>[] = [
     sortable: true,
     selector: (row: any) => row.commentedBy,
   },
-  { name: "Date", sortable: true, selector: (row: any) => row.date },
+  {
+    name: "Date",
+    sortable: true,
+    selector: (row: any) => moment(row.date).format("lll"),
+  },
   { name: "Note", sortable: true, selector: (row: any) => row.note },
 ];
