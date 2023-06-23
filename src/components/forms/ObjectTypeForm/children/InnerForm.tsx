@@ -131,6 +131,7 @@ const InnerForm: FC = () => {
         loading={deviceTypesLoading}
         onChange={deviceTypeChangeHandler}
         multiple
+        searchable
         required
       />
       <FieldArray
@@ -150,6 +151,7 @@ const InnerForm: FC = () => {
           loading={iconLoading}
           required
           multiple
+          searchable
         />
       )}
       <FormikSelectField
@@ -161,6 +163,7 @@ const InnerForm: FC = () => {
         loading={fieldsloading}
         required
         multiple
+        searchable
       />
     </Stack>
   );
