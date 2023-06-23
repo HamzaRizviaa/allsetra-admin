@@ -9,8 +9,10 @@ import {
 } from "./AlarmExpendableRowCard.styled";
 
 // DATA
+import { useAppDispatch } from "hooks";
 import { IAlarm } from "app/data/types";
 import { ALARM_COMMENTS_TABLE_COLUMNS } from "app/data/constants";
+import { deleteCommentFromAlarmThunk } from "app/features";
 
 export interface AlarmExpendableRowCardProps {
   data: IAlarm;
@@ -25,6 +27,17 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
   toggleClearAlarmModal,
   toggleReportTheftModal,
 }) => {
+  const dispatch = useAppDispatch();
+
+  const handleDeleteCommnet = (row: any) => {
+    dispatch(
+      deleteCommentFromAlarmThunk({
+        alarmId: data.uniqueId,
+        commentId: row.uniqueId,
+      })
+    );
+  };
+
   return (
     <AlarmCardContainer>
       <Stack
@@ -72,7 +85,7 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
           cellActions={[
             {
               name: "Delete comment",
-              onClick: () => {},
+              onClick: handleDeleteCommnet,
             },
           ]}
         />

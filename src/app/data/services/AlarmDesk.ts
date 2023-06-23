@@ -32,6 +32,16 @@ class AlarmDesk {
   ) => {
     return await axiosInstance.post(`/alarms/${alarmId}/send-email`, data);
   };
+
+  // Alarm Comments Endpoints
+  static deleteCommentFromAlarm = async (
+    alarmId: string,
+    commentId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/alarms/${alarmId}/comments/${commentId}`
+    );
+  };
 }
 
 export default AlarmDesk;

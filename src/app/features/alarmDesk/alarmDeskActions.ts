@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AlarmDesk } from "app/data/services";
+import { setIsLockedOfAlarm } from "./alarmDeskSlice";
 import { toast, types } from "@vilocnv/allsetra-core";
 import {
   IAlarmReportTheft,
@@ -25,12 +26,13 @@ export const getAlarmsByQueryThunk = createAsyncThunk(
 
 export const postLockAlarmThunk = createAsyncThunk(
   "alarmDesk/postLockAlarmThunk",
-  async (alarmId: string) => {
+  async (alarmId: string, { dispatch }) => {
     try {
       const response = await AlarmDesk.postLockAlarm(alarmId);
 
       if (response.status === 202) {
         toast.success(`Alarm has been locked`);
+        dispatch(setIsLockedOfAlarm({ alarmId, isLocked: true }));
       }
     } catch (e: any) {
       console.error(e);
@@ -41,12 +43,13 @@ export const postLockAlarmThunk = createAsyncThunk(
 
 export const postUnlockAlarmThunk = createAsyncThunk(
   "alarmDesk/postUnlockAlarmThunk",
-  async (alarmId: string) => {
+  async (alarmId: string, { dispatch }) => {
     try {
       const response = await AlarmDesk.postUnlockAlarm(alarmId);
 
       if (response.status === 202) {
         toast.success(`Alarm has been unlocked`);
+        dispatch(setIsLockedOfAlarm({ alarmId, isLocked: false }));
       }
     } catch (e: any) {
       console.error(e);
@@ -95,6 +98,25 @@ export const postAlarmSendEmailThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Email has been send for the alarm");
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const deleteCommentFromAlarmThunk = createAsyncThunk(
+  "alarmDesk/deleteCommentFromAlarmThunk",
+  async ({ alarmId, commentId }: { alarmId: string; commentId: string }) => {
+    try {
+      const response = await AlarmDesk.deleteCommentFromAlarm(
+        alarmId,
+        commentId
+      );
+
+      if (response.status === 202) {
+        toast.success("Comment has been deleted from the alarm");
       }
     } catch (e: any) {
       console.error(e);

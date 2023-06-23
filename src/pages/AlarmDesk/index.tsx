@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useCallback } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import { Table, Topbar, useDispatchOnParams } from "@vilocnv/allsetra-core";
 import AlarmExpendableRowCard from "components/cards/AlarmExpendableRowCard/AlarmExpendableRowCard";
@@ -6,15 +6,20 @@ import AlarmReportTheftForm from "components/forms/alarmDesk/AlarmReportTheftFor
 import ClearAlarmForm from "components/forms/alarmDesk/ClearAlarmForm/ClearAlarmForm";
 
 // Data
-import { useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import { ALL_ALARMS_TABLE_COLUMNS } from "app/data/constants";
-import { getAlarmsByQueryThunk } from "app/features";
+import {
+  getAlarmsByQueryThunk,
+  postLockAlarmThunk,
+  postUnlockAlarmThunk,
+} from "app/features";
 import { selectAlarmDeskState } from "app/data/selectors";
 import { IAlarm } from "app/data/types";
 import AlarmSendEmailForm from "components/forms/alarmDesk/AlarmSendEmailForm/AlarmSendEmailForm";
 
 const AlarmDesk: FC = () => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
 
   // Global State
   const { totalRecords, loading, alarms } =
@@ -22,6 +27,8 @@ const AlarmDesk: FC = () => {
 
   // Local State
   const [selectedAlarmId, setSelectedAlarmId] = useState<string | null>(null);
+  const [expandedRowsId, setExpandedRowsId] = useState<string[]>([]);
+
   const [openSendEmailModal, setOpenSendEmailModal] = useState<boolean>(false);
   const [openClearAlarmModal, setOpenClearAlarmModal] =
     useState<boolean>(false);
@@ -38,9 +45,31 @@ const AlarmDesk: FC = () => {
   const toggleReportTheftModal = () =>
     setOpenReportTheftModal(!openReportTheftModal);
 
-  const onRowExpandToggled = (expanded: boolean, row: IAlarm) => {
-    setSelectedAlarmId(expanded ? row.uniqueId : null);
-  };
+  const isRowExpended = useCallback(
+    (alarmId: string) => {
+      return expandedRowsId.some((id) => id === alarmId);
+    },
+    [expandedRowsId]
+  );
+
+  const onRowExpandToggled = useCallback(
+    (expanded: boolean, row: IAlarm) => {
+      setSelectedAlarmId(expanded ? row.uniqueId : null);
+
+      if (expanded) {
+        dispatch(postLockAlarmThunk(row.uniqueId));
+        setExpandedRowsId([...expandedRowsId, row.uniqueId]);
+      } else {
+        dispatch(postUnlockAlarmThunk(row.uniqueId));
+
+        const filteredExpandedRowsId = expandedRowsId.filter(
+          (id) => id !== row.uniqueId
+        );
+        setExpandedRowsId(filteredExpandedRowsId);
+      }
+    },
+    [expandedRowsId]
+  );
 
   return (
     <Box>
@@ -60,6 +89,9 @@ const AlarmDesk: FC = () => {
               toggleReportTheftModal: toggleReportTheftModal,
               toggleClearAlarmModal: toggleClearAlarmModal,
             }}
+            expandableRowDisabled={(row: IAlarm) =>
+              row.isLocked && !isRowExpended(row.uniqueId)
+            }
             onRowExpandToggled={onRowExpandToggled}
           />
         </Grid>
