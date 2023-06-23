@@ -54,7 +54,7 @@ const InnerForm: FC<Props> = ({ open, onClose, alarmId, ...rest }) => {
         <FormikSelectField
           label="Default email addresses"
           name="defaultEmails"
-          options={data}
+          options={data || []}
           optionLabelKey={"email"}
           optionValueKey={"email"}
           loading={isLoading}
