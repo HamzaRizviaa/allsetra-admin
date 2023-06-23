@@ -1,15 +1,82 @@
 import * as Yup from "yup";
 import { IAddObjectType } from "../types";
 
-export const objectTypeDataFormatterForService = (
-  values: IAddObjectType,
-  deviceTypes: any
-) => {
-  deviceTypes.map((device: any, index: number) => {
-    const filteredDevices = deviceTypes.filter(
-      (item: any) => item === device[index].deviceProfiles[index].deviceTypeId
-    );
+export const objectTypeDataFormatterForForm = (data: any) => {
+  const formattedDevices = data.deviceTypes.map((item: any) => {
+    const uniqueId = item.deviceType.uniqueId;
+
+    const formattedItem = {
+      [uniqueId]: {
+        defaultProfileId: item.defaultProfile.uniqueId,
+      },
+    };
+
+    return formattedItem;
   });
+
+  const transformedDevices: any = {};
+
+  formattedDevices.forEach((item: any) => {
+    const key = Object.keys(item)[0];
+    const value = item[key];
+    transformedDevices[key] = value;
+  });
+
+  const formattedData = data.deviceTypes.map((item: any) => {
+    const uniqueId = item.deviceType.uniqueId;
+
+    const formattedItem = {
+      [uniqueId]: {
+        defaultProfileId: "",
+      },
+    };
+
+    return formattedItem;
+  });
+
+  const transformedData: any = {};
+
+  formattedData.forEach((item: any) => {
+    const key = Object.keys(item)[0];
+    const value = item[key];
+    transformedData[key] = value;
+  });
+
+  const payload = {
+    name: data.name,
+    parentObjectId: data.parentObjectType.uniqueId,
+    iconId: data.icon.uniqueId,
+    deviceTypes: data.deviceTypes.map((item: any) => item.deviceType.uniqueId),
+    deviceProfiles: transformedDevices,
+    deviceProfilesData: transformedData,
+    services: data.services.map((item: any) => item.uniqueId),
+    fields: data.fields.map((item: any) => item.uniqueId),
+    uniqueId: data.uniqueId,
+  };
+
+  return payload;
+};
+
+export const objectTypeDataFormatterForService = (values: any) => {
+  const formattedDeviceProfiles = Object.keys(values.deviceProfilesData).map(
+    (deviceTypeId) => ({
+      deviceTypeId,
+      defaultProfileId:
+        values.deviceProfiles[deviceTypeId]?.defaultProfileId || "",
+    })
+  );
+
+  const payload = {
+    name: values.name,
+    parentObjectId: values.parentObjectId,
+    iconId: values.iconId,
+    deviceTypes: formattedDeviceProfiles,
+    services: values.services,
+    fields: values.fields,
+    uniqueId: values.uniqueId,
+  };
+
+  return payload;
 };
 
 export const addObjectTypeInitialValues: IAddObjectType = {
@@ -17,14 +84,10 @@ export const addObjectTypeInitialValues: IAddObjectType = {
   parentObjectId: "",
   iconId: "",
   deviceTypes: [],
-  // fields: [],
+  deviceProfilesData: {},
+  fields: [],
   services: [],
 };
-
-const addObjectTypeToServiceValidationSchema: Yup.Schema = Yup.object({
-  deviceTypeId: Yup.string().required(),
-  defaultProfileId: Yup.string().required(),
-});
 
 export const addObjectTypeValidationSchema: Yup.Schema = Yup.object({
   name: Yup.string().trim().required().label("Object name"),
@@ -35,7 +98,7 @@ export const addObjectTypeValidationSchema: Yup.Schema = Yup.object({
     .min(1)
     .required()
     .label("Device Types"),
-  // fields: Yup.array().of(Yup.string()).min(1).required().label("Fields"),
+  fields: Yup.array().of(Yup.string()).min(1).required().label("Fields"),
   services: Yup.array()
     .of(Yup.string())
     .min(1)

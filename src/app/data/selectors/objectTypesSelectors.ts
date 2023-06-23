@@ -10,13 +10,29 @@ export const selectAllObjectTypes = (state: RootState) =>
 export const selectTotalObjectTypes = (state: RootState) =>
   state.rootReducer.objectTypesReducer.totalObjectTypes;
 
+export const selectSpecificObjectType = (state: RootState) =>
+  state.rootReducer.objectTypesReducer.specificObject;
+
+export const selectSpecificObjectTypeLoading = (state: RootState) =>
+  state.rootReducer.objectTypesReducer.specificObjectLoading;
+
 export const selectObjectTypesState = createSelector(
   selectAllObjectTypes,
   selectObjectTypesReducerLoading,
   selectTotalObjectTypes,
-  (allObjectTypes, loading, totalObjectTypes) => ({
+  selectSpecificObjectType,
+  selectSpecificObjectTypeLoading,
+  (
     allObjectTypes,
     loading,
     totalObjectTypes,
+    specificObject,
+    specificObjectLoading
+  ) => ({
+    allObjectTypes,
+    loading,
+    totalObjectTypes,
+    specificObject,
+    specificObjectLoading,
   })
 );

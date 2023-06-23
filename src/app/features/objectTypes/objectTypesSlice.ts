@@ -1,18 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllObjectTypesThunk,
   getObjectTypesByQueryThunk,
+  getSpecificObjectThunk,
 } from "./objectTypesActions";
 
 export interface IObjectTypesState {
   loading: boolean;
+  specificObjectLoading: boolean;
 
   // ObjectTypes State
   totalObjectTypes: number | null;
   allObjectTypes: Array<any>;
-
-  // Account Users State
   objectTypes: Array<any>;
+  specificObject: Object | null;
 }
 
 const initialState: IObjectTypesState = {
@@ -20,14 +21,20 @@ const initialState: IObjectTypesState = {
   totalObjectTypes: null,
   allObjectTypes: [],
   objectTypes: [],
+  specificObject: null,
+  specificObjectLoading: false,
 };
 
 const objectTypesSlice = createSlice({
   name: "objectTypes",
   initialState,
-  reducers: {},
+  reducers: {
+    resetSpecificObject: (state) => {
+      state.specificObject = null;
+    },
+  },
   extraReducers: (builder) => {
-    // Get All Accounts Action Cases
+    // Get All Objects Action Cases
     builder.addCase(getAllObjectTypesThunk.pending, (state) => {
       state.loading = true;
     });
@@ -41,7 +48,7 @@ const objectTypesSlice = createSlice({
       state.loading = false;
     });
 
-    // Get Accounts By Querying Action Cases
+    // Get Objects By Querying Action Cases
     builder.addCase(getObjectTypesByQueryThunk.pending, (state) => {
       state.loading = true;
     });
@@ -55,9 +62,23 @@ const objectTypesSlice = createSlice({
     builder.addCase(getObjectTypesByQueryThunk.rejected, (state) => {
       state.loading = false;
     });
+
+    // Get Objects By Querying Action Cases
+    builder.addCase(getSpecificObjectThunk.pending, (state) => {
+      state.specificObjectLoading = true;
+    });
+
+    builder.addCase(getSpecificObjectThunk.fulfilled, (state, action) => {
+      state.specificObject = action.payload;
+      state.specificObjectLoading = false;
+    });
+
+    builder.addCase(getSpecificObjectThunk.rejected, (state) => {
+      state.specificObjectLoading = false;
+    });
   },
 });
 
 export * from "./objectTypesActions";
-
+export const { resetSpecificObject } = objectTypesSlice.actions;
 export default objectTypesSlice.reducer;

@@ -74,11 +74,11 @@ export interface IAddObjectType {
   name: string;
   parentObjectId: string;
   iconId: string;
-  deviceTypes: {
-    deviceTypeId: string;
-    defaultProfileId: string;
-  }[];
-  // fields: string[];
+  deviceTypes: Array<string>;
+  deviceProfilesData: {
+    [deviceTypeId: string]: { defaultProfileId: string };
+  };
+  fields: string[];
   services: string[];
   uniqueId?: string;
 }

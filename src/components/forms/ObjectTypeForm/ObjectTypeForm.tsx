@@ -2,23 +2,26 @@ import { FC, useMemo } from "react";
 import { isEmpty } from "lodash";
 import { Box, Theme, useTheme } from "@mui/material";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers, FormikState } from "formik";
 import { ObjectBlueIcon } from "assets/icons";
 
 // DATA
 import { useAppDispatch, useAppSelector } from "hooks";
 import { IAddObjectType } from "app/data/types";
-import { createOrUpdateObjectTypeThunk } from "app/features";
+import {
+  createOrUpdateObjectTypeThunk,
+  resetSpecificObject,
+} from "app/features";
 import InnerForm from "./children/InnerForm";
 import {
   addObjectTypeInitialValues,
   addObjectTypeValidationSchema,
   objectTypeDataFormatterForService,
 } from "app/data/helpers/objectTypeHelpers";
-import { selectDeviceTypesState } from "app/data/selectors";
+import { selectObjectTypesState } from "app/data/selectors";
 
 export type AddObjectTypeProps = Pick<ModalProps, "open" | "onClose"> & {
-  initialValues?: IAddObjectType;
+  initialValues?: any;
   onSubmit: (
     values: IAddObjectType,
     formikHelpers: FormikHelpers<IAddObjectType>
@@ -35,7 +38,8 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
   const dispatch = useAppDispatch();
   const isEdit = initialValues?.uniqueId;
   const text = isEdit ? "Edit object type" : "Add object type";
-  const { deviceTypes } = useAppSelector(selectDeviceTypesState);
+
+  const { specificObjectLoading } = useAppSelector(selectObjectTypesState);
 
   const formInitialValues = useMemo(
     () =>
@@ -49,10 +53,7 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
   ) => {
     formikHelpers.setSubmitting(true);
 
-    const objectTypeData = objectTypeDataFormatterForService(
-      values,
-      deviceTypes
-    );
+    const objectTypeData = objectTypeDataFormatterForService(values);
 
     const { type } = await dispatch(
       createOrUpdateObjectTypeThunk(objectTypeData)
@@ -60,9 +61,15 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
 
     if (type === "objectType/createOrUpdateObjectTypeThunk/fulfilled") {
       onClose();
+      formikHelpers.resetForm();
     }
 
     formikHelpers.setSubmitting(false);
+  };
+
+  const handleClose = () => {
+    onClose();
+    dispatch(resetSpecificObject());
   };
 
   return (
@@ -78,7 +85,7 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
           <Form>
             <Modal
               open={open}
-              onClose={onClose}
+              onClose={handleClose}
               headerIcon={<ObjectBlueIcon />}
               headerIconBgColor={theme.palette.primary.light}
               title={text}
@@ -93,6 +100,7 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
               }}
               secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
               theme={theme}
+              loading={specificObjectLoading}
             >
               <InnerForm />
             </Modal>

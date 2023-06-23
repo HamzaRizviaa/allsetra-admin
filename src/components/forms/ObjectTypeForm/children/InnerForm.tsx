@@ -1,20 +1,24 @@
 import { FC, useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
-import { useFormikContext } from "formik";
+import { FieldArray, useFormikContext } from "formik";
+import DeviceTypeFields from "./SelectedDeviceTypes";
 
 import { useAppDispatch, useAppSelector } from "hooks";
 import {
   selectDeviceTypesState,
+  selectFieldsState,
   selectIconState,
   selectObjectTypesState,
 } from "app/data/selectors";
 import {
   getAllDeviceTypesThunk,
+  getAllFieldsThunk,
   getAllIconsThunk,
   getAllObjectTypesThunk,
 } from "app/features";
 import { IAddObjectType } from "app/data/types";
+import { difference, isEmpty, omit } from "lodash";
 
 const InnerForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +33,9 @@ const InnerForm: FC = () => {
   const { loading: deviceTypesLoading, deviceTypes } = useAppSelector(
     selectDeviceTypesState
   );
+
+  const { loading: fieldsloading, allFields } =
+    useAppSelector(selectFieldsState);
 
   const filteredData = allObjectTypes.filter(
     (item: any) => item.uniqueId === values.parentObjectId
@@ -55,22 +62,46 @@ const InnerForm: FC = () => {
     }));
   };
 
-  const deviceRender = (deviceTypes: any[]) => {
-    return deviceTypes.map((device) => ({
-      label: device.name,
-      value: device.uniqueId,
-    }));
-  };
-
   useEffect(() => {
     dispatch(getAllObjectTypesThunk());
     dispatch(getAllIconsThunk());
     dispatch(getAllDeviceTypesThunk());
+    dispatch(getAllFieldsThunk());
   }, []);
 
   useEffect(() => {
     iconRender(icons);
   }, [icons]);
+
+  const deviceTypeChangeHandler = (value: any) => {
+    const isDeviceTypeAdded = value.length > values.deviceTypes.length;
+
+    const diffBetweenLists: string[] = isDeviceTypeAdded
+      ? difference(value, values.deviceTypes)
+      : difference(values.deviceTypes, value);
+
+    // Could be the device type ID of either added or removed item
+    const deviceTypeId: string =
+      diffBetweenLists.length > 0 ? diffBetweenLists[0] : "";
+
+    if (isDeviceTypeAdded && !isEmpty(deviceTypeId)) {
+      setFieldValue("deviceProfilesData", {
+        ...values.deviceProfilesData,
+        [`${deviceTypeId}`]: {
+          defaultProfileId: "",
+        },
+      });
+    } else {
+      setFieldValue(
+        "deviceModules",
+        omit(values.deviceProfilesData, [deviceTypeId])
+      );
+    }
+
+    setFieldValue("deviceTypes", value);
+  };
+
+  console.log({ values });
 
   return (
     <Stack spacing={2}>
@@ -94,26 +125,24 @@ const InnerForm: FC = () => {
         required
       />
       <FormikSelectField
-        label="Supported device types"
+        label="Device type"
         name="deviceTypes"
-        options={deviceRender(deviceTypes)}
-        optionLabelKey="label"
-        optionValueKey="value"
+        options={deviceTypes}
+        optionLabelKey="name"
+        optionValueKey="uniqueId"
         loading={deviceTypesLoading}
-        required
+        onChange={deviceTypeChangeHandler}
         multiple
+        required
+      />
+      <FieldArray
+        name="deviceTypes"
+        render={(props) => (
+          <DeviceTypeFields {...props} deviceTypes={deviceTypes} />
+        )}
       />
       <Box sx={{ height: "1px", background: "#EFF4FF" }}></Box>
-      <FormikSelectField
-        label="Object type icon"
-        name="iconId"
-        options={icons}
-        optionLabelKey="url"
-        optionValueKey="uniqueId"
-        loading={iconLoading}
-        required
-      />
-      {values.parentObjectId !== "" && (
+      {values.parentObjectId !== "" ? (
         <FormikSelectField
           label="Supported services"
           name="services"
@@ -124,11 +153,22 @@ const InnerForm: FC = () => {
           required
           multiple
         />
+      ) : (
+        ""
       )}
-      {/* <FieldArray
-        name="deviceTypes"
-        render={(props) => <DeviceTypeFields {...props} />}
-      /> */}
+      <FormikSelectField
+        label="Dynamic Fields"
+        name="fields"
+        options={allFields}
+        optionLabelKey="label"
+        optionValueKey="uniqueId"
+        loading={fieldsloading}
+        onChange={(value) => {
+          console.log(value);
+        }}
+        required
+        multiple
+      />
     </Stack>
   );
 };

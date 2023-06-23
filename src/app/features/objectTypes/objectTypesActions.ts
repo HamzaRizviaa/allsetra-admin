@@ -94,3 +94,19 @@ export const createOrUpdateObjectTypeThunk = createAsyncThunk(
     }
   }
 );
+
+export const getSpecificObjectThunk = createAsyncThunk(
+  "objectType/getSpecificObjectThunk",
+  async (objectTypesID: string) => {
+    try {
+      const response = await ObjectTypes.getSpecificObjectType(objectTypesID);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

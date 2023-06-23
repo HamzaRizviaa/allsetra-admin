@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FormikHelpers } from "formik";
@@ -17,19 +17,26 @@ import {
   getObjectTypesByQueryThunk,
   deactivateObjectTypeThunk,
   createOrUpdateObjectTypeThunk,
+  getSpecificObjectThunk,
 } from "app/features";
 import { ALL_OBJECT_TYPES_TABLE_COLUMNS } from "app/data/constants";
 import { IAddObjectType, IObjectType } from "app/data/types";
 import ObjectTypeForm from "components/forms/ObjectTypeForm/ObjectTypeForm";
+import { isEmpty } from "lodash";
+import { objectTypeDataFormatterForForm } from "app/data/helpers/objectTypeHelpers";
 
 const ObjectTypesManager: FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
   // Global State
-  const { allObjectTypes, loading, totalObjectTypes } = useAppSelector(
-    selectObjectTypesState
-  );
+  const {
+    allObjectTypes,
+    loading,
+    totalObjectTypes,
+    specificObject,
+    specificObjectLoading,
+  } = useAppSelector(selectObjectTypesState);
 
   // Local State
   const [selectedObjectTypeId, setSelectedObjectTypeId] = useState<
@@ -69,6 +76,20 @@ const ObjectTypesManager: FC = () => {
     formikHelpers.setSubmitting(false);
   };
 
+  const formValues = useMemo(
+    () =>
+      selectedObjectTypeId && !isEmpty(specificObject)
+        ? objectTypeDataFormatterForForm(specificObject)
+        : null,
+    [specificObject]
+  );
+
+  const onRowClick = (row: IObjectType) => {
+    dispatch(getSpecificObjectThunk(row.uniqueId));
+    setSelectedObjectTypeId(row.uniqueId);
+    setOpen(true);
+  };
+
   return (
     <Box>
       <Topbar
@@ -88,6 +109,7 @@ const ObjectTypesManager: FC = () => {
           progressPending={loading}
           paginationTotalRows={totalObjectTypes}
           searchPlaceholder="Search object type"
+          onRowClicked={onRowClick}
           cellActions={[
             {
               name: "Activate object type",
@@ -107,6 +129,7 @@ const ObjectTypesManager: FC = () => {
         onClose={() => setOpen(false)}
         theme={theme}
         onSubmit={addObjectTypeHandler}
+        initialValues={formValues}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

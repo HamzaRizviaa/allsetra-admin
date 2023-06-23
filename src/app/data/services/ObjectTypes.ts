@@ -11,6 +11,10 @@ class ObjectTypes {
     return await axiosInstance.post("/objectTypes/search", data);
   };
 
+  static getSpecificObjectType = async (objectTypeId: string) => {
+    return await axiosInstance.get(`/objectTypes/${objectTypeId}`);
+  };
+
   static createObjectType = async (data: any) => {
     return await axiosInstance.post("/objectTypes", data);
   };
