@@ -25,8 +25,6 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
   toggleClearAlarmModal,
   toggleReportTheftModal,
 }) => {
-  console.log({ data });
-
   return (
     <AlarmCardContainer>
       <Stack

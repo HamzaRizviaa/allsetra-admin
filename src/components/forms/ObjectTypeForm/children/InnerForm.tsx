@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { Box, Stack } from "@mui/material";
 import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
 import { FieldArray, useFormikContext } from "formik";
@@ -101,8 +101,6 @@ const InnerForm: FC = () => {
     setFieldValue("deviceTypes", value);
   };
 
-  console.log({ values });
-
   return (
     <Stack spacing={2}>
       <FormikInputField label="Object name" name="name" required />
@@ -142,7 +140,7 @@ const InnerForm: FC = () => {
         )}
       />
       <Box sx={{ height: "1px", background: "#EFF4FF" }}></Box>
-      {values.parentObjectId !== "" ? (
+      {values.parentObjectId !== "" && (
         <FormikSelectField
           label="Supported services"
           name="services"
@@ -153,8 +151,6 @@ const InnerForm: FC = () => {
           required
           multiple
         />
-      ) : (
-        ""
       )}
       <FormikSelectField
         label="Dynamic Fields"
@@ -163,9 +159,6 @@ const InnerForm: FC = () => {
         optionLabelKey="label"
         optionValueKey="uniqueId"
         loading={fieldsloading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
         multiple
       />
