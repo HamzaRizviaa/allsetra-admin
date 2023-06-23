@@ -5,7 +5,6 @@ import {
   getSpecificSubscriptionThunk,
   getSubscriptionsByQueryThunk,
 } from "./subscriptionsActions";
-import { act } from "react-dom/test-utils";
 import { ISubscription } from "app/data/types/subscriptionManagerTypes";
 
 export interface ISubscriptionState {
@@ -29,7 +28,11 @@ const initialState: ISubscriptionState = {
 const subscriptionsSlice = createSlice({
   name: "subscriptions",
   initialState,
-  reducers: {},
+  reducers: {
+    resetSpecificSubscription: (state) => {
+      state.specificSubscription = null;
+    },
+  },
   extraReducers: (builder) => {
     // Get All Subscriptions Action Cases
     builder.addCase(getAllSubscriptionsThunk.pending, (state) => {
@@ -91,4 +94,5 @@ const subscriptionsSlice = createSlice({
 });
 
 export * from "./subscriptionsActions";
+export const { resetSpecificSubscription } = subscriptionsSlice.actions;
 export default subscriptionsSlice.reducer;

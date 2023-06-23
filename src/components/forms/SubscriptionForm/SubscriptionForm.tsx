@@ -6,7 +6,7 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { SubscriptionBlueIcon } from "assets/icons";
 
 // DATA
-import { useAppDispatch } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import InnerForm from "./children/InnerForm";
 import { IAddSubscription } from "app/data/types/subscriptionManagerTypes";
 import {
@@ -14,6 +14,8 @@ import {
   addSubscriptionValidationSchema,
 } from "app/data/helpers/subscriptionHelpers";
 import { createOrUpdateSubscriptionThunk } from "app/features/subscriptions/subscriptionsActions";
+import { resetSpecificSubscription } from "app/features";
+import { selectSubscriptionsState } from "app/data/selectors";
 
 export type AddSubscriptionProps = Pick<ModalProps, "open" | "onClose"> & {
   initialValues?: any;
@@ -33,6 +35,10 @@ const SubscriptionForm: FC<AddSubscriptionProps> = ({
   const dispatch = useAppDispatch();
   const isEdit = initialValues?.uniqueId;
   const text = isEdit ? "Edit subscription" : "Add subscription";
+
+  const { specificSubscriptionLoading } = useAppSelector(
+    selectSubscriptionsState
+  );
 
   const formInitialValues = useMemo(
     () =>
@@ -55,6 +61,11 @@ const SubscriptionForm: FC<AddSubscriptionProps> = ({
     formikHelpers.setSubmitting(false);
   };
 
+  const handleClose = () => {
+    onClose();
+    dispatch(resetSpecificSubscription());
+  };
+
   return (
     <Box>
       <Formik
@@ -68,7 +79,7 @@ const SubscriptionForm: FC<AddSubscriptionProps> = ({
           <Form>
             <Modal
               open={open}
-              onClose={onClose}
+              onClose={handleClose}
               headerIcon={<SubscriptionBlueIcon />}
               headerIconBgColor={theme.palette.primary.light}
               title={text}
@@ -83,6 +94,7 @@ const SubscriptionForm: FC<AddSubscriptionProps> = ({
               }}
               secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
               theme={theme}
+              loading={specificSubscriptionLoading}
             >
               <InnerForm />
             </Modal>

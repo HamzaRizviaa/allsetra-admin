@@ -12,7 +12,7 @@ import NotFound from "pages/NotFound";
 import Map from "pages/Map";
 import AlarmDesk from "pages/AlarmDesk";
 
-// ADMIN PROTECTED ROUTES 
+// ADMIN PROTECTED ROUTES
 import AccountManager from "pages/admin/AccountManager";
 import AccountDetails from "pages/admin/AccountManager/AccountDetails";
 import ServiceManager from "pages/admin/ServiceManager";
