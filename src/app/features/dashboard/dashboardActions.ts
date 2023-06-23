@@ -48,3 +48,19 @@ export const getAllIconsThunk = createAsyncThunk(
     }
   }
 );
+
+export const getAllLanguagesThunk = createAsyncThunk(
+  "dashboard/getAllLanguagesThunk",
+  async () => {
+    try {
+      const response = await Dashboard.getAllLanguages();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

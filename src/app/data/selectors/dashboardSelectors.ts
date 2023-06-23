@@ -1,6 +1,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 
+export const selectDashboardReducerLoading = (state: RootState) =>
+  state.rootReducer.dashboardReducer.loading;
+
 export const selectIdToken = (state: RootState) =>
   state.rootReducer.dashboardReducer.idToken;
 
@@ -34,5 +37,17 @@ export const selectIconState = createSelector(
   (loading, icons) => ({
     loading,
     icons,
+  })
+);
+
+export const selectAllLanguages = (state: RootState) =>
+  state.rootReducer.dashboardReducer.languages;
+
+export const selectLanguageState = createSelector(
+  selectDashboardReducerLoading,
+  selectAllLanguages,
+  (loading, languages) => ({
+    loading,
+    languages,
   })
 );

@@ -19,6 +19,7 @@ import ServiceManager from "pages/admin/ServiceManager";
 import FieldManager from "pages/admin/FieldManager";
 import SubscriptionManager from "pages/admin/SubscriptionManager";
 import ObjectTypesManager from "pages/admin/ObjectTypesManager";
+import Settings from "pages/settings";
 
 // DEVICE TYEPS PROTECTED ROUTES
 import DeviceTypes from "pages/deviceManager/DeviceTypes";
@@ -58,6 +59,8 @@ const App: FC = () => {
           path="/dashboard/device-types/details"
           element={<DeviceTypeDetails />}
         />
+
+        <Route path="/dashboard/settings" element={<Settings />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

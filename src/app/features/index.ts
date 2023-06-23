@@ -5,4 +5,5 @@ export * from "./deviceManager/deviceManagerSlice";
 export * from "./fields/fieldsSlice";
 export * from "./objectTypes/objectTypesSlice";
 export * from "./subscriptions/subscriptionsSlice";
+export * from "./settings/settingsSlice";
 export * from "./alarmDesk/alarmDeskSlice";

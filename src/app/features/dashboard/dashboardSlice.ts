@@ -3,6 +3,7 @@ import {
   getAllCurrenciesThunk,
   getAllRolesThunk,
   getAllIconsThunk,
+  getAllLanguagesThunk,
 } from "./dashboardActions";
 
 export interface IDashboardState {
@@ -13,6 +14,7 @@ export interface IDashboardState {
   roles: Array<any>;
   currencies: Array<any>;
   icons: Array<any>;
+  languages: Array<any>;
 }
 
 const initialState: IDashboardState = {
@@ -23,6 +25,7 @@ const initialState: IDashboardState = {
   roles: [],
   currencies: [],
   icons: [],
+  languages: [],
 };
 
 const dashboardSlice = createSlice({
@@ -79,6 +82,20 @@ const dashboardSlice = createSlice({
     });
 
     builder.addCase(getAllIconsThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get All Languages Action Cases
+    builder.addCase(getAllLanguagesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllLanguagesThunk.fulfilled, (state, action) => {
+      state.languages = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getAllLanguagesThunk.rejected, (state) => {
       state.loading = false;
     });
   },

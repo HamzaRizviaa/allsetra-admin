@@ -5,4 +5,5 @@ export * from "./serviceManagerTypes";
 export * from "./fieldTypes";
 export * from "./objectTypes";
 export * from "./subscriptionManagerTypes";
+export * from "./settingsTypes";
 export * from "./alarmDeskTypes";

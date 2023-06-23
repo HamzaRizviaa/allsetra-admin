@@ -39,6 +39,8 @@ import { ReactComponent as SelectInputRemove } from "./common/SelectInputRemove.
 import { ReactComponent as SelectInputClear } from "./common/SelectInputClear.svg";
 import { ReactComponent as ObjectBlueIcon } from "./common/ObjectBlueIcon.svg";
 import { ReactComponent as SubscriptionBlueIcon } from "./common/SubscriptionBlueIcon.svg";
+import { ReactComponent as LockedIcon } from "./common/lock.svg";
+import { ReactComponent as MarkerIcon } from "./common/Marker.svg";
 
 export {
   LogoDarkSvg,
@@ -71,6 +73,8 @@ export {
   DevicetypeBlueIcon,
   ObjecttypeBlueIcon,
   SubscriptionBlueIcon,
+  LockedIcon,
+  MarkerIcon,
   DevicesIcon,
   AccountsIcon,
   ServicesIcon,
