@@ -21,7 +21,7 @@ import {
 } from "app/features";
 import { ALL_OBJECT_TYPES_TABLE_COLUMNS } from "app/data/constants";
 import { IAddObjectType, IObjectType } from "app/data/types";
-import ObjectTypeForm from "components/forms/ObjectTypeForm/ObjectTypeForm";
+import ObjectTypeForm from "components/forms/admin/ObjectTypeForm/ObjectTypeForm";
 import { isEmpty } from "lodash";
 import { objectTypeDataFormatterForForm } from "app/data/helpers/objectTypeHelpers";
 

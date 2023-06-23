@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { isEmpty } from "lodash";
 import { Box, Theme, useTheme } from "@mui/material";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
-import { Formik, Form, FormikHelpers, FormikState } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import { ObjectBlueIcon } from "assets/icons";
 
 // DATA

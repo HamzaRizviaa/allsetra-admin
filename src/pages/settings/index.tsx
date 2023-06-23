@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, CircularProgress, useTheme } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import UpdateSettingsForm from "components/forms/settings/UpdateSettingsForm.tsx/UpdateSettingsForm";
 
 //Data

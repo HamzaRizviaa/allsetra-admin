@@ -16,7 +16,7 @@ import { ALL_SUBSCRIPTIONS_TABLE_COLUMNS } from "app/data/constants";
 import { selectSubscriptionsState } from "app/data/selectors";
 import { IAddSubscription, ISubscription } from "app/data/types";
 import { subscriptionDataFormatterForForm } from "app/data/helpers";
-import SubscriptionForm from "components/forms/SubscriptionForm/SubscriptionForm";
+import SubscriptionForm from "components/forms/admin/SubscriptionForm/SubscriptionForm";
 import { isEmpty } from "lodash";
 import {
   createOrUpdateSubscriptionThunk,

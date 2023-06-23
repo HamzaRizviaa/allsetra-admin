@@ -1,5 +1,4 @@
 import { FC, useCallback } from "react";
-import { isEmpty } from "lodash";
 import { FieldArrayRenderProps } from "formik";
 import { Stack, Typography, useTheme } from "@mui/material";
 import { FormikSelectField } from "@vilocnv/allsetra-core";
