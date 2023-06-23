@@ -51,14 +51,14 @@ export const getDrawerSubMenuLists = (): {
       path: "/dashboard/service-manager",
     },
     {
-      name: "Field manager",
-      icon: FieldsIcon,
-      path: "/dashboard/field-manager",
-    },
-    {
       name: "Subscription manager",
       icon: SubscriptionSvg,
       path: "/dashboard/subscription-manager",
+    },
+    {
+      name: "Field manager",
+      icon: FieldsIcon,
+      path: "/dashboard/field-manager",
     },
   ],
   "Device Manager": [

@@ -46,8 +46,6 @@ const InnerForm: FC = () => {
     dispatch(getAllServicesThunk());
   }, []);
 
-  console.log({ values });
-
   return (
     <Stack spacing={2}>
       <FormikInputField label="Subscription name" name="name" required />
@@ -65,9 +63,6 @@ const InnerForm: FC = () => {
         optionLabelKey="name"
         optionValueKey="id"
         loading={subscriptionLoading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
       />
       <FormikInputField
@@ -83,9 +78,6 @@ const InnerForm: FC = () => {
           optionLabelKey="name"
           optionValueKey="id"
           loading={subscriptionLoading}
-          onChange={(value) => {
-            console.log(value);
-          }}
           required
         />
         <FormikInputField label="" name="valuePerMonth" required />
@@ -97,9 +89,6 @@ const InnerForm: FC = () => {
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={deviceTypesLoading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
         multiple
       />
@@ -110,9 +99,6 @@ const InnerForm: FC = () => {
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={servicesLoading}
-        onChange={(value) => {
-          console.log(value);
-        }}
         required
       />
     </Stack>
