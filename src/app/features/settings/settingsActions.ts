@@ -37,3 +37,21 @@ export const updateSettingsThunk = createAsyncThunk(
     }
   }
 );
+
+export const resetPasswordThunk = createAsyncThunk(
+  "settings/resetPasswordThunk",
+  async (data: any) => {
+    try {
+      const response = await Settings.resetPassword(data);
+
+      if (response.status === 202) {
+        toast.success("Password has been changed successfully");
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

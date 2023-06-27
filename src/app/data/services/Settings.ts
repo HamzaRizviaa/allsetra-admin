@@ -8,6 +8,10 @@ class Settings {
   static updateSettings = async (data: any) => {
     return await axiosInstance.patch("/userSettings", data);
   };
+
+  static resetPassword = async (data: any) => {
+    return await axiosInstance.post("/userSettings/reset-password", data);
+  };
 }
 
 export default Settings;
