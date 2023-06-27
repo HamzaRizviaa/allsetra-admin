@@ -1,17 +1,13 @@
-import { FC, useMemo } from "react";
-import { isEmpty } from "lodash";
-import { Box, Theme, useTheme } from "@mui/material";
+import { FC } from "react";
+import { Box, useTheme } from "@mui/material";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
 import { ObjectBlueIcon } from "assets/icons";
 
 // DATA
-import { useAppDispatch, useAppSelector } from "hooks";
+import { useAppDispatch } from "hooks";
 import { IAddObjectType } from "app/data/types";
-import {
-  createOrUpdateObjectTypeThunk,
-  resetSpecificObject,
-} from "app/features";
+import { createOrUpdateObjectTypeThunk } from "app/features";
 import InnerForm from "./children/InnerForm";
 import {
   addObjectTypeInitialValues,
@@ -20,32 +16,20 @@ import {
 } from "app/data/helpers/objectTypeHelpers";
 import { selectObjectTypesState } from "app/data/selectors";
 
-export type AddObjectTypeProps = Pick<ModalProps, "open" | "onClose"> & {
+export type AddObjectTypeProps = Omit<ModalProps, "title" | "children"> & {
   initialValues?: any;
-  onSubmit: (
-    values: IAddObjectType,
-    formikHelpers: FormikHelpers<IAddObjectType>
-  ) => void;
-  theme: Theme;
 };
 
 const ObjectTypeForm: FC<AddObjectTypeProps> = ({
   open,
   onClose,
   initialValues,
+  ...rest
 }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const isEdit = initialValues?.uniqueId;
   const text = isEdit ? "Edit object type" : "Add object type";
-
-  const { specificObjectLoading } = useAppSelector(selectObjectTypesState);
-
-  const formInitialValues = useMemo(
-    () =>
-      !isEmpty(initialValues) ? initialValues : addObjectTypeInitialValues,
-    [initialValues]
-  );
 
   const onSubmitHandler = async (
     values: IAddObjectType,
@@ -67,25 +51,23 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
     formikHelpers.setSubmitting(false);
   };
 
-  const handleClose = () => {
-    onClose();
-    dispatch(resetSpecificObject());
-  };
-
   return (
     <Box>
       <Formik
-        initialValues={formInitialValues}
+        initialValues={initialValues || addObjectTypeInitialValues}
         validationSchema={addObjectTypeValidationSchema}
         onSubmit={onSubmitHandler}
         enableReinitialize
         validateOnMount
       >
-        {({ handleSubmit, isSubmitting, dirty, isValid }) => (
+        {({ handleSubmit, isSubmitting, dirty, isValid, resetForm }) => (
           <Form>
             <Modal
               open={open}
-              onClose={handleClose}
+              onClose={() => {
+                onClose();
+                resetForm();
+              }}
               headerIcon={<ObjectBlueIcon />}
               headerIconBgColor={theme.palette.primary.light}
               title={text}
@@ -98,9 +80,15 @@ const ObjectTypeForm: FC<AddObjectTypeProps> = ({
                 // @ts-ignore
                 onClick: handleSubmit,
               }}
-              secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
+              secondaryBtnProps={{
+                text: "Cancel",
+                onClick: () => {
+                  onClose();
+                  resetForm();
+                },
+              }}
               theme={theme}
-              loading={specificObjectLoading}
+              {...rest}
             >
               <InnerForm />
             </Modal>

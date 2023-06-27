@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { Box, Stack } from "@mui/material";
 import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
 import { FieldArray, useFormikContext } from "formik";
@@ -37,16 +37,18 @@ const InnerForm: FC = () => {
   const { loading: fieldsloading, allFields } =
     useAppSelector(selectFieldsState);
 
-  const filteredData = allObjectTypes.filter(
-    (item: any) => item.uniqueId === values.parentObjectId
-  );
+  const [filteredData, supportedDevicesRender] = useMemo(() => {
+    const filteredData = allObjectTypes.find(
+      (item: any) => item.uniqueId === values.parentObjectId
+    );
+    const supportedDevicesRender =
+      filteredData?.services?.map((val: any) => ({
+        label: val.name,
+        value: val.uniqueId,
+      })) || [];
 
-  const supportedDevicesRender = (filteredData: any[]) => {
-    return filteredData[0].services.map((val: any) => ({
-      label: val.name,
-      value: val.uniqueId,
-    }));
-  };
+    return [filteredData, supportedDevicesRender];
+  }, [allObjectTypes, values.parentObjectId]);
 
   const iconRender = (icons: any[]) => {
     return icons.map((icon) => ({
@@ -145,7 +147,7 @@ const InnerForm: FC = () => {
         <FormikSelectField
           label="Supported services"
           name="services"
-          options={supportedDevicesRender(filteredData)}
+          options={supportedDevicesRender}
           optionLabelKey="label"
           optionValueKey="value"
           loading={iconLoading}

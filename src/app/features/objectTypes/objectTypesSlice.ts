@@ -13,6 +13,7 @@ export interface IObjectTypesState {
   totalObjectTypes: number | null;
   allObjectTypes: Array<any>;
   objectTypes: Array<any>;
+  objectTypesLoading: boolean;
   specificObject: Object | null;
 }
 
@@ -21,6 +22,7 @@ const initialState: IObjectTypesState = {
   totalObjectTypes: null,
   allObjectTypes: [],
   objectTypes: [],
+  objectTypesLoading: false,
   specificObject: null,
   specificObjectLoading: false,
 };
@@ -28,11 +30,7 @@ const initialState: IObjectTypesState = {
 const objectTypesSlice = createSlice({
   name: "objectTypes",
   initialState,
-  reducers: {
-    resetSpecificObject: (state) => {
-      state.specificObject = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Get All Objects Action Cases
     builder.addCase(getAllObjectTypesThunk.pending, (state) => {
@@ -40,7 +38,7 @@ const objectTypesSlice = createSlice({
     });
 
     builder.addCase(getAllObjectTypesThunk.fulfilled, (state, action) => {
-      state.allObjectTypes = action.payload;
+      state.allObjectTypes = action.payload || [];
       state.loading = false;
     });
 
@@ -50,17 +48,17 @@ const objectTypesSlice = createSlice({
 
     // Get Objects By Querying Action Cases
     builder.addCase(getObjectTypesByQueryThunk.pending, (state) => {
-      state.loading = true;
+      state.objectTypesLoading = true;
     });
 
     builder.addCase(getObjectTypesByQueryThunk.fulfilled, (state, action) => {
-      state.allObjectTypes = action.payload?.results || [];
+      state.objectTypes = action.payload?.results || [];
       state.totalObjectTypes = action.payload?.rowCount || 0;
-      state.loading = false;
+      state.objectTypesLoading = false;
     });
 
     builder.addCase(getObjectTypesByQueryThunk.rejected, (state) => {
-      state.loading = false;
+      state.objectTypesLoading = false;
     });
 
     // Get Objects By Querying Action Cases
@@ -80,5 +78,4 @@ const objectTypesSlice = createSlice({
 });
 
 export * from "./objectTypesActions";
-export const { resetSpecificObject } = objectTypesSlice.actions;
 export default objectTypesSlice.reducer;

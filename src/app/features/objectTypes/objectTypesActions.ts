@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { toast, types } from "@vilocnv/allsetra-core";
+import { toast, types, utils } from "@vilocnv/allsetra-core";
 import { ObjectTypes } from "app/data/services";
 
 export const getAllObjectTypesThunk = createAsyncThunk(
@@ -75,7 +75,7 @@ export const activateObjectTypeThunk = createAsyncThunk(
 
 export const createOrUpdateObjectTypeThunk = createAsyncThunk(
   "objectType/createOrUpdateObjectTypeThunk",
-  async (data: any) => {
+  async (data: any, { dispatch }) => {
     try {
       const response = data.uniqueId
         ? await ObjectTypes.updateObjectType(data.uniqueId, data)
@@ -85,6 +85,8 @@ export const createOrUpdateObjectTypeThunk = createAsyncThunk(
         data.uniqueId
           ? toast.success("Object Type has been updated")
           : toast.success("Object Type has been created");
+
+        dispatch(getObjectTypesByQueryThunk(utils.getCommonParamsForApi()));
       }
 
       return response;

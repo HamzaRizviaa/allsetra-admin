@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FormikHelpers } from "formik";
@@ -31,11 +31,11 @@ const ObjectTypesManager: FC = () => {
 
   // Global State
   const {
-    allObjectTypes,
-    loading,
+    objectTypesLoading,
     totalObjectTypes,
     specificObject,
     specificObjectLoading,
+    objectTypes,
   } = useAppSelector(selectObjectTypesState);
 
   // Local State
@@ -50,6 +50,17 @@ const ObjectTypesManager: FC = () => {
   const handleActivateObjectType = async (objectType: IObjectType) => {
     objectType && dispatch(activateAccountThunk(objectType.uniqueId));
   };
+
+  const handleAddObjectType = useCallback(() => {
+    setSelectedObjectTypeId(null);
+    setOpen(true);
+  }, []);
+
+  const handleEditObjectType = useCallback((objectType: IObjectType) => {
+    dispatch(getSpecificObjectThunk(objectType.uniqueId));
+    setSelectedObjectTypeId(objectType.uniqueId);
+    setOpen(true);
+  }, []);
 
   const openDeleteConfirmationModal = (objectType: IObjectType) => {
     setSelectedObjectTypeId(objectType.uniqueId);
@@ -81,14 +92,8 @@ const ObjectTypesManager: FC = () => {
       selectedObjectTypeId && !isEmpty(specificObject)
         ? objectTypeDataFormatterForForm(specificObject)
         : null,
-    [specificObject]
+    [selectedObjectTypeId, specificObject]
   );
-
-  const onRowClick = (row: IObjectType) => {
-    dispatch(getSpecificObjectThunk(row.uniqueId));
-    setSelectedObjectTypeId(row.uniqueId);
-    setOpen(true);
-  };
 
   return (
     <Box>
@@ -99,18 +104,18 @@ const ObjectTypesManager: FC = () => {
           variant: "outlined",
           text: "Add object type",
           startIcon: <AddIcon />,
-          onClick: () => setOpen(true),
+          onClick: handleAddObjectType,
         }}
       />
       <Box mx={4}>
         <Table
           columns={ALL_OBJECT_TYPES_TABLE_COLUMNS}
-          data={allObjectTypes}
-          progressPending={loading}
+          data={objectTypes}
+          progressPending={objectTypesLoading}
           paginationTotalRows={totalObjectTypes}
           searchPlaceholder="Search object type"
-          onRowClicked={onRowClick}
           cellActions={[
+            { name: "Edit object type", onClick: handleEditObjectType },
             {
               name: "Activate object type",
               when: (row: IObjectType) => row.isDeleted === true,
@@ -127,8 +132,7 @@ const ObjectTypesManager: FC = () => {
       <ObjectTypeForm
         open={open}
         onClose={() => setOpen(false)}
-        theme={theme}
-        onSubmit={addObjectTypeHandler}
+        loading={specificObjectLoading}
         initialValues={formValues}
       />
       <DeleteConfirmationModal
