@@ -1,4 +1,5 @@
 import { FC, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Box, useTheme } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,8 @@ const UpdateSettingsForm: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const { i18n } = useTranslation();
+
   //Global States
   const { specificSetting } = useAppSelector(selectSettingsState);
   const { loading, languages } = useAppSelector(selectLanguageState);
@@ -39,11 +42,20 @@ const UpdateSettingsForm: FC = () => {
     formikHelpers: FormikHelpers<ISettings>
   ) => {
     formikHelpers.setSubmitting(true);
+
     const { type } = await dispatch(
       updateSettingsThunk({ ...values, languageId: values.language })
     );
 
-    if (type === "fields/createOrUpdateFieldThunk/fulfilled") {
+    if (type === "settings/updateSettingsThunk/fulfilled") {
+      const selectedLanguage = languages.find(
+        (lang) => lang.languageId === values.language
+      );
+
+      await i18n.changeLanguage(
+        selectedLanguage ? selectedLanguage.languageCode : "en"
+      );
+
       formikHelpers.setSubmitting(false);
     }
   };

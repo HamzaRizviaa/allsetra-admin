@@ -31,7 +31,6 @@ export const postLockAlarmThunk = createAsyncThunk(
       const response = await AlarmDesk.postLockAlarm(alarmId);
 
       if (response.status === 202) {
-        toast.success(`Alarm has been locked`);
         dispatch(setIsLockedOfAlarm({ alarmId, isLocked: true }));
       }
     } catch (e: any) {
@@ -48,7 +47,6 @@ export const postUnlockAlarmThunk = createAsyncThunk(
       const response = await AlarmDesk.postUnlockAlarm(alarmId);
 
       if (response.status === 202) {
-        toast.success(`Alarm has been unlocked`);
         dispatch(setIsLockedOfAlarm({ alarmId, isLocked: false }));
       }
     } catch (e: any) {

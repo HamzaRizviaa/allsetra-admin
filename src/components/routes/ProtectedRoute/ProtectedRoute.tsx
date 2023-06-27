@@ -37,12 +37,10 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
     instance.logoutRedirect({ postLogoutRedirectUri: "/" });
   };
 
-  const { drawerMenuItems, drawerSubMenuLists } = useMemo(() => {
-    return {
-      drawerMenuItems: getDrawerMenuItems(t),
-      drawerSubMenuLists: getDrawerSubMenuLists(),
-    };
-  }, [i18n]);
+  const { drawerMenuItems, drawerSubMenuLists } = {
+    drawerMenuItems: getDrawerMenuItems(t),
+    drawerSubMenuLists: getDrawerSubMenuLists(),
+  };
 
   return (
     <Fragment>

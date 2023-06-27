@@ -20,7 +20,7 @@ export const getSpecificSettingThunk = createAsyncThunk(
 );
 
 export const updateSettingsThunk = createAsyncThunk(
-  "fields/updateSettingsThunk",
+  "settings/updateSettingsThunk",
   async (data: any, { dispatch }) => {
     try {
       const response = await Settings.updateSettings(data);
