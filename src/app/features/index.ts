@@ -7,3 +7,4 @@ export * from "./objectTypes/objectTypesSlice";
 export * from "./subscriptions/subscriptionsSlice";
 export * from "./settings/settingsSlice";
 export * from "./alarmDesk/alarmDeskSlice";
+export * from "./objects/objectsSlice";

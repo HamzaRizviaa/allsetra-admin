@@ -7,3 +7,4 @@ export * from "./objectTypesSelectors";
 export * from "./subscriptionsSelectors";
 export * from "./settingsSelectors";
 export * from "./alarmDeskSelectors";
+export * from "./objectsSelectors";
