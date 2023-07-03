@@ -35,3 +35,8 @@ export interface IAlarmSendEmail {
   additionalEmails: string[];
   message: string;
 }
+
+export interface IAlarmSendSMS {
+  contactPersons: string[];
+  message: string;
+}

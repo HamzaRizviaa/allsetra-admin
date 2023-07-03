@@ -19,6 +19,7 @@ export interface AlarmExpendableRowCardProps {
   toggleSendEmailModal: () => void;
   toggleClearAlarmModal: () => void;
   toggleReportTheftModal: () => void;
+  toggleSendSMSModal: () => void;
 }
 
 const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
@@ -26,6 +27,7 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
   toggleSendEmailModal,
   toggleClearAlarmModal,
   toggleReportTheftModal,
+  toggleSendSMSModal,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -53,7 +55,11 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
           >
             Email
           </Button>
-          <Button variant={"outlined"} size={"small"}>
+          <Button
+            variant={"outlined"}
+            size={"small"}
+            onClick={toggleSendSMSModal}
+          >
             SMS
           </Button>
         </Stack>

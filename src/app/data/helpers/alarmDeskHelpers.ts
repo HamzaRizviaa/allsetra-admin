@@ -3,6 +3,7 @@ import {
   IAlarmReportTheft,
   IClearAlarm,
   IAlarmSendEmail,
+  IAlarmSendSMS,
 } from "app/data/types";
 
 export const alarmReportTheftInitialValues: IAlarmReportTheft = {
@@ -48,5 +49,19 @@ export const alarmSendEmailValidationSchema: Yup.Schema = Yup.object({
     .of(Yup.string())
     .required()
     .label("Additional email addresses"),
+  message: Yup.string().trim().required().label("Message"),
+});
+
+export const alarmSendSMSInitialValues: IAlarmSendSMS = {
+  contactPersons: [],
+  message: "",
+};
+
+export const alarmSendSMSValidationSchema: Yup.Schema = Yup.object({
+  contactPersons: Yup.array()
+    .of(Yup.string())
+    .min(1)
+    .required()
+    .label("Default email addresses"),
   message: Yup.string().trim().required().label("Message"),
 });

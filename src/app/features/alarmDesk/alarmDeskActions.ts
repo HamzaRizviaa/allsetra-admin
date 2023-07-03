@@ -5,6 +5,7 @@ import { toast, types } from "@vilocnv/allsetra-core";
 import {
   IAlarmReportTheft,
   IAlarmSendEmail,
+  IAlarmSendSMS,
   IClearAlarm,
 } from "app/data/types";
 
@@ -96,6 +97,22 @@ export const postAlarmSendEmailThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Email has been send for the alarm");
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const postAlarmSendSMSThunk = createAsyncThunk(
+  "alarmDesk/postAlarmSendSMSThunk",
+  async ({ alarmId, data }: { alarmId: string; data: IAlarmSendSMS }) => {
+    try {
+      const response = await AlarmDesk.postAlarmSendSMS(alarmId, data);
+
+      if (response.status === 202) {
+        toast.success("SMS has been send for the alarm");
       }
     } catch (e: any) {
       console.error(e);

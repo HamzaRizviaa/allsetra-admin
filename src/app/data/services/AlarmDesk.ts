@@ -1,6 +1,6 @@
 import axiosInstance from "app/axiosInstance";
 import { types } from "@vilocnv/allsetra-core";
-import { IAlarmReportTheft, IAlarmSendEmail, IClearAlarm } from "../types";
+import { IAlarmReportTheft, IAlarmSendEmail, IAlarmSendSMS, IClearAlarm } from "../types";
 
 class AlarmDesk {
   static getAlarmsByQuery = async (data: types.IRecordsAggregationBody) => {
@@ -31,6 +31,10 @@ class AlarmDesk {
     data: IAlarmSendEmail
   ) => {
     return await axiosInstance.post(`/alarms/${alarmId}/send-email`, data);
+  };
+
+  static postAlarmSendSMS = async (alarmId: string, data: IAlarmSendSMS) => {
+    return await axiosInstance.post(`/alarms/${alarmId}/send-sms`, data);
   };
 
   // Alarm Comments Endpoints

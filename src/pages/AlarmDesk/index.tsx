@@ -4,6 +4,8 @@ import { Table, Topbar, useDispatchOnParams } from "@vilocnv/allsetra-core";
 import AlarmExpendableRowCard from "components/cards/AlarmExpendableRowCard/AlarmExpendableRowCard";
 import AlarmReportTheftForm from "components/forms/alarmDesk/AlarmReportTheftForm/AlarmReportTheftForm";
 import ClearAlarmForm from "components/forms/alarmDesk/ClearAlarmForm/ClearAlarmForm";
+import AlarmSendEmailForm from "components/forms/alarmDesk/AlarmSendEmailForm/AlarmSendEmailForm";
+import AlarmSendSMSForm from "components/forms/alarmDesk/AlarmSendSMSForm/AlarmSendSMSForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -15,7 +17,6 @@ import {
 } from "app/features";
 import { selectAlarmDeskState } from "app/data/selectors";
 import { IAlarm } from "app/data/types";
-import AlarmSendEmailForm from "components/forms/alarmDesk/AlarmSendEmailForm/AlarmSendEmailForm";
 
 const AlarmDesk: FC = () => {
   const theme = useTheme();
@@ -30,6 +31,7 @@ const AlarmDesk: FC = () => {
   const [expandedRowsId, setExpandedRowsId] = useState<string[]>([]);
 
   const [openSendEmailModal, setOpenSendEmailModal] = useState<boolean>(false);
+  const [openSendSMSModal, setOpenSendSMSModal] = useState<boolean>(false);
   const [openClearAlarmModal, setOpenClearAlarmModal] =
     useState<boolean>(false);
   const [openReportTheftModal, setOpenReportTheftModal] =
@@ -38,6 +40,8 @@ const AlarmDesk: FC = () => {
   useDispatchOnParams(getAlarmsByQueryThunk);
 
   const toggleSendEmailModal = () => setOpenSendEmailModal(!openSendEmailModal);
+
+  const toggleSendSMSModal = () => setOpenSendSMSModal(!openSendSMSModal);
 
   const toggleClearAlarmModal = () =>
     setOpenClearAlarmModal(!openClearAlarmModal);
@@ -88,6 +92,7 @@ const AlarmDesk: FC = () => {
               toggleSendEmailModal: toggleSendEmailModal,
               toggleReportTheftModal: toggleReportTheftModal,
               toggleClearAlarmModal: toggleClearAlarmModal,
+              toggleSendSMSModal: toggleSendSMSModal,
             }}
             expandableRowDisabled={(row: IAlarm) =>
               row.isLocked && !isRowExpended(row.uniqueId)
@@ -102,6 +107,11 @@ const AlarmDesk: FC = () => {
       <AlarmSendEmailForm
         open={openSendEmailModal}
         onClose={toggleSendEmailModal}
+        alarmId={selectedAlarmId}
+      />
+      <AlarmSendSMSForm
+        open={openSendSMSModal}
+        onClose={toggleSendSMSModal}
         alarmId={selectedAlarmId}
       />
       <ClearAlarmForm
