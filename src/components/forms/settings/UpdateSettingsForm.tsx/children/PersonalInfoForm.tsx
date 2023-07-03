@@ -50,13 +50,7 @@ const PersonalInfoForm: FC = () => {
               placeholder="User number"
               fullWidth
               disabled
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <LockedIcon />
-                  </InputAdornment>
-                ),
-              }}
+              endIcon={<LockedIcon />}
             />
             <FormikInputField
               label="Email"
