@@ -11,6 +11,8 @@ import NotFound from "pages/NotFound";
 // PROTECTED PAGES
 import Map from "pages/Map";
 import AlarmDesk from "pages/AlarmDesk";
+import Objects from "pages/Objects";
+import ObjectDetails from "pages/Objects/ObjectDetails";
 
 // ADMIN PROTECTED ROUTES
 import AccountManager from "pages/admin/AccountManager";
@@ -35,6 +37,8 @@ const App: FC = () => {
       <Route path="/dashboard" element={<ProtectedRoute redirectTo="/" />}>
         <Route index element={<Map />} />
         <Route path="/dashboard/alarm-desk" element={<AlarmDesk />} />
+        <Route path="/dashboard/objects" element={<Objects />} />
+        <Route path="/dashboard/objects/details" element={<ObjectDetails />} />
 
         {/* Admin Manager Routes */}
         <Route path="/dashboard/account-manager" element={<AccountManager />} />

@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  GoogleMap,
-  InfoWindow,
-  LoadScript,
-  Marker,
-} from "@react-google-maps/api";
+import React from "react";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { MapContainer } from "./Map.styled";
 
 interface MapProps {
@@ -17,7 +12,7 @@ interface MapProps {
   objects: Array<any>;
 }
 
-const Map: React.FC<MapProps> = ({ center, zoom, objects }) => {
+const Map: React.FC<MapProps> = ({ center, zoom }) => {
   return (
     <MapContainer>
       <LoadScript
