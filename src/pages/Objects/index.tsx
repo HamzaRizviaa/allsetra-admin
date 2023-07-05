@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { Table, Topbar, useDispatchOnParams } from "@vilocnv/allsetra-core";
 
@@ -24,8 +24,7 @@ const Objects: FC = () => {
   const rowClickHandler = (row: any) => {
     dispatch(setActiveObject(row));
     navigate({
-      pathname: "/dashboard/objects/details",
-      search: createSearchParams({ objectId: row.uniqueId }).toString(),
+      pathname: `/dashboard/objects/${row.uniqueId}`,
     });
   };
 

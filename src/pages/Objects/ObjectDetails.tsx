@@ -1,9 +1,10 @@
 import { FC, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { Box, useTheme } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 import { Topbar } from "@vilocnv/allsetra-core";
+import { toast } from "react-toastify";
 import ObjectDetailsHeader from "components/sections/objects/ObjectDetailsHeader/ObjectDetailsHeader";
 import ObjectDetailsBody from "components/sections/objects/ObjectDetailsBody/ObjectDetailsBody";
 
@@ -16,19 +17,29 @@ const ObjectDetails: FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const objectId = searchParams.get("objectId");
+  const params = useParams();
 
   // Global State
-  const { activeObject, loading } = useAppSelector(selectQueriedObjectsState);
+  const { activeObject } = useAppSelector(selectQueriedObjectsState);
+
+  const getSpecificObjectById = async () => {
+    const { type } = await dispatch(
+      getSpecificObjectByIdThunk(params.id ?? "")
+    );
+
+    if (type === "objects/getSpecificObjectByIdThunk/rejected") {
+      navigate(-1);
+      toast.error("Object not found");
+    }
+  };
 
   useEffect(() => {
-    if (isEmpty(objectId)) {
+    if (isEmpty(params.id)) {
       navigate(-1);
     } else {
-      dispatch(getSpecificObjectByIdThunk(objectId ?? ""));
+      getSpecificObjectById();
     }
-  }, [searchParams]);
+  }, [params]);
 
   return (
     <Box>
@@ -41,7 +52,7 @@ const ObjectDetails: FC = () => {
           variant: "contained",
           text: "Settings",
           startIcon: <Settings />,
-          onClick: () => {},
+          onClick: () => navigate("/dashboard/objects/details/settings"),
         }}
       />
       <Box mx={4} mt={4}>

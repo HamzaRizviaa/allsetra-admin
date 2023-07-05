@@ -43,6 +43,8 @@ export const getSpecificObjectByIdThunk = createAsyncThunk(
       if (response.status === 200) {
         return response.data;
       }
+
+      return response;
     } catch (e: any) {
       console.error(e);
       throw new Error(e);

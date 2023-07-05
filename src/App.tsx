@@ -13,6 +13,9 @@ import Map from "pages/Map";
 import AlarmDesk from "pages/AlarmDesk";
 import Objects from "pages/Objects";
 import ObjectDetails from "pages/Objects/ObjectDetails";
+import ObjectSettings from "pages/Objects/ObjectSettings";
+import ObjectTripsHistory from "pages/Objects/ObjectTripsHistory";
+import ObjectLocationHistory from "pages/Objects/ObjectLocationHistory";
 
 // ADMIN PROTECTED ROUTES
 import AccountManager from "pages/admin/AccountManager";
@@ -38,7 +41,19 @@ const App: FC = () => {
         <Route index element={<Map />} />
         <Route path="/dashboard/alarm-desk" element={<AlarmDesk />} />
         <Route path="/dashboard/objects" element={<Objects />} />
-        <Route path="/dashboard/objects/details" element={<ObjectDetails />} />
+        <Route path="/dashboard/objects/:id" element={<ObjectDetails />} />
+        <Route
+          path="/dashboard/objects/:id/settings"
+          element={<ObjectSettings />}
+        />
+        <Route
+          path="/dashboard/objects/:id/trips-history"
+          element={<ObjectTripsHistory />}
+        />
+        <Route
+          path="/dashboard/objects/:id/location-history"
+          element={<ObjectLocationHistory />}
+        />
 
         {/* Admin Manager Routes */}
         <Route path="/dashboard/account-manager" element={<AccountManager />} />
