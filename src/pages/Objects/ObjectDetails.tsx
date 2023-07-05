@@ -46,7 +46,7 @@ const ObjectDetails: FC = () => {
       />
       <Box mx={4} mt={4}>
         <ObjectDetailsHeader objectName={activeObject?.name || ""} />
-        <ObjectDetailsBody />
+        <ObjectDetailsBody activeObject={activeObject} />
       </Box>
     </Box>
   );

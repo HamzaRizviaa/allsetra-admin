@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { types } from "@vilocnv/allsetra-core";
 import {
   getAllObjectsThunk,
   getObjectsByQueryThunk,
@@ -8,7 +9,7 @@ import {
 export interface IObjectState {
   loading: boolean;
   totalRecords: number | null;
-  activeObject: any;
+  activeObject: types.IObject | null;
   allObjects: Array<any>;
   objects: Array<any>;
 }

@@ -3,3 +3,4 @@ export * from "./accountHelpers";
 export * from "./serviceManagerHelpers";
 export * from "./subscriptionHelpers";
 export * from "./alarmDeskHelpers";
+export * from "./objectsHelpers"
