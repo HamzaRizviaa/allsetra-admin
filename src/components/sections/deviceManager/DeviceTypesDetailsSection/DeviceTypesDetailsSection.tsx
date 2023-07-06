@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import { Form, Formik } from "formik";
-import { FormikDropzone, FormikInputField } from "@vilocnv/allsetra-core";
+import { FormikInputField } from "@vilocnv/allsetra-core";
 import { Stack } from "@mui/material";
 import { isEmpty } from "lodash";
 import {

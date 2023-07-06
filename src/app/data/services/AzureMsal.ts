@@ -1,7 +1,4 @@
-import {
-  InteractionRequiredAuthError,
-  AuthenticationResult,
-} from "@azure/msal-browser";
+import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { msalInstance } from "index";
 
 class AzureMsal {

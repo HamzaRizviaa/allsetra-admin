@@ -23,7 +23,7 @@ export const ALL_FIELD_TABLE_COLUMNS = (fieldTypes: any[]) => {
       name: "Field type",
       selector: (row: IField) =>
         fieldTypes.map((type) => {
-          if (type.id == row.fieldType) return type.name;
+          if (type.id === row.fieldType) return type.name;
         }),
       sortable: true,
     },

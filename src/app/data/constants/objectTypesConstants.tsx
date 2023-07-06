@@ -1,4 +1,4 @@
-import { TableColumn, StatusBadge, types, Badge } from "@vilocnv/allsetra-core";
+import { TableColumn, StatusBadge, Badge } from "@vilocnv/allsetra-core";
 import { IObjectType } from "../types";
 import { Box } from "@mui/material";
 

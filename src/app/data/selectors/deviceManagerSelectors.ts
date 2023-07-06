@@ -41,7 +41,7 @@ export const selectActiveDeviceType = createSelector(
   selectActiveDeviceTypeId,
   (deviceTypes, deviceTypeId) => {
     return deviceTypes.find(
-      (deviceType: any) => deviceType.uniqueId == deviceTypeId
+      (deviceType: any) => deviceType.uniqueId === deviceTypeId
     );
   }
 );

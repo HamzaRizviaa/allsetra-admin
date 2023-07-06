@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC, Fragment, useMemo } from "react";
+import { FC, Fragment } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import {
@@ -27,7 +27,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   const dispatch = useAppDispatch();
   const isDrawerCollapsed = useAppSelector(selectIsDrawerCollapsed);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const toggleDrawerCollapseState = () => {
     dispatch(setDrawerCollapseState(!isDrawerCollapsed));

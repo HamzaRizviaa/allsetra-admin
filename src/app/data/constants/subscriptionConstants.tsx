@@ -1,4 +1,4 @@
-import { TableColumn, StatusBadge, types, Badge } from "@vilocnv/allsetra-core";
+import { TableColumn, StatusBadge, Badge } from "@vilocnv/allsetra-core";
 import { ISubscription } from "../types/subscriptionManagerTypes";
 import { Box } from "@mui/material";
 import theme from "app/theme";

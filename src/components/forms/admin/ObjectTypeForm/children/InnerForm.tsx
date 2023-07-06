@@ -37,7 +37,7 @@ const InnerForm: FC = () => {
   const { loading: fieldsloading, allFields } =
     useAppSelector(selectFieldsState);
 
-  const [filteredData, supportedDevicesRender] = useMemo(() => {
+  const [_, supportedDevicesRender] = useMemo(() => {
     const filteredData = allObjectTypes.find(
       (item: any) => item.uniqueId === values.parentObjectId
     );

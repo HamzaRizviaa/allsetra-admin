@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Box, InputAdornment, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import {
   ChangePasswordForm,
   ContentSectionLayout,

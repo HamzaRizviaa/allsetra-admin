@@ -14,7 +14,6 @@ import {
   addObjectTypeValidationSchema,
   objectTypeDataFormatterForService,
 } from "app/data/helpers/objectTypeHelpers";
-import { selectObjectTypesState } from "app/data/selectors";
 
 export type AddObjectTypeProps = Omit<ModalProps, "title" | "children"> & {
   initialValues?: any;

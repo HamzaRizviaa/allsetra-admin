@@ -37,7 +37,6 @@ const SubscriptionManager: FC = () => {
     allSubscriptions,
     loading,
     specificSubscription,
-    specificSubscriptionLoading,
   } = useAppSelector(selectSubscriptionsState);
 
   // Local State

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { isEmpty, capitalize } from "lodash";
+import { isEmpty } from "lodash";
 import { Box, useTheme } from "@mui/material";
 import { Topbar, TabPanes, TabPanel } from "@vilocnv/allsetra-core";
 

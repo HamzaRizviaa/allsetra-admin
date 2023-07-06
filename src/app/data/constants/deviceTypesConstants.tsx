@@ -9,7 +9,9 @@ import CloseIcon from "@mui/icons-material/Close";
 export const ALL_DEVICETYPES_TABLE_COLUMNS: TableColumn<IDeviceType>[] = [
   {
     name: "Picture",
-    selector: (row: IDeviceType) => <img src={row.imageURL} />,
+    selector: (row: IDeviceType) => (
+      <img src={row.imageURL} alt="Device Picture" />
+    ),
     sortable: true,
   },
   {

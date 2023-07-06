@@ -1,10 +1,8 @@
 import { FC, useEffect } from "react";
 import { Box, Stack } from "@mui/material";
 import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
-import { useFormikContext } from "formik";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { IAddSubscription } from "app/data/types";
 import {
   selectAllCurrencies,
   selectDeviceTypesState,
@@ -21,14 +19,11 @@ import {
 
 const InnerForm: FC = () => {
   const dispatch = useAppDispatch();
-  const { values } = useFormikContext<IAddSubscription>();
   const currencies = useSelector(selectAllCurrencies);
 
-  const {
-    loading: subscriptionLoading,
-    allSubscriptions,
-    subscriptionTypes,
-  } = useAppSelector(selectSubscriptionsState);
+  const { loading: subscriptionLoading, subscriptionTypes } = useAppSelector(
+    selectSubscriptionsState
+  );
 
   const { loading: deviceTypesLoading, deviceTypes } = useAppSelector(
     selectDeviceTypesState
