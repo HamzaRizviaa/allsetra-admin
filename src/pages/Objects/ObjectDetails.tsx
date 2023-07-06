@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { Box, useTheme } from "@mui/material";
 import { Settings } from "@mui/icons-material";
-import { Topbar } from "@vilocnv/allsetra-core";
-import { toast } from "react-toastify";
+import { toast, Topbar } from "@vilocnv/allsetra-core";
 import ObjectDetailsHeader from "components/sections/objects/ObjectDetailsHeader/ObjectDetailsHeader";
 import ObjectDetailsBody from "components/sections/objects/ObjectDetailsBody/ObjectDetailsBody";
 
