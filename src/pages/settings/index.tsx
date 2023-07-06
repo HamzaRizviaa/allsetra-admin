@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
+import { PageLoader } from "@vilocnv/allsetra-core";
 import UpdateSettingsForm from "components/forms/settings/UpdateSettingsForm.tsx/UpdateSettingsForm";
 
 //Data
@@ -18,19 +19,7 @@ const Settings: FC = () => {
 
   return (
     <Box>
-      {loading && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100vh",
-            width: "80vw",
-          }}
-        >
-          <CircularProgress sx={{ color: "#845AFC" }} />
-        </Box>
-      )}
+      {loading && <PageLoader isLoading={loading} />}
       <UpdateSettingsForm />
     </Box>
   );
