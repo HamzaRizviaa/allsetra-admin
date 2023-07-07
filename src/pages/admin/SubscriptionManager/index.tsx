@@ -83,7 +83,7 @@ const SubscriptionManager: FC = () => {
       selectedSubscriptionId && !isEmpty(specificSubscription)
         ? subscriptionDataFormatterForForm(specificSubscription)
         : null,
-    [specificSubscription]
+    [specificSubscription, selectedSubscriptionId]
   );
 
   const onRowClick = (row: ISubscription) => {

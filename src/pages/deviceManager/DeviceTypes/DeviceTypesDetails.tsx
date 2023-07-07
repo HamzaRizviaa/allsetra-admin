@@ -30,7 +30,7 @@ const DeviceTypeDetails: FC = () => {
     if (isEmpty(deviceTypeId)) {
       navigate("/dashboard/device-types");
     }
-  }, [searchParams]);
+  }, [deviceTypeId]);
 
   return (
     <main>

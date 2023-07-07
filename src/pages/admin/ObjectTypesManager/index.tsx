@@ -1,13 +1,14 @@
 import { FC, useCallback, useMemo, useState } from "react";
+import { isEmpty } from "lodash";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { FormikHelpers } from "formik";
 import {
   Table,
   Topbar,
   DeleteConfirmationModal,
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
+import ObjectTypeForm from "components/forms/admin/ObjectTypeForm/ObjectTypeForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -16,13 +17,10 @@ import {
   activateAccountThunk,
   getObjectTypesByQueryThunk,
   deactivateObjectTypeThunk,
-  createOrUpdateObjectTypeThunk,
   getSpecificObjectThunk,
 } from "app/features";
 import { ALL_OBJECT_TYPES_TABLE_COLUMNS } from "app/data/constants";
-import { IAddObjectType, IObjectType } from "app/data/types";
-import ObjectTypeForm from "components/forms/admin/ObjectTypeForm/ObjectTypeForm";
-import { isEmpty } from "lodash";
+import { IObjectType } from "app/data/types";
 import { objectTypeDataFormatterForForm } from "app/data/helpers/objectTypeHelpers";
 
 const ObjectTypesManager: FC = () => {
@@ -71,20 +69,6 @@ const ObjectTypesManager: FC = () => {
     selectedObjectTypeId &&
       dispatch(deactivateObjectTypeThunk(selectedObjectTypeId));
     setOpenDeleteModal(false);
-  };
-
-  const addObjectTypeHandler = async (
-    values: IAddObjectType,
-    formikHelpers: FormikHelpers<IAddObjectType>
-  ) => {
-    formikHelpers.setSubmitting(true);
-    const { type } = await dispatch(createOrUpdateObjectTypeThunk(values));
-
-    if (type === "objectType/createOrUpdateObjectTypeThunk/fulfilled") {
-      setOpen(false);
-    }
-
-    formikHelpers.setSubmitting(false);
   };
 
   const formValues = useMemo(
