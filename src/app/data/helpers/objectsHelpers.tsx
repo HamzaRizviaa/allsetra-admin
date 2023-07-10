@@ -1,5 +1,9 @@
 import { types, Badge } from "@vilocnv/allsetra-core";
+import { isEmpty, omit } from "lodash";
 
+//
+// OBJECT DETAILS PAGE HELPERS
+//
 export const transformObjectForObjectInfoTable = (
   object: types.IObject | null
 ): any => {
@@ -52,4 +56,33 @@ export const transformObjectForAlarmConfigTable = (
       object.alarmsConfiguration.IgnitionOn
     ),
   };
+};
+
+//
+// OBJECT SETTINGS PAGE HELPERS
+//
+export const objectDetailsFormatterForSettingsForm = (
+  object: types.IObject | null
+) => {
+  if (isEmpty(object)) return {};
+
+  const removedUnwantedKeys = omit(object, [
+    "created",
+    "createdBy",
+    "deleted",
+    "deletedBy",
+    "installations",
+    "isDeleted",
+    "lastUpdated",
+    "location",
+    "metadata",
+    "status",
+    "updatedBy",
+  ]);
+
+  const formattedObject = {
+    ...removedUnwantedKeys,
+  };
+
+  return formattedObject;
 };

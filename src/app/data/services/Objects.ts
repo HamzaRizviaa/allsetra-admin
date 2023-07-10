@@ -13,6 +13,10 @@ class Objects {
   static getSpecificObjectById = async (objectId: string) => {
     return await axiosInstance.get(`/objects/${objectId}`);
   };
+
+  static postUpdateObject = async (data: any) => {
+    return await axiosInstance.patch(`/objects/${data.uniqueId}`, data);
+  };
 }
 
 export default Objects;

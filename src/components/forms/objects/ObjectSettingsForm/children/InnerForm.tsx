@@ -1,20 +1,35 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, useFormikContext } from "formik";
-import { Topbar } from "@vilocnv/allsetra-core";
+import { Topbar, types } from "@vilocnv/allsetra-core";
 import { Box, useTheme } from "@mui/material";
 
-const InnerForm: FC = () => {
+import ObjectInformationSetting from "./ObjectInformationSetting";
+import CorrectionSetting from "./CorrectionSetting";
+import ReminderSetting from "./ReminderSetting";
+import AlarmConfigurationSetting from "./AlarmConfigurationSetting";
+import NotificationsSetting from "./NotificationsSetting";
+
+interface Props {
+  activeObject: types.IObject | null;
+}
+
+const InnerForm: FC<Props> = ({ activeObject }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const { handleSubmit, isSubmitting, dirty, isValid } = useFormikContext();
+  const { handleSubmit, isSubmitting, dirty, isValid, values } =
+    useFormikContext();
+
+  console.log({ values });
 
   return (
     <Form>
       <Topbar
         theme={theme}
-        title="User Settings"
+        breadcrumbTitle="Object details"
+        breadcrumbRedirectTo={() => navigate(-1)}
+        title={activeObject?.name || ""}
         primaryButton={{
           variant: "contained",
           text: "Save Changes",
@@ -30,7 +45,13 @@ const InnerForm: FC = () => {
           },
         }}
       />
-      <Box></Box>
+      <Box mx={4}>
+        <ObjectInformationSetting />
+        <CorrectionSetting />
+        <ReminderSetting />
+        <AlarmConfigurationSetting />
+        <NotificationsSetting />
+      </Box>
     </Form>
   );
 };

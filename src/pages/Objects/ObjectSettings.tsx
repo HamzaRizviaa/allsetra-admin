@@ -1,18 +1,22 @@
-import { FC, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { isEmpty } from "lodash";
+import { FC } from "react";
+import { PageLoader } from "@vilocnv/allsetra-core";
+import ObjectSettingsForm from "components/forms/objects/ObjectSettingsForm/ObjectSettingsForm";
+
+// DATA
+import { useActiveObjectById } from "hooks";
 
 const ObjectSettings: FC = () => {
-  const navigate = useNavigate();
-  const params = useParams();
+  const { activeObject, loading } = useActiveObjectById();
 
-  useEffect(() => {
-    if (isEmpty(params.id)) {
-      navigate(-1);
-    }
-  }, [params]);
-
-  return <div>ObjectSettings</div>;
+  return (
+    <div>
+      {loading ? (
+        <PageLoader isLoading={loading} />
+      ) : (
+        <ObjectSettingsForm activeObject={activeObject} />
+      )}
+    </div>
+  );
 };
 
 export default ObjectSettings;
