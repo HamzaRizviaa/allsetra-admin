@@ -5,7 +5,8 @@ import {
   FormikInputField,
   Button,
 } from "@vilocnv/allsetra-core";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
+import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 const CorrectionSetting: FC = () => {
   return (
@@ -13,7 +14,7 @@ const CorrectionSetting: FC = () => {
       title="Correction"
       subTitle="Some text to help user understand what this block is responsible for."
     >
-      <Box>
+      <ChildFormBox>
         <TwoColsLayout hideDivider>
           <FormikInputField label="New milage" name="name" fullWidth />
           <FormikInputField
@@ -31,7 +32,7 @@ const CorrectionSetting: FC = () => {
             Cancel
           </Button>
         </Stack>
-      </Box>
+      </ChildFormBox>
     </ContentSectionLayout>
   );
 };

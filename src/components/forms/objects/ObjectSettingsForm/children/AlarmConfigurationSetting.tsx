@@ -5,6 +5,7 @@ import {
   FormikToggleField,
 } from "@vilocnv/allsetra-core";
 import { Stack, Box, Typography } from "@mui/material";
+import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 const AlarmConfigurationSetting: FC = () => {
   return (
@@ -12,7 +13,7 @@ const AlarmConfigurationSetting: FC = () => {
       title="Alarm configuration"
       subTitle="Some text to help user understand what this block is responsible for."
     >
-      <Box>
+      <ChildFormBox>
         <TwoColsLayout hideDivider>
           <Stack spacing={2}>
             <Typography>Outside of working house alarms:</Typography>
@@ -53,7 +54,7 @@ const AlarmConfigurationSetting: FC = () => {
             />
           </Stack>
         </TwoColsLayout>
-      </Box>
+      </ChildFormBox>
     </ContentSectionLayout>
   );
 };

@@ -5,7 +5,8 @@ import {
   FormikInputField,
   Button,
 } from "@vilocnv/allsetra-core";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
+import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 const ReminderSetting: FC = () => {
   return (
@@ -13,7 +14,7 @@ const ReminderSetting: FC = () => {
       title="Reminder"
       subTitle="Some text to help user understand what this block is responsible for."
     >
-      <Box>
+      <ChildFormBox>
         <TwoColsLayout>
           <FormikInputField
             label="Send reminders from"
@@ -42,7 +43,7 @@ const ReminderSetting: FC = () => {
             Cancel
           </Button>
         </Stack>
-      </Box>
+      </ChildFormBox>
     </ContentSectionLayout>
   );
 };

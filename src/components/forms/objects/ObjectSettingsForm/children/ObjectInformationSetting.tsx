@@ -5,7 +5,7 @@ import {
   FormikInputField,
   FormikSelectField,
 } from "@vilocnv/allsetra-core";
-import { Box } from "@mui/material";
+import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 const ObjectInformationSetting: FC = () => {
   return (
@@ -13,7 +13,7 @@ const ObjectInformationSetting: FC = () => {
       title="Object information"
       subTitle="Some text to help user understand what this block is responsible for."
     >
-      <Box>
+      <ChildFormBox>
         <TwoColsLayout>
           <FormikInputField label="Object Name" name="name" fullWidth />
           {/* <FormikSelectField
@@ -61,7 +61,7 @@ const ObjectInformationSetting: FC = () => {
             rows={2}
           />
         </TwoColsLayout>
-      </Box>
+      </ChildFormBox>
     </ContentSectionLayout>
   );
 };

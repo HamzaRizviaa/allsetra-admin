@@ -3,7 +3,8 @@ import {
   ContentSectionLayout,
   FormikToggleField,
 } from "@vilocnv/allsetra-core";
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
+import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 const NotificationsSetting: FC = () => {
   return (
@@ -11,7 +12,7 @@ const NotificationsSetting: FC = () => {
       title="Notifications"
       subTitle="Some text to help user understand what this block is responsible for."
     >
-      <Box>
+      <ChildFormBox>
         <Stack spacing={2}>
           <Typography>Geofence crossing</Typography>
           <FormikToggleField
@@ -57,7 +58,7 @@ const NotificationsSetting: FC = () => {
             name="notifications.PrivateOrBusinessEndTripReminder"
           />
         </Stack>
-      </Box>
+      </ChildFormBox>
     </ContentSectionLayout>
   );
 };

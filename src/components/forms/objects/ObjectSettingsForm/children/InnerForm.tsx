@@ -5,6 +5,7 @@ import { Topbar, types } from "@vilocnv/allsetra-core";
 import { Box, useTheme } from "@mui/material";
 
 import ObjectInformationSetting from "./ObjectInformationSetting";
+import DevicesSetting from "./DevicesSetting";
 import CorrectionSetting from "./CorrectionSetting";
 import ReminderSetting from "./ReminderSetting";
 import AlarmConfigurationSetting from "./AlarmConfigurationSetting";
@@ -35,7 +36,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
           text: "Save Changes",
           onClick: handleSubmit,
           loading: isSubmitting,
-          disabled: !dirty ? isValid : !isValid,
+          // disabled: !dirty ? isValid : !isValid,
         }}
         secondaryButton={{
           variant: "text",
@@ -47,6 +48,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
       />
       <Box mx={4}>
         <ObjectInformationSetting />
+        <DevicesSetting />
         <CorrectionSetting />
         <ReminderSetting />
         <AlarmConfigurationSetting />
