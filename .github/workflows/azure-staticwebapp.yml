@@ -4,10 +4,10 @@
 # For instructions see https://docs.microsoft.com/azure/static-web-apps/get-started-portal?tabs=vanilla-javascript
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main", "develop"]
   pull_request:
     types: [opened, synchronize, reopened, closed]
-    branches: [ "main" ]
+    branches: ["main", "develop"]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
