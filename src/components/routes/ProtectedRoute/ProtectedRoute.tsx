@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC, Fragment, useEffect } from "react";
+import { FC, Fragment } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import {
@@ -11,12 +11,13 @@ import { DashboardLayout } from "@vilocnv/allsetra-core";
 
 // DATA
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector, useSignalR } from "hooks";
 import {
-  getAllLanguagesThunk,
-  getSpecificSettingThunk,
-  setDrawerCollapseState,
-} from "app/features";
+  useAppDispatch,
+  useAppSelector,
+  useSignalR,
+  useSetLangOnSettingsChange,
+} from "hooks";
+import { setDrawerCollapseState } from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
 import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
 
@@ -25,20 +26,18 @@ export interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
-  const { pathname } = useLocation();
-  const { instance } = useMsal();
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
+  const { instance } = useMsal();
+
   const isDrawerCollapsed = useAppSelector(selectIsDrawerCollapsed);
 
   useSignalR();
 
-  const { t } = useTranslation();
+  useSetLangOnSettingsChange();
 
-  useEffect(() => {
-    dispatch(getAllLanguagesThunk());
-    dispatch(getSpecificSettingThunk());
-  }, []);
+  const { t } = useTranslation();
 
   const toggleDrawerCollapseState = () => {
     dispatch(setDrawerCollapseState(!isDrawerCollapsed));

@@ -1,0 +1,8 @@
+{
+  "drawerMenuLinks": {
+    "map": "Karte",
+    "alarmDesk": "Alarmschalter",
+    "devices": "Geräte",
+    "objects": "Objekte"
+  }
+}
