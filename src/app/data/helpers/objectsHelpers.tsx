@@ -58,6 +58,23 @@ export const transformObjectForAlarmConfigTable = (
   };
 };
 
+export const transformObjectMetaDataForDynamicFields = (
+  object: types.IObject | null
+): any => {
+  if (!object) return {};
+  const dynamicFields = object.metadata.filter(
+    (item) => item.informationType === 0
+  );
+
+  const data: any = {};
+
+  dynamicFields.forEach((item: any) => {
+    data[item.field.label] = item.value;
+  });
+
+  return data;
+};
+
 //
 // OBJECT SETTINGS PAGE HELPERS
 //
