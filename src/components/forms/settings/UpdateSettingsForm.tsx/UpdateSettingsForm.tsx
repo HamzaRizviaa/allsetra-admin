@@ -42,6 +42,7 @@ const UpdateSettingsForm: FC = () => {
     formikHelpers: FormikHelpers<ISettings>
   ) => {
     formikHelpers.setSubmitting(true);
+
     const { type } = await dispatch(
       updateSettingsThunk({ ...values, languageId: values.language })
     );
@@ -54,9 +55,9 @@ const UpdateSettingsForm: FC = () => {
       await i18n.changeLanguage(
         selectedLanguage ? selectedLanguage.languageCode : "en"
       );
-
-      formikHelpers.setSubmitting(false);
     }
+
+    formikHelpers.setSubmitting(false);
   };
 
   return (

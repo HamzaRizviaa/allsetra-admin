@@ -1,11 +1,15 @@
 import { FC, useMemo } from "react";
+import { isEmpty } from "lodash";
 import { Box, Grid, Stack } from "@mui/material";
 import { KeyValueTable, types } from "@vilocnv/allsetra-core";
 import AttachedDevicesGrid from "./children/AttachedDevicesGrid";
+import ObjectDetailsMap from "./children/ObjectDetailsMap";
 
+// DATA
 import {
   transformObjectForObjectInfoTable,
   transformObjectForAlarmConfigTable,
+  transformObjectMetaDataForDynamicFields,
 } from "app/data/helpers";
 
 interface Props {
@@ -13,12 +17,14 @@ interface Props {
 }
 
 const ObjectDetailsBody: FC<Props> = ({ activeObject }) => {
-  const { objectInformation, alarmConfiguration } = useMemo(() => {
-    return {
-      objectInformation: transformObjectForObjectInfoTable(activeObject),
-      alarmConfiguration: transformObjectForAlarmConfigTable(activeObject),
-    };
-  }, [activeObject]);
+  const { objectInformation, alarmConfiguration, dynamicFields } =
+    useMemo(() => {
+      return {
+        objectInformation: transformObjectForObjectInfoTable(activeObject),
+        alarmConfiguration: transformObjectForAlarmConfigTable(activeObject),
+        dynamicFields: transformObjectMetaDataForDynamicFields(activeObject),
+      };
+    }, [activeObject]);
 
   return (
     <Box mt={4}>
@@ -30,16 +36,23 @@ const ObjectDetailsBody: FC<Props> = ({ activeObject }) => {
               title="Object Information"
               records={objectInformation}
             />
-            <KeyValueTable title="Object Dynamic Fields" records={{}} />
-            <KeyValueTable title="Installation Information" records={{}} />
+            {!isEmpty(dynamicFields) && (
+              <KeyValueTable
+                title="Object Dynamic Fields"
+                records={dynamicFields}
+              />
+            )}
+            {/* <KeyValueTable title="Installation Information" records={{}} /> */}
             <KeyValueTable
               title="Alarm Configuration"
               records={alarmConfiguration}
             />
-            <KeyValueTable title="Working Hours" records={{}} />
+            {/* <KeyValueTable title="Working Hours" records={{}} /> */}
           </Stack>
         </Grid>
-        <Grid item xs={12} lg={5}></Grid>
+        <Grid item xs={12} lg={5} gap={2}>
+          <ObjectDetailsMap activeObject={activeObject} />
+        </Grid>
       </Grid>
     </Box>
   );

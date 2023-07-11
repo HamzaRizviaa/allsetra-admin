@@ -1,44 +1,19 @@
-import { FC, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { isEmpty } from "lodash";
+import { FC, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { Settings } from "@mui/icons-material";
-import { toast, Topbar } from "@vilocnv/allsetra-core";
+import { Topbar, PageLoader } from "@vilocnv/allsetra-core";
 import ObjectDetailsHeader from "components/sections/objects/ObjectDetailsHeader/ObjectDetailsHeader";
 import ObjectDetailsBody from "components/sections/objects/ObjectDetailsBody/ObjectDetailsBody";
 
 // Data
-import { useAppDispatch, useAppSelector } from "hooks";
-import { selectQueriedObjectsState } from "app/data/selectors";
-import { getSpecificObjectByIdThunk } from "app/features";
+import { useActiveObjectById } from "hooks";
 
 const ObjectDetails: FC = () => {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const params = useParams();
 
-  // Global State
-  const { activeObject } = useAppSelector(selectQueriedObjectsState);
-
-  const getSpecificObjectById = async () => {
-    const { type } = await dispatch(
-      getSpecificObjectByIdThunk(params.id ?? "")
-    );
-
-    if (type === "objects/getSpecificObjectByIdThunk/rejected") {
-      navigate(-1);
-      toast.error("Object not found");
-    }
-  };
-
-  useEffect(() => {
-    if (isEmpty(params.id)) {
-      navigate(-1);
-    } else {
-      getSpecificObjectById();
-    }
-  }, [params]);
+  const { activeObject, loading } = useActiveObjectById();
 
   return (
     <Box>
@@ -51,12 +26,19 @@ const ObjectDetails: FC = () => {
           variant: "contained",
           text: "Settings",
           startIcon: <Settings />,
-          onClick: () => navigate("/dashboard/objects/details/settings"),
+          onClick: () =>
+            navigate(`/dashboard/objects/${activeObject?.uniqueId}/settings`),
         }}
       />
       <Box mx={4} mt={4}>
-        <ObjectDetailsHeader objectName={activeObject?.name || ""} />
-        <ObjectDetailsBody activeObject={activeObject} />
+        {loading ? (
+          <PageLoader isLoading={loading} />
+        ) : (
+          <Fragment>
+            <ObjectDetailsHeader objectName={activeObject?.name || ""} />
+            <ObjectDetailsBody activeObject={activeObject} />
+          </Fragment>
+        )}
       </Box>
     </Box>
   );

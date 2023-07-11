@@ -7,13 +7,21 @@ interface Props {
 }
 
 const AttachedDevicesGrid: FC<Props> = ({ devices }) => {
+  const onCancelSubscription = (deviceId: string) => {
+    console.log({ deviceId });
+  };
+
   return (
     <Grid container spacing={4}>
-      {devices.map((_, index: number) => (
-        <Grid key={index} item xs={12} md={6}>
-          <DeviceCard />
-        </Grid>
-      ))}
+      {devices &&
+        devices.map((device, index: number) => (
+          <Grid key={index} item xs={12} md={6}>
+            <DeviceCard
+              device={device}
+              onCancelSubscription={onCancelSubscription}
+            />
+          </Grid>
+        ))}
     </Grid>
   );
 };
