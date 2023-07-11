@@ -24,7 +24,7 @@ import ServiceManager from "pages/admin/ServiceManager";
 import FieldManager from "pages/admin/FieldManager";
 import SubscriptionManager from "pages/admin/SubscriptionManager";
 import ObjectTypesManager from "pages/admin/ObjectTypesManager";
-import Settings from "pages/Settings/index";
+import Settings from "pages/Settings";
 
 // DEVICE TYEPS PROTECTED ROUTES
 import DeviceTypes from "pages/deviceManager/DeviceTypes";
