@@ -9,26 +9,42 @@ import {
   DeleteConfirmationModal,
 } from "@vilocnv/allsetra-core";
 import { ChildFormBox, DeviceName } from "../ObjectSettingsForm.styled";
+import { useAppDispatch } from "hooks";
+import { disconnectDeviceFromObjectThunk } from "app/features";
 
 interface Props {
+  objectId: string;
   devices: Array<types.IDevice>;
 }
 
-const DevicesSetting: FC<Props> = ({ devices }) => {
+const DevicesSetting: FC<Props> = ({ objectId, devices }) => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
 
   const [openDisconnectModal, setOpenDisconnectModal] =
     useState<boolean>(false);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onOpenDisconnectModal = (deviceId: string) => {
     setSelectedDeviceId(deviceId);
     setOpenDisconnectModal(true);
   };
 
-  const onDisconnectClick = () => {
-    console.log({ selectedDeviceId });
-    setOpenDisconnectModal(false);
+  const onDisconnectClick = async () => {
+    setIsLoading(true);
+
+    try {
+      await dispatch(
+        disconnectDeviceFromObjectThunk({
+          objectId,
+          deviceId: selectedDeviceId,
+        })
+      );
+    } finally {
+      setIsLoading(false);
+      setOpenDisconnectModal(false);
+    }
   };
 
   return (
@@ -58,7 +74,7 @@ const DevicesSetting: FC<Props> = ({ devices }) => {
         onClose={() => setOpenDisconnectModal(false)}
         title="You are about to disconnect the device"
         subTitle="Do you really want to disconnect this device? This process cannot be undone."
-        primaryBtnProps={{ onClick: onDisconnectClick }}
+        primaryBtnProps={{ onClick: onDisconnectClick, loading: isLoading }}
         theme={theme}
       />
     </ContentSectionLayout>

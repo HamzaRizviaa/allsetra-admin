@@ -19,10 +19,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const { handleSubmit, isSubmitting, dirty, isValid, values } =
-    useFormikContext();
-
-  console.log({ values });
+  const { handleSubmit, isSubmitting, dirty, isValid } = useFormikContext();
 
   return (
     <Form>
@@ -36,7 +33,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
           text: "Save Changes",
           onClick: handleSubmit,
           loading: isSubmitting,
-          // disabled: !dirty ? isValid : !isValid,
+          disabled: !dirty ? isValid : !isValid,
         }}
         secondaryButton={{
           variant: "text",
@@ -48,7 +45,10 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
       />
       <Box mx={4}>
         <ObjectInformationSetting />
-        <DevicesSetting devices={activeObject?.devices ?? []} />
+        <DevicesSetting
+          objectId={activeObject?.uniqueId || ""}
+          devices={activeObject?.devices ?? []}
+        />
         <CorrectionSetting />
         <ReminderSetting />
         <AlarmConfigurationSetting />

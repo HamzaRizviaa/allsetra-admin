@@ -70,3 +70,25 @@ export const postUpdateObjectThunk = createAsyncThunk(
     }
   }
 );
+
+export const disconnectDeviceFromObjectThunk = createAsyncThunk(
+  "objects/disconnectDeviceFromObjectThunk",
+  async ({ objectId, deviceId }: any, { dispatch }) => {
+    try {
+      const response = await Objects.disconnectDeviceFromObject(
+        objectId,
+        deviceId
+      );
+
+      if (response.status === 202) {
+        toast.success("Device has been disconnected from object");
+        dispatch(getSpecificObjectByIdThunk(objectId));
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

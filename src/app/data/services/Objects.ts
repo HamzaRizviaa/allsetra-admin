@@ -17,6 +17,15 @@ class Objects {
   static postUpdateObject = async (data: any) => {
     return await axiosInstance.patch(`/objects/${data.uniqueId}`, data);
   };
+
+  static disconnectDeviceFromObject = async (
+    objectId: string,
+    deviceId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/objects/${objectId}/devices/${deviceId}`
+    );
+  };
 }
 
 export default Objects;

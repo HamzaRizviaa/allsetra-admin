@@ -9,7 +9,11 @@ import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 // DATA
 import { useAppDispatch, useAppSelector } from "hooks";
-import { getAllAccountsThunk, getAllObjectTypesThunk } from "app/features";
+import {
+  getAllAccountsThunk,
+  getAllObjectTypesThunk,
+  useGetAllUsersQuery,
+} from "app/features";
 import {
   selectAccountsState,
   selectObjectTypesState,
@@ -24,6 +28,9 @@ const ObjectInformationSetting: FC = () => {
 
   const { allAccounts, loading: accountsLoading } =
     useAppSelector(selectAccountsState);
+
+  // @ts-ignore
+  const { data: users, isLoading: usersLoading } = useGetAllUsersQuery();
 
   useEffect(() => {
     dispatch(getAllObjectTypesThunk());
@@ -60,14 +67,17 @@ const ObjectInformationSetting: FC = () => {
             multiple
             fullWidth
           />
-          {/* <FormikSelectField
+          <FormikSelectField
             label="Assigned Users"
-            name="name"
-            options={allAccounts ?? []}
+            name="users"
+            options={users ?? []}
+            optionLabelKey={"email"}
+            optionValueKey={"uniqueId"}
+            loading={usersLoading}
             searchable
             multiple
             fullWidth
-          /> */}
+          />
           <FormikSelectField
             label="Owner"
             name="ownerId"
