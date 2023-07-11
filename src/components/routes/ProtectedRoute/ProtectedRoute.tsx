@@ -11,7 +11,7 @@ import { DashboardLayout } from "@vilocnv/allsetra-core";
 
 // DATA
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector, useSignalR } from "hooks";
 import { setDrawerCollapseState } from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
 import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
@@ -26,6 +26,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const isDrawerCollapsed = useAppSelector(selectIsDrawerCollapsed);
+
+  useSignalR();
 
   const { t } = useTranslation();
 

@@ -15,7 +15,7 @@ export const transformObjectForObjectInfoTable = (
     "A-Number": object.aNumber,
     "Multiviewer Name": object.multiviewerName,
     "Object Type": object.objectType.name,
-    Comments: "No comments",
+    Comments: object.comments,
     Milage: object.mileage,
   };
 };
@@ -78,10 +78,17 @@ export const objectDetailsFormatterForSettingsForm = (
     "metadata",
     "status",
     "updatedBy",
+    "objectType",
+    "owner",
+    "devices",
   ]);
 
   const formattedObject = {
     ...removedUnwantedKeys,
+    objectTypeId: object.objectType?.uniqueId ?? "",
+    ownerId: object.owner?.uniqueId ?? "",
+    accounts: object.accounts?.map((item) => item.uniqueId),
+    users: object.users?.map((item) => item.uniqueId),
   };
 
   return formattedObject;

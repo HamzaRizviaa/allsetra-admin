@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   ContentSectionLayout,
   TwoColsLayout,
@@ -7,7 +7,29 @@ import {
 } from "@vilocnv/allsetra-core";
 import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
+// DATA
+import { useAppDispatch, useAppSelector } from "hooks";
+import { getAllAccountsThunk, getAllObjectTypesThunk } from "app/features";
+import {
+  selectAccountsState,
+  selectObjectTypesState,
+} from "app/data/selectors";
+
 const ObjectInformationSetting: FC = () => {
+  const dispatch = useAppDispatch();
+
+  const { allObjectTypes, loading: objectTypesLoading } = useAppSelector(
+    selectObjectTypesState
+  );
+
+  const { allAccounts, loading: accountsLoading } =
+    useAppSelector(selectAccountsState);
+
+  useEffect(() => {
+    dispatch(getAllObjectTypesThunk());
+    dispatch(getAllAccountsThunk());
+  }, []);
+
   return (
     <ContentSectionLayout
       title="Object information"
@@ -16,32 +38,46 @@ const ObjectInformationSetting: FC = () => {
       <ChildFormBox>
         <TwoColsLayout>
           <FormikInputField label="Object Name" name="name" fullWidth />
-          {/* <FormikSelectField
+          <FormikSelectField
             label="Object Type"
-            name="name"
-            options={[]}
+            name="objectTypeId"
+            options={allObjectTypes ?? []}
+            optionLabelKey={"name"}
+            optionValueKey={"uniqueId"}
+            loading={accountsLoading}
             fullWidth
-          /> */}
+          />
         </TwoColsLayout>
-        {/* <TwoColsLayout>
+        <TwoColsLayout>
           <FormikSelectField
             label="Assigned Accounts"
-            name="name"
-            options={[]}
+            name="accounts"
+            options={allAccounts ?? []}
+            optionLabelKey={"name"}
+            optionValueKey={"uniqueId"}
+            loading={accountsLoading}
             searchable
             multiple
             fullWidth
           />
-          <FormikSelectField
+          {/* <FormikSelectField
             label="Assigned Users"
             name="name"
-            options={[]}
+            options={allAccounts ?? []}
             searchable
             multiple
             fullWidth
+          /> */}
+          <FormikSelectField
+            label="Owner"
+            name="ownerId"
+            options={allAccounts ?? []}
+            optionLabelKey={"name"}
+            optionValueKey={"uniqueId"}
+            loading={objectTypesLoading}
+            fullWidth
           />
-          <FormikSelectField label="Owner" name="name" options={[]} fullWidth />
-        </TwoColsLayout> */}
+        </TwoColsLayout>
         <TwoColsLayout>
           <FormikInputField label="A-Number" name="aNumber" fullWidth />
           <FormikInputField

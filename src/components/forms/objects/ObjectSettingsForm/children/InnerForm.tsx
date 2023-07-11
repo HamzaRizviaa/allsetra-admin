@@ -48,7 +48,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
       />
       <Box mx={4}>
         <ObjectInformationSetting />
-        <DevicesSetting />
+        <DevicesSetting devices={activeObject?.devices ?? []} />
         <CorrectionSetting />
         <ReminderSetting />
         <AlarmConfigurationSetting />
