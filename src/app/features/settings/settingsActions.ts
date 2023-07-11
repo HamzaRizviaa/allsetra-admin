@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "@vilocnv/allsetra-core";
-// @ts-ignore
-import Settings from "app/data/services/Settings";
+import { Settings } from "app/data/services";
 
 export const getSpecificSettingThunk = createAsyncThunk(
   "settings/getSpecificSettingThunk",
@@ -12,6 +11,8 @@ export const getSpecificSettingThunk = createAsyncThunk(
       if (response.status === 200) {
         return response.data;
       }
+
+      return response;
     } catch (e: any) {
       console.error(e);
       throw new Error(e);
@@ -46,6 +47,24 @@ export const resetPasswordThunk = createAsyncThunk(
 
       if (response.status === 202) {
         toast.success("Password has been changed successfully");
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getAllLanguagesThunk = createAsyncThunk(
+  "settings/getAllLanguagesThunk",
+  async () => {
+    try {
+      const response = await Settings.getAllLanguages();
+
+      if (response.status === 200) {
+        return response.data;
       }
 
       return response;

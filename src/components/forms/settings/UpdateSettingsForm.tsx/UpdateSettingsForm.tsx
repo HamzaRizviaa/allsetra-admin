@@ -29,7 +29,7 @@ const UpdateSettingsForm: FC = () => {
 
   //Global States
   const { specificSetting } = useAppSelector(selectSettingsState);
-  const { loading, languages } = useAppSelector(selectLanguageState);
+  const { languagesLoading, languages } = useAppSelector(selectLanguageState);
 
   const formValues = useMemo(
     () =>
@@ -91,7 +91,10 @@ const UpdateSettingsForm: FC = () => {
           />
           <Box px={"32px"}>
             <PersonalInfoForm />
-            <InterfaceForm languages={languages} languagesLoading={loading} />
+            <InterfaceForm
+              languages={languages}
+              languagesLoading={languagesLoading}
+            />
           </Box>
         </Form>
       )}

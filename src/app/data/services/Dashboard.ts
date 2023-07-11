@@ -12,10 +12,6 @@ class Dashboard {
   static getAllIcons = async () => {
     return await axiosInstance.get("/icons");
   };
-
-  static getAllLanguages = async () => {
-    return await axiosInstance.get("/userSettings/available-languages");
-  };
 }
 
 export default Dashboard;

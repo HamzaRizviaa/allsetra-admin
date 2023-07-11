@@ -17,3 +17,18 @@ export const selectSettingsState = createSelector(
     specificSetting,
   })
 );
+
+export const selectAllLanguages = (state: RootState) =>
+  state.rootReducer.settingsReducer.languages;
+
+export const selectLanguagesLoading = (state: RootState) =>
+  state.rootReducer.settingsReducer.languagesLoading;
+
+export const selectLanguageState = createSelector(
+  selectAllLanguages,
+  selectLanguagesLoading,
+  (languages, languagesLoading) => ({
+    languages,
+    languagesLoading,
+  })
+);

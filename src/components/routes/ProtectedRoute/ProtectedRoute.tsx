@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import {
@@ -12,7 +12,11 @@ import { DashboardLayout } from "@vilocnv/allsetra-core";
 // DATA
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector, useSignalR } from "hooks";
-import { setDrawerCollapseState } from "app/features";
+import {
+  getAllLanguagesThunk,
+  getSpecificSettingThunk,
+  setDrawerCollapseState,
+} from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
 import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
 
@@ -30,6 +34,11 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   useSignalR();
 
   const { t } = useTranslation();
+
+  useEffect(() => {
+    dispatch(getAllLanguagesThunk());
+    dispatch(getSpecificSettingThunk());
+  }, []);
 
   const toggleDrawerCollapseState = () => {
     dispatch(setDrawerCollapseState(!isDrawerCollapsed));

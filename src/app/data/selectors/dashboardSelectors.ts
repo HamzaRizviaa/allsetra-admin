@@ -39,15 +39,3 @@ export const selectIconState = createSelector(
     icons,
   })
 );
-
-export const selectAllLanguages = (state: RootState) =>
-  state.rootReducer.dashboardReducer.languages;
-
-export const selectLanguageState = createSelector(
-  selectDashboardReducerLoading,
-  selectAllLanguages,
-  (loading, languages) => ({
-    loading,
-    languages,
-  })
-);

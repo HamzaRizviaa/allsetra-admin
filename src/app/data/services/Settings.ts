@@ -12,6 +12,10 @@ class Settings {
   static resetPassword = async (data: any) => {
     return await axiosInstance.post("/userSettings/reset-password", data);
   };
+
+  static getAllLanguages = async () => {
+    return await axiosInstance.get("/userSettings/available-languages");
+  };
 }
 
 export default Settings;
