@@ -3,9 +3,7 @@ import {
   ContentSectionLayout,
   TwoColsLayout,
   FormikInputField,
-  Button,
 } from "@vilocnv/allsetra-core";
-import { Stack } from "@mui/material";
 import { ChildFormBox } from "../ObjectSettingsForm.styled";
 
 const ReminderSetting: FC = () => {
@@ -35,14 +33,6 @@ const ReminderSetting: FC = () => {
             fullWidth
           />
         </TwoColsLayout>
-        <Stack mt={4} direction={"row"} spacing={2}>
-          <Button variant={"contained"} size={"small"}>
-            Set a reminder
-          </Button>
-          <Button variant={"text"} size={"small"}>
-            Cancel
-          </Button>
-        </Stack>
       </ChildFormBox>
     </ContentSectionLayout>
   );

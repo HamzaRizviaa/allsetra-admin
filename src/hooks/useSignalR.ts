@@ -21,7 +21,7 @@ const useSignalR = () => {
   const createHubConnection = () => {
     const newConnection = new HubConnectionBuilder()
       .withUrl(
-        `${process.env.REACT_APP_API_BASE_URL}/?source=adminportal&${userEmail}`,
+        `${process.env.REACT_APP_API_BASE_URL}/?source=adminportal&user=${userEmail}`,
         options
       )
       .withAutomaticReconnect()
@@ -29,8 +29,8 @@ const useSignalR = () => {
 
     newConnection
       .start()
-      .then((result) => {
-        console.log("Connected!", { result });
+      .then(() => {
+        console.log("Connected SignalR!");
 
         newConnection.on("EventRaised", (message) => {
           console.log(message);
@@ -42,14 +42,14 @@ const useSignalR = () => {
   };
 
   useEffect(() => {
-    if (idToken) {
+    if (idToken && userEmail) {
       createHubConnection();
     }
 
     return () => {
       hubConnection.stop();
     };
-  }, [idToken]);
+  }, [idToken, userEmail]);
 
   return { hubConnection };
 };
