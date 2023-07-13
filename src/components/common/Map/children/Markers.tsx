@@ -1,6 +1,11 @@
 import React from "react";
-import { OverlayView, InfoWindowF, MarkerF } from "@react-google-maps/api";
-import { MarkerLabel } from "../Map.styled";
+import {
+  OverlayView,
+  InfoWindowF,
+  MarkerF,
+  OverlayViewF,
+} from "@react-google-maps/api";
+import { MarkerBlip, MarkerLabel } from "../Map.styled";
 import { MapObjectCard } from "@vilocnv/allsetra-core";
 
 interface MarkerProps {
@@ -17,12 +22,16 @@ const Markers: React.FC<MarkerProps> = ({
   return (
     <>
       {objects.map((object: any, index: any) => {
+        console.log("Single object", object);
         const position = {
           lat: object.location.latitude,
           lng: object.location.longitude,
         };
+        const hasAlarmType = object.hasOwnProperty("alarmType");
 
-        const iconUrl = `${process.env.REACT_APP_API_BASE_URL}/icons/${object.objectType.icon.uniqueId}/file?X-Subscription=${process.env.REACT_APP_API_HEADER_SUBSCRIPTION}`;
+        const iconUrl = !hasAlarmType
+          ? `${process.env.REACT_APP_API_BASE_URL}/icons/${object.objectType.icon.uniqueId}/file?X-Subscription=${process.env.REACT_APP_API_HEADER_SUBSCRIPTION}`
+          : "";
 
         const originalDate = new Date(object.location.date);
         const formattedDate = originalDate.toLocaleString("en-US", {
@@ -33,14 +42,23 @@ const Markers: React.FC<MarkerProps> = ({
           hour12: true,
         });
 
+        const getPixelPositionOffset = () => ({
+          x: 20,
+          y: -29,
+        });
+
         return (
           <React.Fragment key={index}>
             <MarkerF
               position={position}
-              icon={{
-                url: iconUrl,
-                scaledSize: new window.google.maps.Size(28, 28),
-              }}
+              icon={
+                iconUrl
+                  ? {
+                      url: iconUrl,
+                      scaledSize: new window.google.maps.Size(28, 28),
+                    }
+                  : undefined
+              }
               onClick={() => handleMarkerClick(index)}
             >
               {selectedMarker === index && (
@@ -59,12 +77,14 @@ const Markers: React.FC<MarkerProps> = ({
                 </InfoWindowF>
               )}
             </MarkerF>
-            <OverlayView
+            <OverlayViewF
               position={position}
               mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+              getPixelPositionOffset={getPixelPositionOffset}
             >
               <MarkerLabel>{object.name}</MarkerLabel>
-            </OverlayView>
+              <MarkerBlip></MarkerBlip>
+            </OverlayViewF>
           </React.Fragment>
         );
       })}
