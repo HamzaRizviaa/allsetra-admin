@@ -63,7 +63,7 @@ export const transformObjectMetaDataForDynamicFields = (
 ): any => {
   if (!object) return {};
   const dynamicFields = object.metadata.filter(
-    (item) => item.informationType === 0
+    (item) => item.informationType === "OBJECT"
   );
 
   const data: any = {};
