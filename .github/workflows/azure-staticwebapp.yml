@@ -59,6 +59,7 @@ jobs:
           NPM_REGISTRY_URL: https://npm.pkg.github.com
           REACT_APP_API_BASE_URL: ${{ secrets.API_BASE_URL }}
           REACT_APP_API_HEADER_SUBSCRIPTION: ${{ secrets.API_SUBSCRIPTION }}
+          REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
 
   close_pull_request_job:
     environment: Dev

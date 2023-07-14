@@ -17,6 +17,7 @@ import {
 } from "app/features";
 import { selectAlarmDeskState } from "app/data/selectors";
 import { IAlarm } from "app/data/types";
+import Map from "components/common/Map/Map";
 
 const AlarmDesk: FC = () => {
   const theme = useTheme();
@@ -75,6 +76,10 @@ const AlarmDesk: FC = () => {
     [expandedRowsId]
   );
 
+  console.log("ALARMS", alarms);
+
+  const geozone = [{ lat: 52.150125, lng: 5.4 }];
+
   return (
     <Box>
       <Topbar theme={theme} title="Alarm desk" />
@@ -101,7 +106,13 @@ const AlarmDesk: FC = () => {
           />
         </Grid>
         <Grid item xs={12} lg={5}>
-          <p>MAP</p>
+          <Map
+            center={{ lat: 52.0, lng: 5.301137 }}
+            zoom={10}
+            radius={50}
+            objects={alarms}
+            geozone={geozone}
+          />
         </Grid>
       </Grid>
       <AlarmSendEmailForm
