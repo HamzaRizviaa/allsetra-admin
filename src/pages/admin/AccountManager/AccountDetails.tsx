@@ -15,6 +15,9 @@ import AccountServices from "components/sections/admin/AccountSubSections/Accoun
 import AccountDeviceTypes from "components/sections/admin/AccountSubSections/AccountDeviceTypes";
 import AccountObjectTypes from "components/sections/admin/AccountSubSections/AccountObjectTypes";
 import AccountUsers from "components/sections/admin/AccountSubSections/AccountUsers";
+import AccountDevices from "components/sections/admin/AccountSubSections/AccountDevices";
+import AccountObjects from "components/sections/admin/AccountSubSections/AccountObjects";
+import AccountInstallations from "components/sections/admin/AccountSubSections/AccountInstallations";
 
 const AccountDetails: FC = () => {
   const theme = useTheme();
@@ -64,31 +67,48 @@ const AccountDetails: FC = () => {
         >
           <Box mx={2}>
             <TabPanel value={tabSelectedIndex} index={0}>
-              <AccountDetailsSection />
+              {/* Details */}
+              <AccountDetailsSection /> /
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={1}>
+              {/* Services */}
               <AccountServices accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={2}>
+              {/* Device Types */}
               <AccountDeviceTypes accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={3}>
+              {/* Object Types */}
               <AccountObjectTypes accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={4}>
-              <AccountUsers accountId={accountId} />
+              {/* Groups */}
+              <h1>Groups</h1>
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={5}>
-              <h1>Devices</h1>
+              {/* Users */}
+              <AccountUsers accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={6}>
-              <h1>Objects</h1>
+              {/* Subscriptions */}
+              <h1>Subscriptions</h1>
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={7}>
-              <h1>Alarms</h1>
+              {/* Devices */}
+              <AccountDevices accountId={accountId} />
             </TabPanel>
             <TabPanel value={tabSelectedIndex} index={8}>
-              <h1>Notification</h1>
+              {/* Objects */}
+              <AccountObjects accountId={accountId} />
+            </TabPanel>
+            <TabPanel value={tabSelectedIndex} index={9}>
+              {/* Alarms */}
+              <h1>Alarms</h1>
+            </TabPanel>
+            <TabPanel value={tabSelectedIndex} index={10}>
+              {/* Installations */}
+              <AccountInstallations accountId={accountId} />
             </TabPanel>
           </Box>
         </TabPanes>

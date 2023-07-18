@@ -146,6 +146,55 @@ class Accounts {
       data
     );
   };
+
+  static removeObjectFromAccount = async (
+    accountId: string,
+    objectId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/objects/${objectId}`
+    );
+  };
+
+  // Account Installations Endpoints
+  static getAccountInstallations = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/installations/search`,
+      data
+    );
+  };
+
+  static removeInstallationFromAccount = async (
+    accountId: string,
+    installationId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/installations/${installationId}`
+    );
+  };
+
+  // Account Devices Endpoints
+  static getAccountDevices = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/devices/search`,
+      data
+    );
+  };
+
+  static removeDeviceFromAccount = async (
+    accountId: string,
+    deviceId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/devices/${deviceId}`
+    );
+  };
 }
 
 export default Accounts;

@@ -9,7 +9,9 @@ export const ACCOUNT_DETAILS_TABS_HEADINGS: string[] = [
   "Services",
   "Device Types",
   "Object Types",
+  "Groups",
   "Users",
+  "Subscriptions",
   "Devices",
   "Objects",
   "Alarms",
@@ -148,6 +150,105 @@ export const ACCOUNT_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
   {
     name: "# of Fields",
     selector: (row: any) => `${row.fieldsCount} fields`,
+    sortable: true,
+  },
+];
+
+export const ACCOUNT_OBJECTS_TABLE_COLUMNS: TableColumn<types.IObject>[] = [
+  {
+    name: "Name",
+    selector: (row: types.IObject) => row.name,
+    sortable: true,
+  },
+  {
+    name: "Object Type",
+    selector: (row: types.IObject) => row.objectType.name,
+    sortable: true,
+  },
+  {
+    name: "A-NR",
+    selector: (row: types.IObject) => row.aNumber,
+    sortable: true,
+  },
+  {
+    name: "Multiviewer  Name",
+    selector: (row: types.IObject) => row.multiviewerName,
+    sortable: true,
+  },
+  {
+    name: "Mileage",
+    selector: (row: types.IObject) => row.mileage,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: types.IObject) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
+];
+
+export const ACCOUNT_DEVICES_TABLE_COLUMNS: TableColumn<types.IDevice>[] = [
+  {
+    name: "Name",
+    selector: (row: types.IDevice) => row.name,
+    sortable: true,
+  },
+  {
+    name: "Device Type",
+    selector: (row: types.IDevice) => row.deviceType?.name || "",
+    sortable: true,
+  },
+  {
+    name: "Last Received Network",
+    selector: (row: types.IDevice) => row.lastReceivedNetwork,
+    sortable: true,
+  },
+  {
+    name: "Last BatteryValue",
+    selector: (row: types.IDevice) => row.lastBatteryValue,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: types.IDevice) => <StatusBadge isDeactivated={row.isDeleted} />,
+    sortable: true,
+  },
+];
+
+export const ACCOUNT_INSTALLATIONS_TABLE_COLUMNS: TableColumn<any>[] = [
+  {
+    name: "Name",
+    selector: (row: any) => row.name,
+    sortable: true,
+  },
+  {
+    name: "Current Step",
+    selector: (row: any) => row.currentStep,
+    sortable: true,
+  },
+  {
+    name: "Object",
+    selector: (row: any) => row.object?.name ?? "",
+    sortable: true,
+  },
+  {
+    name: "Object Type",
+    selector: (row: any) => row.objectType?.name ?? "",
+    sortable: true,
+  },
+  {
+    name: "Device",
+    selector: (row: any) => row.device?.name ?? "",
+    sortable: true,
+  },
+  {
+    name: "Device Type",
+    selector: (row: any) => row.deviceType?.name ?? "",
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
     sortable: true,
   },
 ];

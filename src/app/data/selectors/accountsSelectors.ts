@@ -82,3 +82,36 @@ export const selectAccountObjectTypes = createSelector(
     accountObjectTypes,
   })
 );
+
+export const selectAccountObjects = createSelector(
+  selectAccountsReducerLoading,
+  selectAccountTotalRecords,
+  (state: RootState) => state.rootReducer.accountsReducer.accountObjects,
+  (loading, totalRecords, accountObjects) => ({
+    loading,
+    totalRecords,
+    accountObjects,
+  })
+);
+
+export const selectAccountDevices = createSelector(
+  selectAccountsReducerLoading,
+  selectAccountTotalRecords,
+  (state: RootState) => state.rootReducer.accountsReducer.accountDevices,
+  (loading, totalRecords, accountDevices) => ({
+    loading,
+    totalRecords,
+    accountDevices,
+  })
+);
+
+export const selectAccountInstallations = createSelector(
+  selectAccountsReducerLoading,
+  selectAccountTotalRecords,
+  (state: RootState) => state.rootReducer.accountsReducer.accountInstallations,
+  (loading, totalRecords, accountInstallations) => ({
+    loading,
+    totalRecords,
+    accountInstallations,
+  })
+);
