@@ -1,4 +1,4 @@
-import { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback, useEffect } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import { Table, Topbar, useDispatchOnParams } from "@vilocnv/allsetra-core";
 import AlarmExpendableRowCard from "components/cards/AlarmExpendableRowCard/AlarmExpendableRowCard";
@@ -14,6 +14,7 @@ import {
   getAlarmsByQueryThunk,
   postLockAlarmThunk,
   postUnlockAlarmThunk,
+  postUnlockAllAlarmsThunk,
 } from "app/features";
 import { selectAlarmDeskState } from "app/data/selectors";
 import { IAlarm } from "app/data/types";
@@ -31,6 +32,7 @@ const AlarmDesk: FC = () => {
   const [selectedAlarmId, setSelectedAlarmId] = useState<string | null>(null);
   const [expandedRowsId, setExpandedRowsId] = useState<string[]>([]);
 
+  // Form Modals States
   const [openSendEmailModal, setOpenSendEmailModal] = useState<boolean>(false);
   const [openSendSMSModal, setOpenSendSMSModal] = useState<boolean>(false);
   const [openClearAlarmModal, setOpenClearAlarmModal] =
@@ -76,9 +78,20 @@ const AlarmDesk: FC = () => {
     [expandedRowsId]
   );
 
-  console.log("ALARMS", alarms);
+  useEffect(() => {
+    const handleTabClose = (event: any) => {
+      event.preventDefault();
+      dispatch(postUnlockAllAlarmsThunk());
+      return (event.returnValue = "Are you sure you want to exit?");
+    };
 
-  const geozone = [{ lat: 52.150125, lng: 5.4 }];
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+      dispatch(postUnlockAllAlarmsThunk());
+    };
+  }, []);
 
   return (
     <Box>
@@ -111,7 +124,7 @@ const AlarmDesk: FC = () => {
             zoom={10}
             radius={50}
             objects={alarms}
-            geozone={geozone}
+            geozone={[{ lat: 52.150125, lng: 5.4 }]}
           />
         </Grid>
       </Grid>

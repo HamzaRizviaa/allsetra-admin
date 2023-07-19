@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { PageLoader, types } from "@vilocnv/allsetra-core";
 import { MapContainer } from "./Map.styled";
 import Markers from "../Map/children/Markers";
 import Geozone from "../Map/children/Geozone";
-import { PageLoader } from "@vilocnv/allsetra-core";
-
 interface MapProps {
   center: {
     lat: number;
@@ -29,7 +28,6 @@ const Map: React.FC<MapProps> = ({
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`,
-    // ...otherOptions
   });
 
   useEffect(() => {

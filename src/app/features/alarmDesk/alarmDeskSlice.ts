@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAlarm } from "app/data/types";
+import { types } from "@vilocnv/allsetra-core";
 import { getAlarmsByQueryThunk } from "./alarmDeskActions";
 
 export interface IAlarmDeskState {
@@ -8,7 +8,7 @@ export interface IAlarmDeskState {
   // Accounts State
   totalRecords: number | null;
   activeAlarmId: string | null;
-  alarms: Array<IAlarm>;
+  alarms: Array<types.IAlarm>;
 }
 
 const initialState: IAlarmDeskState = {
@@ -37,6 +37,11 @@ const alarmDeskSlice = createSlice({
         alarm.isLocked = action.payload.isLocked;
       }
     },
+    setAllAlarmsAsUnlocked: (state) => {
+      state.alarms.forEach((alarm) => {
+        alarm.isLocked = false;
+      });
+    },
   },
   extraReducers: (builder) => {
     // Get Accounts By Querying Action Cases
@@ -58,6 +63,7 @@ const alarmDeskSlice = createSlice({
 
 export * from "./alarmDeskActions";
 export * from "./alarmDeskQueries";
-export const { setActiveAlarmId, setIsLockedOfAlarm } = alarmDeskSlice.actions;
+export const { setActiveAlarmId, setIsLockedOfAlarm, setAllAlarmsAsUnlocked } =
+  alarmDeskSlice.actions;
 
 export default alarmDeskSlice.reducer;

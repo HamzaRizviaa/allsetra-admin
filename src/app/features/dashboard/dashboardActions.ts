@@ -48,3 +48,21 @@ export const getAllIconsThunk = createAsyncThunk(
     }
   }
 );
+
+export const getAllCountriesThunk = createAsyncThunk(
+  "dashboard/getAllCountriesThunk",
+  async () => {
+    try {
+      const response = await Dashboard.getAllCountries();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

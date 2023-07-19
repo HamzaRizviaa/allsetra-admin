@@ -12,6 +12,10 @@ class Dashboard {
   static getAllIcons = async () => {
     return await axiosInstance.get("/icons");
   };
+
+  static getAllCountries = async () => {
+    return await axiosInstance.get("/countries");
+  };
 }
 
 export default Dashboard;

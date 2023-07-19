@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AlarmDesk } from "app/data/services";
-import { setIsLockedOfAlarm } from "./alarmDeskSlice";
+import { setIsLockedOfAlarm, setAllAlarmsAsUnlocked } from "./alarmDeskSlice";
 import { toast, types } from "@vilocnv/allsetra-core";
 import {
   IAlarmReportTheft,
@@ -50,6 +50,24 @@ export const postUnlockAlarmThunk = createAsyncThunk(
       if (response.status === 202) {
         dispatch(setIsLockedOfAlarm({ alarmId, isLocked: false }));
       }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const postUnlockAllAlarmsThunk = createAsyncThunk(
+  "alarmDesk/postUnlockAllAlarmsThunk",
+  async (_, { dispatch }) => {
+    try {
+      const response = await AlarmDesk.postUnlockAllAlarms();
+
+      if (response.status === 202) {
+        dispatch(setAllAlarmsAsUnlocked());
+      }
+
+      return response;
     } catch (e: any) {
       console.error(e);
       throw new Error(e);

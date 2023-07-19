@@ -28,14 +28,23 @@ export const selectAllCurrencies = (state: RootState) =>
 export const selectAllIcons = (state: RootState) =>
   state.rootReducer.dashboardReducer.icons;
 
-export const selectIconReducerLoading = (state: RootState) =>
-  state.rootReducer.dashboardReducer.loading;
+export const selectAllCountries = (state: RootState) =>
+  state.rootReducer.dashboardReducer.countries;
 
 export const selectIconState = createSelector(
-  selectIconReducerLoading,
+  selectDashboardReducerLoading,
   selectAllIcons,
   (loading, icons) => ({
     loading,
     icons,
+  })
+);
+
+export const selectDashboardCountriesState = createSelector(
+  selectDashboardReducerLoading,
+  selectAllCountries,
+  (loading, countries) => ({
+    loading,
+    countries,
   })
 );

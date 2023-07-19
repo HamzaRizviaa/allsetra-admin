@@ -1,32 +1,35 @@
-import React from "react";
+import { FC, Fragment } from "react";
+import { isEmpty } from "lodash";
 import {
   OverlayView,
   InfoWindowF,
   MarkerF,
   OverlayViewF,
 } from "@react-google-maps/api";
+import { MapObjectCard, types } from "@vilocnv/allsetra-core";
 import { MarkerBlip, MarkerLabel } from "../Map.styled";
-import { MapObjectCard } from "@vilocnv/allsetra-core";
 
 interface MarkerProps {
-  objects: any[];
+  objects: types.IObject[];
   selectedMarker: number | null;
   handleMarkerClick: (markerIndex: any) => void;
 }
 
-const Markers: React.FC<MarkerProps> = ({
+const Markers: FC<MarkerProps> = ({
   objects,
   selectedMarker,
   handleMarkerClick,
 }) => {
   return (
-    <>
-      {objects.map((object: any, index: any) => {
-        console.log("Single object", object);
+    <Fragment>
+      {objects.map((object: types.IObject, index: number) => {
+        if (isEmpty(object.location)) return null;
+
         const position = {
           lat: object.location.latitude,
           lng: object.location.longitude,
         };
+
         const hasAlarmType = object.hasOwnProperty("alarmType");
 
         const iconUrl = !hasAlarmType
@@ -48,7 +51,7 @@ const Markers: React.FC<MarkerProps> = ({
         });
 
         return (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             <MarkerF
               position={position}
               icon={
@@ -85,10 +88,10 @@ const Markers: React.FC<MarkerProps> = ({
               <MarkerLabel>{object.name}</MarkerLabel>
               <MarkerBlip></MarkerBlip>
             </OverlayViewF>
-          </React.Fragment>
+          </Fragment>
         );
       })}
-    </>
+    </Fragment>
   );
 };
 

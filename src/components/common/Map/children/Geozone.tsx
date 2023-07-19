@@ -1,5 +1,5 @@
-import { CircleF } from "@react-google-maps/api";
 import { FC } from "react";
+import { CircleF } from "@react-google-maps/api";
 
 const GEOZONE_OPTIONS = {
   strokeColor: "#b1bae8",

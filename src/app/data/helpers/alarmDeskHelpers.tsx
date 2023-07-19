@@ -5,6 +5,14 @@ import {
   IAlarmSendEmail,
   IAlarmSendSMS,
 } from "app/data/types";
+import { types, Badge } from "@vilocnv/allsetra-core";
+import { isEmpty } from "lodash";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import { IconButton } from "@mui/material";
+
+//
+// ALARM DESK FORMS HELPERS
+//
 
 export const alarmReportTheftInitialValues: IAlarmReportTheft = {
   comment: "",
@@ -65,3 +73,51 @@ export const alarmSendSMSValidationSchema: Yup.Schema = Yup.object({
     .label("Default email addresses"),
   message: Yup.string().trim().required().label("Message"),
 });
+
+//
+// ALARM DESK METADATA KEYVALUE TABLE HELPERS
+//
+
+export const transformAlarmForObjectInfoTable = (alarm: types.IAlarm) => {
+  if (!alarm) return {};
+
+  return {
+    "A number": alarm.object?.aNumber ?? "",
+    "Object Name": alarm.object?.name ?? "",
+    Immobiliser: (
+      <Badge colorScheme={alarm.hasImmobilizer ? "success" : "error"}>
+        {alarm.hasImmobilizer ? "Yes" : "No"}
+      </Badge>
+    ),
+  };
+};
+
+export const transformAlarmPersonsForTable = (alarmPersons: Array<any>) => {
+  if (isEmpty(alarmPersons)) return {};
+
+  const data: any = {};
+
+  alarmPersons.forEach((person) => {
+    data[`${person.firstName} ${person.lastName}`] = (
+      <IconButton sx={{ width: "18px", height: "18px" }}>
+        <LocalPhoneIcon sx={{ width: "18px", height: "18px" }} />
+      </IconButton>
+    );
+  });
+
+  return data;
+};
+
+export const transformOwnerCountriesForWhitelisted = (
+  object: types.IObject
+) => {
+  if (isEmpty(object)) return {};
+
+  const data: any = {};
+
+  object.owner.countries.map((countryWhitelist: any) => {
+    data[countryWhitelist.name] = "";
+  });
+
+  return data;
+};

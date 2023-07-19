@@ -1,6 +1,8 @@
 import "./App.css";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useAppDispatch } from "hooks";
+import { postUnlockAllAlarmsThunk } from "app/features";
 import UnprotectedRoute from "components/routes/UnprotectedRoute/UnprotectedRoute";
 import ProtectedRoute from "components/routes/ProtectedRoute/ProtectedRoute";
 
@@ -31,6 +33,23 @@ import DeviceTypes from "pages/deviceManager/DeviceTypes";
 import DeviceTypeDetails from "pages/deviceManager/DeviceTypes/DeviceTypesDetails";
 
 const App: FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const handleTabClose = (event: any) => {
+      event.preventDefault();
+      dispatch(postUnlockAllAlarmsThunk());
+      return (event.returnValue = "Are you sure you want to exit?");
+    };
+
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+      dispatch(postUnlockAllAlarmsThunk());
+    };
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<UnprotectedRoute redirectTo="/dashboard" />}>
