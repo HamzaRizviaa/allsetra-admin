@@ -82,7 +82,6 @@ const AlarmDesk: FC = () => {
     const handleTabClose = (event: any) => {
       event.preventDefault();
       dispatch(postUnlockAllAlarmsThunk());
-      return (event.returnValue = "Are you sure you want to exit?");
     };
 
     window.addEventListener("beforeunload", handleTabClose);
