@@ -32,3 +32,14 @@ export const ALL_OBJECTS_TABLE_COLUMNS: TableColumn<any>[] = [
   },
 ];
 
+//
+// OBJECT DETAILS
+//
+export const OBJECT_DETAILS_TABLES_HEADINGS: string[] = [
+  "Object Information",
+  "CAN Bus Data",
+  "Alarm History",
+  "Installation History",
+  "Account History",
+  "Subscription History",
+];

@@ -5,6 +5,7 @@ import { Settings } from "@mui/icons-material";
 import { Topbar, PageLoader } from "@vilocnv/allsetra-core";
 import ObjectDetailsHeader from "components/sections/objects/ObjectDetailsHeader/ObjectDetailsHeader";
 import ObjectDetailsBody from "components/sections/objects/ObjectDetailsBody/ObjectDetailsBody";
+import ObjectDetailsTables from "components/sections/objects/ObjectDetailsTables/ObjectDetailsTables";
 
 // Data
 import { useActiveObjectById } from "hooks";
@@ -37,6 +38,7 @@ const ObjectDetails: FC = () => {
           <Fragment>
             <ObjectDetailsHeader objectName={activeObject?.name || ""} />
             <ObjectDetailsBody activeObject={activeObject} />
+            <ObjectDetailsTables />
           </Fragment>
         )}
       </Box>
