@@ -17,12 +17,7 @@ const Settings: FC = () => {
 
   useDispatchOnMount(getAllLanguagesThunk, languages.length ? undefined : true);
 
-  return (
-    <Box>
-      {loading && <PageLoader isLoading={loading} />}
-      <UpdateSettingsForm />
-    </Box>
-  );
+  return <Box>{loading ? <PageLoader /> : <UpdateSettingsForm />}</Box>;
 };
 
 export default Settings;

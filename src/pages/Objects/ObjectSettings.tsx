@@ -11,7 +11,7 @@ const ObjectSettings: FC = () => {
   return (
     <div>
       {loading ? (
-        <PageLoader isLoading={loading} />
+        <PageLoader />
       ) : (
         <ObjectSettingsForm activeObject={activeObject} />
       )}

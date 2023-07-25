@@ -2585,10 +2585,10 @@
     "@typescript-eslint/types" "5.57.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vilocnv/allsetra-core@^0.1.18":
-  version "0.1.18"
-  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.1.18/33151b4c66d4ed012258f396aff438bbd4fb31c1#33151b4c66d4ed012258f396aff438bbd4fb31c1"
-  integrity sha512-G0oSdKkxpU2UO29HPDYVIFZjTLtAWTWgvoMsGJRIiOlpps0OKq33JFlQgclA1DShid3FEmAFAE3mz8qTK49bLg==
+"@vilocnv/allsetra-core@^0.1.22":
+  version "0.1.22"
+  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.1.22/3e38ac7b79310d50fbd3e26ad8697be37b3f0772#3e38ac7b79310d50fbd3e26ad8697be37b3f0772"
+  integrity sha512-zj1xxAIGoW5M2vp6qa9xntpOztOlTRAbUmMnS+xFFIuDThW26zAH5FhtnL/h75cy6BCAIB38nVymU9qSu3eOtA==
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
@@ -8222,6 +8222,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+redux-persist@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"
+  integrity sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==
 
 redux-thunk@^2.4.2:
   version "2.4.2"

@@ -76,3 +76,4 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
 };
 
 export default ProtectedRoute;
+

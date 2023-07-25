@@ -68,7 +68,7 @@ const Map: React.FC<MapProps> = ({
     return <div>Map cannot be loaded right now, sorry.</div>;
   }
 
-  return isLoaded ? renderMap() : <PageLoader isLoading={true} />;
+  return isLoaded ? renderMap() : <PageLoader />;
 };
 
 export default Map;

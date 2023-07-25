@@ -1,46 +1,16 @@
-import { FC, Fragment } from "react";
-import {
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-  useMsal,
-} from "@azure/msal-react";
+import { FC, useEffect } from "react";
+import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "app/integrations/azure/authConfig";
+import { PageLoader } from "@vilocnv/allsetra-core";
 
 const Auth: FC = () => {
-  const { instance, accounts } = useMsal();
+  const { instance } = useMsal();
 
-  return (
-    <Fragment>
-      <UnauthenticatedTemplate>
-        <div className="App">
-          <header className="App-header">
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <button onClick={() => instance.loginRedirect(loginRequest)}>
-              Login
-            </button>
-          </header>
-        </div>
-      </UnauthenticatedTemplate>
+  useEffect(() => {
+    instance.loginRedirect(loginRequest);
+  }, []);
 
-      <AuthenticatedTemplate>
-        <div className="App">
-          <header className="App-header">
-            <p>Hello {accounts[0]?.name}!</p>
-
-            <button
-              onClick={() =>
-                instance.logoutRedirect({ postLogoutRedirectUri: "/" })
-              }
-            >
-              Logout
-            </button>
-          </header>
-        </div>
-      </AuthenticatedTemplate>
-    </Fragment>
-  );
+  return <PageLoader sx={{ width: "100dvw" }}></PageLoader>;
 };
 
 export default Auth;

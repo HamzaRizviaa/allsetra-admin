@@ -33,7 +33,7 @@ const ObjectDetails: FC = () => {
       />
       <Box mx={4} mt={4}>
         {loading ? (
-          <PageLoader isLoading={loading} />
+          <PageLoader />
         ) : (
           <Fragment>
             <ObjectDetailsHeader objectName={activeObject?.name || ""} />
