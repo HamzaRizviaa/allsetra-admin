@@ -1,9 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
-import { useAppSelector } from "hooks";
+import { utils, toast } from "@vilocnv/allsetra-core";
+import { useAppDispatch, useAppSelector } from "hooks";
 import { selectActiveUserDetails } from "app/data/selectors";
+import { BackendEventsEnum } from "app/data/types";
+import { getAccountsByQueryThunk } from "app/features";
 
 const useSignalR = () => {
+  const dispatch = useAppDispatch();
   const [hubConnection, setHubConnection] = useState(HubConnection.prototype);
 
   const { userEmail, idToken } = useAppSelector(selectActiveUserDetails);
@@ -32,8 +36,17 @@ const useSignalR = () => {
       .then(() => {
         console.log("Connected SignalR!");
 
-        newConnection.on("EventRaised", (message) => {
-          console.log(message);
+        newConnection.on("EventRaised", (event) => {
+          switch (event.eventName) {
+            case BackendEventsEnum.AccountCreatedEvent:
+              toast.success(
+                `Account with the name "${event.name}" has been created.`
+              );
+              dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
+              break;
+            default:
+              console.log({ eventName: event.eventName });
+          }
         });
 
         setHubConnection(newConnection);

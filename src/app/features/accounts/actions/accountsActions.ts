@@ -36,13 +36,14 @@ export const getAccountsByQueryThunk = createAsyncThunk(
 
 export const createAccountThunk = createAsyncThunk(
   "accounts/createAccountThunk",
-  async (data: any, { dispatch }) => {
+  async (data: any) => {
     try {
       const response = await Accounts.createAccount(data);
 
       if (response.status === 202) {
-        toast.success("Account has been created");
-        dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
+        toast.success(
+          "Account creation request is being processed by the backend."
+        );
       }
 
       return response;

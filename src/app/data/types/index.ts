@@ -7,3 +7,4 @@ export * from "./objectTypes";
 export * from "./subscriptionManagerTypes";
 export * from "./settingsTypes";
 export * from "./alarmDeskTypes";
+export * from "./backendEvents";
