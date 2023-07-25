@@ -64,6 +64,9 @@ const AccountDetails: FC = () => {
           value={tabSelectedIndex}
           onChange={setTabSelectedIndex}
           headings={ACCOUNT_DETAILS_TABS_HEADINGS}
+          onHeadingClick={(heading) => {
+            console.log(heading);
+          }}
         >
           <Box mx={2}>
             <TabPanel value={tabSelectedIndex} index={0}>

@@ -108,6 +108,26 @@ export const transformAlarmPersonsForTable = (alarmPersons: Array<any>) => {
   return data;
 };
 
+export const transformOwnerForCompanyInformation = (object: types.IObject) => {
+  if (isEmpty(object)) return {};
+
+  const { visitingAddress } = object.owner;
+
+  const data: any = {
+    "Company name": object.owner?.name || "",
+    Address: `House #: ${visitingAddress.houseNumber}, Street: ${visitingAddress.street}, City: ${visitingAddress.city}, State: ${visitingAddress.state}`,
+    Status: (
+      <Badge
+        colorScheme={object.owner.status === "ACTIVE" ? "success" : "error"}
+      >
+        {object.owner.status}
+      </Badge>
+    ),
+  };
+
+  return data;
+};
+
 export const transformOwnerCountriesForWhitelisted = (
   object: types.IObject
 ) => {

@@ -11,6 +11,7 @@ import { useGetAlarmPersonsForAlarmQuery } from "app/features";
 import {
   transformAlarmForObjectInfoTable,
   transformAlarmPersonsForTable,
+  transformOwnerForCompanyInformation,
   transformOwnerCountriesForWhitelisted,
 } from "app/data/helpers";
 
@@ -22,16 +23,19 @@ const AlarmMetadata: FC<AlarmMetadataProps> = ({ data }) => {
   const { data: alarmPersonsData, isLoading: alarmPersonsLoading } =
     useGetAlarmPersonsForAlarmQuery(data.uniqueId);
 
-  const { objectInformation, alarmPersons, countriesWhiteListed } =
-    useMemo(() => {
-      return {
-        objectInformation: transformAlarmForObjectInfoTable(data),
-        alarmPersons: transformAlarmPersonsForTable(alarmPersonsData ?? []),
-        countriesWhiteListed: transformOwnerCountriesForWhitelisted(
-          data.object
-        ),
-      };
-    }, [data, alarmPersonsData]);
+  const {
+    objectInformation,
+    alarmPersons,
+    companyInformation,
+    countriesWhiteListed,
+  } = useMemo(() => {
+    return {
+      objectInformation: transformAlarmForObjectInfoTable(data),
+      alarmPersons: transformAlarmPersonsForTable(alarmPersonsData ?? []),
+      companyInformation: transformOwnerForCompanyInformation(data.object),
+      countriesWhiteListed: transformOwnerCountriesForWhitelisted(data.object),
+    };
+  }, [data, alarmPersonsData]);
 
   console.log({ alarmPersonsData });
 
@@ -51,7 +55,7 @@ const AlarmMetadata: FC<AlarmMetadataProps> = ({ data }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <DataCardAccordionLayout title="Company Information">
-            <div></div>
+            <KeyValueTable records={companyInformation} />
           </DataCardAccordionLayout>
         </Grid>
         <Grid item xs={12} md={6}>
