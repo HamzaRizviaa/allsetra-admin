@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { PageLoader, types } from "@vilocnv/allsetra-core";
+import { PageLoader } from "@vilocnv/allsetra-core";
 import { MapContainer } from "./Map.styled";
 import Markers from "../Map/children/Markers";
 import Geozone from "../Map/children/Geozone";

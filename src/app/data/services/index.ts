@@ -8,3 +8,5 @@ export { default as Subscriptions } from "./Subscriptions";
 export { default as ObjectTypes } from "./ObjectTypes";
 export { default as Settings } from "./Settings";
 export { default as AlarmDesk } from "./AlarmDesk";
+export { default as Objects } from "./Objects";
+export { default as Devices } from "./Devices";

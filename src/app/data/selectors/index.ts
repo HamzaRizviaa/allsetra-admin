@@ -8,3 +8,4 @@ export * from "./subscriptionsSelectors";
 export * from "./settingsSelectors";
 export * from "./alarmDeskSelectors";
 export * from "./objectsSelectors";
+export * from "./devicesSelectors";

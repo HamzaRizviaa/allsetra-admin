@@ -9,6 +9,7 @@ import objectTypesReducer from "./objectTypes/objectTypesSlice";
 import settingsReducer from "./settings/settingsSlice";
 import alarmDeskReducer from "./alarmDesk/alarmDeskSlice";
 import objectsReducer from "./objects/objectsSlice";
+import devicesReducer from "./devices/devicesSlice";
 
 const rootReducer = combineReducers({
   dashboardReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   settingsReducer,
   alarmDeskReducer,
   objectsReducer,
+  devicesReducer,
 });
 
 export default rootReducer;

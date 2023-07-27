@@ -9,3 +9,4 @@ export * from "./settings/settingsSlice";
 export * from "./alarmDesk/alarmDeskSlice";
 export * from "./objects/objectsSlice";
 export * from "./users/usersQueries";
+export * from "./devices/devicesSlice";

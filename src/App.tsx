@@ -13,6 +13,9 @@ import NotFound from "pages/NotFound";
 // PROTECTED PAGES
 import Map from "pages/Map";
 import AlarmDesk from "pages/AlarmDesk";
+import Devices from "pages/Devices";
+import DeviceDetailts from "pages/Devices/DeviceDetailts";
+import DeviceLocationHistory from "pages/Devices/DeviceLocationHistory";
 import Objects from "pages/Objects";
 import ObjectDetails from "pages/Objects/ObjectDetails";
 import ObjectSettings from "pages/Objects/ObjectSettings";
@@ -57,7 +60,18 @@ const App: FC = () => {
 
       <Route path="/dashboard" element={<ProtectedRoute redirectTo="/" />}>
         <Route index element={<Map />} />
+
         <Route path="/dashboard/alarm-desk" element={<AlarmDesk />} />
+
+        {/* Devices */}
+        <Route path="/dashboard/devices" element={<Devices />} />
+        <Route path="/dashboard/devices/:id" element={<DeviceDetailts />} />
+        <Route
+          path="/dashboard/devices/:id/location-history"
+          element={<DeviceLocationHistory />}
+        />
+
+        {/* Objects */}
         <Route path="/dashboard/objects" element={<Objects />} />
         <Route path="/dashboard/objects/:id" element={<ObjectDetails />} />
         <Route
