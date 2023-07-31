@@ -20,6 +20,7 @@ import {
 import { setDrawerCollapseState } from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
 import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
+import { persistor } from "app/store";
 
 export interface ProtectedRouteProps {
   redirectTo: string;
@@ -44,6 +45,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   };
 
   const handleLogout = () => {
+    persistor.purge();
     instance.logoutRedirect({ postLogoutRedirectUri: "/" });
   };
 
@@ -76,4 +78,3 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
 };
 
 export default ProtectedRoute;
-

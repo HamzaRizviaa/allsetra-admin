@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "hooks";
+import { FC } from "react";
+import { useAppSelector, useDispatchOnMount } from "hooks";
 import { selectObjectsState } from "app/data/selectors";
 import { getAllObjectsThunk } from "app/features";
 import Map from "components/common/Map/Map";
 
-const MapMain: React.FC = () => {
-  const dispatch = useAppDispatch();
+const MapMain: FC = () => {
   const { allObjects } = useAppSelector(selectObjectsState);
 
-  useEffect(() => {
-    dispatch(getAllObjectsThunk());
-  }, []);
+  useDispatchOnMount(getAllObjectsThunk, allObjects.length ? undefined : true);
 
   const geozone = [{ lat: 52.150125, lng: 5.4 }];
 

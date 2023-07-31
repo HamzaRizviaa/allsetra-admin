@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { PageLoader } from "@vilocnv/allsetra-core";
 import { MapContainer } from "./Map.styled";
 import Markers from "../Map/children/Markers";
 import Geozone from "../Map/children/Geozone";
+
 interface MapProps {
   center: {
     lat: number;
@@ -15,13 +16,7 @@ interface MapProps {
   geozone: Array<any>;
 }
 
-const Map: React.FC<MapProps> = ({
-  center,
-  zoom,
-  objects,
-  geozone,
-  radius,
-}) => {
+const Map: FC<MapProps> = ({ center, zoom, objects, geozone, radius }) => {
   const [shouldRenderMarkers, setShouldRenderMarkers] = useState(false);
   const [shouldRenderGeozone, setShouldRenderGeozone] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState<number | null>(null);
@@ -47,9 +42,9 @@ const Map: React.FC<MapProps> = ({
     return (
       <MapContainer>
         <GoogleMap
-          mapContainerStyle={{ height: "100%", width: "100%" }}
           center={center}
           zoom={zoom}
+          mapContainerStyle={{ height: "100%", width: "100%" }}
         >
           {shouldRenderGeozone && <Geozone geozone={geozone} radius={radius} />}
           {shouldRenderMarkers && (
