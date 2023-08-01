@@ -20,6 +20,7 @@ export interface IAccountsState {
   allAccounts: Array<any>;
 
   // Account Details State
+  activeTabIndex: number;
   totalRecords: number | null;
   accountUsers: Array<any>;
   accountServices: Array<any>;
@@ -37,6 +38,7 @@ const initialState: IAccountsState = {
   activeAccountId: null,
   allAccounts: [],
 
+  activeTabIndex: 0,
   totalRecords: null,
   accountUsers: [],
   accountServices: [],
@@ -53,6 +55,9 @@ const accountsSlice = createSlice({
   reducers: {
     setActiveAccountId: (state, action: PayloadAction<string | null>) => {
       state.activeAccountId = action.payload;
+    },
+    setActiveTabIndex: (state, action: PayloadAction<number>) => {
+      state.activeTabIndex = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -196,6 +201,6 @@ const accountsSlice = createSlice({
 
 export * from "./actions";
 export * from "./accountsQueries";
-export const { setActiveAccountId } = accountsSlice.actions;
+export const { setActiveAccountId, setActiveTabIndex } = accountsSlice.actions;
 
 export default accountsSlice.reducer;

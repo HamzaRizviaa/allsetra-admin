@@ -20,7 +20,7 @@ interface Props {
   accountId: string | null;
 }
 
-const AccountUsers: FC<Props> = ({ accountId }) => {
+const AccountUsersSection: FC<Props> = ({ accountId }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
@@ -104,4 +104,4 @@ const AccountUsers: FC<Props> = ({ accountId }) => {
   );
 };
 
-export default AccountUsers;
+export default AccountUsersSection;

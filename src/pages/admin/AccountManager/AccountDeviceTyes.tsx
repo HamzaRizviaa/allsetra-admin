@@ -1,18 +1,20 @@
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { capitalize } from "lodash";
 import { useTheme } from "@mui/material";
 import { Topbar } from "@vilocnv/allsetra-core";
 import AccountTabLayout from "components/common/AccountTabLayout/AccountTabLayout";
-import AccountDetailsSection from "components/sections/admin/AccountDetailsSection/AccountDetailsSection";
+import AccountDeviceTypesSection from "components/sections/admin/AccountSubSections/AccountDeviceTypesSection";
 
 // Data
 import { useAppSelector } from "hooks";
 import { selectActiveAccount } from "app/data/selectors";
 
-const AccountDetails: FC = () => {
+const AccountDeviceTyes: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const params = useParams();
+  const accountId = params.id ?? "";
 
   // Global State
   const activeAccount = useAppSelector(selectActiveAccount);
@@ -26,10 +28,10 @@ const AccountDetails: FC = () => {
         breadcrumbRedirectTo={() => navigate(-1)}
       />
       <AccountTabLayout>
-        <AccountDetailsSection />
+        <AccountDeviceTypesSection accountId={accountId} />
       </AccountTabLayout>
     </main>
   );
 };
 
-export default AccountDetails;
+export default AccountDeviceTyes;

@@ -36,6 +36,9 @@ export const selectAccountsState = createSelector(
 );
 
 // Account Details Selectors
+export const selectAccountActiveTabIndex = (state: RootState) =>
+  state.rootReducer.accountsReducer.activeTabIndex;
+
 export const selectAccountTotalRecords = (state: RootState) =>
   state.rootReducer.accountsReducer.totalRecords;
 

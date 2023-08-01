@@ -4,15 +4,16 @@ import { capitalize } from "lodash";
 import { useTheme } from "@mui/material";
 import { Topbar } from "@vilocnv/allsetra-core";
 import AccountTabLayout from "components/common/AccountTabLayout/AccountTabLayout";
-import AccountDetailsSection from "components/sections/admin/AccountDetailsSection/AccountDetailsSection";
 
 // Data
 import { useAppSelector } from "hooks";
 import { selectActiveAccount } from "app/data/selectors";
 
-const AccountDetails: FC = () => {
+const AccountSubscriptions: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  // const params = useParams();
+  // const accountId = params.id ?? "";
 
   // Global State
   const activeAccount = useAppSelector(selectActiveAccount);
@@ -26,10 +27,10 @@ const AccountDetails: FC = () => {
         breadcrumbRedirectTo={() => navigate(-1)}
       />
       <AccountTabLayout>
-        <AccountDetailsSection />
+        <div>Account Subscriptions</div>
       </AccountTabLayout>
     </main>
   );
 };
 
-export default AccountDetails;
+export default AccountSubscriptions;

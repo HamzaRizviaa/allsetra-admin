@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FormikHelpers } from "formik";
@@ -21,6 +21,7 @@ import {
   setActiveAccountId,
   createAccountThunk,
   getAccountsByQueryThunk,
+  setActiveTabIndex,
 } from "app/features";
 import { ALL_ACCOUNTS_TABLE_COLUMNS } from "app/data/constants";
 
@@ -44,10 +45,8 @@ const Accounts: FC = () => {
 
   const handleViewAccount = (account: types.IAccount) => {
     dispatch(setActiveAccountId(account.uniqueId));
-    navigate({
-      pathname: "/dashboard/account-manager/details",
-      search: createSearchParams({ accountId: account.uniqueId }).toString(),
-    });
+    dispatch(setActiveTabIndex(0));
+    navigate(`/dashboard/account-manager/details/${account.uniqueId}`);
   };
 
   const handleActivateAccount = async (account: types.IAccount) => {

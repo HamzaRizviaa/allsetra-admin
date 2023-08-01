@@ -18,6 +18,20 @@ export const ACCOUNT_DETAILS_TABS_HEADINGS: string[] = [
   "Installations",
 ];
 
+export const ACCOUNT_TAB_INDEX_TO_ROUTENAME_MAPPING: Record<number, string> = {
+  0: "details",
+  1: "services",
+  2: "device-types",
+  3: "object-types",
+  4: "groups",
+  5: "users",
+  6: "subscriptions",
+  7: "devices",
+  8: "objects",
+  9: "alarms",
+  10: "installations",
+};
+
 //
 // TABLE HEADERS
 //
