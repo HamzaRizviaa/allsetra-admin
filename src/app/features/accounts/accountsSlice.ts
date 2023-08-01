@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { types } from "@vilocnv/allsetra-core";
 import {
   getAllAccountsThunk,
   getAccountsByQueryThunk,
@@ -9,6 +10,7 @@ import {
   getAccountObjectsThunk,
   getAccountDevicesThunk,
   getAccountInstallationsThunk,
+  getSpecificAccountThunk,
 } from "./actions";
 
 export interface IAccountsState {
@@ -16,7 +18,7 @@ export interface IAccountsState {
 
   // Accounts State
   totalAccounts: number | null;
-  activeAccountId: string | null;
+  activeAccount: types.IAccount | null;
   allAccounts: Array<any>;
 
   // Account Details State
@@ -35,7 +37,7 @@ const initialState: IAccountsState = {
   loading: false,
 
   totalAccounts: null,
-  activeAccountId: null,
+  activeAccount: null,
   allAccounts: [],
 
   activeTabIndex: 0,
@@ -53,9 +55,6 @@ const accountsSlice = createSlice({
   name: "accounts",
   initialState,
   reducers: {
-    setActiveAccountId: (state, action: PayloadAction<string | null>) => {
-      state.activeAccountId = action.payload;
-    },
     setActiveTabIndex: (state, action: PayloadAction<number>) => {
       state.activeTabIndex = action.payload;
     },
@@ -87,6 +86,20 @@ const accountsSlice = createSlice({
     });
 
     builder.addCase(getAccountsByQueryThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Specific Account Action Cases
+    builder.addCase(getSpecificAccountThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getSpecificAccountThunk.fulfilled, (state, action) => {
+      state.activeAccount = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getSpecificAccountThunk.rejected, (state) => {
       state.loading = false;
     });
 
@@ -201,6 +214,6 @@ const accountsSlice = createSlice({
 
 export * from "./actions";
 export * from "./accountsQueries";
-export const { setActiveAccountId, setActiveTabIndex } = accountsSlice.actions;
+export const { setActiveTabIndex } = accountsSlice.actions;
 
 export default accountsSlice.reducer;

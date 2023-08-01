@@ -1,22 +1,22 @@
 import { FC } from "react";
-import { Formik, Form } from "formik";
+import { Box } from "@mui/material";
 
 // CHILDREN
 import GeneralInformationForm from "./children/GeneralInformationForm";
 import FinancialInformationForm from "./children/FinancialInformationForm";
 import LogisticsForm from "./children/LogisticsForm";
+import AlarmConfigurationFormSection from "components/forms/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
 import ManagementForm from "./children/ManagementForm";
 
 const AccountDetailsSection: FC = () => {
   return (
-    <Formik initialValues={{}} onSubmit={() => {}}>
-      <Form>
-        <GeneralInformationForm />
-        <FinancialInformationForm />
-        <LogisticsForm />
-        <ManagementForm />
-      </Form>
-    </Formik>
+    <Box>
+      <GeneralInformationForm />
+      <FinancialInformationForm />
+      <LogisticsForm />
+      <AlarmConfigurationFormSection />
+      <ManagementForm />
+    </Box>
   );
 };
 

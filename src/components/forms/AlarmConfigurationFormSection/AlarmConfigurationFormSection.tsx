@@ -4,10 +4,10 @@ import {
   TwoColsLayout,
   FormikToggleField,
 } from "@vilocnv/allsetra-core";
-import { Stack, Box, Typography } from "@mui/material";
-import { ChildFormBox } from "../ObjectSettingsForm.styled";
+import { Stack, Typography } from "@mui/material";
+import { ChildFormBox } from "./AlarmConfigurationFormSection.styled";
 
-const AlarmConfigurationSetting: FC = () => {
+const AlarmConfigurationFormSection: FC = () => {
   return (
     <ContentSectionLayout
       title="Alarm configuration"
@@ -59,4 +59,4 @@ const AlarmConfigurationSetting: FC = () => {
   );
 };
 
-export default AlarmConfigurationSetting;
+export default AlarmConfigurationFormSection;

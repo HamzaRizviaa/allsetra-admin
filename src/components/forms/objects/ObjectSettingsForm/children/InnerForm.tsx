@@ -8,7 +8,7 @@ import ObjectInformationSetting from "./ObjectInformationSetting";
 import DevicesSetting from "./DevicesSetting";
 import CorrectionSetting from "./CorrectionSetting";
 import ReminderSetting from "./ReminderSetting";
-import AlarmConfigurationSetting from "./AlarmConfigurationSetting";
+import AlarmConfigurationFormSection from "components/forms/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
 import NotificationsSetting from "./NotificationsSetting";
 
 interface Props {
@@ -19,7 +19,8 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const { handleSubmit, isSubmitting, dirty, isValid } = useFormikContext();
+  const { handleSubmit, isSubmitting, dirty, isValid, resetForm } =
+    useFormikContext();
 
   return (
     <Form>
@@ -38,9 +39,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
         secondaryButton={{
           variant: "text",
           text: "Cancel",
-          onClick: () => {
-            navigate(-1);
-          },
+          onClick: () => resetForm(),
         }}
       />
       <Box mx={4}>
@@ -51,7 +50,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
         />
         <CorrectionSetting />
         <ReminderSetting />
-        <AlarmConfigurationSetting />
+        <AlarmConfigurationFormSection />
         <NotificationsSetting />
       </Box>
     </Form>

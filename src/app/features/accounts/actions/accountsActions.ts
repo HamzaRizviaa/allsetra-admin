@@ -34,6 +34,24 @@ export const getAccountsByQueryThunk = createAsyncThunk(
   }
 );
 
+export const getSpecificAccountThunk = createAsyncThunk(
+  "accounts/getSpecificAccountThunk",
+  async (accountId: string) => {
+    try {
+      const response = await Accounts.getSpecificAccount(accountId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const createAccountThunk = createAsyncThunk(
   "accounts/createAccountThunk",
   async (data: any) => {
@@ -43,6 +61,26 @@ export const createAccountThunk = createAsyncThunk(
       if (response.status === 202) {
         toast.success(
           "Account creation request is being processed by the backend."
+        );
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const updateAccountThunk = createAsyncThunk(
+  "accounts/updateAccountThunk",
+  async ({ accountId, data }: { accountId: string, data: any }) => {
+    try {
+      const response = await Accounts.updateAccount(accountId, data);
+
+      if (response.status === 202) {
+        toast.success(
+          "Account update request is being processed by the backend."
         );
       }
 

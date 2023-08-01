@@ -18,7 +18,6 @@ import { selectAccountsState } from "app/data/selectors";
 import {
   activateAccountThunk,
   deactivateAccountThunk,
-  setActiveAccountId,
   createAccountThunk,
   getAccountsByQueryThunk,
   setActiveTabIndex,
@@ -44,7 +43,6 @@ const Accounts: FC = () => {
   useDispatchOnParams(getAccountsByQueryThunk);
 
   const handleViewAccount = (account: types.IAccount) => {
-    dispatch(setActiveAccountId(account.uniqueId));
     dispatch(setActiveTabIndex(0));
     navigate(`/dashboard/account-manager/details/${account.uniqueId}`);
   };

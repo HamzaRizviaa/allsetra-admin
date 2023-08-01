@@ -8,29 +8,27 @@ export const selectAccountsReducerLoading = (state: RootState) =>
 export const selectTotalAccounts = (state: RootState) =>
   state.rootReducer.accountsReducer.totalAccounts;
 
-export const selectActiveAccountId = (state: RootState) =>
-  state.rootReducer.accountsReducer.activeAccountId;
+export const selectActiveAccount = (state: RootState) =>
+  state.rootReducer.accountsReducer.activeAccount;
 
 export const selectAllAccounts = (state: RootState) =>
   state.rootReducer.accountsReducer.allAccounts;
 
-export const selectActiveAccount = createSelector(
-  selectAllAccounts,
-  selectActiveAccountId,
-  (accounts, accountId) => {
-    return accounts.find((account: any) => account.id === accountId);
-  }
+export const selectActiveAccountState = createSelector(
+  selectAccountsReducerLoading,
+  selectActiveAccount,
+  (loading, account) => ({ loading, account })
 );
 
 export const selectAccountsState = createSelector(
   selectAccountsReducerLoading,
   selectTotalAccounts,
-  selectActiveAccountId,
+  selectActiveAccount,
   selectAllAccounts,
-  (loading, totalAccounts, activeAccountId, allAccounts) => ({
+  (loading, totalAccounts, account, allAccounts) => ({
     loading,
     totalAccounts,
-    activeAccountId,
+    account,
     allAccounts,
   })
 );

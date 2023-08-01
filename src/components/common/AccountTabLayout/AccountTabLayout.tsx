@@ -2,12 +2,15 @@ import { FC, PropsWithChildren, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { Box } from "@mui/material";
-import { TabPanes } from "@vilocnv/allsetra-core";
+import { PageLoader, TabPanes, toast } from "@vilocnv/allsetra-core";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
-import { setActiveTabIndex } from "app/features";
-import { selectAccountActiveTabIndex } from "app/data/selectors";
+import { getSpecificAccountThunk, setActiveTabIndex } from "app/features";
+import {
+  selectAccountActiveTabIndex,
+  selectActiveAccountState,
+} from "app/data/selectors";
 import {
   ACCOUNT_DETAILS_TABS_HEADINGS,
   ACCOUNT_TAB_INDEX_TO_ROUTENAME_MAPPING,
@@ -19,13 +22,31 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
   const params = useParams();
 
   // Global State
+  const { loading, account } = useAppSelector(selectActiveAccountState);
   const accountActiveTabIndex = useAppSelector(selectAccountActiveTabIndex);
+
+  const getSpecificAccountById = async () => {
+    if (!isEmpty(account) && account.uniqueId === params.id) return;
+
+    try {
+      const { type } = await dispatch(getSpecificAccountThunk(params.id ?? ""));
+
+      if (type !== "accounts/getSpecificAccountThunk/fulfilled") {
+        navigate("/dashboard/account-manager");
+        toast.error("Account was not found");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (isEmpty(params.id)) {
       navigate("/dashboard/account-manager");
+    } else {
+      getSpecificAccountById();
     }
-  }, [params]);
+  }, []);
 
   const onChangeTab = (value: number) => {
     dispatch(setActiveTabIndex(value));
@@ -36,15 +57,19 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <Box>
-      <TabPanes
-        value={accountActiveTabIndex}
-        onChange={onChangeTab}
-        headings={ACCOUNT_DETAILS_TABS_HEADINGS}
-      >
-        <Box mt={4} mx={4}>
-          {children}
-        </Box>
-      </TabPanes>
+      {loading ? (
+        <PageLoader />
+      ) : (
+        <TabPanes
+          value={accountActiveTabIndex}
+          onChange={onChangeTab}
+          headings={ACCOUNT_DETAILS_TABS_HEADINGS}
+        >
+          <Box mt={4} mx={4}>
+            {children}
+          </Box>
+        </TabPanes>
+      )}
     </Box>
   );
 };

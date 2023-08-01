@@ -35,7 +35,7 @@ const ManagementForm: FC = () => (
       <TwoColsLayout hideDivider>
         <FormikSelectField
           label="Account owner"
-          name="Account owner"
+          name="accountOwner"
           options={[]}
           onChange={() => {}}
           fullWidth
