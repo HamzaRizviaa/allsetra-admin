@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
-import {
-  ContentSectionLayout,
-  FormikInputField,
-  TwoColsLayout,
-} from "@vilocnv/allsetra-core";
+import { ContentSectionLayout } from "@vilocnv/allsetra-core";
+import AddressFormSection from "components/forms/common/AddressFormSection/AddressFormSection";
 
 const LogisticsForm: FC = () => (
   <ContentSectionLayout
@@ -19,44 +16,11 @@ const LogisticsForm: FC = () => (
         },
       }}
     >
-      <TwoColsLayout title="Shipping address" hideDivider>
-        <FormikInputField
-          label="Street"
-          placeholder="Street"
-          name="number"
-          fullWidth
-        />
-        <FormikInputField
-          label="Postal code"
-          placeholder="Postal code"
-          name="name"
-          fullWidth
-        />
-        <FormikInputField
-          label="City"
-          placeholder="City"
-          name="name"
-          fullWidth
-        />
-        <FormikInputField
-          label="Country"
-          placeholder="Country"
-          name="name"
-          fullWidth
-        />
-        <FormikInputField
-          label="Email"
-          placeholder="Email"
-          name="name"
-          fullWidth
-        />
-        <FormikInputField
-          label="Phone number"
-          placeholder="Phone number"
-          name="name"
-          fullWidth
-        />
-      </TwoColsLayout>
+      <AddressFormSection
+        title="Shipping address"
+        parentKey="shippingAddress"
+        hideDivider
+      />
     </Box>
   </ContentSectionLayout>
 );

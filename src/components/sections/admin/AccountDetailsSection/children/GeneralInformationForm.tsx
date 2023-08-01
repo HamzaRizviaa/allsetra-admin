@@ -7,6 +7,7 @@ import {
   TwoColsLayout,
 } from "@vilocnv/allsetra-core";
 import { useGetAccountsIndustriesQuery } from "app/features";
+import AddressFormSection from "components/forms/common/AddressFormSection/AddressFormSection";
 
 const GeneralInformationForm: FC = () => {
   const { data: accountsIndustries, isLoading: accountsIndustriesLoading } =
@@ -87,52 +88,10 @@ const GeneralInformationForm: FC = () => {
             disabled
           />
         </TwoColsLayout>
-        <TwoColsLayout title="Visiting address">
-          <FormikInputField
-            label="Street"
-            placeholder="Street"
-            name="number"
-            fullWidth
-          />
-          <FormikInputField
-            label="House number"
-            placeholder="Postal code"
-            name="name"
-            fullWidth
-          />
-          <FormikInputField
-            label="Postal code"
-            placeholder="Postal code"
-            name="name"
-            fullWidth
-          />
-          <FormikInputField
-            label="City"
-            placeholder="City"
-            name="name"
-            fullWidth
-          />
-          <FormikInputField
-            label="Country"
-            placeholder="Country"
-            name="name"
-            fullWidth
-          />
-        </TwoColsLayout>
-        <TwoColsLayout>
-          <FormikInputField
-            label="Email"
-            placeholder="Email"
-            name="name"
-            fullWidth
-          />
-          <FormikInputField
-            label="Phone number"
-            placeholder="Phone number"
-            name="phoneNumber"
-            fullWidth
-          />
-        </TwoColsLayout>
+        <AddressFormSection
+          title="Visiting Address"
+          parentKey="visitingAddress"
+        />
         <TwoColsLayout>
           <FormikInputField
             label="Website"

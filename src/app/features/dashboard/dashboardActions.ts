@@ -66,3 +66,21 @@ export const getAllCountriesThunk = createAsyncThunk(
     }
   }
 );
+
+export const getAllPaymentMethodsThunk = createAsyncThunk(
+  "dashboard/getAllPaymentMethodsThunk",
+  async () => {
+    try {
+      const response = await Dashboard.getAllPaymentMethods();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

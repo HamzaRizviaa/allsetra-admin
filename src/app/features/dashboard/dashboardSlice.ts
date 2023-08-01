@@ -4,6 +4,7 @@ import {
   getAllRolesThunk,
   getAllIconsThunk,
   getAllCountriesThunk,
+  getAllPaymentMethodsThunk,
 } from "./dashboardActions";
 
 export interface IDashboardState {
@@ -15,6 +16,7 @@ export interface IDashboardState {
   currencies: Array<any>;
   icons: Array<any>;
   countries: Array<any>;
+  paymentMethods: Array<any>;
 }
 
 const initialState: IDashboardState = {
@@ -26,6 +28,7 @@ const initialState: IDashboardState = {
   currencies: [],
   icons: [],
   countries: [],
+  paymentMethods: [],
 };
 
 const dashboardSlice = createSlice({
@@ -96,6 +99,20 @@ const dashboardSlice = createSlice({
     });
 
     builder.addCase(getAllCountriesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get All Payment Methods Action Cases
+    builder.addCase(getAllPaymentMethodsThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllPaymentMethodsThunk.fulfilled, (state, action) => {
+      state.paymentMethods = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getAllPaymentMethodsThunk.rejected, (state) => {
       state.loading = false;
     });
   },

@@ -8,7 +8,7 @@ import ObjectInformationSetting from "./ObjectInformationSetting";
 import DevicesSetting from "./DevicesSetting";
 import CorrectionSetting from "./CorrectionSetting";
 import ReminderSetting from "./ReminderSetting";
-import AlarmConfigurationFormSection from "components/forms/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
+import AlarmConfigurationFormSection from "components/forms/common/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
 import NotificationsSetting from "./NotificationsSetting";
 
 interface Props {

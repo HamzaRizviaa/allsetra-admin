@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import GeneralInformationForm from "./children/GeneralInformationForm";
 import FinancialInformationForm from "./children/FinancialInformationForm";
 import LogisticsForm from "./children/LogisticsForm";
-import AlarmConfigurationFormSection from "components/forms/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
+import AlarmConfigurationFormSection from "components/forms/common/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
 import ManagementForm from "./children/ManagementForm";
 
 const AccountDetailsSection: FC = () => {

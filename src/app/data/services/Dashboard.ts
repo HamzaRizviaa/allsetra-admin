@@ -16,6 +16,10 @@ class Dashboard {
   static getAllCountries = async () => {
     return await axiosInstance.get("/countries");
   };
+
+  static getAllPaymentMethods = async () => {
+    return await axiosInstance.get("/PaymentMethods");
+  };
 }
 
 export default Dashboard;

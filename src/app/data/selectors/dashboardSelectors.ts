@@ -31,6 +31,9 @@ export const selectAllIcons = (state: RootState) =>
 export const selectAllCountries = (state: RootState) =>
   state.rootReducer.dashboardReducer.countries;
 
+export const selectAllPaymentMethods = (state: RootState) =>
+  state.rootReducer.dashboardReducer.paymentMethods;
+
 export const selectIconState = createSelector(
   selectDashboardReducerLoading,
   selectAllIcons,
@@ -46,5 +49,14 @@ export const selectDashboardCountriesState = createSelector(
   (loading, countries) => ({
     loading,
     countries,
+  })
+);
+
+export const selectDashboardPaymentMethodsState = createSelector(
+  selectDashboardReducerLoading,
+  selectAllPaymentMethods,
+  (loading, paymentMethods) => ({
+    loading,
+    paymentMethods,
   })
 );
