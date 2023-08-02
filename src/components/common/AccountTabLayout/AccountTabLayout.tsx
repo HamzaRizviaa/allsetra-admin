@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { Box } from "@mui/material";
-import { PageLoader, TabPanes, toast } from "@vilocnv/allsetra-core";
+import { TabPanes, toast } from "@vilocnv/allsetra-core";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -11,10 +11,7 @@ import {
   resetActiveAccountState,
   setActiveTabIndex,
 } from "app/features";
-import {
-  selectAccountActiveTabIndex,
-  selectActiveAccountState,
-} from "app/data/selectors";
+import { selectActiveAccountState } from "app/data/selectors";
 import {
   ACCOUNT_DETAILS_TABS_HEADINGS,
   ACCOUNT_TAB_INDEX_TO_ROUTENAME_MAPPING,
@@ -26,12 +23,11 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
   const params = useParams();
 
   // Global State
-  const { activeAccount } = useAppSelector(selectActiveAccountState);
-  const accountActiveTabIndex = useAppSelector(selectAccountActiveTabIndex);
+  const { activeTabIndex: accountActiveTabIndex } = useAppSelector(
+    selectActiveAccountState
+  );
 
   const getSpecificAccountById = async () => {
-    // if (!isEmpty(activeAccount) && activeAccount.uniqueId === params.id) return;
-
     try {
       const { type } = await dispatch(getSpecificAccountThunk(params.id ?? ""));
 
