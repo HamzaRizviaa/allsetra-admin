@@ -36,15 +36,16 @@ export const getSubscriptionsByQueryThunk = createAsyncThunk(
 
 export const deactivateSubscriptionThunk = createAsyncThunk(
   "subscriptions/deactivateSubscriptionThunk",
-  async (subscriptionId: string, { dispatch }) => {
+  async (subscriptionId: string) => {
     try {
       const response = await Subscriptions.deactivateSubscription(
         subscriptionId
       );
 
       if (response.status === 202) {
-        toast.success("Subscription has been deactivated");
-        dispatch(getAllSubscriptionsThunk());
+        toast.success(
+          `Subscription deactivation request is being processed by the backend.`
+        );
       }
 
       return response;
@@ -57,15 +58,16 @@ export const deactivateSubscriptionThunk = createAsyncThunk(
 
 export const reactivateSubscriptionThunk = createAsyncThunk(
   "subscriptions/reactivateSubscriptionThunk",
-  async (subscriptionId: string, { dispatch }) => {
+  async (subscriptionId: string) => {
     try {
       const response = await Subscriptions.reactivateSubscription(
         subscriptionId
       );
 
       if (response.status === 202) {
-        toast.success("Subscription has been reactivated");
-        dispatch(getAllSubscriptionsThunk());
+        toast.success(
+          `Subscription activation request is being processed by the backend.`
+        );
       }
 
       return response;
@@ -86,8 +88,12 @@ export const createOrUpdateSubscriptionThunk = createAsyncThunk(
 
       if (response.status === 202) {
         data.uniqueId
-          ? toast.success("Subscription has been updated")
-          : toast.success("Subscription has been created");
+          ? toast.success(
+              `Subscription updation request is being processed by the backend.`
+            )
+          : toast.success(
+              `Subscription creation request is being processed by the backend.`
+            );
       }
 
       return response;

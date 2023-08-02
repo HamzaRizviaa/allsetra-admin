@@ -9,13 +9,6 @@ import {
 } from "app/features";
 import { BackendEventsEnum } from "app/data/types";
 
-export const signalRGenerateRequestToastMessage = (
-  eventFor: string,
-  actionType: string
-): string => {
-  return `${eventFor} ${actionType} request is being processed by the backend.`;
-};
-
 export const signalRGenerateSuccessToastMessage = (
   eventName: string,
   eventFor: string,

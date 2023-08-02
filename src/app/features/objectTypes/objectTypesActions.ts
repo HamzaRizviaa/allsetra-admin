@@ -37,13 +37,14 @@ export const getObjectTypesByQueryThunk = createAsyncThunk(
 
 export const deactivateObjectTypeThunk = createAsyncThunk(
   "objectTypes/deactivateAccountThunk",
-  async (objectTypesID: string, { dispatch }) => {
+  async (objectTypesID: string) => {
     try {
       const response = await ObjectTypes.deactivateObjectType(objectTypesID);
 
       if (response.status === 202) {
-        toast.success("Object type has been deactivated");
-        dispatch(getAllObjectTypesThunk());
+        toast.success(
+          `Object types deactivation request is being processed by the backend.`
+        );
       }
 
       return response;
@@ -56,13 +57,14 @@ export const deactivateObjectTypeThunk = createAsyncThunk(
 
 export const activateObjectTypeThunk = createAsyncThunk(
   "objectTypes/activateObjectTypeThunk",
-  async (objectTypesID: string, { dispatch }) => {
+  async (objectTypesID: string) => {
     try {
       const response = await ObjectTypes.reactivateObjectType(objectTypesID);
 
       if (response.status === 202) {
-        toast.success("Object type has been reactivated");
-        dispatch(getAllObjectTypesThunk());
+        toast.success(
+          `Object types activation request is being processed by the backend.`
+        );
       }
 
       return response;
@@ -83,8 +85,12 @@ export const createOrUpdateObjectTypeThunk = createAsyncThunk(
 
       if (response.status === 202) {
         data.uniqueId
-          ? toast.success("Object Type has been updated")
-          : toast.success("Object Type has been created");
+          ? toast.success(
+              `Object types updation request is being processed by the backend.`
+            )
+          : toast.success(
+              `Object types creation request is being processed by the backend.`
+            );
 
         dispatch(getObjectTypesByQueryThunk(utils.getCommonParamsForApi()));
       }

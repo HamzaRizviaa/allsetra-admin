@@ -52,7 +52,7 @@ export const getSpecificServiceByIdThunk = createAsyncThunk(
 
 export const createOrUpdateServiceThunk = createAsyncThunk(
   "serviceManager/createOrUpdateServiceThunk",
-  async (data: any, { dispatch }) => {
+  async (data: any) => {
     try {
       const response = data.uniqueId
         ? await ServiceManager.updateService(data.uniqueId, data)
@@ -60,10 +60,12 @@ export const createOrUpdateServiceThunk = createAsyncThunk(
 
       if (response.status === 202) {
         data.uniqueId
-          ? toast.success("Service has been updated")
-          : toast.success("Service has been created");
-
-        dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
+          ? toast.success(
+              `Service updation request is being processed by the backend.`
+            )
+          : toast.success(
+              `Service creation request is being processed by the backend.`
+            );
       }
 
       return response;
@@ -76,13 +78,14 @@ export const createOrUpdateServiceThunk = createAsyncThunk(
 
 export const deactivateServiceThunk = createAsyncThunk(
   "serviceManager/deactivateServiceThunk",
-  async (serviceId: string, { dispatch }) => {
+  async (serviceId: string) => {
     try {
       const response = await ServiceManager.deactivateService(serviceId);
 
       if (response.status === 202) {
-        toast.success("Service has been deactivated");
-        dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
+        toast.success(
+          `Service deactivation request is being processed by the backend.`
+        );
       }
 
       return response;
@@ -95,13 +98,14 @@ export const deactivateServiceThunk = createAsyncThunk(
 
 export const activateServiceThunk = createAsyncThunk(
   "serviceManager/activateServiceThunk",
-  async (serviceId: string, { dispatch }) => {
+  async (serviceId: string) => {
     try {
       const response = await ServiceManager.activateService(serviceId);
 
       if (response.status === 202) {
-        toast.success("Service has been activated");
-        dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
+        toast.success(
+          `Service activation request is being processed by the backend.`
+        );
       }
 
       return response;
