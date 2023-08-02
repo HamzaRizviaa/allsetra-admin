@@ -7,14 +7,14 @@ import AccountTabLayout from "components/common/AccountTabLayout/AccountTabLayou
 
 // Data
 import { useAppSelector } from "hooks";
-import { selectActiveAccount } from "app/data/selectors";
+import { selectActiveAccountState } from "app/data/selectors";
 
 const AccountAlarms: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
   // Global State
-  const activeAccount = useAppSelector(selectActiveAccount);
+  const { activeAccount } = useAppSelector(selectActiveAccountState);
 
   return (
     <main>

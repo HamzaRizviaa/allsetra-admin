@@ -8,6 +8,12 @@ const accountsQueries = rootRtkQuery.injectEndpoints({
         return response;
       },
     }),
+    getAccountsTypes: builder.query<void, void>({
+      query: () => '/accounts/types',
+      transformResponse: (response: any) => {
+        return response;
+      },
+    }),
     getAvailableUsersForAccount: builder.query<any, string | null>({
       query: (accountId) => `/accounts/${accountId}/users/available-users`,
       transformResponse: (response: any) => {
@@ -41,6 +47,7 @@ const accountsQueries = rootRtkQuery.injectEndpoints({
 
 export const {
   useGetAccountsIndustriesQuery,
+  useGetAccountsTypesQuery,
   useGetAvailableUsersForAccountQuery,
   useGetAvailableServicesForAccountQuery,
   useGetAvailableDeviceTypesForAccountQuery,

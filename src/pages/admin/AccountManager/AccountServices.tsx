@@ -8,14 +8,16 @@ import AccountServicesSection from "components/sections/admin/AccountSubSections
 
 // Data
 import { useAppSelector } from "hooks";
-import { selectActiveAccount } from "app/data/selectors";
+import { selectActiveAccountState } from "app/data/selectors";
 
 const AccountServices: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
   // Global State
-  const activeAccount = useAppSelector(selectActiveAccount);
+  const { activeAccount, activeAccountId } = useAppSelector(
+    selectActiveAccountState
+  );
 
   return (
     <main>
@@ -26,7 +28,7 @@ const AccountServices: FC = () => {
         breadcrumbRedirectTo={() => navigate(-1)}
       />
       <AccountTabLayout>
-        <AccountServicesSection accountId={activeAccount?.uniqueId || ""} />
+        <AccountServicesSection accountId={activeAccountId || ""} />
       </AccountTabLayout>
     </main>
   );

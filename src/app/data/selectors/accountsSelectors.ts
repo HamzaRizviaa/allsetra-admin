@@ -8,6 +8,9 @@ export const selectAccountsReducerLoading = (state: RootState) =>
 export const selectTotalAccounts = (state: RootState) =>
   state.rootReducer.accountsReducer.totalAccounts;
 
+export const selectActiveAccountId = (state: RootState) =>
+  state.rootReducer.accountsReducer.activeAccountId;
+
 export const selectActiveAccount = (state: RootState) =>
   state.rootReducer.accountsReducer.activeAccount;
 
@@ -16,8 +19,9 @@ export const selectAllAccounts = (state: RootState) =>
 
 export const selectActiveAccountState = createSelector(
   selectAccountsReducerLoading,
+  selectActiveAccountId,
   selectActiveAccount,
-  (loading, account) => ({ loading, account })
+  (loading, activeAccountId, activeAccount) => ({ loading, activeAccountId, activeAccount })
 );
 
 export const selectAccountsState = createSelector(

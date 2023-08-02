@@ -5,13 +5,20 @@ import {
   FormikInputField,
   FormikSelectField,
   TwoColsLayout,
+  FormikTimeFrameField,
 } from "@vilocnv/allsetra-core";
-import { useGetAccountsIndustriesQuery } from "app/features";
+import {
+  useGetAccountsIndustriesQuery,
+  useGetAccountsTypesQuery,
+} from "app/features";
 import AddressFormSection from "components/forms/common/AddressFormSection/AddressFormSection";
 
 const GeneralInformationForm: FC = () => {
   const { data: accountsIndustries, isLoading: accountsIndustriesLoading } =
     useGetAccountsIndustriesQuery();
+
+  const { data: accountsTypes, isLoading: accountsTypesLoading } =
+    useGetAccountsTypesQuery();
 
   return (
     <ContentSectionLayout
@@ -45,7 +52,10 @@ const GeneralInformationForm: FC = () => {
           <FormikSelectField
             label="Account type"
             name="accountType"
-            options={[]}
+            options={accountsTypes || []}
+            optionLabelKey={"name"}
+            optionValueKey={"id"}
+            loading={accountsTypesLoading}
             fullWidth
           />
           <FormikSelectField
@@ -100,7 +110,7 @@ const GeneralInformationForm: FC = () => {
             fullWidth
           />
         </TwoColsLayout>
-        <TwoColsLayout fullWidth hideDivider>
+        <TwoColsLayout fullWidth>
           <FormikInputField
             label="Account Note"
             placeholder="Enter the note..."
@@ -108,6 +118,12 @@ const GeneralInformationForm: FC = () => {
             fullWidth
             multiline
             rows={2}
+          />
+        </TwoColsLayout>
+        <TwoColsLayout fullWidth hideDivider>
+          <FormikTimeFrameField
+            label="Default working hours"
+            name="workingHours"
           />
         </TwoColsLayout>
       </Box>

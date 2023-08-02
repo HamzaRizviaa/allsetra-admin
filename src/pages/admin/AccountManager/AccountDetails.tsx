@@ -9,7 +9,7 @@ import AccountDetailsSection from "components/sections/admin/AccountDetailsSecti
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
-import { selectActiveAccount } from "app/data/selectors";
+import { selectActiveAccountState } from "app/data/selectors";
 import { updateAccountThunk } from "app/features";
 
 const AccountDetails: FC = () => {
@@ -18,7 +18,7 @@ const AccountDetails: FC = () => {
   const dispatch = useAppDispatch();
 
   // Global State
-  const activeAccount = useAppSelector(selectActiveAccount);
+  const { activeAccount } = useAppSelector(selectActiveAccountState);
 
   const initialValues = useMemo(
     () => (!isEmpty(activeAccount) ? activeAccount : {}),

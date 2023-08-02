@@ -21,6 +21,7 @@ import {
   createAccountThunk,
   getAccountsByQueryThunk,
   setActiveTabIndex,
+  setActiveAccountId,
 } from "app/features";
 import { ALL_ACCOUNTS_TABLE_COLUMNS } from "app/data/constants";
 
@@ -44,6 +45,7 @@ const Accounts: FC = () => {
 
   const handleViewAccount = (account: types.IAccount) => {
     dispatch(setActiveTabIndex(0));
+    dispatch(setActiveAccountId(account.uniqueId));
     navigate(`/dashboard/account-manager/details/${account.uniqueId}`);
   };
 

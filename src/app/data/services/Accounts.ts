@@ -42,6 +42,14 @@ class Accounts {
     );
   };
 
+  static getAccountsIndustries = async () => {
+    return await axiosInstance.get("/accounts/industries");
+  };
+
+  static getAccountsTypes = async () => {
+    return await axiosInstance.get("/accounts/types");
+  };
+
   static createUserAndAssociateToAccount = async (
     accountId: string,
     data: any

@@ -54,7 +54,7 @@ const FinancialInformationForm: FC = () => {
             name="paymentMethod"
             options={paymentMethods || []}
             optionLabelKey={"name"}
-            optionValueKey={"id"}
+            optionValueKey={"name"}
             loading={paymentMethodsLoading}
             fullWidth
           />

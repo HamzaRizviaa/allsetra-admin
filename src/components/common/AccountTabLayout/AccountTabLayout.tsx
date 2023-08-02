@@ -6,7 +6,11 @@ import { PageLoader, TabPanes, toast } from "@vilocnv/allsetra-core";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
-import { getSpecificAccountThunk, setActiveTabIndex } from "app/features";
+import {
+  getSpecificAccountThunk,
+  resetActiveAccountState,
+  setActiveTabIndex,
+} from "app/features";
 import {
   selectAccountActiveTabIndex,
   selectActiveAccountState,
@@ -22,11 +26,11 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
   const params = useParams();
 
   // Global State
-  const { loading, account } = useAppSelector(selectActiveAccountState);
+  const { activeAccount } = useAppSelector(selectActiveAccountState);
   const accountActiveTabIndex = useAppSelector(selectAccountActiveTabIndex);
 
   const getSpecificAccountById = async () => {
-    if (!isEmpty(account) && account.uniqueId === params.id) return;
+    if (!isEmpty(activeAccount) && activeAccount.uniqueId === params.id) return;
 
     try {
       const { type } = await dispatch(getSpecificAccountThunk(params.id ?? ""));
@@ -42,6 +46,7 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (isEmpty(params.id)) {
+      dispatch(resetActiveAccountState());
       navigate("/dashboard/account-manager");
     } else {
       getSpecificAccountById();
@@ -57,19 +62,15 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <Box>
-      {loading ? (
-        <PageLoader />
-      ) : (
-        <TabPanes
-          value={accountActiveTabIndex}
-          onChange={onChangeTab}
-          headings={ACCOUNT_DETAILS_TABS_HEADINGS}
-        >
-          <Box mt={4} mx={4}>
-            {children}
-          </Box>
-        </TabPanes>
-      )}
+      <TabPanes
+        value={accountActiveTabIndex}
+        onChange={onChangeTab}
+        headings={ACCOUNT_DETAILS_TABS_HEADINGS}
+      >
+        <Box mt={4} mx={4}>
+          {children}
+        </Box>
+      </TabPanes>
     </Box>
   );
 };

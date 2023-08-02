@@ -13,14 +13,7 @@ export const ALL_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
   },
   {
     name: "Service Fields",
-    selector: (row: any) => row.fields,
-    format: (row: any) => (
-      <Stack my={1} gap={1} flexWrap={"wrap"}>
-        {row.fields.map((field: any) => (
-          <Badge colorScheme="info">{field.label}</Badge>
-        ))}
-      </Stack>
-    ),
+    selector: (row: any) => row.fields.length,
     sortable: true,
   },
   {
