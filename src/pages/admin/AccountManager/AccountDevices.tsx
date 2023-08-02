@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { capitalize } from "lodash";
 import { useTheme } from "@mui/material";
 import { Topbar } from "@vilocnv/allsetra-core";
@@ -8,16 +8,16 @@ import AccountDevicesSection from "components/sections/admin/AccountSubSections/
 
 // Data
 import { useAppSelector } from "hooks";
-import { selectActiveAccount } from "app/data/selectors";
+import { selectActiveAccountState } from "app/data/selectors";
 
 const AccountDevices: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const params = useParams();
-  const accountId = params.id ?? "";
 
   // Global State
-  const activeAccount = useAppSelector(selectActiveAccount);
+  const { activeAccount, activeAccountId } = useAppSelector(
+    selectActiveAccountState
+  );
 
   return (
     <main>
@@ -28,7 +28,7 @@ const AccountDevices: FC = () => {
         breadcrumbRedirectTo={() => navigate(-1)}
       />
       <AccountTabLayout>
-        <AccountDevicesSection accountId={accountId} />
+        <AccountDevicesSection accountId={activeAccountId || ""} />
       </AccountTabLayout>
     </main>
   );
