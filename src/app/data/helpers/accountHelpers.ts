@@ -5,6 +5,42 @@ import {
   IAccountAssignDeviceType,
   IAccountAssignObjectType,
 } from "../types";
+import { addressValidationSchema, alarmConfigurationValidationSchema, workingHoursValidationSchema } from "./commonValidationsHelpers"
+
+
+// 
+// Account Details Helpers
+//
+export const accountDetailsValidationSchema = Yup.object().shape({
+  "uniqueId": Yup.string(),
+  "name": Yup.string().required().label("Name"),
+  "debtorNumber": Yup.string().nullable().label("Debtor number"),
+  "resellerReference": Yup.string().nullable().label("Reseller Reference"),
+  "customerType": Yup.string().nullable().label("Customer Type"),
+  "website": Yup.string().nullable().label("Website"),
+  "phoneNumber": Yup.string().nullable().label("Phone number"),
+  "kvkcocNumber": Yup.string().nullable().label("KVK number"),
+  "description": Yup.string().nullable().label("Description"),
+  "workingHoursType": Yup.string().label("Working Hours Type"),
+  "accountNumber": Yup.string().nullable().label("Account number"),
+  "accountType": Yup.string().nullable(),
+  "accountIndustry": Yup.string().nullable(),
+  "boboid": Yup.string().nullable().label("BOBO ID"),
+  "notes": Yup.string().nullable().label("Notes"),
+  "accountOwner": Yup.string().nullable().label("Account owner"),
+  "multiViewerId": Yup.string().nullable().label("Multi-viewer ID"),
+  "afasDebitNumber": Yup.string().nullable().label("AFAS Debit number"),
+  "billingAddress": addressValidationSchema,
+  "bankAccount": Yup.string().nullable().label("AFAS Debit number"),
+  "vatNumber": Yup.string().nullable().label("VAT number"),
+  "vatShifted": Yup.string().nullable().label("VAT shifted"),
+  "paymentTermInDays": Yup.string().nullable().label("Payment term"),
+  "paymentMethod": Yup.string().nullable().label("Payment method"),
+  "visitingAddress": addressValidationSchema,
+  "shippingAddress": addressValidationSchema,
+  "alarmsConfiguration": alarmConfigurationValidationSchema,
+  "workingHours": workingHoursValidationSchema,
+})
 
 //
 // Account Users Helpers

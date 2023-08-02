@@ -30,7 +30,7 @@ const AccountTabLayout: FC<PropsWithChildren> = ({ children }) => {
   const accountActiveTabIndex = useAppSelector(selectAccountActiveTabIndex);
 
   const getSpecificAccountById = async () => {
-    if (!isEmpty(activeAccount) && activeAccount.uniqueId === params.id) return;
+    // if (!isEmpty(activeAccount) && activeAccount.uniqueId === params.id) return;
 
     try {
       const { type } = await dispatch(getSpecificAccountThunk(params.id ?? ""));

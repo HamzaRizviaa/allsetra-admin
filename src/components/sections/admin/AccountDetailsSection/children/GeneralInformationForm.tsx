@@ -45,6 +45,7 @@ const GeneralInformationForm: FC = () => {
             label="Account name"
             name="name"
             placeholder="Account name"
+            required
             fullWidth
           />
         </TwoColsLayout>

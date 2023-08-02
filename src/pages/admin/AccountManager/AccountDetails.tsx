@@ -11,6 +11,7 @@ import AccountDetailsSection from "components/sections/admin/AccountDetailsSecti
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectActiveAccountState } from "app/data/selectors";
 import { updateAccountThunk } from "app/features";
+import { accountDetailsValidationSchema } from "app/data/helpers";
 
 const AccountDetails: FC = () => {
   const theme = useTheme();
@@ -43,6 +44,7 @@ const AccountDetails: FC = () => {
       <Formik
         // @ts-ignore
         initialValues={initialValues}
+        validationSchema={accountDetailsValidationSchema}
         onSubmit={saveChangesHandler}
       >
         {({ handleSubmit, isSubmitting, isValid, dirty, resetForm }) => (
@@ -57,7 +59,7 @@ const AccountDetails: FC = () => {
                 text: "Save Changes",
                 onClick: handleSubmit,
                 loading: isSubmitting,
-                disabled: !dirty ? isValid : !isValid,
+                // disabled: !dirty ? isValid : !isValid,
               }}
               secondaryButton={{
                 variant: "text",
