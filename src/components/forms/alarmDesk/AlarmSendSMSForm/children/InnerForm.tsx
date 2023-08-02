@@ -56,7 +56,7 @@ const InnerForm: FC<Props> = ({ open, onClose, alarmId, ...rest }) => {
           name="contactPersons"
           options={data || []}
           optionLabelKey={"email"}
-          optionValueKey={"email"}
+          optionValueKey={"uniqueId"}
           loading={isLoading}
           multiple
           searchable
