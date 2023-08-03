@@ -60,6 +60,9 @@ jobs:
           REACT_APP_API_BASE_URL: ${{ secrets.API_BASE_URL }}
           REACT_APP_API_HEADER_SUBSCRIPTION: ${{ secrets.API_SUBSCRIPTION }}
           REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
+          REACT_APP_AZURE_CLIENT_ID:  ${{ secrets.AD_B2C_CLIENT_ID }}  
+          REACT_APP_AZURE_AUTHORITY_DOMAIN:  ${{ secrets.AD_B2C_AUTHORITY_DOMAIN }}  
+          REACT_APP_AZURE_SIGNUP_SIGNIN_AUTHORITY:  ${{ secrets.AD_B2C_SIGNIN_POLICY }}            
 
   build_and_deploy_job_prod:
     environment: Prod
@@ -100,7 +103,10 @@ jobs:
           NPM_REGISTRY_URL: https://npm.pkg.github.com
           REACT_APP_API_BASE_URL: ${{ secrets.API_BASE_URL }}
           REACT_APP_API_HEADER_SUBSCRIPTION: ${{ secrets.API_SUBSCRIPTION }}
-          REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}          
+          REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}       
+          REACT_APP_AZURE_CLIENT_ID:  ${{ secrets.AD_B2C_CLIENT_ID }}  
+          REACT_APP_AZURE_AUTHORITY_DOMAIN:  ${{ secrets.AD_B2C_AUTHORITY_DOMAIN }}  
+          REACT_APP_AZURE_SIGNUP_SIGNIN_AUTHORITY:  ${{ secrets.AD_B2C_SIGNIN_POLICY }}  
 
   close_pull_request_job:
     environment: Dev
