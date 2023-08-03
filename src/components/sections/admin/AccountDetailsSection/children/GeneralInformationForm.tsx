@@ -139,7 +139,8 @@ const GeneralInformationForm: FC = () => {
         <TwoColsLayout fullWidth hideDivider>
           <FormikTimeFrameField
             label="Default working hours"
-            name="workingHours"
+            typeName="workingHoursType"
+            name="workingHours.workingHoursSchedule"
           />
         </TwoColsLayout>
       </Box>

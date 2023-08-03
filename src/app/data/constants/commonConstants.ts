@@ -10,23 +10,39 @@ import {
   ServicesIcon,
   FieldsIcon,
   DeviceTypesIcon,
+  MapActiveIcon,
+  DevicesActiveIcon,
+  ObjectsActiveIcon,
+  SubscriptionActiveIcon,
+  DeviceTypesActiveIcon,
+  AlertsActiveIcon,
+  FieldsActiveIcon,
+  ServiceActiveIcon,
 } from "assets/icons";
 
 export const getDrawerMenuItems = (t: any): Array<IDrawerMenuItem> => [
-  { name: t("drawerMenuLinks.map"), icon: MapSvg, path: "/dashboard" },
+  {
+    name: t("drawerMenuLinks.map"),
+    icon: MapSvg,
+    activeIcon: MapActiveIcon,
+    path: "/dashboard",
+  },
   {
     name: t("drawerMenuLinks.alarmDesk"),
     icon: AlertSvg,
+    activeIcon: AlertsActiveIcon,
     path: "/dashboard/alarm-desk",
   },
   {
     name: t("drawerMenuLinks.devices"),
     icon: DevicesIcon,
+    activeIcon: DevicesActiveIcon,
     path: "/dashboard/devices",
   },
   {
     name: t("drawerMenuLinks.objects"),
     icon: ObjectsSvg,
+    activeIcon: ObjectsActiveIcon,
     path: "/dashboard/objects",
   },
 ];
@@ -43,21 +59,25 @@ export const getDrawerSubMenuLists = (): {
     {
       name: "Object types",
       icon: ObjectTypesIcon,
+      activeIcon: ObjectTypesIcon,
       path: "/dashboard/object-types",
     },
     {
       name: "Service manager",
       icon: ServicesIcon,
+      activeIcon: ServiceActiveIcon,
       path: "/dashboard/service-manager",
     },
     {
       name: "Subscription manager",
       icon: SubscriptionSvg,
+      activeIcon: SubscriptionActiveIcon,
       path: "/dashboard/subscription-manager",
     },
     {
       name: "Field manager",
       icon: FieldsIcon,
+      activeIcon: FieldsActiveIcon,
       path: "/dashboard/field-manager",
     },
   ],
@@ -65,6 +85,7 @@ export const getDrawerSubMenuLists = (): {
     {
       name: "Device types",
       icon: DeviceTypesIcon,
+      activeIcon: DeviceTypesActiveIcon,
       path: "/dashboard/device-types",
     },
   ],

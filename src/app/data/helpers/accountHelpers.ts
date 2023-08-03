@@ -11,6 +11,7 @@ import {
   alarmConfigurationValidationSchema,
   workingHoursValidationSchema,
 } from "./commonValidationsHelpers";
+import { transformAddressObjectForForm } from "./commonHelpers";
 
 //
 // Account Details Helpers
@@ -42,6 +43,9 @@ export const accountDetailsFormatterForForm = (account: any) => {
     workingHours: {
       workingHoursSchedule: account.workingHours,
     },
+    billingAddress: transformAddressObjectForForm(account.billingAddress),
+    shippingAddress: transformAddressObjectForForm(account.shippingAddress),
+    visitingAddress: transformAddressObjectForForm(account.visitingAddress),
   };
 
   return formattedObject;

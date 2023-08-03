@@ -6,3 +6,4 @@ export * from "./alarmDeskHelpers";
 export * from "./objectsHelpers";
 export * from "./commonValidationsHelpers";
 export * from "./signalRHelpers";
+export * from "./commonHelpers"

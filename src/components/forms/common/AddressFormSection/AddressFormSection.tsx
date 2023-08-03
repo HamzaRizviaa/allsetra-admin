@@ -1,6 +1,13 @@
 import { FC, Fragment } from "react";
 import { Stack } from "@mui/material";
-import { TwoColsLayout, FormikInputField } from "@vilocnv/allsetra-core";
+import {
+  TwoColsLayout,
+  FormikInputField,
+  FormikSelectField,
+} from "@vilocnv/allsetra-core";
+import { useAppSelector, useDispatchOnMount } from "hooks";
+import { selectDashboardCountriesState } from "app/data/selectors";
+import { getAllCountriesThunk } from "app/features";
 
 interface Props {
   title: string;
@@ -13,6 +20,10 @@ const AddressFormSection: FC<Props> = ({
   parentKey,
   hideDivider = false,
 }) => {
+  const { countries, loading } = useAppSelector(selectDashboardCountriesState);
+
+  useDispatchOnMount(getAllCountriesThunk, countries.length ? undefined : true);
+
   return (
     <Fragment>
       <TwoColsLayout title={title}>
@@ -48,10 +59,15 @@ const AddressFormSection: FC<Props> = ({
           name={`${parentKey}.city`}
           fullWidth
         />
-        <FormikInputField
+        <FormikSelectField
           label="Country"
           placeholder="Country"
-          name={`${parentKey}.country.name`}
+          options={countries}
+          optionLabelKey={"name"}
+          optionValueKey={"id"}
+          name={`${parentKey}.country`}
+          loading={loading}
+          searchable
           fullWidth
         />
       </TwoColsLayout>

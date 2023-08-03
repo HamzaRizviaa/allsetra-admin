@@ -10,9 +10,9 @@ import AlarmConfigurationFormSection from "components/forms/common/AlarmConfigur
 import ManagementForm from "./children/ManagementForm";
 
 const AccountDetailsSection: FC = () => {
-  const { errors } = useFormikContext();
+  const { values, errors } = useFormikContext();
 
-  console.log({ errors });
+  console.log({ values, errors });
 
   return (
     <Box>
