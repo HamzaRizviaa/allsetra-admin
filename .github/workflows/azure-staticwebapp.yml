@@ -61,11 +61,68 @@ jobs:
           REACT_APP_API_HEADER_SUBSCRIPTION: ${{ secrets.API_SUBSCRIPTION }}
           REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}
 
+  build_and_deploy_job_prod:
+    environment: Prod
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      pull-requests: write # for Azure/static-web-apps-deploy to comment on PRs
+    if: github.event.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed'))
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    env:
+      CI: false
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Create .npmrc for token authentication
+        uses: healthplace/npmrc-registry-login-action@v1.0
+        with:
+          scope: "@vilocnv"
+          registry: "https://npm.pkg.github.com"
+          auth-token: ${{secrets.PAT_TOKEN}}
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing api token for app
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: ${{ env.APP_LOCATION }}
+          api_location: ${{ env.API_LOCATION }}
+          app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
+          ###### End of Repository/Build Configurations ######
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          NPM_TOKEN: ${{ secrets.PAT_TOKEN }}
+          NPM_REGISTRY_URL: https://npm.pkg.github.com
+          REACT_APP_API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          REACT_APP_API_HEADER_SUBSCRIPTION: ${{ secrets.API_SUBSCRIPTION }}
+          REACT_APP_GOOGLE_MAP_API_KEY: ${{ secrets.GOOGLE_MAP_API_KEY }}          
+
   close_pull_request_job:
     environment: Dev
     permissions:
       contents: none
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing api token for app
+          action: "close"
+
+          
+  close_pull_request_job_prod:
+    environment: Prod
+    permissions:
+      contents: none
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
