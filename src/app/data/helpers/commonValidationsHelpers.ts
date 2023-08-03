@@ -3,15 +3,15 @@ import * as Yup from "yup";
 export const addressValidationSchema = Yup.object()
   .shape({
     id: Yup.number(),
-    street: Yup.string().required().label("Street"),
-    houseNumber: Yup.string().required().label("House number"),
+    street: Yup.string().label("Street"),
+    houseNumber: Yup.string().label("House number"),
     extension: Yup.string().nullable().label("Extension"),
-    city: Yup.string().required().label("City"),
+    city: Yup.string().label("City"),
     state: Yup.string().nullable().label("State"),
-    postalCode: Yup.string().required().label("Postal code"),
+    postalCode: Yup.string().label("Postal code"),
     phoneNumber: Yup.string().nullable().label("Phone number"),
     email: Yup.string().nullable().label("Email"),
-    country: Yup.number().nullable().required().label("Country"),
+    country: Yup.number().nullable().label("Country"),
   })
   .nullable();
 

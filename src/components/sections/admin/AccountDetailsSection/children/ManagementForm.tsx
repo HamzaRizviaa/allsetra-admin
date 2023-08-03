@@ -63,7 +63,7 @@ const ManagementForm: FC = () => {
             label="Account owner"
             name="accountOwner"
             optionLabelKey={"name"}
-            optionValueKey={"name"}
+            optionValueKey={"uniqueId"}
             options={allAccounts}
             loading={allAccountsLoading}
             searchable
