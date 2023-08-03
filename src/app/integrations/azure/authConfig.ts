@@ -1,11 +1,10 @@
 import { LogLevel } from "@azure/msal-browser";
-import { b2cPolicies } from "./policies";
 
 export const msalConfig = {
   auth: {
-    clientId: "af265da3-b7c3-4a67-9e30-9e65a15f80b5", // This is the ONLY mandatory field; everything else is optional.
-    authority: b2cPolicies.authorities.signUpSignIn.authority, // Choose sign-up/sign-in user-flow as your default.
-    knownAuthorities: [b2cPolicies.authorityDomain], // You must identify your tenant's domain as a known authority.
+    clientId: process.env.REACT_APP_AZURE_CLIENT_ID || "", // This is the ONLY mandatory field; everything else is optional.
+    authority: process.env.REACT_APP_AZURE_SIGNUP_SIGNIN_AUTHORITY || "", // Choose sign-up/sign-in user-flow as your default.
+    knownAuthorities: [process.env.REACT_APP_AZURE_AUTHORITY_DOMAIN || ""], // You must identify your tenant's domain as a known authority.
     navigateToLoginRequestUrl: false,
   },
   cache: {

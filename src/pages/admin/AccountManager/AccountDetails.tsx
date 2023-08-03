@@ -11,7 +11,10 @@ import AccountDetailsSection from "components/sections/admin/AccountDetailsSecti
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectActiveAccountState } from "app/data/selectors";
 import { updateAccountThunk } from "app/features";
-import { accountDetailsValidationSchema } from "app/data/helpers";
+import {
+  accountDetailsFormatterForForm,
+  accountDetailsValidationSchema,
+} from "app/data/helpers";
 
 const AccountDetails: FC = () => {
   const theme = useTheme();
@@ -22,7 +25,10 @@ const AccountDetails: FC = () => {
   const { activeAccount } = useAppSelector(selectActiveAccountState);
 
   const initialValues = useMemo(
-    () => (!isEmpty(activeAccount) ? activeAccount : {}),
+    () =>
+      !isEmpty(activeAccount)
+        ? accountDetailsFormatterForForm(activeAccount)
+        : {},
     [activeAccount]
   );
 

@@ -3,6 +3,8 @@ import { types } from "@vilocnv/allsetra-core";
 import {
   getAllAccountsThunk,
   getAccountsByQueryThunk,
+  getAccountsIndustriesThunk,
+  getAccountsTypesThunk,
   getAccountAssociatedUsersThunk,
   getAccountServicesThunk,
   getAccountDeviceTypesThunk,
@@ -21,6 +23,11 @@ export interface IAccountsState {
   activeAccountId: string | null;
   activeAccount: types.IAccount | null;
   allAccounts: Array<any>;
+
+  accountsIndustriesLoading: boolean;
+  accountsIndustries: Array<any>;
+  accountsTypesLoading: boolean;
+  accountsTypes: Array<any>;
 
   // Account Details State
   activeTabIndex: number;
@@ -41,6 +48,11 @@ const initialState: IAccountsState = {
   activeAccountId: null,
   activeAccount: null,
   allAccounts: [],
+
+  accountsIndustriesLoading: false,
+  accountsIndustries: [],
+  accountsTypesLoading: false,
+  accountsTypes: [],
 
   activeTabIndex: 0,
   totalRecords: null,
@@ -113,6 +125,34 @@ const accountsSlice = createSlice({
       state.loading = false;
     });
 
+    // Get Accounts Industries Thunk Action Cases
+    builder.addCase(getAccountsIndustriesThunk.pending, (state) => {
+      state.accountsIndustriesLoading = true;
+    });
+
+    builder.addCase(getAccountsIndustriesThunk.fulfilled, (state, action) => {
+      state.accountsIndustries = action.payload;
+      state.accountsIndustriesLoading = false;
+    });
+
+    builder.addCase(getAccountsIndustriesThunk.rejected, (state) => {
+      state.accountsIndustriesLoading = false;
+    });
+
+    // Get Accounts Types Thunk Action Cases
+    builder.addCase(getAccountsTypesThunk.pending, (state) => {
+      state.accountsTypesLoading = true;
+    });
+
+    builder.addCase(getAccountsTypesThunk.fulfilled, (state, action) => {
+      state.accountsTypes = action.payload;
+      state.accountsTypesLoading = false;
+    });
+
+    builder.addCase(getAccountsTypesThunk.rejected, (state) => {
+      state.accountsTypesLoading = false;
+    });
+
     // Get Account Users Action Cases
     builder.addCase(getAccountAssociatedUsersThunk.pending, (state) => {
       state.loading = true;
@@ -121,7 +161,8 @@ const accountsSlice = createSlice({
     builder.addCase(
       getAccountAssociatedUsersThunk.fulfilled,
       (state, action) => {
-        state.accountUsers = action.payload;
+        state.accountUsers = action.payload?.results || [];
+        state.totalRecords = action.payload?.rowCount || 0;
         state.loading = false;
       }
     );
@@ -224,6 +265,10 @@ const accountsSlice = createSlice({
 
 export * from "./actions";
 export * from "./accountsQueries";
-export const { setActiveAccountId, setActiveTabIndex, resetActiveAccountState } = accountsSlice.actions;
+export const {
+  setActiveAccountId,
+  setActiveTabIndex,
+  resetActiveAccountState,
+} = accountsSlice.actions;
 
 export default accountsSlice.reducer;

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types, utils } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAccountDeviceTypesThunk = createAsyncThunk(
   "accounts/getAccountDeviceTypesThunk",
@@ -26,7 +26,7 @@ export const getAccountDeviceTypesThunk = createAsyncThunk(
 
 export const assignDeviceTypeToAccountThunk = createAsyncThunk(
   "accounts/assignDeviceTypeToAccountThunk",
-  async ({ accountId, data }: any, { dispatch }) => {
+  async ({ accountId, data }: any) => {
     try {
       const response = await Accounts.assignDeviceTypeToAccount(
         accountId,
@@ -34,12 +34,8 @@ export const assignDeviceTypeToAccountThunk = createAsyncThunk(
       );
 
       if (response.status === 202) {
-        toast.success("Device type has been assigned to the account");
-        dispatch(
-          getAccountDeviceTypesThunk({
-            accountId,
-            params: utils.getCommonParamsForApi(),
-          })
+        toast.success(
+          "Device type assigning request is being processed by the backend."
         );
       }
 
@@ -53,7 +49,7 @@ export const assignDeviceTypeToAccountThunk = createAsyncThunk(
 
 export const removeDeviceTypeFromAccountThunk = createAsyncThunk(
   "accounts/removeDeviceTypeFromAccountThunk",
-  async ({ accountId, deviceTypeId }: any, { dispatch }) => {
+  async ({ accountId, deviceTypeId }: any) => {
     try {
       const response = await Accounts.removeDeviceTypeFromAccount(
         accountId,
@@ -61,12 +57,8 @@ export const removeDeviceTypeFromAccountThunk = createAsyncThunk(
       );
 
       if (response.status === 202) {
-        toast.success("Device type has been removed from the account");
-        dispatch(
-          getAccountDeviceTypesThunk({
-            accountId,
-            params: utils.getCommonParamsForApi(),
-          })
+        toast.success(
+          "Device type removing request is being processed by the backend."
         );
       }
 

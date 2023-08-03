@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types, utils } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAccountInstallationsThunk = createAsyncThunk(
   "accounts/getAccountInstallationsThunk",
@@ -29,7 +29,7 @@ export const getAccountInstallationsThunk = createAsyncThunk(
 
 export const removeInstallationFromAccountThunk = createAsyncThunk(
   "accounts/removeInstallationFromAccountThunk",
-  async ({ accountId, installationId }: any, { dispatch }) => {
+  async ({ accountId, installationId }: any) => {
     try {
       const response = await Accounts.removeInstallationFromAccount(
         accountId,
@@ -37,12 +37,8 @@ export const removeInstallationFromAccountThunk = createAsyncThunk(
       );
 
       if (response.status === 202) {
-        toast.success("Installation has been removed from the account");
-        dispatch(
-          getAccountInstallationsThunk({
-            accountId,
-            params: utils.getCommonParamsForApi(),
-          })
+        toast.success(
+          "Installation removing request is being processed by the backend."
         );
       }
 

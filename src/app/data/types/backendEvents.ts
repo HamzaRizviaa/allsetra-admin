@@ -81,6 +81,7 @@ export enum BackendEventsEnum {
   InstallationCreatedEvent = "InstallationCreatedEvent",
   InstallationDeactivatedEvent = "InstallationDeactivatedEvent",
   InstallationUpdatedEvent = "InstallationUpdatedEvent",
+  InstallationRemovedFromAccountEvent = "InstallationRemovedFromAccountEvent",
   FieldAssignedToObjectTypeEvent = "FieldAssignedToObjectTypeEvent",
   FieldRemovedFromObjectTypeEvent = "FieldRemovedFromObjectTypeEvent",
   ObjectTypeActivatedEvent = "ObjectTypeActivatedEvent",

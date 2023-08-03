@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types, utils } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAccountObjectsThunk = createAsyncThunk(
   "accounts/getAccountObjectsThunk",
@@ -26,7 +26,7 @@ export const getAccountObjectsThunk = createAsyncThunk(
 
 export const removeObjectFromAccountThunk = createAsyncThunk(
   "accounts/removeObjectFromAccountThunk",
-  async ({ accountId, objectId }: any, { dispatch }) => {
+  async ({ accountId, objectId }: any) => {
     try {
       const response = await Accounts.removeObjectFromAccount(
         accountId,
@@ -34,12 +34,8 @@ export const removeObjectFromAccountThunk = createAsyncThunk(
       );
 
       if (response.status === 202) {
-        toast.success("Object has been removed from the account");
-        dispatch(
-          getAccountObjectsThunk({
-            accountId,
-            params: utils.getCommonParamsForApi(),
-          })
+        toast.success(
+          "Object removing request is being processed by the backend."
         );
       }
 

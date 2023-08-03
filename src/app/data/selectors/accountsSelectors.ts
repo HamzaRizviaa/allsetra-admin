@@ -17,6 +17,36 @@ export const selectActiveAccount = (state: RootState) =>
 export const selectAllAccounts = (state: RootState) =>
   state.rootReducer.accountsReducer.allAccounts;
 
+export const selectAccountsIndustriesLoading = (state: RootState) =>
+  state.rootReducer.accountsReducer.accountsIndustriesLoading;
+
+export const selectAccountsIndustries = (state: RootState) =>
+  state.rootReducer.accountsReducer.accountsIndustries;
+
+export const selectAccountsTypesLoading = (state: RootState) =>
+  state.rootReducer.accountsReducer.accountsTypesLoading;
+
+export const selectAccountsTypes = (state: RootState) =>
+  state.rootReducer.accountsReducer.accountsTypes;
+
+export const selectAccountMetadataState = createSelector(
+  selectAccountsIndustriesLoading,
+  selectAccountsIndustries,
+  selectAccountsTypesLoading,
+  selectAccountsTypes,
+  (
+    accountsIndustriesLoading,
+    accountsIndustries,
+    accountsTypesLoading,
+    accountsTypes
+  ) => ({
+    accountsIndustriesLoading,
+    accountsIndustries,
+    accountsTypesLoading,
+    accountsTypes,
+  })
+);
+
 export const selectActiveAccountState = createSelector(
   selectAccountsReducerLoading,
   selectActiveAccountId,

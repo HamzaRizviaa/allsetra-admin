@@ -32,8 +32,14 @@ class Accounts {
   };
 
   // Account Users Endpoints
-  static getAccountAssociatedUsers = async (accountId: string) => {
-    return await axiosInstance.get(`/accounts/${accountId}/users`);
+  static getAccountAssociatedUsers = async (
+    accountId: string,
+    data: types.IRecordsAggregationBody
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/users/search`,
+      data
+    );
   };
 
   static getAvailableUsersForAccount = async (accountId: string) => {

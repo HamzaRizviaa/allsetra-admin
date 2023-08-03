@@ -6,6 +6,14 @@ import {
   getServicesByQueryThunk,
   getFieldsByQueryThunk,
   getSubscriptionsByQueryThunk,
+  getAccountServicesThunk,
+  getAccountDeviceTypesThunk,
+  getAccountObjectTypesThunk,
+  getAccountAssociatedUsersThunk,
+  getAccountObjectsThunk,
+  getAccountDevicesThunk,
+  getAccountInstallationsThunk,
+  getSpecificAccountThunk,
 } from "app/features";
 import { BackendEventsEnum } from "app/data/types";
 
@@ -22,12 +30,144 @@ export const signalREventsRaisedListener = (
   dispatch: AppDispatch
 ) => {
   switch (event.eventName) {
+    //
     // Account Events
+    //
     case BackendEventsEnum.AccountCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Account", event.name, "created")
       );
       dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
+      break;
+    case BackendEventsEnum.AccountUpdatedEvent:
+      toast.success(
+        signalRGenerateSuccessToastMessage("Account", event.name, "updated")
+      );
+      dispatch(getSpecificAccountThunk(event.accountId ?? ""));
+      break;
+
+    // Account Services Events
+    case BackendEventsEnum.ServiceAssignedToAccountEvent:
+      toast.success("Service has been assigned.");
+      dispatch(
+        getAccountServicesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+    case BackendEventsEnum.ServiceRemovedFromAccountEvent:
+      toast.success("Service has been removed.");
+      dispatch(
+        getAccountServicesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+
+    // Account Device Types Events
+    case BackendEventsEnum.DeviceTypeAssignedToAccountEvent:
+      toast.success("Device type has been assigned.");
+      dispatch(
+        getAccountDeviceTypesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+    case BackendEventsEnum.DeviceTypeRemovedFromAccountEvent:
+      toast.success("Device type has been removed.");
+      dispatch(
+        getAccountDeviceTypesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+
+    // Account Object Types Events
+    case BackendEventsEnum.ObjectTypeAssignedToAccountEvent:
+      toast.success("Object type has been assigned.");
+      dispatch(
+        getAccountObjectTypesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+    case BackendEventsEnum.ObjectTypeRemovedFromAccountEvent:
+      toast.success("Object type has been removed.");
+      dispatch(
+        getAccountObjectTypesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+
+    // Account Users Events
+    case BackendEventsEnum.UserCreatedEvent:
+      toast.success(
+        signalRGenerateSuccessToastMessage("User", event.name, "created")
+      );
+      dispatch(
+        getAccountAssociatedUsersThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+    case BackendEventsEnum.UserAssignedToAccountEvent:
+      toast.success("User has been assigned.");
+      dispatch(
+        getAccountAssociatedUsersThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+    case BackendEventsEnum.UserRemovedFromAccountEvent:
+      toast.success("User has been removed.");
+      dispatch(
+        getAccountAssociatedUsersThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+
+    // Account Devices Events
+    case BackendEventsEnum.DeviceRemovedFromAccountEvent:
+      toast.success("Device has been removed.");
+      dispatch(
+        getAccountDevicesThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+
+    // Account Object Events
+    case BackendEventsEnum.ObjectRemovedFromAccountEvent:
+      toast.success("Object has been removed.");
+      dispatch(
+        getAccountObjectsThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
+      break;
+
+    // Account Installation Events
+    case BackendEventsEnum.InstallationRemovedFromAccountEvent:
+      toast.success("Installation has been removed.");
+      dispatch(
+        getAccountInstallationsThunk({
+          accountId: event.accountId,
+          params: utils.getCommonParamsForApi(),
+        })
+      );
       break;
 
     //
@@ -165,8 +305,5 @@ export const signalREventsRaisedListener = (
       );
       dispatch(getSubscriptionsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-
-    default:
-      console.log({ eventName: event.eventName });
   }
 };

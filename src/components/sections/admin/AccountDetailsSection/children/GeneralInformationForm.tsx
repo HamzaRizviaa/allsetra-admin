@@ -7,18 +7,33 @@ import {
   TwoColsLayout,
   FormikTimeFrameField,
 } from "@vilocnv/allsetra-core";
-import {
-  useGetAccountsIndustriesQuery,
-  useGetAccountsTypesQuery,
-} from "app/features";
 import AddressFormSection from "components/forms/common/AddressFormSection/AddressFormSection";
 
-const GeneralInformationForm: FC = () => {
-  const { data: accountsIndustries, isLoading: accountsIndustriesLoading } =
-    useGetAccountsIndustriesQuery();
+// Data
+import { useAppSelector, useDispatchOnMount } from "hooks";
+import { selectAccountMetadataState } from "app/data/selectors";
+import {
+  getAccountsIndustriesThunk,
+  getAccountsTypesThunk,
+} from "app/features";
 
-  const { data: accountsTypes, isLoading: accountsTypesLoading } =
-    useGetAccountsTypesQuery();
+const GeneralInformationForm: FC = () => {
+  const {
+    accountsIndustriesLoading,
+    accountsIndustries,
+    accountsTypesLoading,
+    accountsTypes,
+  } = useAppSelector(selectAccountMetadataState);
+
+  useDispatchOnMount(
+    getAccountsIndustriesThunk,
+    accountsIndustries.length ? undefined : true
+  );
+
+  useDispatchOnMount(
+    getAccountsTypesThunk,
+    accountsTypes.length ? undefined : true
+  );
 
   return (
     <ContentSectionLayout

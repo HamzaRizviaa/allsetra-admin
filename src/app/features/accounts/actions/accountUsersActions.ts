@@ -1,12 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAccountAssociatedUsersThunk = createAsyncThunk(
   "accounts/getAccountAssociatedUsersThunk",
-  async (accountId: string) => {
+  async ({
+    params,
+    accountId,
+  }: {
+    params: types.IRecordsAggregationBody;
+    accountId: string;
+  }) => {
     try {
-      const response = await Accounts.getAccountAssociatedUsers(accountId);
+      const response = await Accounts.getAccountAssociatedUsers(
+        accountId,
+        params
+      );
 
       if (response.status === 200) {
         return response.data;
@@ -36,13 +45,14 @@ export const getAvailableUsersForAccountThunk = createAsyncThunk(
 
 export const removeUserFromAccountThunk = createAsyncThunk(
   "accounts/removeUserFromAccountThunk",
-  async ({ accountId, userId }: any, { dispatch }) => {
+  async ({ accountId, userId }: any) => {
     try {
       const response = await Accounts.removeUserFromAccount(accountId, userId);
 
       if (response.status === 202) {
-        toast.success("User has been removed from the account");
-        dispatch(getAccountAssociatedUsersThunk(accountId));
+        toast.success(
+          "User removing request is being processed by the backend."
+        );
       }
 
       return response;

@@ -12,6 +12,12 @@ import { useAppSelector, useDispatchOnMount } from "hooks";
 import { selectDashboardPaymentMethodsState } from "app/data/selectors";
 import { getAllPaymentMethodsThunk } from "app/features";
 
+const paymentTermInDaysOptions = [
+  { days: 30, name: "1 month" },
+  { days: 90, name: "3 months" },
+  { days: 180, name: "6 month" },
+];
+
 const FinancialInformationForm: FC = () => {
   const { paymentMethods, loading: paymentMethodsLoading } = useAppSelector(
     selectDashboardPaymentMethodsState
@@ -62,7 +68,9 @@ const FinancialInformationForm: FC = () => {
             label="Payment term"
             placeholder="Payment term"
             name="paymentTermInDays"
-            options={[]}
+            options={paymentTermInDaysOptions}
+            optionLabelKey={"name"}
+            optionValueKey={"days"}
             fullWidth
           />
         </TwoColsLayout>

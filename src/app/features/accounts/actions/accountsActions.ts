@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Accounts } from "app/data/services";
-import { toast, types, utils } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAllAccountsThunk = createAsyncThunk(
   "accounts/getAllAccountsThunk",
@@ -44,7 +44,43 @@ export const getSpecificAccountThunk = createAsyncThunk(
         return response.data;
       }
 
-      return response
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getAccountsIndustriesThunk = createAsyncThunk(
+  "accounts/getAccountsIndustriesThunk",
+  async () => {
+    try {
+      const response = await Accounts.getAccountsIndustries();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getAccountsTypesThunk = createAsyncThunk(
+  "accounts/getAccountsTypesThunk",
+  async () => {
+    try {
+      const response = await Accounts.getAccountsTypes();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
     } catch (e: any) {
       console.error(e);
       throw new Error(e);
@@ -74,7 +110,7 @@ export const createAccountThunk = createAsyncThunk(
 
 export const updateAccountThunk = createAsyncThunk(
   "accounts/updateAccountThunk",
-  async ({ accountId, data }: { accountId: string, data: any }) => {
+  async ({ accountId, data }: { accountId: string; data: any }) => {
     try {
       const response = await Accounts.updateAccount(accountId, data);
 
@@ -94,13 +130,14 @@ export const updateAccountThunk = createAsyncThunk(
 
 export const deactivateAccountThunk = createAsyncThunk(
   "accounts/deactivateAccountThunk",
-  async (accountId: string, { dispatch }) => {
+  async (accountId: string) => {
     try {
       const response = await Accounts.deactivateAccount(accountId);
 
       if (response.status === 202) {
-        toast.success("Account has been deactivated");
-        dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
+        toast.success(
+          "Account deactivation request is being processed by the backend."
+        );
       }
 
       return response;
@@ -113,13 +150,14 @@ export const deactivateAccountThunk = createAsyncThunk(
 
 export const activateAccountThunk = createAsyncThunk(
   "accounts/activateAccountThunk",
-  async (accountId: string, { dispatch }) => {
+  async (accountId: string) => {
     try {
       const response = await Accounts.reactivateAccount(accountId);
 
       if (response.status === 202) {
-        toast.success("Account has been reactivated");
-        dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
+        toast.success(
+          "Account activation request is being processed by the backend."
+        );
       }
 
       return response;

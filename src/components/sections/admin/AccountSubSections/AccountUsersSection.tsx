@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { FormikHelpers } from "formik";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Table, AddUserForm, types } from "@vilocnv/allsetra-core";
+import { Table, AddUserForm, types, useDispatchOnParams } from "@vilocnv/allsetra-core";
 import AssignUserForm from "components/forms/accounts/AssignUserForm/AssignUserForm";
 
 // Data
@@ -25,14 +25,15 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
   const dispatch = useAppDispatch();
 
   // Global State
-  const { accountUsers, loading } = useAppSelector(selectAccountUsers);
+  const { accountUsers, loading, totalRecords } =
+    useAppSelector(selectAccountUsers);
   const roles = useAppSelector(selectAllRoles);
 
   // Local State
   const [assignUserModal, setAssignUserModal] = useState(false);
   const [addUserModal, setAddUserModal] = useState(false);
 
-  useDispatchOnMount(getAccountAssociatedUsersThunk, accountId);
+  useDispatchOnParams(getAccountAssociatedUsersThunk, { args: { accountId } });
 
   useDispatchOnMount(getAllRolesThunk, roles.length ? undefined : true);
 
@@ -73,6 +74,7 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
         columns={ACCOUNT_USERS_TABLE_COLUMNS}
         data={accountUsers}
         progressPending={loading}
+        paginationTotalRows={totalRecords}
         cellActions={[{ name: "Remove User", onClick: removeUserHandler }]}
         searchPlaceholder="Search user"
         primaryButton={{
@@ -86,6 +88,7 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
           variant: "outlined",
           onClick: toggleAssignUserModal,
         }}
+        
       />
       <AssignUserForm
         open={assignUserModal}

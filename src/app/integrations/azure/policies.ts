@@ -5,13 +5,12 @@ export const b2cPolicies = {
   },
   authorities: {
     signUpSignIn: {
-      authority:
-        "https://allsetradev.b2clogin.com/allsetradev.onmicrosoft.com/B2C_1_signin_only",
+      authority: process.env.REACT_APP_AZURE_SIGNUP_SIGNIN_AUTHORITY || "",
     },
     editProfile: {
       authority:
         "https://allsetradev.b2clogin.com/allsetradev.onmicrosoft.com/B2C_1_edit_profile_v2",
     },
   },
-  authorityDomain: "allsetradev.b2clogin.com",
+  authorityDomain: process.env.REACT_APP_AZURE_AUTHORITY_DOMAIN || "",
 };
