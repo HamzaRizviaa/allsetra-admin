@@ -35,6 +35,8 @@ export { ReactComponent as SettingsActiveIcon } from "./drawer/settingsActiveIco
 export { ReactComponent as AlertsActiveIcon } from "./drawer/alertsActiveIcon.svg";
 export { ReactComponent as ServiceActiveIcon } from "./drawer/serviceActiveIcon.svg";
 export { ReactComponent as FieldsActiveIcon } from "./drawer/fieldsActiveIcon.svg";
+export { ReactComponent as AccountActiveIcon } from "./drawer/accountActiveIcon.svg";
+export { ReactComponent as ObjectTypesActiveIcon } from "./drawer/objectTypesActiveIcon.svg";
 
 // Common Icons
 export { ReactComponent as Add } from "./common/Add.svg";

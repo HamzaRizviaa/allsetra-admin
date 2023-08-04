@@ -18,6 +18,8 @@ import {
   AlertsActiveIcon,
   FieldsActiveIcon,
   ServiceActiveIcon,
+  AccountActiveIcon,
+  ObjectTypesActiveIcon,
 } from "assets/icons";
 
 export const getDrawerMenuItems = (t: any): Array<IDrawerMenuItem> => [
@@ -54,12 +56,13 @@ export const getDrawerSubMenuLists = (): {
     {
       name: "Account manager",
       icon: AccountsIcon,
+      activeIcon: AccountActiveIcon,
       path: "/dashboard/account-manager",
     },
     {
       name: "Object types",
       icon: ObjectTypesIcon,
-      activeIcon: ObjectTypesIcon,
+      activeIcon: ObjectTypesActiveIcon,
       path: "/dashboard/object-types",
     },
     {
