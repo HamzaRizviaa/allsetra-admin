@@ -34,12 +34,14 @@ export const accountDetailsFormatterForForm = (account: any) => {
     "objectsCount",
     "linkedObjects",
     "countries",
+    "accountOwner",
   ]);
 
   const formattedObject = {
     ...removedUnwantedKeys,
     accountIndustry: account.accountIndustry?.id,
     accountType: account.accountTyp?.id,
+    accountOwnerUniqueId: account.accountOwner,
     workingHours: {
       workingHoursSchedule: account.workingHours,
     },

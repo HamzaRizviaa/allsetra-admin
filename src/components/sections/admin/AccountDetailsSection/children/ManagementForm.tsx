@@ -61,7 +61,7 @@ const ManagementForm: FC = () => {
         <TwoColsLayout hideDivider>
           <FormikSelectField
             label="Account owner"
-            name="accountOwner"
+            name="accountOwnerUniqueId"
             optionLabelKey={"name"}
             optionValueKey={"uniqueId"}
             options={allAccounts}
