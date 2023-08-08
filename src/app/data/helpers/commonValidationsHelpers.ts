@@ -11,7 +11,7 @@ export const addressValidationSchema = Yup.object()
     postalCode: Yup.string().label("Postal code"),
     phoneNumber: Yup.string().nullable().label("Phone number"),
     email: Yup.string().nullable().label("Email"),
-    country: Yup.number().nullable().label("Country"),
+    countryId: Yup.number().nullable().label("Country"),
   })
   .nullable();
 

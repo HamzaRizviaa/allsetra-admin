@@ -65,7 +65,7 @@ const AddressFormSection: FC<Props> = ({
           options={countries}
           optionLabelKey={"name"}
           optionValueKey={"id"}
-          name={`${parentKey}.country`}
+          name={`${parentKey}.countryId`}
           loading={loading}
           searchable
           fullWidth

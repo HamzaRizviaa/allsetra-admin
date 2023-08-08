@@ -65,7 +65,7 @@ const AccountDetails: FC = () => {
                 text: "Save Changes",
                 onClick: handleSubmit,
                 loading: isSubmitting,
-                // disabled: !dirty ? isValid : !isValid,
+                disabled: !dirty ? isValid : !isValid,
               }}
               secondaryButton={{
                 variant: "text",
