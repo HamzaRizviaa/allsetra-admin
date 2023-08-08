@@ -10,9 +10,8 @@ import {
 } from "@vilocnv/allsetra-core";
 
 // Data
-import { useAppDispatch, useAppSelector } from "hooks";
-
-import { ALL_SUBSCRIPTIONS_TABLE_COLUMNS } from "app/data/constants";
+import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
+import { getAllSubscriptionsTableColumns } from "app/data/constants";
 import { selectSubscriptionsState } from "app/data/selectors";
 import { IAddSubscription, ISubscription } from "app/data/types";
 import { subscriptionDataFormatterForForm } from "app/data/helpers";
@@ -24,6 +23,7 @@ import {
   getSpecificSubscriptionThunk,
   getSubscriptionsByQueryThunk,
   reactivateSubscriptionThunk,
+  getAllSubscriptionTypesThunk,
 } from "app/features";
 
 const SubscriptionManager: FC = () => {
@@ -31,12 +31,12 @@ const SubscriptionManager: FC = () => {
   const dispatch = useAppDispatch();
 
   // Global State
-
   const {
     totalSubscriptions,
     allSubscriptions,
     loading,
     specificSubscription,
+    subscriptionTypes,
   } = useAppSelector(selectSubscriptionsState);
 
   // Local State
@@ -47,6 +47,11 @@ const SubscriptionManager: FC = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
   useDispatchOnParams(getSubscriptionsByQueryThunk);
+
+  useDispatchOnMount(
+    getAllSubscriptionTypesThunk,
+    subscriptionTypes.length ? undefined : true
+  );
 
   const handleActivateSubscription = async (subscription: ISubscription) => {
     subscription &&
@@ -106,7 +111,7 @@ const SubscriptionManager: FC = () => {
       />
       <Box mx={4}>
         <Table
-          columns={ALL_SUBSCRIPTIONS_TABLE_COLUMNS}
+          columns={getAllSubscriptionsTableColumns(subscriptionTypes)}
           data={allSubscriptions}
           progressPending={loading}
           paginationTotalRows={totalSubscriptions}

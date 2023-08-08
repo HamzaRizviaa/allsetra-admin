@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { isEmpty } from "lodash";
 import { IAddObjectType } from "../types";
 
 export const objectTypeDataFormatterForForm = (data: any) => {
@@ -66,15 +67,18 @@ export const objectTypeDataFormatterForService = (values: any) => {
     })
   );
 
-  const payload = {
+  const payload: any = {
     name: values.name,
-    parentObjectId: values.parentObjectId,
     iconId: values.iconId,
     deviceTypes: formattedDeviceProfiles,
-    services: values.services,
     fields: values.fields,
     uniqueId: values.uniqueId,
   };
+
+  if (values.parentObjectId) {
+    payload.parentObjectId = values.parentObjectId;
+    payload.services = values.parentObjectId;
+  }
 
   return payload;
 };
@@ -91,7 +95,7 @@ export const addObjectTypeInitialValues: IAddObjectType = {
 
 export const addObjectTypeValidationSchema: Yup.Schema = Yup.object({
   name: Yup.string().trim().required().label("Object name"),
-  parentObjectId: Yup.string().trim().required().label("Parent object type"),
+  parentObjectId: Yup.string().trim().label("Parent object type"),
   iconId: Yup.string().trim().required().label("Object type icon"),
   deviceTypes: Yup.array()
     .of(Yup.string())
@@ -101,7 +105,10 @@ export const addObjectTypeValidationSchema: Yup.Schema = Yup.object({
   fields: Yup.array().of(Yup.string()).min(1).required().label("Fields"),
   services: Yup.array()
     .of(Yup.string())
-    .min(1)
-    .required()
-    .label("Supported services"),
+    .label("Supported services")
+    .when("parentObjectId", {
+      is: (val: string) => !isEmpty(val),
+      then: (schema) => schema.min(1).required(),
+      otherwise: (schema) => schema,
+    }),
 });

@@ -7,11 +7,6 @@ import { TableColumn, Badge, StatusBadge } from "@vilocnv/allsetra-core";
 export const ALL_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
   { name: "Service Name", selector: (row: any) => row.name, sortable: true },
   {
-    name: "Status",
-    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
-    sortable: true,
-  },
-  {
     name: "Service Fields",
     selector: (row: any) => row.fields.length,
     sortable: true,
@@ -31,6 +26,11 @@ export const ALL_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
   {
     name: "Linked Object types",
     selector: (row: any) => row.objectTypesCount,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: any) => <StatusBadge isDeactivated={row.isDeleted} />,
     sortable: true,
   },
 ];

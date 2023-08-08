@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { Box, Stack } from "@mui/material";
 import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
 import { useSelector } from "react-redux";
-import { useAppDispatch, useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
 import {
   selectAllCurrencies,
   selectDeviceTypesState,
@@ -36,10 +36,18 @@ const InnerForm: FC = () => {
   useEffect(() => {
     dispatch(getAllSubscriptionsThunk());
     dispatch(getAllDeviceTypesThunk());
-    dispatch(getAllSubscriptionTypesThunk());
-    dispatch(getAllCurrenciesThunk());
     dispatch(getAllServicesThunk());
   }, []);
+
+  useDispatchOnMount(
+    getAllCurrenciesThunk,
+    currencies.length ? undefined : true
+  );
+
+  useDispatchOnMount(
+    getAllSubscriptionTypesThunk,
+    subscriptionTypes.length ? undefined : true
+  );
 
   return (
     <Stack spacing={2}>

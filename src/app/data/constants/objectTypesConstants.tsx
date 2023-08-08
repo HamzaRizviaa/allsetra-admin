@@ -8,11 +8,6 @@ import { Box } from "@mui/material";
 export const ALL_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<IObjectType>[] = [
   { name: "", selector: (row: IObjectType) => row.name, sortable: true },
   {
-    name: "Status",
-    cell: (row: IObjectType) => <StatusBadge isDeactivated={row.isDeleted} />,
-    sortable: true,
-  },
-  {
     name: "Default Profile",
     cell: (row: IObjectType) => (
       <>
@@ -32,7 +27,6 @@ export const ALL_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<IObjectType>[] = [
     ),
     sortable: true,
   },
-
   {
     name: "# of objects",
     cell: (row: IObjectType) => `${row.deviceTypesCount} objects`,
@@ -53,6 +47,11 @@ export const ALL_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<IObjectType>[] = [
           : "-"}
       </>
     ),
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: IObjectType) => <StatusBadge isDeactivated={row.isDeleted} />,
     sortable: true,
   },
 ];

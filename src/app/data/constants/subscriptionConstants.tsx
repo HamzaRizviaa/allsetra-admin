@@ -6,19 +6,32 @@ import theme from "app/theme";
 //
 // TABLE HEADERS
 //
-export const ALL_SUBSCRIPTIONS_TABLE_COLUMNS: TableColumn<ISubscription>[] = [
+export const getAllSubscriptionsTableColumns = (
+  subscriptionTypes: Array<any>
+): TableColumn<ISubscription>[] => [
   {
     name: "Subscription Name",
     selector: (row: ISubscription) => row.name,
     sortable: true,
   },
   {
+    name: "Service Name",
+    selector: (row: ISubscription) => row.service.name,
+    sortable: true,
+  },
+  {
     name: "Subscription Type",
-    cell: (row: ISubscription) => (
-      <Box sx={{ marginRight: "5px" }}>
-        <Badge colorScheme="info">{row.subscriptionType}</Badge>
-      </Box>
-    ),
+    cell: (row: ISubscription) => {
+      const subTypeName: string = subscriptionTypes.find(
+        (item) => item.id === row.subscriptionType
+      )?.name;
+
+      return (
+        <Box sx={{ marginRight: "5px" }}>
+          <Badge colorScheme="info">{subTypeName}</Badge>
+        </Box>
+      );
+    },
     sortable: true,
   },
   {

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ServiceManager } from "app/data/services";
-import { toast, types, utils } from "@vilocnv/allsetra-core";
+import { toast, types } from "@vilocnv/allsetra-core";
 
 export const getAllServicesThunk = createAsyncThunk(
   "serviceManager/getAllServicesThunk",

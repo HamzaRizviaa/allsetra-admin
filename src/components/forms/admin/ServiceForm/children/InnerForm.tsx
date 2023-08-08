@@ -91,7 +91,6 @@ const InnerForm: FC = () => {
         optionValueKey="uniqueId"
         loading={fieldsLoading}
         multiple
-        required
         searchable
       />
     </Stack>

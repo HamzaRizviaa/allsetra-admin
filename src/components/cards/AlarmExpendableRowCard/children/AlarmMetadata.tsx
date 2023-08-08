@@ -20,8 +20,9 @@ export interface AlarmMetadataProps {
 }
 
 const AlarmMetadata: FC<AlarmMetadataProps> = ({ data }) => {
-  const { data: alarmPersonsData, isLoading: alarmPersonsLoading } =
-    useGetAlarmPersonsForAlarmQuery(data.uniqueId);
+  const { data: alarmPersonsData } = useGetAlarmPersonsForAlarmQuery(
+    data.uniqueId
+  );
 
   const {
     objectInformation,
@@ -36,8 +37,6 @@ const AlarmMetadata: FC<AlarmMetadataProps> = ({ data }) => {
       countriesWhiteListed: transformOwnerCountriesForWhitelisted(data.object),
     };
   }, [data, alarmPersonsData]);
-
-  console.log({ alarmPersonsData });
 
   return (
     <Box my={2}>

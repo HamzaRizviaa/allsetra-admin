@@ -38,13 +38,6 @@ export const ACCOUNT_TAB_INDEX_TO_ROUTENAME_MAPPING: Record<number, string> = {
 export const ALL_ACCOUNTS_TABLE_COLUMNS: TableColumn<types.IAccount>[] = [
   { name: "Name", selector: (row: types.IAccount) => row.name, sortable: true },
   {
-    name: "Status",
-    cell: (row: types.IAccount) => (
-      <StatusBadge isDeactivated={row.isDeleted} />
-    ),
-    sortable: true,
-  },
-  {
     name: "Type",
     selector: (row: types.IAccount) => row.customerType,
     sortable: true,
@@ -52,6 +45,13 @@ export const ALL_ACCOUNTS_TABLE_COLUMNS: TableColumn<types.IAccount>[] = [
   {
     name: "# of users",
     selector: (row: types.IAccount) => row.usersCount,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: types.IAccount) => (
+      <StatusBadge isDeactivated={row.isDeleted} />
+    ),
     sortable: true,
   },
 ];

@@ -113,7 +113,6 @@ const InnerForm: FC = () => {
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={objectTypesLoading}
-        required
       />
       <FormikSelectField
         label="Object type icon"

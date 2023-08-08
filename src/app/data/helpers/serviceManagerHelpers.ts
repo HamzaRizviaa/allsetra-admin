@@ -13,7 +13,7 @@ export const addServiceInitialValues: IAddService = {
 export const addServiceValidationSchema: Yup.Schema = Yup.object({
   name: Yup.string().trim().required().label("Service name"),
   description: Yup.string().trim().required().label("Service description"),
-  fields: Yup.array().of(Yup.string()).min(1).required().label("Fields"),
+  fields: Yup.array().of(Yup.string()).label("Fields"),
   deviceTypes: Yup.array()
     .of(Yup.string())
     .min(1)
@@ -44,7 +44,7 @@ export const formatServiceDataForForm = (service: any) => {
 
   service.serviceDeviceTypes.map((item: any) => {
     deviceTypes.push(item.deviceType.uniqueId);
-    
+
     deviceModules[item.deviceType.uniqueId] = {
       requiredModulesId: item.requiredModules.map(
         (module: any) => module.uniqueId

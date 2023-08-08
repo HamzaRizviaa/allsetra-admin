@@ -74,5 +74,4 @@ const serviceManagerSlice = createSlice({
 });
 
 export * from "./serviceManagerActions";
-export const {} = serviceManagerSlice.actions;
 export default serviceManagerSlice.reducer;
