@@ -8,6 +8,11 @@ interface Props {
 }
 
 const ObjectDetailsMap: FC<Props> = ({ activeObject }) => {
+  const objectLocation = {
+    lat: activeObject?.location?.latitude || 0,
+    lng: activeObject?.location?.longitude || 0,
+  };
+
   return (
     <ObjectMapContainer>
       <LoadScript
@@ -15,18 +20,10 @@ const ObjectDetailsMap: FC<Props> = ({ activeObject }) => {
       >
         <GoogleMap
           mapContainerStyle={{ height: "100%", width: "100%" }}
-          center={{
-            lat: activeObject?.location.latitude || 0,
-            lng: activeObject?.location.longitude || 0,
-          }}
+          center={objectLocation}
           zoom={8}
         >
-          <MarkerF
-            position={{
-              lat: activeObject?.location.latitude || 0,
-              lng: activeObject?.location.longitude || 0,
-            }}
-          />
+          <MarkerF position={objectLocation} />
         </GoogleMap>
       </LoadScript>
     </ObjectMapContainer>
