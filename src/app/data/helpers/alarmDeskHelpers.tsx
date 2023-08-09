@@ -7,13 +7,12 @@ import {
 } from "app/data/types";
 import { types, Badge } from "@vilocnv/allsetra-core";
 import { isEmpty } from "lodash";
+import { Link } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import { IconButton } from "@mui/material";
 
 //
 // ALARM DESK FORMS HELPERS
 //
-
 export const alarmReportTheftInitialValues: IAlarmReportTheft = {
   comment: "",
   handleAlarm: false,
@@ -99,9 +98,9 @@ export const transformAlarmPersonsForTable = (alarmPersons: Array<any>) => {
 
   alarmPersons.forEach((person) => {
     data[`${person.firstName} ${person.lastName}`] = (
-      <IconButton sx={{ width: "18px", height: "18px" }}>
+      <Link to={`tel:${person.phone}`}>
         <LocalPhoneIcon sx={{ width: "18px", height: "18px" }} />
-      </IconButton>
+      </Link>
     );
   });
 
