@@ -4,21 +4,24 @@ import { FormikSelectField, FormikInputField } from "@vilocnv/allsetra-core";
 import { FieldArray, useFormikContext } from "formik";
 import DeviceTypeFields from "./SelectedDeviceTypes";
 
+// DATA
+import { difference, isEmpty, omit } from "lodash";
 import { useAppDispatch, useAppSelector } from "hooks";
 import {
   selectDeviceTypesState,
   selectFieldsState,
   selectIconState,
   selectObjectTypesState,
+  selectServicManagerState,
 } from "app/data/selectors";
 import {
   getAllDeviceTypesThunk,
   getAllFieldsThunk,
   getAllIconsThunk,
   getAllObjectTypesThunk,
+  getAllServicesThunk,
 } from "app/features";
 import { IAddObjectType } from "app/data/types";
-import { difference, isEmpty, omit } from "lodash";
 
 const InnerForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -37,18 +40,25 @@ const InnerForm: FC = () => {
   const { loading: fieldsloading, allFields } =
     useAppSelector(selectFieldsState);
 
-  const [_, supportedDevicesRender] = useMemo(() => {
-    const filteredData = allObjectTypes.find(
-      (item: any) => item.uniqueId === values.parentObjectId
-    );
-    const supportedDevicesRender =
-      filteredData?.services?.map((val: any) => ({
-        label: val.name,
-        value: val.uniqueId,
-      })) || [];
+  const { loading: servicesLoading, allServices } = useAppSelector(
+    selectServicManagerState
+  );
 
-    return [filteredData, supportedDevicesRender];
-  }, [allObjectTypes, values.parentObjectId]);
+  useEffect(() => {
+    dispatch(getAllObjectTypesThunk());
+    dispatch(getAllIconsThunk());
+    dispatch(getAllDeviceTypesThunk());
+    dispatch(getAllFieldsThunk());
+    dispatch(getAllServicesThunk());
+  }, []);
+
+  useEffect(() => {
+    iconRender(icons);
+  }, [icons]);
+
+  const objectTypesOptions = useMemo(() => {
+    return [{ name: "Select Object Type", uniqueId: "" }, ...allObjectTypes];
+  }, [allObjectTypes]);
 
   const iconRender = (icons: any[]) => {
     return icons.map((icon) => ({
@@ -63,17 +73,6 @@ const InnerForm: FC = () => {
       value: icon.uniqueId,
     }));
   };
-
-  useEffect(() => {
-    dispatch(getAllObjectTypesThunk());
-    dispatch(getAllIconsThunk());
-    dispatch(getAllDeviceTypesThunk());
-    dispatch(getAllFieldsThunk());
-  }, []);
-
-  useEffect(() => {
-    iconRender(icons);
-  }, [icons]);
 
   const deviceTypeChangeHandler = (value: any) => {
     const isDeviceTypeAdded = value.length > values.deviceTypes.length;
@@ -109,7 +108,7 @@ const InnerForm: FC = () => {
       <FormikSelectField
         label="Parent object type"
         name="parentObjectId"
-        options={allObjectTypes}
+        options={objectTypesOptions}
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={objectTypesLoading}
@@ -142,19 +141,17 @@ const InnerForm: FC = () => {
         )}
       />
       <Box sx={{ height: "1px", background: "#EFF4FF" }}></Box>
-      {values.parentObjectId !== "" && (
-        <FormikSelectField
-          label="Supported services"
-          name="services"
-          options={supportedDevicesRender}
-          optionLabelKey="label"
-          optionValueKey="value"
-          loading={iconLoading}
-          required
-          multiple
-          searchable
-        />
-      )}
+      <FormikSelectField
+        label="Supported services"
+        name="services"
+        options={allServices}
+        optionLabelKey="name"
+        optionValueKey="uniqueId"
+        loading={servicesLoading}
+        required
+        multiple
+        searchable
+      />
       <FormikSelectField
         label="Dynamic Fields"
         name="fields"

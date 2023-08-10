@@ -45,7 +45,7 @@ export const objectTypeDataFormatterForForm = (data: any) => {
 
   const payload = {
     name: data.name,
-    parentObjectId: data.parentObjectType.uniqueId,
+    parentObjectId: data.parentObjectType ? data.parentObjectType.uniqueId : "",
     iconId: data.icon.uniqueId,
     deviceTypes: data.deviceTypes.map((item: any) => item.deviceType.uniqueId),
     deviceProfiles: transformedDevices,
@@ -73,11 +73,11 @@ export const objectTypeDataFormatterForService = (values: any) => {
     deviceTypes: formattedDeviceProfiles,
     fields: values.fields,
     uniqueId: values.uniqueId,
+    services: values.services,
   };
 
-  if (values.parentObjectId) {
+  if (!isEmpty(values.parentObjectId)) {
     payload.parentObjectId = values.parentObjectId;
-    payload.services = values.parentObjectId;
   }
 
   return payload;
@@ -105,10 +105,7 @@ export const addObjectTypeValidationSchema: Yup.Schema = Yup.object({
   fields: Yup.array().of(Yup.string()).min(1).required().label("Fields"),
   services: Yup.array()
     .of(Yup.string())
-    .label("Supported services")
-    .when("parentObjectId", {
-      is: (val: string) => !isEmpty(val),
-      then: (schema) => schema.min(1).required(),
-      otherwise: (schema) => schema,
-    }),
+    .min(1)
+    .required()
+    .label("Supported services"),
 });
