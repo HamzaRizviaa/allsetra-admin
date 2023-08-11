@@ -19,7 +19,18 @@ export const addDeviceTypeValidationSchema: Yup.Schema = Yup.object({
 export const deviceTypeDetailsInitialValues = {
   name: "",
   devicePicture: [],
+  currency: "",
+  price: "",
 };
+
+export const deviceTypeDetailsValidationSchema = Yup.object({
+  name: Yup.string().required().label("Device Name"),
+  currency: Yup.string().trim().required().label("Currency"),
+  price: Yup.string().trim().required().label("Price"),
+  devicePicture: Yup.array()
+    .min(1, "You need to upload a file to post device type")
+    .required(),
+});
 
 export const deviceTypeDataFormatter = (deviceType: any) => {
   const devicePicture = !isEmpty(deviceType.imageURL)
@@ -31,9 +42,8 @@ export const deviceTypeDataFormatter = (deviceType: any) => {
     : [];
 
   const payload = {
-    name: deviceType.name,
+    ...deviceType,
     devicePicture,
   };
-
   return payload;
 };

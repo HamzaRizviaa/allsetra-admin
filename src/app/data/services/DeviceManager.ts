@@ -13,6 +13,12 @@ class DeviceManager {
     return await axiosInstance.post("/deviceTypes/search", data);
   };
 
+  // Device Types Details Endpoints
+
+  static updateDeviceType = async (deviceTypeId: string, data: any) => {
+    return await axiosInstance.patch(`/deviceTypes/${deviceTypeId}`, data);
+  };
+
   // Device Types Profiles Endpoints
 
   static getDeviceTypesProfiles = async (

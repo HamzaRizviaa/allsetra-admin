@@ -37,6 +37,29 @@ export const getDeviceTypesByQueryThunk = createAsyncThunk(
   }
 );
 
+//Device Types Detail
+
+export const updateDeviceTypesDetailThunk = createAsyncThunk(
+  "deviceManager/updateDeviceTypesDetailThunk",
+  async (data: any) => {
+    try {
+      const response = await DeviceManager.updateDeviceType(
+        data.uniqueId,
+        data
+      );
+
+      if (response.status === 202) {
+        toast.success("Device Type has been updated");
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 //Device Types Profiles
 
 export const getDeviceTypesProfilesThunk = createAsyncThunk(

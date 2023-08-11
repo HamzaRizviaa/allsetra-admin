@@ -35,6 +35,11 @@ export const ALL_DEVICETYPES_TABLE_COLUMNS: TableColumn<IDeviceType>[] = [
     sortable: true,
   },
   {
+    name: "Device Price",
+    cell: (row: IDeviceType) => "-",
+    sortable: true,
+  },
+  {
     name: "Supports CAN",
     cell: (row: IDeviceType) =>
       row.supportsCAN ? (

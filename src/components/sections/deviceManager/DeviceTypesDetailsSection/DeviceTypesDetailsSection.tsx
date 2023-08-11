@@ -1,37 +1,42 @@
-import React, { FC, useMemo } from "react";
-import { Form, Formik } from "formik";
-import { FormikInputField } from "@vilocnv/allsetra-core";
-import { Stack } from "@mui/material";
-import { isEmpty } from "lodash";
+import { FC } from "react";
 import {
-  deviceTypeDataFormatter,
-  deviceTypeDetailsInitialValues,
-} from "app/data/helpers";
+  FormikDropzone,
+  FormikInputField,
+  FormikSelectField,
+} from "@vilocnv/allsetra-core";
+import { Box, Stack } from "@mui/material";
+import { selectAllCurrencies } from "app/data/selectors";
+import { useAppSelector } from "hooks";
 
-interface Props {
-  initialValues: any;
-}
-
-const DeviceTypesDetailsSection: FC<Props> = ({ initialValues }) => {
-  const formInitialValues = useMemo(
-    () =>
-      !isEmpty(initialValues)
-        ? deviceTypeDataFormatter(initialValues)
-        : deviceTypeDetailsInitialValues,
-    [initialValues]
-  );
+const DeviceTypesDetailsSection: FC = () => {
+  const currencies = useAppSelector(selectAllCurrencies);
 
   return (
-    <Formik initialValues={formInitialValues} onSubmit={() => {}}>
-      <Form>
-        <Stack spacing={3}>
-          <h4>Device name</h4>
-          <FormikInputField name="name" placeholder="Device name" disabled />
-          <h4>Device picture:</h4>
-          {/* <FormikDropzone name="devicePicture" fieldTitle="" /> */}
-        </Stack>
-      </Form>
-    </Formik>
+    <Stack spacing={3}>
+      <h4>Device name</h4>
+      <Box width={{ xs: "90%", sm: "30vw" }}>
+        <FormikInputField
+          name="name"
+          placeholder="Device name"
+          disabled
+          fullWidth
+        />
+      </Box>
+      <h4>Device picture:</h4>
+      <FormikDropzone name="devicePicture" fieldTitle="" />
+      <h4>Device price:</h4>
+      <Stack direction={"row"} width={{ xs: "90%", sm: "30vw" }} spacing={2}>
+        <FormikSelectField
+          label=""
+          name="currency"
+          options={currencies}
+          optionLabelKey="name"
+          optionValueKey="id"
+          sx={{ width: "30%" }}
+        />
+        <FormikInputField name="price" placeholder="Device price" />
+      </Stack>
+    </Stack>
   );
 };
 

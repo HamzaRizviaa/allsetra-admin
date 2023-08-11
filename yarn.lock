@@ -2585,10 +2585,10 @@
     "@typescript-eslint/types" "5.57.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vilocnv/allsetra-core@^0.1.37":
-  version "0.1.37"
-  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.1.37/d5f4b303a1cdeb59376988a37a84d701a86fbf87#d5f4b303a1cdeb59376988a37a84d701a86fbf87"
-  integrity sha512-bS737201+WRdwbPX2HYh9iEB0GYOyb4/1wmmquAlvjQaLxMTdglq6OC5l9rP1bdp5QKiDYwtv5v6ViFZfg8liw==
+"@vilocnv/allsetra-core@^0.1.38":
+  version "0.1.38"
+  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.1.38/54cb9b8caac23fc225180e0c7892942ac5730a40#54cb9b8caac23fc225180e0c7892942ac5730a40"
+  integrity sha512-uHshI+6Jnss28c0MGX/0xjvzS56WE+VOgRFN9rABYTKdcPCgPKmS0hW7Sj8PcppRudJr1JMThY44BuyUnvLuhQ==
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
