@@ -8,7 +8,10 @@ export const MapContainer = styled(Box)({
     boxShadow: "none",
   },
   "button.gm-ui-hover-effect": {
-    visibility: "hidden",
+    top: "6px !important",
+    "& span": {
+      backgroundColor: "#ffffff !important",
+    },
   },
   ".gm-style-iw-d": {
     overflow: "hidden !important",
