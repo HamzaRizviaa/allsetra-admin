@@ -54,3 +54,5 @@ export { ReactComponent as LockedIcon } from "./common/lock.svg";
 export { ReactComponent as MarkerIcon } from "./common/Marker.svg";
 export { ReactComponent as PointerHistoryIcon } from "./common/PointerHistoryIcon.svg";
 export { ReactComponent as Alarm } from "./common/Alarm.svg";
+export { ReactComponent as TrackingIcon } from "./common/trackingIcon.svg";
+export { ReactComponent as CalendarIcon } from "./common/CalendarIcon.svg";

@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.10.6",
     "@microsoft/signalr": "^7.0.7",
     "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.139",
     "@mui/material": "^5.11.16",
     "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.3",
