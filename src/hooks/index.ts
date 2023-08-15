@@ -4,3 +4,4 @@ export { default as useFetch } from "./useFetch";
 export { default as useActiveObjectById } from "./useActiveObjectById";
 export { default as useSignalR } from "./useSignalR";
 export { default as useSetLangOnSettingsChange } from "./useSetLangOnSettingsChange";
+export { default as useActiveDevice } from "./useActiveDevice";

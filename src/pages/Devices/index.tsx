@@ -1,44 +1,43 @@
 import { FC } from "react";
 import { Box, useTheme } from "@mui/material";
-import { Topbar } from "@vilocnv/allsetra-core";
+import { Table, Topbar, useDispatchOnParams } from "@vilocnv/allsetra-core";
+import { useNavigate } from "react-router-dom";
 
 // Data
-// import { useAppDispatch, useAppSelector } from "hooks";
-// import { selectQueriedObjectsState } from "app/data/selectors";
-// import { getObjectsByQueryThunk, setActiveObject } from "app/features";
-// import { ALL_OBJECTS_TABLE_COLUMNS } from "app/data/constants";
+import { useAppDispatch, useAppSelector } from "hooks";
+import { getDevicesByQueryThunk, setActiveDevice } from "app/features";
+import { ALL_DEVICES_TABLE_COLUMNS } from "app/data/constants";
+import { selectDevicesState } from "app/data/selectors";
+import { IDevices } from "app/data/types";
 
 const Devices: FC = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const theme = useTheme();
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   // Global State
-  // const { objects, totalRecords, loading } = useAppSelector(
-  //   selectQueriedObjectsState
-  // );
+  const { totalDevices, allDevices, loading } =
+    useAppSelector(selectDevicesState);
 
-  // useDispatchOnParams(getObjectsByQueryThunk);
+  useDispatchOnParams(getDevicesByQueryThunk);
 
-  // const rowClickHandler = (row: any) => {
-  //   dispatch(setActiveObject(row));
-  //   navigate({
-  //     pathname: `/dashboard/devices/${row.uniqueId}`,
-  //   });
-  // };
+  const handleViewDevice = (device: IDevices) => {
+    dispatch(setActiveDevice(device));
+    navigate(`/dashboard/devices/${device.uniqueId}`);
+  };
 
   return (
     <Box>
       <Topbar theme={theme} title="Devices" />
       <Box mx={4}>
-        {/* <Table
-          columns={ALL_OBJECTS_TABLE_COLUMNS}
-          data={objects}
+        <Table
+          columns={ALL_DEVICES_TABLE_COLUMNS}
+          data={allDevices}
           progressPending={loading}
-          paginationTotalRows={totalRecords}
-          onRowClicked={rowClickHandler}
-          searchPlaceholder="Search object"
-        /> */}
+          paginationTotalRows={totalDevices}
+          searchPlaceholder="Search device"
+          onRowClicked={handleViewDevice}
+        />
       </Box>
     </Box>
   );

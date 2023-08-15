@@ -8,3 +8,4 @@ export * from "./subscriptionManagerTypes";
 export * from "./settingsTypes";
 export * from "./alarmDeskTypes";
 export * from "./backendEvents";
+export * from "./devicesTypes";

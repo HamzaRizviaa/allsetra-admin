@@ -26,6 +26,14 @@ class Devices {
       `/devices/${deviceId}/locations${locationSearch}`
     );
   };
+
+  static deactivateDevice = async (deviceId: string) => {
+    return await axiosInstance.delete(`/devices/${deviceId}`);
+  };
+
+  static reactivateDevice = async (deviceId: string) => {
+    return await axiosInstance.patch(`/devices/${deviceId}/activate`);
+  };
 }
 
 export default Devices;

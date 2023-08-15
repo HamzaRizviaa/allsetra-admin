@@ -5,4 +5,5 @@ export * from "./fieldConstants";
 export * from "./objectTypesConstants";
 export * from "./subscriptionConstants";
 export * from "./alarmDeskConstants";
-export * from "./objectsConstants"
+export * from "./objectsConstants";
+export * from "./devicesConstants";

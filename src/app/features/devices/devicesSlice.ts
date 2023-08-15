@@ -1,23 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { types } from "@vilocnv/allsetra-core";
-import { getDeviceLocationHistoryThunk } from "./devicesActions";
+import {
+  getAllDevicesThunk,
+  getDeviceLocationHistoryThunk,
+  getDevicesByQueryThunk,
+  getSpecificDeviceThunk,
+} from "./devicesActions";
+import { IDevices } from "app/data/types";
 
 export interface IDevicesState {
   loading: boolean;
-  totalRecords: number | null;
-  allDevices: Array<any>;
+  totalDevices: number | null;
+
   devices: Array<any>;
-  activeDevice: types.IDevice | null;
   deviceLocationHistory: Array<any>;
+  specificDevice: IDevices | null;
 }
 
 const initialState: IDevicesState = {
   loading: false,
-  totalRecords: null,
-  allDevices: [],
+  totalDevices: null,
   devices: [],
-  activeDevice: null,
   deviceLocationHistory: [],
+  specificDevice: null,
 };
 
 const DevicesSlice = createSlice({
@@ -25,7 +29,10 @@ const DevicesSlice = createSlice({
   initialState,
   reducers: {
     setActiveDevice: (state, action) => {
-      state.activeDevice = action.payload;
+      state.specificDevice = action.payload;
+    },
+    resetSpecificDevice: (state) => {
+      state.specificDevice = null;
     },
   },
   extraReducers: (builder) => {
@@ -45,10 +52,53 @@ const DevicesSlice = createSlice({
     builder.addCase(getDeviceLocationHistoryThunk.rejected, (state) => {
       state.loading = false;
     });
+
+    // Get All devices Action Cases
+    builder.addCase(getAllDevicesThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllDevicesThunk.fulfilled, (state, action) => {
+      state.devices = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getAllDevicesThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Devies By Querying Action Cases
+    builder.addCase(getDevicesByQueryThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getDevicesByQueryThunk.fulfilled, (state, action) => {
+      state.devices = action.payload?.results || [];
+      state.totalDevices = action.payload?.rowCount || 0;
+      state.loading = false;
+    });
+
+    builder.addCase(getDevicesByQueryThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Specific Device Action Cases
+    builder.addCase(getSpecificDeviceThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getSpecificDeviceThunk.fulfilled, (state, action) => {
+      state.specificDevice = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getSpecificDeviceThunk.rejected, (state) => {
+      state.loading = false;
+    });
   },
 });
 
 export * from "./devicesActions";
-export const { setActiveDevice } = DevicesSlice.actions;
+export const { setActiveDevice, resetSpecificDevice } = DevicesSlice.actions;
 
 export default DevicesSlice.reducer;

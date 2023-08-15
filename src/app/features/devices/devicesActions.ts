@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast, types } from "@vilocnv/allsetra-core";
 import { Devices } from "app/data/services";
 
 export const getDeviceLocationHistoryThunk = createAsyncThunk(
@@ -12,6 +13,111 @@ export const getDeviceLocationHistoryThunk = createAsyncThunk(
 
       if (response.status === 200) {
         return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getAllDevicesThunk = createAsyncThunk(
+  "devices/getAllDevicesThunk",
+  async () => {
+    try {
+      const response = await Devices.getAllDevices();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getSpecificDeviceThunk = createAsyncThunk(
+  "devices/getSpecificDeviceThunk",
+  async (deviceId: string) => {
+    try {
+      const response = await Devices.getSpecificDeviceById(deviceId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getDevicesByQueryThunk = createAsyncThunk(
+  "devices/getDevicesByQueryThunk",
+  async (params: types.IRecordsAggregationBody) => {
+    try {
+      const response = await Devices.getDevicesByQuery(params);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const deactivateDeviceThunk = createAsyncThunk(
+  "devices/deactivateDeviceThunk",
+  async (deviceId: string, { dispatch }) => {
+    try {
+      const response = await Devices.deactivateDevice(deviceId);
+
+      if (response.status === 202) {
+        toast.success("Device has been deactivated");
+        dispatch(getAllDevicesThunk());
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const reactivateDeviceThunk = createAsyncThunk(
+  "devices/reactivateDeviceThunk",
+  async (deviceId: string, { dispatch }) => {
+    try {
+      const response = await Devices.reactivateDevice(deviceId);
+
+      if (response.status === 202) {
+        toast.success("Device has been reactivated");
+        dispatch(getAllDevicesThunk());
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const postUpdateDeviceThunk = createAsyncThunk(
+  "devices/postUpdateDeviceThunk",
+  async (data: any, { dispatch }) => {
+    try {
+      const response = await Devices.postUpdateDevice(data);
+
+      if (response.status === 202) {
+        toast.success("Device settings have been updated");
+        dispatch(getSpecificDeviceThunk(data.uniqueId));
       }
 
       return response;

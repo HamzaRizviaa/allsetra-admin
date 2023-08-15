@@ -16,6 +16,7 @@ import AlarmDesk from "pages/AlarmDesk";
 import Devices from "pages/Devices";
 import DeviceDetailts from "pages/Devices/DeviceDetailts";
 import DeviceLocationHistory from "pages/Devices/DeviceLocationHistory";
+import DeviceSettings from "pages/Devices/DeviceSettings";
 import Objects from "pages/Objects";
 import ObjectDetails from "pages/Objects/ObjectDetails";
 import ObjectSettings from "pages/Objects/ObjectSettings";
@@ -45,7 +46,6 @@ import Settings from "pages/Settings";
 // DEVICE TYEPS PROTECTED ROUTES
 import DeviceTypes from "pages/deviceManager/DeviceTypes";
 import DeviceTypeDetails from "pages/deviceManager/DeviceTypes/DeviceTypesDetails";
-
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -81,6 +81,10 @@ const App: FC = () => {
         <Route
           path="/dashboard/devices/:id/location-history"
           element={<DeviceLocationHistory />}
+        />
+        <Route
+          path="/dashboard/devices/:id/settings"
+          element={<DeviceSettings />}
         />
 
         {/* Objects */}
