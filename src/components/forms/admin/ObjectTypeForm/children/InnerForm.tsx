@@ -108,7 +108,7 @@ const InnerForm: FC = () => {
       <FormikSelectField
         label="Parent object type"
         name="parentObjectId"
-        options={objectTypesOptions}
+        options={objectTypesOptions ?? []}
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={objectTypesLoading}
@@ -125,7 +125,7 @@ const InnerForm: FC = () => {
       <FormikSelectField
         label="Device type"
         name="deviceTypes"
-        options={deviceTypes}
+        options={deviceTypes ?? []}
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={deviceTypesLoading}
@@ -144,7 +144,7 @@ const InnerForm: FC = () => {
       <FormikSelectField
         label="Supported services"
         name="services"
-        options={allServices}
+        options={allServices ?? []}
         optionLabelKey="name"
         optionValueKey="uniqueId"
         loading={servicesLoading}
@@ -155,7 +155,7 @@ const InnerForm: FC = () => {
       <FormikSelectField
         label="Dynamic Fields"
         name="fields"
-        options={allFields}
+        options={allFields ?? []}
         optionLabelKey="label"
         optionValueKey="uniqueId"
         loading={fieldsloading}

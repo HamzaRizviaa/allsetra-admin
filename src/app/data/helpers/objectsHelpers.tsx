@@ -1,5 +1,6 @@
-import { types, Badge } from "@vilocnv/allsetra-core";
+import { types, Badge, helpers } from "@vilocnv/allsetra-core";
 import { isEmpty, omit } from "lodash";
+import * as Yup from "yup";
 
 //
 // OBJECT DETAILS PAGE HELPERS
@@ -110,3 +111,31 @@ export const objectDetailsFormatterForSettingsForm = (
 
   return formattedObject;
 };
+
+export const objectDetailsValidationSchema = Yup.object({
+  name: Yup.string().required().label("Object Name"),
+  objectTypeId: Yup.string().required().label("Object Type"),
+  accounts: Yup.array().of(Yup.string()).label("Assigned accounts"),
+  users: Yup.array().of(Yup.string()).label("Assigned users"),
+  ownerId: Yup.string().required().label("Owner"),
+  aNumber: Yup.string().nullable().label("A-Number"),
+  multiviewerName: Yup.string().nullable().label("Multiviewer"),
+  mileage: Yup.number().nullable().label("Milage"),
+  comments: Yup.string().nullable(),
+  metadata: Yup.array().nullable(),
+  remindersFrom: Yup.number().nullable().label("Reminders From"),
+  remindersForEvery: Yup.number().nullable().label("Reminders For Every"),
+  reminderEmail: Yup.string().nullable().label("Reminder Email"),
+  reminderName: Yup.string().nullable().label("Reminder Name"),
+  alarmsConfiguration: helpers.alarmConfigurationValidationSchema,
+  notifications: helpers.notificationsConfigurationValidationSchema,
+  isWorkingHoursOverriden: Yup.bool(),
+  workingHoursType: Yup.string()
+    .nullable()
+    .required()
+    .label("Working Hours Type"),
+  workingHours: Yup.object({
+    workingHoursSchedule: helpers.workingHoursValidationSchema,
+  }),
+  uniqueId: Yup.string(),
+});

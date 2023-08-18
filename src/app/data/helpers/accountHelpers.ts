@@ -6,12 +6,8 @@ import {
   IAccountAssignDeviceType,
   IAccountAssignObjectType,
 } from "../types";
-import {
-  addressValidationSchema,
-  alarmConfigurationValidationSchema,
-  workingHoursValidationSchema,
-} from "./commonValidationsHelpers";
 import { transformAddressObjectForForm } from "./commonHelpers";
+import { helpers } from "@vilocnv/allsetra-core";
 
 //
 // Account Details Helpers
@@ -72,17 +68,17 @@ export const accountDetailsValidationSchema = Yup.object().shape({
   accountOwner: Yup.string().nullable().label("Account owner"),
   multiViewerId: Yup.string().nullable().label("Multi-viewer ID"),
   afasDebitNumber: Yup.string().nullable().label("AFAS Debit number"),
-  billingAddress: addressValidationSchema,
+  billingAddress: helpers.addressValidationSchema,
   bankAccount: Yup.string().nullable().label("AFAS Debit number"),
   vatNumber: Yup.string().nullable().label("VAT number"),
   vatShifted: Yup.string().nullable().label("VAT shifted"),
   paymentTermInDays: Yup.string().nullable().label("Payment term"),
   paymentMethod: Yup.string().nullable().label("Payment method"),
-  visitingAddress: addressValidationSchema,
-  shippingAddress: addressValidationSchema,
-  alarmsConfiguration: alarmConfigurationValidationSchema,
+  visitingAddress: helpers.addressValidationSchema,
+  shippingAddress: helpers.addressValidationSchema,
+  alarmsConfiguration: helpers.alarmConfigurationValidationSchema,
   workingHours: Yup.object({
-    workingHoursSchedule: workingHoursValidationSchema,
+    workingHoursSchedule: helpers.workingHoursValidationSchema,
   }),
 });
 

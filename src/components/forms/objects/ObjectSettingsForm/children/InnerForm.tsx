@@ -10,6 +10,7 @@ import CorrectionSetting from "./CorrectionSetting";
 import ReminderSetting from "./ReminderSetting";
 import AlarmConfigurationFormSection from "components/forms/common/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
 import NotificationsSetting from "./NotificationsSetting";
+import ObjectWorkingHoursSetting from "./ObjectWorkingHoursSetting";
 
 interface Props {
   activeObject: types.IObject | null;
@@ -48,6 +49,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
           objectId={activeObject?.uniqueId || ""}
           devices={activeObject?.devices ?? []}
         />
+        <ObjectWorkingHoursSetting />
         <CorrectionSetting />
         <ReminderSetting />
         <AlarmConfigurationFormSection />

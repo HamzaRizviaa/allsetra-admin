@@ -8,7 +8,10 @@ import InnerForm from "./children/InnerForm";
 
 // DATA
 import { useAppDispatch } from "hooks";
-import { objectDetailsFormatterForSettingsForm } from "app/data/helpers";
+import {
+  objectDetailsFormatterForSettingsForm,
+  objectDetailsValidationSchema,
+} from "app/data/helpers";
 import { postUpdateObjectThunk } from "app/features";
 
 interface Props {
@@ -40,8 +43,8 @@ const ObjectSettingsForm: FC<Props> = ({ activeObject }) => {
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={objectDetailsValidationSchema}
       onSubmit={saveChangesHandler}
-      // validationSchema={{}}
       enableReinitialize
       validateOnMount
     >
