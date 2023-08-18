@@ -266,3 +266,28 @@ export const ACCOUNT_INSTALLATIONS_TABLE_COLUMNS: TableColumn<any>[] = [
     sortable: true,
   },
 ];
+
+export const ACCOUNT_SUBSCRIPTIONS_TABLE_COLUMNS: TableColumn<any>[] = [
+  {
+    name: "Name",
+    selector: (row: any) => row.subscription?.name || "",
+    sortable: true,
+  },
+  {
+    name: "Duration In Months",
+    selector: (row: any) => row.subscription?.durationInMonths || "",
+    sortable: true,
+  },
+  {
+    name: "Service Name",
+    selector: (row: any) => row.subscription?.service?.name || "",
+    sortable: true,
+  },
+  {
+    name: "Status",
+    cell: (row: any) => (
+      <StatusBadge isDeactivated={row.subscription?.isDeleted} />
+    ),
+    sortable: true,
+  },
+];

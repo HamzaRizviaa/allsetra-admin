@@ -2,21 +2,33 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { capitalize } from "lodash";
 import { useTheme } from "@mui/material";
-import { Topbar } from "@vilocnv/allsetra-core";
+import { Topbar, Table, useDispatchOnParams } from "@vilocnv/allsetra-core";
 import AccountTabLayout from "components/common/AccountTabLayout/AccountTabLayout";
 
 // Data
 import { useAppSelector } from "hooks";
-import { selectActiveAccount } from "app/data/selectors";
+import {
+  selectAccountSubscriptions,
+  selectActiveAccountState,
+} from "app/data/selectors";
+import { getAccountSubscriptionsBySearchThunk } from "app/features";
+import { ACCOUNT_SUBSCRIPTIONS_TABLE_COLUMNS } from "app/data/constants";
 
 const AccountSubscriptions: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  // const params = useParams();
-  // const accountId = params.id ?? "";
 
   // Global State
-  const activeAccount = useAppSelector(selectActiveAccount);
+  const { activeAccount, activeAccountId } = useAppSelector(
+    selectActiveAccountState
+  );
+  const { totalRecords, accountSubscriptions, loading } = useAppSelector(
+    selectAccountSubscriptions
+  );
+
+  useDispatchOnParams(getAccountSubscriptionsBySearchThunk, {
+    args: { accountId: activeAccountId },
+  });
 
   return (
     <main>
@@ -27,7 +39,13 @@ const AccountSubscriptions: FC = () => {
         breadcrumbRedirectTo={() => navigate(-1)}
       />
       <AccountTabLayout>
-        <div>Account Subscriptions</div>
+        <Table
+          columns={ACCOUNT_SUBSCRIPTIONS_TABLE_COLUMNS}
+          data={accountSubscriptions ?? []}
+          progressPending={loading}
+          paginationTotalRows={totalRecords}
+          searchPlaceholder="Search subscriptions"
+        />
       </AccountTabLayout>
     </main>
   );

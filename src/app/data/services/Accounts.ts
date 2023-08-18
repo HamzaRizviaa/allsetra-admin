@@ -209,6 +209,17 @@ class Accounts {
       `/accounts/${accountId}/devices/${deviceId}`
     );
   };
+
+  // Account Subscriptions Endpoints
+  static getAccountSubscriptionsBySearch = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/subscriptions/search`,
+      data
+    );
+  };
 }
 
 export default Accounts;

@@ -13,6 +13,7 @@ import {
   getAccountDevicesThunk,
   getAccountInstallationsThunk,
   getSpecificAccountThunk,
+  getAccountSubscriptionsBySearchThunk,
 } from "./actions";
 
 export interface IAccountsState {
@@ -39,6 +40,7 @@ export interface IAccountsState {
   accountObjects: Array<any>;
   accountDevices: Array<any>;
   accountInstallations: Array<any>;
+  accountSubscriptions: Array<any>;
 }
 
 const initialState: IAccountsState = {
@@ -63,6 +65,7 @@ const initialState: IAccountsState = {
   accountObjects: [],
   accountDevices: [],
   accountInstallations: [],
+  accountSubscriptions: [],
 };
 
 const accountsSlice = createSlice({
@@ -258,6 +261,24 @@ const accountsSlice = createSlice({
     });
 
     builder.addCase(getAccountInstallationsThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Account Subscriptions Action Cases
+    builder.addCase(getAccountSubscriptionsBySearchThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(
+      getAccountSubscriptionsBySearchThunk.fulfilled,
+      (state, action) => {
+        state.accountSubscriptions = action.payload?.results || [];
+        state.totalRecords = action.payload?.rowCount || 0;
+        state.loading = false;
+      }
+    );
+
+    builder.addCase(getAccountSubscriptionsBySearchThunk.rejected, (state) => {
       state.loading = false;
     });
   },
