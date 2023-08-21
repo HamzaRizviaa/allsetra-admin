@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 
 export const MapContainer = styled(Box)({
   height: "100vh",
@@ -18,6 +18,12 @@ export const MapContainer = styled(Box)({
   },
   ".gm-style .gm-style-iw-tc::after": {
     background: "#192026E0",
+  },
+  ".gmnoprint .gm-style-mtc": {
+    display: "none",
+  },
+  "button.gm-control-active.gm-fullscreen-control": {
+    display: "none",
   },
 });
 
@@ -48,5 +54,36 @@ export const MarkerBlip = styled(Box)({
     top: 6,
     width: "24px",
     background: "#192026c2",
+  },
+});
+
+export const MapWrapper = styled(Box)({});
+
+export const SearchFieldWrapper = styled(Box)({
+  background: "#fff",
+  borderRadius: "6px",
+});
+
+export const TopLeftSection = styled(Box)({
+  display: "flex",
+  gap: "8px",
+  position: "absolute",
+  top: "16px",
+  left: "16px",
+  zIndex: 99,
+});
+
+export const TopRightSection = styled(Box)({
+  position: "absolute",
+  top: "16px",
+  right: "16px",
+  zIndex: 99,
+});
+
+export const MiniButton = styled(Button)({
+  background: "#fff",
+  minWidth: "0",
+  "&:hover": {
+    background: "#fff",
   },
 });
