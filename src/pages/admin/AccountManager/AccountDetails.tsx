@@ -22,14 +22,16 @@ const AccountDetails: FC = () => {
   const dispatch = useAppDispatch();
 
   // Global State
-  const { activeAccount } = useAppSelector(selectActiveAccountState);
+  const { activeAccount, activeAccountId } = useAppSelector(
+    selectActiveAccountState
+  );
 
   const initialValues = useMemo(
     () =>
       !isEmpty(activeAccount)
         ? accountDetailsFormatterForForm(activeAccount)
         : {},
-    [activeAccount]
+    [activeAccount, activeAccountId]
   );
 
   const saveChangesHandler = async (
@@ -52,6 +54,8 @@ const AccountDetails: FC = () => {
         initialValues={initialValues}
         validationSchema={accountDetailsValidationSchema}
         onSubmit={saveChangesHandler}
+        enableReinitialize
+        validateOnMount
       >
         {({ handleSubmit, isSubmitting, isValid, dirty, resetForm }) => (
           <Form>
