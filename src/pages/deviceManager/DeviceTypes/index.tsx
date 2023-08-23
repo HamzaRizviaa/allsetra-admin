@@ -4,13 +4,17 @@ import { Topbar, Table, useDispatchOnParams } from "@vilocnv/allsetra-core";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
 // Data
-import { useAppDispatch, useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
 import {
+  getAllCurrenciesThunk,
   getDeviceTypesByQueryThunk,
   setActiveDeviceTypeId,
 } from "app/features";
 import { ALL_DEVICETYPES_TABLE_COLUMNS } from "app/data/constants/deviceTypesConstants";
-import { selectDeviceTypesState } from "app/data/selectors";
+import {
+  selectAllCurrencies,
+  selectDeviceTypesState,
+} from "app/data/selectors";
 import { IDeviceType } from "app/data/types";
 
 const DeviceTypes: FC = () => {
@@ -23,7 +27,14 @@ const DeviceTypes: FC = () => {
     selectDeviceTypesState
   );
 
+  const currencies = useAppSelector(selectAllCurrencies);
+
   useDispatchOnParams(getDeviceTypesByQueryThunk);
+
+  useDispatchOnMount(
+    getAllCurrenciesThunk,
+    currencies.length ? undefined : true
+  );
 
   const handleViewDevice = (device: IDeviceType) => {
     dispatch(setActiveDeviceTypeId(device.uniqueId));

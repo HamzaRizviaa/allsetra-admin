@@ -1,9 +1,10 @@
 import { FC, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
-import { Box, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import { PageLoader, Topbar } from "@vilocnv/allsetra-core";
 import { useJsApiLoader, GoogleMap, MarkerF } from "@react-google-maps/api";
+import DeviceLocationHistorySection from "components/sections/devices/DeviceLocationHistorySection/DeviceLocationHistorySection";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -42,18 +43,34 @@ const DeviceLocationHistory: FC = () => {
         title="Location History"
         breadcrumbTitle="Device Details"
         theme={theme}
+        primaryButton={{
+          variant: "contained",
+          text: "Save Changes",
+          onClick: () => {},
+        }}
       />
-      <Box mx={4} sx={{ width: "95%", height: "85vh" }}>
+      <Box mx={4} mt={4}>
         {isLoaded ? (
-          <GoogleMap
-            mapContainerStyle={{ height: "100%", width: "100%" }}
-            center={{ lat: 52.0, lng: 5.301137 }}
-            zoom={8}
-          >
-            {deviceLocationHistory.map((item) => (
-              <MarkerF position={{ lat: item.latitude, lng: item.longitude }} />
-            ))}
-          </GoogleMap>
+          <Grid container>
+            <Grid item xs={12} md={4}>
+              <DeviceLocationHistorySection />
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Box mx={4} sx={{ width: "95%", height: "85vh" }}>
+                <GoogleMap
+                  mapContainerStyle={{ height: "100%", width: "100%" }}
+                  center={{ lat: 52.0, lng: 5.301137 }}
+                  zoom={8}
+                >
+                  {deviceLocationHistory.map((item) => (
+                    <MarkerF
+                      position={{ lat: item.latitude, lng: item.longitude }}
+                    />
+                  ))}
+                </GoogleMap>
+              </Box>
+            </Grid>
+          </Grid>
         ) : (
           <PageLoader />
         )}

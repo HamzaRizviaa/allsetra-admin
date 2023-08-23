@@ -139,3 +139,45 @@ export const deviceDetailsFormatterForSettingsForm = (
 
   return formattedDevice;
 };
+
+//
+// DEVICE LOCATION HISTORY PAGE HELPERS
+//
+
+export const timelineItems = [
+  {
+    title: "Lageweg 5a, 7056 CA, Netherlands",
+    dateAndTime: "21:50:53, 16/09/2022",
+    location: "51.8926, 4.37519",
+    deviceNumber: "28",
+    color: "#1CA0BD",
+  },
+  {
+    title: "Lageweg 5a, 7056 CA, Netherlands",
+    dateAndTime: "21:50:53, 16/09/2022",
+    location: "51.8926, 4.37519",
+    deviceNumber: "28",
+    color: "#4560E4",
+  },
+  {
+    title: "Lageweg 5a, 7056 CA, Netherlands",
+    dateAndTime: "21:50:53, 16/09/2022",
+    location: "51.8926, 4.37519",
+    deviceNumber: "28",
+    color: "#3E34C1",
+  },
+  {
+    title: "Lageweg 5a, 7056 CA, Netherlands",
+    dateAndTime: "21:50:53, 16/09/2022",
+    location: "51.8926, 4.37519",
+    deviceNumber: "28",
+    color: "#6E44A8",
+  },
+  {
+    title: "Lageweg 5a, 7056 CA, Netherlands",
+    dateAndTime: "21:50:53, 16/09/2022",
+    location: "51.8926, 4.37519",
+    deviceNumber: "28",
+    color: "#BC3FB7",
+  },
+];

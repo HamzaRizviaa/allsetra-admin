@@ -4,7 +4,7 @@ import {
   FormikInputField,
   FormikSelectField,
 } from "@vilocnv/allsetra-core";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { selectAllCurrencies } from "app/data/selectors";
 import { useAppSelector } from "hooks";
 import {

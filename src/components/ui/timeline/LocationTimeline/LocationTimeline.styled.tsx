@@ -1,5 +1,11 @@
 import { styled, Box } from "@mui/material";
 
+export const LocationTimelineContainer = styled(Box)(() => ({
+  "& .MuiTimeline-root": {
+    padding: "6px 0px",
+  },
+}));
+
 export const LocationTimelineWrapper = styled(Box)<{
   color: string;
   color2?: string;

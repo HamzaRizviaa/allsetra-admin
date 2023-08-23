@@ -8,6 +8,7 @@ import {
   TimelineDot,
 } from "@mui/lab";
 import {
+  LocationTimelineContainer,
   LocationTimelineWrapper,
   TimelineContentDetail,
   TimelineContentDetailsWrapper,
@@ -28,7 +29,7 @@ export interface LocationTimelineProps {
 
 const LocationTimeline: FC<LocationTimelineProps> = ({ timeLineItems }) => {
   return (
-    <Fragment>
+    <LocationTimelineContainer>
       {timeLineItems && (
         <Timeline>
           {timeLineItems.map((item, index, array) => (
@@ -62,7 +63,7 @@ const LocationTimeline: FC<LocationTimelineProps> = ({ timeLineItems }) => {
           ))}
         </Timeline>
       )}
-    </Fragment>
+    </LocationTimelineContainer>
   );
 };
 
