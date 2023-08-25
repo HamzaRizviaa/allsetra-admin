@@ -111,6 +111,7 @@ export enum BackendEventsEnum {
   UserAssignedToAccountEvent = "UserAssignedToAccountEvent",
   UserRemovedFromAccountEvent = "UserRemovedFromAccountEvent",
   UserCreatedEvent = "UserCreatedEvent",
+  UserUpdatedEvent = "UserUpdatedEvent",
   LocationReportedEvent = "LocationReportedEvent",
   ObjectLocationReported = "ObjectLocationReported",
 }

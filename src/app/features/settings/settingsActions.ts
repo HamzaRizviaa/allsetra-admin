@@ -27,7 +27,7 @@ export const updateSettingsThunk = createAsyncThunk(
       const response = await Settings.updateSettings(data);
 
       if (response.status === 202) {
-        toast.success("User Settings have been updated");
+        toast.success("Update settings request is being processed by the backend.");
         dispatch(getSpecificSettingThunk());
       }
 

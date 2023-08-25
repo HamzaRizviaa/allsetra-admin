@@ -1,5 +1,4 @@
 import { toast, utils } from "@vilocnv/allsetra-core";
-import { AppDispatch } from "app/store";
 import {
   getAccountsByQueryThunk,
   getObjectTypesByQueryThunk,
@@ -15,7 +14,9 @@ import {
   getAccountInstallationsThunk,
   getSpecificAccountThunk,
 } from "app/features";
+import { AppDispatch } from "app/store";
 import { BackendEventsEnum } from "app/data/types";
+import { changeLanguage } from "app/data/helpers";
 
 export const signalRGenerateSuccessToastMessage = (
   eventName: string,
@@ -304,6 +305,21 @@ export const signalREventsRaisedListener = (
         )
       );
       dispatch(getSubscriptionsByQueryThunk(utils.getCommonParamsForApi()));
+      break;
+
+    //
+    // Settings Events
+    //
+    case BackendEventsEnum.UserUpdatedEvent:
+      changeLanguage(event.preferredLanguage || "en");
+      toast.success("Settings have been updated.");
+      break;
+
+    //
+    // Alarm Desk Events
+    //
+    case BackendEventsEnum.AlarmCommentCreatedEvent:
+      console.log(event);
       break;
   }
 };

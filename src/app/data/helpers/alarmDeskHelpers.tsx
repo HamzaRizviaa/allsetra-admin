@@ -96,8 +96,8 @@ export const transformAlarmPersonsForTable = (alarmPersons: Array<any>) => {
 
   const data: any = {};
 
-  alarmPersons.forEach((person) => {
-    data[`${person.firstName} ${person.lastName}`] = (
+  alarmPersons.forEach((person, index) => {
+    data[`${index + 1} - ${person.firstName} ${person.lastName}`] = (
       <Link to={`tel:${person.phone}`}>
         <LocalPhoneIcon sx={{ width: "18px", height: "18px" }} />
       </Link>
