@@ -6,6 +6,7 @@ import {
   Table,
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
+import AddDeviceProfileForm from "components/forms/deviceManager/AddDeviceProfileForm/AddDeviceProfileForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -33,6 +34,7 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
   const [selectedDeviceTypeProfileId, setSelectedDeviceTypeProfileId] =
     useState<string | null>(null); // Current devicetype profile's id
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
+  const [open, setOpen] = useState(false); // Used for AddField Modal
 
   useDispatchOnParams(getDeviceTypesProfilesThunk, {
     searchByField: "profileName",
@@ -75,8 +77,10 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
           text: "Add device profile type",
           variant: "outlined",
           startIcon: <AddIcon />,
+          onClick: () => setOpen(true),
         }}
       />
+      <AddDeviceProfileForm open={open} onClose={() => setOpen(false)} />
       <DeleteConfirmationModal
         open={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}

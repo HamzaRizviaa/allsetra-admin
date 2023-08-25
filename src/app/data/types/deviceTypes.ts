@@ -73,3 +73,8 @@ export interface IDeviceTypeModule {
   moduleName: string;
   isRequired: boolean;
 }
+
+export interface IAddDeviceProfileType {
+  profileName: string;
+  description: string;
+}

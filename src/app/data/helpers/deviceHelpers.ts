@@ -16,6 +16,10 @@ export const addDeviceTypeValidationSchema: Yup.Schema = Yup.object({
     .label("Supported device types"),
 });
 
+//
+// DEVICE TYPES DETAILS PAGE HELPERS
+//
+
 export const deviceTypeDetailsInitialValues = {
   name: "",
   devicePicture: [],
@@ -47,3 +51,17 @@ export const deviceTypeDataFormatter = (deviceType: any) => {
   };
   return payload;
 };
+
+//
+// DEVICE TYPES PROFILES PAGE HELPERS
+//
+
+export const deviceTypeProfilesInitialValues = {
+  profileName: "",
+  description: "",
+};
+
+export const deviceTypeProfilesValidationSchema = Yup.object({
+  profileName: Yup.string().required().label("Profile Name"),
+  description: Yup.string().trim().required().label("Description"),
+});
