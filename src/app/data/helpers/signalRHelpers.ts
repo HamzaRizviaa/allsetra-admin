@@ -318,6 +318,10 @@ export const signalREventsRaisedListener = (
     //
     // Alarm Desk Events
     //
+    case BackendEventsEnum.AlarmUpdatedEvent:
+      console.log(event);
+      break;
+
     case BackendEventsEnum.AlarmCommentCreatedEvent:
       console.log(event);
       break;
