@@ -9,8 +9,9 @@ export interface ISubscription {
   name: string;
   details: string;
   subscriptionType: number;
-  paymentType: number;
-  durationInMonths: number;
+  contractTerm: number;
+  prolongationInMonths: number;
+  terminationInMonths: number;
   currency: number;
   valuePerMonth: number;
   deviceTypes: SubscriptionDeviceType[];
@@ -130,8 +131,9 @@ export interface IAddSubscription {
   name: string;
   details: string;
   subscriptionType: string;
-  paymentType: number;
-  durationInMonths: number;
+  contractTerm: number;
+  prolongationInMonths: number;
+  terminationInMonths: number;
   currency: number;
   valuePerMonth: number;
   deviceTypes: string[];

@@ -16,6 +16,7 @@ import {
   getAllSubscriptionTypesThunk,
   getAllSubscriptionsThunk,
 } from "app/features";
+import { CONTRACT_TERMS } from "app/data/constants";
 
 const InnerForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,8 @@ const InnerForm: FC = () => {
   const { loading: subscriptionLoading, subscriptionTypes } = useAppSelector(
     selectSubscriptionsState
   );
+
+  console.log("Subscription TYPES", subscriptionTypes);
 
   const { loading: deviceTypesLoading, deviceTypes } = useAppSelector(
     selectDeviceTypesState
@@ -68,9 +71,22 @@ const InnerForm: FC = () => {
         loading={subscriptionLoading}
         required
       />
+      <FormikSelectField
+        label="Contract term"
+        name="contractTerm"
+        options={CONTRACT_TERMS}
+        optionLabelKey="name"
+        optionValueKey="id"
+        required
+      />
       <FormikInputField
-        label="Duration (months)"
-        name="durationInMonths"
+        label="Prolongation term"
+        name="prolongationInMonths"
+        required
+      />
+      <FormikInputField
+        label="Termination term"
+        name="terminationInMonths"
         required
       />
       <Box sx={{ display: "flex" }}>

@@ -37,6 +37,7 @@ const SubscriptionManager: FC = () => {
     loading,
     specificSubscription,
     subscriptionTypes,
+    totalSubscriptionsLoading,
   } = useAppSelector(selectSubscriptionsState);
 
   // Local State
@@ -113,7 +114,7 @@ const SubscriptionManager: FC = () => {
         <Table
           columns={getAllSubscriptionsTableColumns(subscriptionTypes)}
           data={allSubscriptions}
-          progressPending={loading}
+          progressPending={totalSubscriptionsLoading}
           paginationTotalRows={totalSubscriptions}
           searchPlaceholder="Search subscription"
           onRowClicked={onRowClick}

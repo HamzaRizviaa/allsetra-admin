@@ -14,6 +14,7 @@ export interface ISubscriptionState {
   subscriptions: Array<any>;
   subscriptionTypes: Array<any>;
   specificSubscription: ISubscription | null;
+  totalSubscriptionsLoading: boolean;
 }
 
 const initialState: ISubscriptionState = {
@@ -23,6 +24,7 @@ const initialState: ISubscriptionState = {
   subscriptions: [],
   subscriptionTypes: [],
   specificSubscription: null,
+  totalSubscriptionsLoading: false,
 };
 
 const subscriptionsSlice = createSlice({
@@ -50,17 +52,17 @@ const subscriptionsSlice = createSlice({
 
     // Get Subscriptions By Querying Action Cases
     builder.addCase(getSubscriptionsByQueryThunk.pending, (state) => {
-      state.loading = true;
+      state.totalSubscriptionsLoading = true;
     });
 
     builder.addCase(getSubscriptionsByQueryThunk.fulfilled, (state, action) => {
       state.subscriptions = action.payload?.results || [];
       state.totalSubscriptions = action.payload?.rowCount || 0;
-      state.loading = false;
+      state.totalSubscriptionsLoading = false;
     });
 
     builder.addCase(getSubscriptionsByQueryThunk.rejected, (state) => {
-      state.loading = false;
+      state.totalSubscriptionsLoading = false;
     });
 
     // Get Subscriptions By Querying Action Cases

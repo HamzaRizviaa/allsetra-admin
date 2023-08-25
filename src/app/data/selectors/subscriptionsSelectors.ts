@@ -8,6 +8,9 @@ export const selectSubscriptionsReducerLoading = (state: RootState) =>
 export const selectTotalSubscriptions = (state: RootState) =>
   state.rootReducer.subscriptionReducer.totalSubscriptions;
 
+export const selectTotalSubscriptionsLoading = (state: RootState) =>
+  state.rootReducer.subscriptionReducer.totalSubscriptionsLoading;
+
 export const selectAllSubscriptions = (state: RootState) =>
   state.rootReducer.subscriptionReducer.subscriptions;
 
@@ -27,13 +30,15 @@ export const selectSubscriptionsState = createSelector(
   selectAllSubscriptionTypes,
   selectSpecificSubscription,
   selectSpecificSubscriptionLoading,
+  selectTotalSubscriptionsLoading,
   (
     loading,
     totalSubscriptions,
     allSubscriptions,
     subscriptionTypes,
     specificSubscription,
-    specificSubscriptionLoading
+    specificSubscriptionLoading,
+    totalSubscriptionsLoading
   ) => ({
     loading,
     totalSubscriptions,
@@ -41,5 +46,6 @@ export const selectSubscriptionsState = createSelector(
     subscriptionTypes,
     specificSubscription,
     specificSubscriptionLoading,
+    totalSubscriptionsLoading,
   })
 );

@@ -53,7 +53,7 @@ export const getAllSubscriptionsTableColumns = (
   },
   {
     name: "Duration",
-    selector: (row: ISubscription) => `${row.durationInMonths} months`,
+    selector: (row: ISubscription) => `${row.prolongationInMonths} months`,
     sortable: true,
   },
   {
@@ -67,5 +67,24 @@ export const getAllSubscriptionsTableColumns = (
     name: "Status",
     cell: (row: ISubscription) => <StatusBadge isDeactivated={row.isDeleted} />,
     sortable: true,
+  },
+];
+
+export const CONTRACT_TERMS = [
+  {
+    id: 0,
+    name: "1 year",
+  },
+  {
+    id: 1,
+    name: "2 years",
+  },
+  {
+    id: 2,
+    name: "3 years",
+  },
+  {
+    id: 3,
+    name: "5 years",
   },
 ];
