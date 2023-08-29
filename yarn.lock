@@ -1069,6 +1069,13 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@babel/runtime@^7.20.13":
+  version "7.22.11"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.11.tgz#7a9ba3bbe406ad6f9e8dd4da2ece453eb23a77a4"
+  integrity sha512-ee7jVNlWN09+KftVOu9n7S8gQzD/Z6hN/I8VBRXW4P1+Xe7kJGXMwu8vds4aGIMHZnNbdpSWCfZZtinytpcAvA==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/runtime@^7.22.6":
   version "7.22.10"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.10.tgz#ae3e9631fd947cb7e3610d3e9d8fef5f76696682"
@@ -2864,10 +2871,10 @@
     "@typescript-eslint/types" "5.57.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vilocnv/allsetra-core@^0.1.45":
-  version "0.1.45"
-  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.1.45/07244aa0e97f4e34b4a3ffb3a4ab72977d0904fc#07244aa0e97f4e34b4a3ffb3a4ab72977d0904fc"
-  integrity sha512-o2p2o6ec00BXwuU79XhgKm289RpN+JHaVFZOzVYMWQzHh2chr2bN4y/PV0E1S2M9ibSk6NzMN6pKKgFS+vR1HQ==
+"@vilocnv/allsetra-core@^0.1.48":
+  version "0.1.48"
+  resolved "https://npm.pkg.github.com/download/@VilocNV/allsetra-core/0.1.48/0dfb56defa50c436b0e59177d85b4a027b9c944f#0dfb56defa50c436b0e59177d85b4a027b9c944f"
+  integrity sha512-rjR3BIX8fwlFFZ56uoOKvjA4XqQzm0poCA0nlZfZXb0SlnZmZ/4hMPdAB+DWwvk+8+nL5x87mhV7714Vvqa1HQ==
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
