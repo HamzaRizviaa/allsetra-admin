@@ -157,3 +157,19 @@ export const deleteCommentFromAlarmThunk = createAsyncThunk(
     }
   }
 );
+
+export const getSpecificAlarmThunk = createAsyncThunk(
+  "alarmDesk/getSpecificAlarmThunk",
+  async (alarmId: string) => {
+    try {
+      const response = await AlarmDesk.getSpecficAlarm(alarmId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

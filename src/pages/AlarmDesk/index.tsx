@@ -52,6 +52,10 @@ const AlarmDesk: FC = () => {
   const toggleReportTheftModal = () =>
     setOpenReportTheftModal(!openReportTheftModal);
 
+  const handleGeneratePDF = () => {
+    window.open("/alarm-desk/theft-report", "_blank");
+  };
+
   const isRowExpended = useCallback(
     (alarmId: string) => {
       return expandedRowsId.some((id) => id === alarmId);
@@ -146,6 +150,7 @@ const AlarmDesk: FC = () => {
         open={openReportTheftModal}
         onClose={toggleReportTheftModal}
         alarmId={selectedAlarmId}
+        generatePDF={handleGeneratePDF}
       />
     </Box>
   );

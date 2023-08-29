@@ -10,16 +10,18 @@ import {
   alarmReportTheftInitialValues,
   alarmReportTheftValidationSchema,
 } from "app/data/helpers";
-import { postAlarmReportTheftThunk } from "app/features";
+import { getSpecificAlarmThunk, postAlarmReportTheftThunk } from "app/features";
 import InnerForm from "./children/InnerForm";
 
 type Props = Omit<ModalProps, "title" | "children"> & {
   alarmId: string | null;
+  generatePDF: () => void;
 };
 
 const AlarmReportTheftForm: FC<Props> = ({
   open,
   onClose,
+  generatePDF,
   alarmId,
   ...rest
 }) => {
@@ -31,11 +33,14 @@ const AlarmReportTheftForm: FC<Props> = ({
   ) => {
     formikHelpers.setSubmitting(true);
 
+    dispatch(getSpecificAlarmThunk(alarmId || ""));
+
     const { type } = await dispatch(
       postAlarmReportTheftThunk({ alarmId: alarmId || "", data: values })
     );
 
     if (type === "alarmDesk/postAlarmReportTheftThunk/fulfilled") {
+      generatePDF();
       onClose();
       formikHelpers.resetForm();
     }

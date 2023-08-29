@@ -46,6 +46,10 @@ class AlarmDesk {
     return await axiosInstance.post(`/alarms/${alarmId}/send-sms`, data);
   };
 
+  static getSpecficAlarm = async (alarmId: string) => {
+    return await axiosInstance.get(`/alarms/${alarmId}`);
+  };
+
   // Alarm Comments Endpoints
   static deleteCommentFromAlarm = async (
     alarmId: string,

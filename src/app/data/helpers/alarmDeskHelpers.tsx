@@ -140,3 +140,255 @@ export const transformOwnerCountriesForWhitelisted = (
 
   return data;
 };
+
+////                                                                         ////
+//// ************************* PDF REPORT THEFT HELPERS ******************** ////
+////                                                                         ////
+
+export const transformAlarmForPDFGenralDataTable = (alarm: any) => {
+  if (!alarm) return {};
+
+  const { owner } = alarm.object;
+  const { visitingAddress } = owner;
+
+  return {
+    "ID-nummer": alarm.aNumber ?? "",
+    Vlootnummer: "",
+    Bedrijfsnaam: owner?.name ?? "",
+    "KvK-nummer": owner?.kvkcocNumber ?? "",
+    Bezoekadres: visitingAddress
+      ? `${visitingAddress.houseNumber}, ${visitingAddress.street}, ${visitingAddress.city}, ${visitingAddress.state}, ${visitingAddress.country?.name}`
+      : "",
+    Postcode: visitingAddress.postalCode ?? "",
+    Vestigingsplaats: visitingAddress.city ?? "",
+    Land: visitingAddress.country?.name ?? "",
+    Telefoonnummer: visitingAddress?.phoneNumber ?? "",
+    Faxnummer: "",
+  };
+};
+
+export const transformAlarmForPDFInsuranceTable = (alarm: any) => {
+  if (!alarm) return {};
+
+  return {
+    "Verzekering via": "",
+    Contactpersoon: "",
+    Verzekeringsmaatschappij: "",
+    Ingangsdatum: "",
+  };
+};
+
+export const transformAlarmForPDFWarningAddressesTable = (
+  alarmPersons: Array<any>
+) => {
+  if (isEmpty(alarmPersons)) return [];
+
+  const data: any = {};
+
+  alarmPersons.forEach((person, ind) => {
+    data[`Warning Address ${ind + 1}`] = {
+      Voornaam: person.firstName ?? "",
+      Achternaam: person.lastName ?? "",
+      "Mobiele nummer": person.phone ?? "",
+      Emailadres: person.email ?? "",
+    };
+  });
+
+  return data;
+};
+
+export const transformAlarmForPDFEquipmentTable = (alarm: any) => {
+  if (!alarm) return {};
+
+  const { object } = alarm;
+
+  const equipmentData = {
+    Soort: "",
+    "Merk en Type": "",
+    Kenteken: "",
+    Serienummer: "",
+    Chassisnummer: "",
+    Bouwjaar: "",
+    Kleur: "",
+    "KM-stand:": object.mileage ?? "",
+    Draaiuren: "",
+    "Kilometerstand begin": "",
+    "Testrit kilometers": "",
+    Wegdraaigetal: "",
+    "BMWT / VeBit keur": "",
+    "Locatie chassis/serienummer": "",
+    "Omschrijving typeplaatje + plaats": "",
+  };
+
+  object?.metadata &&
+    object.metadata.map((data: any) => {
+      const { field } = data;
+
+      if (field.label === "Brand") {
+        equipmentData.Soort = data.value;
+      }
+      if (field.label === "Model") {
+        equipmentData["Merk en Type"] = data.value;
+      }
+      if (field.label === "Color") {
+        equipmentData.Kleur = data.value;
+      }
+      if (field.label === "VIN / Frame Number") {
+        equipmentData.Chassisnummer = data.value;
+      }
+      if (field.label === "Motor ID") {
+        equipmentData.Serienummer = data.value;
+      }
+      if (field.label === "License Plate") {
+        equipmentData.Kenteken = data.value;
+      }
+    });
+
+  return equipmentData;
+};
+
+export const transformAlarmForPDFExtraTable = (alarm: any) => {
+  if (!alarm) return {};
+
+  return {
+    "Inzet van object": "",
+    Locatie: "",
+    Transport: "",
+    Werktijden: "",
+    "Aanvullende afspraken ": "",
+  };
+};
+
+export const getFullAddress = async (lat: number, long: number) => {
+  return new Promise<{ street: string; city: string; country: string }>(
+    (resolve, reject) => {
+      const geocoder = new window.google.maps.Geocoder();
+      const latLng = new window.google.maps.LatLng(lat, long);
+
+      let city = "City Not Available";
+      let country = "Country Not Available";
+      let street = "Street Not Available";
+
+      geocoder.geocode({ location: latLng }, (results, status) => {
+        if (status === "OK") {
+          if (results && results[0]) {
+            results[0].address_components.forEach((address) => {
+              if (address.types.includes("locality")) {
+                city = address.long_name;
+              }
+              if (address.types.includes("country")) {
+                country = address.long_name;
+              }
+              if (address.types.includes("route")) {
+                street = address.long_name;
+              }
+            });
+          } else {
+            console.log("Address not found");
+          }
+          resolve({ street, city, country });
+        } else if (status === "ZERO_RESULTS") {
+          console.log("No results found for provided coordinates");
+          resolve({ street, city, country });
+        } else {
+          console.log("Geocoder failed due to: " + status);
+          resolve({ street, city, country });
+        }
+      });
+    }
+  );
+};
+
+export const transformAlarmForPDFLocationNotificationTable = async (
+  alarm: any
+) => {
+  if (!alarm) return {};
+
+  const { street, city, country } = await getFullAddress(
+    alarm.location?.latitude ?? 0,
+    alarm.location?.longitude ?? 0
+  );
+  return {
+    [street]: "",
+    [city]: "",
+    [country]: "",
+    Coördinaten: alarm.location
+      ? `${alarm.location?.latitude},${alarm.location?.longitude}`
+      : "0,0",
+    Tijdstip: alarm.location.date ?? "Not Available",
+  };
+};
+
+export const transformAlarmForPDFLastGoodGpsTable = async (alarm: any) => {
+  if (!alarm) return {};
+
+  const { street, city, country } = await getFullAddress(
+    alarm.object?.location?.latitude ?? 0,
+    alarm.object?.location?.longitude ?? 0
+  );
+
+  return {
+    [street]: "",
+    [city]: "",
+    [country]: "",
+    Coördinaten: alarm.object?.location
+      ? `${alarm.object?.location?.latitude},${alarm.object?.location?.longitude}`
+      : "0,0",
+    Tijdstip: alarm.object?.location?.date ?? "Not Available",
+  };
+};
+
+export const transformAlarmForPDFMapImages = (alarm: any) => {
+  if (!alarm) return {};
+
+  const locationNotificationCoordinates = alarm.location
+    ? `${alarm.location?.latitude},${alarm.location?.longitude}`
+    : "0,0";
+  const lastGoodGpsCoordinates = alarm.object?.location
+    ? `${alarm.object?.location?.latitude},${alarm.object?.location?.longitude}`
+    : "0,0";
+
+  return {
+    locationNotification: {
+      imageUrl: "",
+      location: locationNotificationCoordinates,
+      zoom: "12",
+      type: "roadmap",
+    },
+
+    lastGoodGpsZoomedOut: {
+      imageUrl: "",
+      location: lastGoodGpsCoordinates,
+      zoom: "10",
+      type: "roadmap",
+    },
+
+    lastGoodGpsMap: {
+      imageUrl: "",
+      location: lastGoodGpsCoordinates,
+      zoom: "12",
+      type: "roadmap",
+    },
+
+    lastGoodGpsZoomed: {
+      imageUrl: "",
+      location: lastGoodGpsCoordinates,
+      zoom: "14",
+      type: "roadmap",
+    },
+
+    lastGoodGpsSatZoomedOut: {
+      imageUrl: "",
+      location: lastGoodGpsCoordinates,
+      zoom: "10",
+      type: "hybrid",
+    },
+
+    lastGoodGpsSat: {
+      imageUrl: "",
+      location: lastGoodGpsCoordinates,
+      zoom: "13",
+      type: "hybrid",
+    },
+  };
+};

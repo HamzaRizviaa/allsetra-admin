@@ -42,6 +42,7 @@ import FieldManager from "pages/admin/FieldManager";
 import SubscriptionManager from "pages/admin/SubscriptionManager";
 import ObjectTypesManager from "pages/admin/ObjectTypesManager";
 import Settings from "pages/Settings";
+import AlarmTheftReport from "components/pdf/AlarmTheftReport/AlarmTheftReport";
 
 // DEVICE TYEPS PROTECTED ROUTES
 import DeviceTypes from "pages/deviceManager/DeviceTypes";
@@ -169,6 +170,9 @@ const App: FC = () => {
 
         <Route path="/dashboard/settings" element={<Settings />} />
       </Route>
+
+      {/* Alarm Desk Theft Report */}
+      <Route path="/alarm-desk/theft-report" element={<AlarmTheftReport />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

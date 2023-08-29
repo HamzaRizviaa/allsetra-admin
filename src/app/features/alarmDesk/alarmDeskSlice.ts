@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { types } from "@vilocnv/allsetra-core";
-import { getAlarmsByQueryThunk } from "./alarmDeskActions";
+import {
+  getAlarmsByQueryThunk,
+  getSpecificAlarmThunk,
+} from "./alarmDeskActions";
 
 export interface IAlarmDeskState {
   loading: boolean;
@@ -9,6 +12,7 @@ export interface IAlarmDeskState {
   totalRecords: number | null;
   activeAlarmId: string | null;
   alarms: Array<types.IAlarm>;
+  specificAlarm: any | null;
 }
 
 const initialState: IAlarmDeskState = {
@@ -16,6 +20,7 @@ const initialState: IAlarmDeskState = {
   totalRecords: null,
   activeAlarmId: null,
   alarms: [],
+  specificAlarm: null,
 };
 
 const alarmDeskSlice = createSlice({
@@ -56,6 +61,20 @@ const alarmDeskSlice = createSlice({
     });
 
     builder.addCase(getAlarmsByQueryThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get Specific Alarm  Action Cases
+    builder.addCase(getSpecificAlarmThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getSpecificAlarmThunk.fulfilled, (state, action) => {
+      state.specificAlarm = action.payload || [];
+      state.loading = false;
+    });
+
+    builder.addCase(getSpecificAlarmThunk.rejected, (state) => {
       state.loading = false;
     });
   },
