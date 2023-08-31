@@ -15,6 +15,7 @@ import {
   getSpecificAccountThunk,
   getAccountSubscriptionsBySearchThunk,
 } from "./actions";
+import { getAllAccountGroupsThunk } from "./actions/accountGroupsActions";
 
 export interface IAccountsState {
   loading: boolean;
@@ -40,6 +41,7 @@ export interface IAccountsState {
   accountObjects: Array<any>;
   accountDevices: Array<any>;
   accountInstallations: Array<any>;
+  accountGroups: Array<any>;
   accountSubscriptions: Array<any>;
 }
 
@@ -65,6 +67,7 @@ const initialState: IAccountsState = {
   accountObjects: [],
   accountDevices: [],
   accountInstallations: [],
+  accountGroups: [],
   accountSubscriptions: [],
 };
 
@@ -261,6 +264,21 @@ const accountsSlice = createSlice({
     });
 
     builder.addCase(getAccountInstallationsThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get All Account Groups Action Cases
+    builder.addCase(getAllAccountGroupsThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getAllAccountGroupsThunk.fulfilled, (state, action) => {
+      state.accountGroups = action.payload || [];
+      state.totalRecords = action.payload?.rowCount || 0;
+      state.loading = false;
+    });
+
+    builder.addCase(getAllAccountGroupsThunk.rejected, (state) => {
       state.loading = false;
     });
 
