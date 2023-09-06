@@ -7,7 +7,8 @@ import AccountTabLayout from "components/common/AccountTabLayout/AccountTabLayou
 
 // Data
 import { useAppSelector } from "hooks";
-import { selectActiveAccount } from "app/data/selectors";
+import { selectActiveAccountState } from "app/data/selectors";
+import AccountGroupsSection from "components/sections/admin/AccountSubSections/AccountGroupsSection";
 
 const AccountGroups: FC = () => {
   const theme = useTheme();
@@ -16,7 +17,9 @@ const AccountGroups: FC = () => {
   // const accountId = params.id ?? "";
 
   // Global State
-  const activeAccount = useAppSelector(selectActiveAccount);
+  const { activeAccount, activeAccountId } = useAppSelector(
+    selectActiveAccountState
+  );
 
   return (
     <main>
@@ -27,7 +30,7 @@ const AccountGroups: FC = () => {
         breadcrumbRedirectTo={() => navigate(-1)}
       />
       <AccountTabLayout>
-        <div>Account Groups</div>
+        <AccountGroupsSection accountId={activeAccountId || ""} />
       </AccountTabLayout>
     </main>
   );

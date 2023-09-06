@@ -210,6 +210,45 @@ class Accounts {
     );
   };
 
+  //Account Groups
+  static getAllAccountGroups = async (accountId: string) => {
+    return await axiosInstance.get(`/accounts/${accountId}/groups`);
+  };
+
+  static createAccountGroups = async (accountId: string, data: any) => {
+    return await axiosInstance.post(`/accounts/${accountId}/groups`, data);
+  };
+
+  static updateAccountGroups = async (
+    accountId: string,
+    groupId: string,
+    data: any
+  ) => {
+    return await axiosInstance.patch(
+      `/accounts/${accountId}/groups/${groupId}`,
+      data
+    );
+  };
+
+  static getAccountGroups = async (
+    data: types.IRecordsAggregationBody,
+    accountId: string
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/groups/search`,
+      data
+    );
+  };
+
+  static removeGroupFromAccount = async (
+    accountId: string,
+    groupId: string
+  ) => {
+    return await axiosInstance.delete(
+      `/accounts/${accountId}/groups/${groupId}`
+    );
+  };
+
   // Account Subscriptions Endpoints
   static getAccountSubscriptionsBySearch = async (
     data: types.IRecordsAggregationBody,
