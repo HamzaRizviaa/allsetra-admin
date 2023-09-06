@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 import { types } from "@vilocnv/allsetra-core";
 import { ObjectMapContainer } from "../ObjectDetailsBody.styled";
+import Map from "components/common/Map/Map";
 
 interface Props {
   activeObject: types.IObject | null;
@@ -12,20 +12,15 @@ const ObjectDetailsMap: FC<Props> = ({ activeObject }) => {
     lat: activeObject?.location?.latitude || 0,
     lng: activeObject?.location?.longitude || 0,
   };
-
   return (
     <ObjectMapContainer>
-      <LoadScript
-        googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`}
-      >
-        <GoogleMap
-          mapContainerStyle={{ height: "100%", width: "100%" }}
-          center={objectLocation}
-          zoom={8}
-        >
-          <MarkerF position={objectLocation} />
-        </GoogleMap>
-      </LoadScript>
+      <Map
+        center={objectLocation}
+        zoom={10}
+        radius={50}
+        objects={[activeObject]}
+        geozone={[objectLocation]}
+      />
     </ObjectMapContainer>
   );
 };

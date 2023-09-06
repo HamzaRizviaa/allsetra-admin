@@ -11,9 +11,10 @@ import DeviceIOMappingSettings from "./DeviceIOMappingSettings";
 
 interface Props {
   specificDevice: IDevices | null;
+  setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InnerForm: FC<Props> = ({ specificDevice }) => {
+const InnerForm: FC<Props> = ({ specificDevice, setOpenMappingModal }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ const InnerForm: FC<Props> = ({ specificDevice }) => {
         <GeneralSettings />
         <ProfileConfigurationSettings />
         <InputToOutputConfigSettings />
-        <DeviceIOMappingSettings />
+        <DeviceIOMappingSettings setOpenMappingModal={setOpenMappingModal} />
       </Box>
     </Form>
   );

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { Modal, ModalProps } from "@vilocnv/allsetra-core";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useTheme } from "@mui/material";
@@ -6,17 +6,21 @@ import { useTheme } from "@mui/material";
 import { IAddDeviceProfileType } from "app/data/types";
 import InnerForm from "./children/InnerForm";
 import { DeviceProfileFormIcon } from "assets/icons";
-import { useAppDispatch } from "hooks";
 import {
   deviceTypeProfilesInitialValues,
   deviceTypeProfilesValidationSchema,
 } from "app/data/helpers";
 
-export type Props = Omit<ModalProps, "title" | "children"> & {};
+export type Props = Omit<ModalProps, "title" | "children"> & {
+  setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const AddDeviceProfileForm: FC<Props> = ({ open, onClose }) => {
+const AddDeviceProfileForm: FC<Props> = ({
+  open,
+  onClose,
+  setOpenMappingModal,
+}) => {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
 
   const addDeviceProfileHandler = async (
     values: IAddDeviceProfileType,
@@ -50,7 +54,7 @@ const AddDeviceProfileForm: FC<Props> = ({ open, onClose }) => {
             secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
             theme={theme}
           >
-            <InnerForm />
+            <InnerForm setOpenMappingModal={setOpenMappingModal} />
           </Modal>
         </Form>
       )}

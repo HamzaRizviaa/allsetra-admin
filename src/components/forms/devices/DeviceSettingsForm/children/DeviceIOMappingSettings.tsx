@@ -4,7 +4,11 @@ import { Stack } from "@mui/material";
 import { ChildFormBox } from "components/forms/objects/ObjectSettingsForm/ObjectSettingsForm.styled";
 import { DEVICEIOMAPPING__TABLE_COLUMNS } from "app/data/constants";
 
-const DeviceIOMappingSettings: FC = () => {
+interface Props {
+  setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const DeviceIOMappingSettings: FC<Props> = ({ setOpenMappingModal }) => {
   return (
     <ContentSectionLayout
       title="Device I/O Mapping"
@@ -24,7 +28,7 @@ const DeviceIOMappingSettings: FC = () => {
           <Button
             variant={"outlined"}
             size={"medium"}
-            onClick={() => {}}
+            onClick={() => setOpenMappingModal(true)}
             sx={{ width: "30%" }}
           >
             Add Mapping

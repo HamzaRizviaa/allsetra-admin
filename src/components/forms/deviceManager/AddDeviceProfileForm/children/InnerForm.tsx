@@ -11,9 +11,11 @@ import {
 //Data
 import { DEVICEIOMAPPING__TABLE_COLUMNS } from "app/data/constants";
 
-interface Props {}
+interface Props {
+  setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const InnerForm: FC<Props> = ({}) => {
+const InnerForm: FC<Props> = ({ setOpenMappingModal }) => {
   return (
     <Stack spacing={2}>
       <FormikInputField
@@ -103,7 +105,7 @@ const InnerForm: FC<Props> = ({}) => {
       <Button
         variant={"outlined"}
         size={"medium"}
-        onClick={() => {}}
+        onClick={() => setOpenMappingModal(true)}
         sx={{ width: "45%" }}
       >
         Add Mapping

@@ -16,7 +16,7 @@ const Header: FC = () => {
 
       <Image
         style={styles.logo}
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaMD92RopHIebvq3zEfrB5XxwppZ_NcfvF_JYvHkovuc4YsYs_0nFFfvB8lN9Xk4P45g&usqp=CAU"
+        src={require("../../../../assets/icons/logos/logo.png")}
       />
     </View>
   );

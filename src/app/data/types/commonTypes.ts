@@ -6,3 +6,11 @@ export interface IDrawerMenuItem {
   activeIcon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   path: string;
 }
+
+export interface IAddDMappingType {
+  dataPoint: string;
+  identifier: string;
+  triggerMode: string;
+  inverted: boolean;
+  voltageThreshold: string;
+}

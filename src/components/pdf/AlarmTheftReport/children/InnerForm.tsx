@@ -5,9 +5,7 @@ import PDFTable from "components/ui/tables/PDFTable/PDFTable";
 
 import {
   transformAlarmForPDFEquipmentTable,
-  transformAlarmForPDFExtraTable,
   transformAlarmForPDFGenralDataTable,
-  transformAlarmForPDFInsuranceTable,
   transformAlarmForPDFLastGoodGpsTable,
   transformAlarmForPDFLocationNotificationTable,
   transformAlarmForPDFMapImages,
@@ -22,21 +20,17 @@ export interface PDFDataProps {
 const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
   const {
     generalDataInfo,
-    insuranceDataInfo,
     warningAddressesDataInfo,
     equipmentDataInfo,
-    extraDataInfo,
     locationNotificationDataInfo,
     lastGoodGpsDataInfo,
     mapImagesData,
   } = useMemo(() => {
     return {
       generalDataInfo: transformAlarmForPDFGenralDataTable(specificAlarm),
-      insuranceDataInfo: transformAlarmForPDFInsuranceTable(specificAlarm),
       warningAddressesDataInfo:
         transformAlarmForPDFWarningAddressesTable(alarmPersonsData),
       equipmentDataInfo: transformAlarmForPDFEquipmentTable(specificAlarm),
-      extraDataInfo: transformAlarmForPDFExtraTable(specificAlarm),
       locationNotificationDataInfo:
         transformAlarmForPDFLocationNotificationTable(specificAlarm),
       lastGoodGpsDataInfo: transformAlarmForPDFLastGoodGpsTable(specificAlarm),
@@ -75,14 +69,11 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
     );
   }, []);
 
-  console.log(addresses, "jjjjjs");
-
   return (
     <>
       <View>
         <Text style={styles.pageTitle}>Algemeen</Text>
         <PDFTable title="Algemene gegevens" records={generalDataInfo} />
-        <PDFTable title="Verzekering" records={insuranceDataInfo} />
       </View>
 
       <View break>
@@ -97,11 +88,6 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
       <View break>
         <Text style={styles.pageTitle}>Materieel</Text>
         <PDFTable title="Materieelgegevens" records={equipmentDataInfo} />
-      </View>
-
-      <View break>
-        <Text style={styles.pageTitle}>Extra</Text>
-        <PDFTable title="Extra gegevens" records={extraDataInfo} />
       </View>
 
       <View break>

@@ -153,7 +153,6 @@ export const transformAlarmForPDFGenralDataTable = (alarm: any) => {
 
   return {
     "ID-nummer": alarm.aNumber ?? "",
-    Vlootnummer: "",
     Bedrijfsnaam: owner?.name ?? "",
     "KvK-nummer": owner?.kvkcocNumber ?? "",
     Bezoekadres: visitingAddress
@@ -163,18 +162,6 @@ export const transformAlarmForPDFGenralDataTable = (alarm: any) => {
     Vestigingsplaats: visitingAddress.city ?? "",
     Land: visitingAddress.country?.name ?? "",
     Telefoonnummer: visitingAddress?.phoneNumber ?? "",
-    Faxnummer: "",
-  };
-};
-
-export const transformAlarmForPDFInsuranceTable = (alarm: any) => {
-  if (!alarm) return {};
-
-  return {
-    "Verzekering via": "",
-    Contactpersoon: "",
-    Verzekeringsmaatschappij: "",
-    Ingangsdatum: "",
   };
 };
 
@@ -202,61 +189,17 @@ export const transformAlarmForPDFEquipmentTable = (alarm: any) => {
 
   const { object } = alarm;
 
-  const equipmentData = {
-    Soort: "",
-    "Merk en Type": "",
-    Kenteken: "",
-    Serienummer: "",
-    Chassisnummer: "",
-    Bouwjaar: "",
-    Kleur: "",
-    "KM-stand:": object.mileage ?? "",
-    Draaiuren: "",
-    "Kilometerstand begin": "",
-    "Testrit kilometers": "",
-    Wegdraaigetal: "",
-    "BMWT / VeBit keur": "",
-    "Locatie chassis/serienummer": "",
-    "Omschrijving typeplaatje + plaats": "",
-  };
+  const equipmentData: any = {};
 
-  object?.metadata &&
-    object.metadata.map((data: any) => {
-      const { field } = data;
+  !isEmpty(object.metadata)
+    ? object.metadata.map((meta: any) => {
+        const { field } = meta;
 
-      if (field.label === "Brand") {
-        equipmentData.Soort = data.value;
-      }
-      if (field.label === "Model") {
-        equipmentData["Merk en Type"] = data.value;
-      }
-      if (field.label === "Color") {
-        equipmentData.Kleur = data.value;
-      }
-      if (field.label === "VIN / Frame Number") {
-        equipmentData.Chassisnummer = data.value;
-      }
-      if (field.label === "Motor ID") {
-        equipmentData.Serienummer = data.value;
-      }
-      if (field.label === "License Plate") {
-        equipmentData.Kenteken = data.value;
-      }
-    });
+        equipmentData[field.label] = meta.value;
+      })
+    : (equipmentData["Data"] = "No Metadata Available");
 
   return equipmentData;
-};
-
-export const transformAlarmForPDFExtraTable = (alarm: any) => {
-  if (!alarm) return {};
-
-  return {
-    "Inzet van object": "",
-    Locatie: "",
-    Transport: "",
-    Werktijden: "",
-    "Aanvullende afspraken ": "",
-  };
 };
 
 export const getFullAddress = async (lat: number, long: number) => {

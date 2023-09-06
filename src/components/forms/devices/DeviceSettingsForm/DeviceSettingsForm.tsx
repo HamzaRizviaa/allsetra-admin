@@ -13,9 +13,13 @@ import { deviceDetailsFormatterForSettingsForm } from "app/data/helpers/devicesH
 
 interface Props {
   specificDevice: IDevices | null;
+  setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DeviceSettingsForm: FC<Props> = ({ specificDevice }) => {
+const DeviceSettingsForm: FC<Props> = ({
+  specificDevice,
+  setOpenMappingModal,
+}) => {
   const dispatch = useAppDispatch();
 
   const initialValues = useMemo(
@@ -45,7 +49,10 @@ const DeviceSettingsForm: FC<Props> = ({ specificDevice }) => {
       enableReinitialize
       validateOnMount
     >
-      <InnerForm specificDevice={specificDevice} />
+      <InnerForm
+        specificDevice={specificDevice}
+        setOpenMappingModal={setOpenMappingModal}
+      />
     </Formik>
   );
 };

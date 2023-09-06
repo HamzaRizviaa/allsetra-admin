@@ -23,7 +23,7 @@ const Markers: FC<MarkerProps> = ({
   return (
     <Fragment>
       {objects.map((object: types.IObject, index: number) => {
-        if (isEmpty(object.location)) return null;
+        if (isEmpty(object?.location)) return null;
 
         const position = {
           lat: object.location.latitude,
@@ -33,7 +33,7 @@ const Markers: FC<MarkerProps> = ({
         const hasAlarmType = object.hasOwnProperty("alarmType");
 
         const iconUrl = !hasAlarmType
-          ? `${process.env.REACT_APP_API_BASE_URL}/icons/${object.objectType.icon.uniqueId}/file?X-Subscription=${process.env.REACT_APP_API_HEADER_SUBSCRIPTION}`
+          ? `${process.env.REACT_APP_API_BASE_URL}/icons/${object?.objectType?.icon?.uniqueId}/file?X-Subscription=${process.env.REACT_APP_API_HEADER_SUBSCRIPTION}`
           : "";
 
         const originalDate = new Date(object.location.date);

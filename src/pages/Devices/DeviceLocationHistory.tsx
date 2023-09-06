@@ -42,6 +42,7 @@ const DeviceLocationHistory: FC = () => {
       <Topbar
         title="Location History"
         breadcrumbTitle="Device Details"
+        breadcrumbRedirectTo={() => navigate(-1)}
         theme={theme}
         primaryButton={{
           variant: "contained",

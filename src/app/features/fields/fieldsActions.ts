@@ -90,7 +90,7 @@ export const reactivateFieldThunk = createAsyncThunk(
 
 export const createOrUpdateFieldThunk = createAsyncThunk(
   "fields/createOrUpdateFieldThunk",
-  async (data: any, { dispatch }) => {
+  async (data: any) => {
     try {
       const response = data.uniqueId
         ? await Fields.updateField(data.uniqueId, data)
@@ -100,7 +100,6 @@ export const createOrUpdateFieldThunk = createAsyncThunk(
         data.uniqueId
           ? toast.success("Field has been updated")
           : toast.success("Field has been created");
-        dispatch(getAllFieldsThunk());
       }
 
       return response;

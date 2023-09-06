@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    gap: "90px",
+    gap: "70px",
   },
   headerTitle: {
     fontSize: "14px",
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
   },
   logo: {
     height: "40px",
-    width: "120px",
+    width: "140px",
   },
 
   //footer
