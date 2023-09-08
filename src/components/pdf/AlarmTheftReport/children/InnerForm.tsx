@@ -50,10 +50,13 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         const mapType = mapImages[mapImage].type;
 
         const imageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${mapImages[mapImage].location}&zoom=${mapImages[mapImage].zoom}&size=450x450&markers=color:${markerColor}|${markerLocation}&maptype=${mapType}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`;
+        console.log(imageUrl, "imageUrl");
 
         return [mapImage, { ...mapImages[mapImage], imageUrl }];
       })
     );
+
+    console.log(updatedMapImages, "updatedMapImages");
 
     setMapImages(updatedMapImages);
   }, []);

@@ -28,7 +28,6 @@ export const styles = StyleSheet.create({
     gap: "5px",
   },
   logo: {
-    height: "40px",
     width: "140px",
   },
 
