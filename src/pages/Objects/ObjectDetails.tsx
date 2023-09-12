@@ -1,5 +1,5 @@
 import { FC, Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 import { Topbar, PageLoader } from "@vilocnv/allsetra-core";

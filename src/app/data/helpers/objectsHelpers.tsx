@@ -99,6 +99,7 @@ export const objectDetailsFormatterForSettingsForm = (
     "objectType",
     "owner",
     "devices",
+    "isWorkingHoursOverriden",
   ]);
 
   const formattedObject = {
@@ -107,6 +108,10 @@ export const objectDetailsFormatterForSettingsForm = (
     ownerId: object.owner?.uniqueId ?? "",
     accounts: object.accounts?.map((item) => item.uniqueId),
     users: object.users?.map((item) => item.uniqueId),
+    workingHours: {
+      // @ts-ignore
+      workingHoursSchedule: object.workingHours,
+    },
   };
 
   return formattedObject;
@@ -129,7 +134,6 @@ export const objectDetailsValidationSchema = Yup.object({
   reminderName: Yup.string().nullable().label("Reminder Name"),
   alarmsConfiguration: helpers.alarmConfigurationValidationSchema,
   notifications: helpers.notificationsConfigurationValidationSchema,
-  isWorkingHoursOverriden: Yup.bool(),
   workingHoursType: Yup.string()
     .nullable()
     .required()

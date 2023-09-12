@@ -17,15 +17,13 @@ const useActiveObjectById = () => {
   const { activeObject, loading } = useAppSelector(selectQueriedObjectsState);
 
   const getSpecificObjectById = async () => {
-    if (isEmpty(activeObject) || activeObject.uniqueId !== params.id) {
-      const { type } = await dispatch(
-        getSpecificObjectByIdThunk(params.id ?? "")
-      );
+    const { type } = await dispatch(
+      getSpecificObjectByIdThunk(params.id ?? "")
+    );
 
-      if (type === "objects/getSpecificObjectByIdThunk/rejected") {
-        navigate(-1);
-        toast.error("Object not found");
-      }
+    if (type === "objects/getSpecificObjectByIdThunk/rejected") {
+      navigate(-1);
+      toast.error("Object not found");
     }
   };
 
@@ -35,7 +33,7 @@ const useActiveObjectById = () => {
     } else {
       getSpecificObjectById();
     }
-  }, [params]);
+  }, [params.id]);
 
   return { activeObject, loading };
 };
