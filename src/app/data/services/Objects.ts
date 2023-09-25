@@ -26,6 +26,10 @@ class Objects {
       `/objects/${objectId}/devices/${deviceId}`
     );
   };
+
+  static getAllSubscriptionsByObjectId = async (objectId: string) => {
+    return await axiosInstance.get(`/objects/${objectId}/subscriptions`);
+  };
 }
 
 export default Objects;

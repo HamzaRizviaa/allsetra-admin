@@ -22,6 +22,20 @@ export const transformAddressObjectForForm = (address: any) => {
   };
 };
 
+export const formatDate = (dateString: string) => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  };
+
+  const date = new Date(dateString);
+  //@ts-ignore
+  return date.toLocaleString("en-US", options);
+};
+
 //
 // ADD MAPPING FORM HELPERS
 //

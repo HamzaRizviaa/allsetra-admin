@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { types } from "@vilocnv/allsetra-core";
 import {
   getAllObjectsThunk,
+  getAllSubscriptionsByObjectIdThunk,
   getObjectsByQueryThunk,
   getSpecificObjectByIdThunk,
 } from "./objectsActions";
@@ -12,6 +13,8 @@ export interface IObjectState {
   activeObject: types.IObject | null;
   allObjects: Array<any>;
   objects: Array<any>;
+  objectSubscriptions: Array<any>;
+  objectSubscriptionsLoading: boolean;
 }
 
 const initialState: IObjectState = {
@@ -20,6 +23,8 @@ const initialState: IObjectState = {
   activeObject: null,
   allObjects: [],
   objects: [],
+  objectSubscriptions: [],
+  objectSubscriptionsLoading: false,
 };
 
 const objectsSlice = createSlice({
@@ -72,6 +77,23 @@ const objectsSlice = createSlice({
 
     builder.addCase(getSpecificObjectByIdThunk.rejected, (state) => {
       state.loading = false;
+    });
+
+    // Get Subscriptions of Object By ID Thunk
+    builder.addCase(getAllSubscriptionsByObjectIdThunk.pending, (state) => {
+      state.objectSubscriptionsLoading = true;
+    });
+
+    builder.addCase(
+      getAllSubscriptionsByObjectIdThunk.fulfilled,
+      (state, action) => {
+        state.objectSubscriptions = action.payload;
+        state.objectSubscriptionsLoading = false;
+      }
+    );
+
+    builder.addCase(getAllSubscriptionsByObjectIdThunk.rejected, (state) => {
+      state.objectSubscriptionsLoading = false;
     });
   },
 });

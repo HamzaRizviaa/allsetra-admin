@@ -7,6 +7,12 @@ export const selectObjectsReducerLoading = (state: RootState) =>
 export const selectAllTheObjects = (state: RootState) =>
   state.rootReducer.objectsReducer.allObjects;
 
+export const selectAllObjectSubscriptions = (state: RootState) =>
+  state.rootReducer.objectsReducer.objectSubscriptions;
+
+export const selectObjectsSubscriptionLoading = (state: RootState) =>
+  state.rootReducer.objectsReducer.objectSubscriptionsLoading;
+
 export const selectObjectsQueried = (state: RootState) =>
   state.rootReducer.objectsReducer.objects;
 
@@ -35,5 +41,14 @@ export const selectQueriedObjectsState = createSelector(
     objects,
     totalRecords,
     activeObject,
+  })
+);
+
+export const selectObjectSubscriptions = createSelector(
+  selectAllObjectSubscriptions,
+  selectObjectsSubscriptionLoading,
+  (objectSubscriptions, objectSubscriptionsLoading) => ({
+    objectSubscriptions,
+    objectSubscriptionsLoading,
   })
 );

@@ -178,3 +178,15 @@ export const selectAccountGroups = createSelector(
     accountGroups,
   })
 );
+
+export const selectDeviceSubscriptions = createSelector(
+  selectAccountsReducerLoading,
+  selectAccountTotalRecords,
+  (state: RootState) =>
+    state.rootReducer.accountsReducer.accountDeviceSubscriptions,
+  (loading, totalRecords, accountDeviceSubscriptions) => ({
+    loading,
+    totalRecords,
+    accountDeviceSubscriptions,
+  })
+);

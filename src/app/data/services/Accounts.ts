@@ -170,6 +170,15 @@ class Accounts {
     );
   };
 
+  static getDeviceSubscriptionsConnectedtoObjectAndAccount = async (
+    accountId: string,
+    objectId: string
+  ) => {
+    return await axiosInstance.get(
+      `/accounts/${accountId}/objects/${objectId}/subscriptions`
+    );
+  };
+
   // Account Installations Endpoints
   static getAccountInstallations = async (
     data: types.IRecordsAggregationBody,
