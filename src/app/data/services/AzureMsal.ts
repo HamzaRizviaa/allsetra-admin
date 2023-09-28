@@ -4,6 +4,7 @@ import { msalInstance } from "index";
 class AzureMsal {
   static acquireToken = async () => {
     const account = msalInstance.getAllAccounts()[0];
+    const redirectUri = window.location.origin + "/dashboard";
 
     const accessTokenRequest = {
       scopes: [
@@ -13,6 +14,7 @@ class AzureMsal {
         "https://graph.microsoft.com/.default",
       ],
       account: account,
+      redirectUri,
     };
 
     try {
@@ -21,10 +23,11 @@ class AzureMsal {
       );
       return accessTokenResponse;
     } catch (error) {
-      if (error instanceof InteractionRequiredAuthError) {
-        msalInstance.acquireTokenRedirect(accessTokenRequest);
-      }
       console.log(error);
+
+      if (error instanceof InteractionRequiredAuthError) {
+        return msalInstance.acquireTokenRedirect(accessTokenRequest);
+      }
     }
   };
 }
