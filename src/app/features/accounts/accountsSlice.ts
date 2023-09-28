@@ -14,6 +14,7 @@ import {
   getAccountInstallationsThunk,
   getSpecificAccountThunk,
   getAccountSubscriptionsBySearchThunk,
+  getDeviceSubscriptionsConnectedtoObjectAndAccountThunk,
 } from "./actions";
 import { getAllAccountGroupsThunk } from "./actions/accountGroupsActions";
 
@@ -43,6 +44,7 @@ export interface IAccountsState {
   accountInstallations: Array<any>;
   accountGroups: Array<any>;
   accountSubscriptions: Array<any>;
+  accountDeviceSubscriptions: Array<any>;
 }
 
 const initialState: IAccountsState = {
@@ -69,6 +71,7 @@ const initialState: IAccountsState = {
   accountInstallations: [],
   accountGroups: [],
   accountSubscriptions: [],
+  accountDeviceSubscriptions: [],
 };
 
 const accountsSlice = createSlice({
@@ -299,6 +302,30 @@ const accountsSlice = createSlice({
     builder.addCase(getAccountSubscriptionsBySearchThunk.rejected, (state) => {
       state.loading = false;
     });
+
+    // Get Account Device Subscriptions Action Cases
+    builder.addCase(
+      getDeviceSubscriptionsConnectedtoObjectAndAccountThunk.pending,
+      (state) => {
+        state.loading = true;
+      }
+    );
+
+    builder.addCase(
+      getDeviceSubscriptionsConnectedtoObjectAndAccountThunk.fulfilled,
+      (state, action) => {
+        state.accountDeviceSubscriptions = action.payload?.results || [];
+        state.totalRecords = action.payload?.rowCount || 0;
+        state.loading = false;
+      }
+    );
+
+    builder.addCase(
+      getDeviceSubscriptionsConnectedtoObjectAndAccountThunk.rejected,
+      (state) => {
+        state.loading = false;
+      }
+    );
   },
 });
 

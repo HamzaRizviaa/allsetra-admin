@@ -46,3 +46,24 @@ export const removeObjectFromAccountThunk = createAsyncThunk(
     }
   }
 );
+
+export const getDeviceSubscriptionsConnectedtoObjectAndAccountThunk =
+  createAsyncThunk(
+    "accounts/getDeviceSubscriptionsConnectedtoObjectAndAccountThunk",
+    async ({ accountId, objectId }: any) => {
+      try {
+        const response =
+          await Accounts.getDeviceSubscriptionsConnectedtoObjectAndAccount(
+            accountId,
+            objectId
+          );
+
+        if (response.status === 200) {
+          return response.data;
+        }
+      } catch (e: any) {
+        console.error(e);
+        throw new Error(e);
+      }
+    }
+  );

@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { isEmpty } from "lodash";
 import { Box, Grid, Stack } from "@mui/material";
 import { KeyValueTable, types } from "@vilocnv/allsetra-core";
@@ -10,21 +10,46 @@ import {
   transformObjectForObjectInfoTable,
   transformObjectForAlarmConfigTable,
   transformObjectMetaDataForDynamicFields,
+  transformObjectMetaDataForInstallationInformation,
+  transformObjectMetaDataForService,
 } from "app/data/helpers";
+import { useAppDispatch, useAppSelector } from "hooks";
+import { getAllSubscriptionsByObjectIdThunk } from "app/features";
+import { selectObjectSubscriptions } from "app/data/selectors";
 
 interface Props {
   activeObject: types.IObject | null;
 }
 
 const ObjectDetailsBody: FC<Props> = ({ activeObject }) => {
-  const { objectInformation, alarmConfiguration, dynamicFields } =
-    useMemo(() => {
-      return {
-        objectInformation: transformObjectForObjectInfoTable(activeObject),
-        alarmConfiguration: transformObjectForAlarmConfigTable(activeObject),
-        dynamicFields: transformObjectMetaDataForDynamicFields(activeObject),
-      };
-    }, [activeObject]);
+  const dispatch = useAppDispatch();
+
+  const { objectSubscriptions } = useAppSelector(selectObjectSubscriptions);
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(getAllSubscriptionsByObjectIdThunk(activeObject?.uniqueId));
+  }, []);
+
+  const {
+    objectInformation,
+    alarmConfiguration,
+    dynamicFields,
+    installationInformation,
+    serviceInfo,
+  } = useMemo(() => {
+    return {
+      objectInformation: transformObjectForObjectInfoTable(activeObject),
+      alarmConfiguration: transformObjectForAlarmConfigTable(activeObject),
+      dynamicFields: transformObjectMetaDataForDynamicFields(activeObject),
+      installationInformation:
+        transformObjectMetaDataForInstallationInformation(activeObject),
+      serviceInfo: transformObjectMetaDataForService(
+        activeObject,
+        objectSubscriptions
+      ),
+    };
+  }, [activeObject]);
 
   return (
     <Box mt={4}>
@@ -42,7 +67,18 @@ const ObjectDetailsBody: FC<Props> = ({ activeObject }) => {
                 records={dynamicFields}
               />
             )}
-            {/* <KeyValueTable title="Installation Information" records={{}} /> */}
+            {!isEmpty(installationInformation) && (
+              <KeyValueTable
+                title="Installation Information"
+                records={installationInformation}
+              />
+            )}
+            {!isEmpty(serviceInfo) && (
+              <KeyValueTable
+                title="Service & Subscription"
+                records={serviceInfo}
+              />
+            )}
             <KeyValueTable
               title="Alarm Configuration"
               records={alarmConfiguration}

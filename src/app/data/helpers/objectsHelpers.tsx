@@ -1,6 +1,7 @@
 import { types, Badge, helpers } from "@vilocnv/allsetra-core";
 import { isEmpty, omit } from "lodash";
 import * as Yup from "yup";
+import { formatDate } from "./commonHelpers";
 
 //
 // OBJECT DETAILS PAGE HELPERS
@@ -70,6 +71,51 @@ export const transformObjectMetaDataForDynamicFields = (
   const data: any = {};
 
   dynamicFields.forEach((item: any) => {
+    data[item.field.label] = item.value;
+  });
+
+  return data;
+};
+
+export const transformObjectMetaDataForInstallationInformation = (
+  object: types.IObject | null
+): any => {
+  if (!object) return {};
+  const installationInfo = object.metadata.filter(
+    (item) => item.informationType === "INSTALLATION"
+  );
+
+  const data: any = {};
+
+  installationInfo.forEach((item: any) => {
+    data[item.field.label] = item.value;
+  });
+
+  return data;
+};
+
+export const transformObjectMetaDataForService = (
+  object: types.IObject | null,
+  objectSubscriptions: any
+): any => {
+  if (!object) return {};
+  const serviceFields = object.metadata.filter(
+    (item) => item.informationType === "SERVICE"
+  );
+
+  const data: any = {};
+
+  const formattedDate = formatDate(objectSubscriptions[0].startDate);
+
+  const objectData = {
+    "Subscription Name": objectSubscriptions[0].subscription.name,
+    "Subscription Start": formattedDate,
+  };
+
+  data["Subscription Name"] = objectData["Subscription Name"];
+  data["Subscription Start"] = objectData["Subscription Start"];
+
+  serviceFields.forEach((item: any) => {
     data[item.field.label] = item.value;
   });
 
