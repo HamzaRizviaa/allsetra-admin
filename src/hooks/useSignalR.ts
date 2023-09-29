@@ -23,7 +23,7 @@ const useSignalR = () => {
   const createHubConnection = () => {
     const newConnection = new HubConnectionBuilder()
       .withUrl(
-        `${process.env.REACT_APP_API_BASE_URL}/?source=adminportal&user=${userEmail}`,
+        `${process.env.REACT_APP_API_BASE_LIVE_UPDATE_URL}/?source=adminportal&user=${userEmail}`,
         options
       )
       .withAutomaticReconnect()
