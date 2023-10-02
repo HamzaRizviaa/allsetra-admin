@@ -101,11 +101,10 @@ const AccountGroupsSection: FC<Props> = ({ accountId }) => {
     <Box>
       <Box
         display="flex"
-        justifyContent="space-between"
+        justifyContent="flex-end"
         alignItems="center"
         marginBottom={2}
       >
-        <SearchField placeholder="Search group" />
         <Button
           variant="outlined"
           startIcon={<AddIcon />}
@@ -119,7 +118,7 @@ const AccountGroupsSection: FC<Props> = ({ accountId }) => {
         spacing={{ xs: 2, md: 2 }}
       >
         {accountGroups.map((item, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index}>
+          <Grid item key={index}>
             <GroupCard
               groupTitle={item.name}
               onDelete={() => openDeleteConfirmationModal(item.uniqueId)}
