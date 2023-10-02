@@ -10,7 +10,13 @@ export const ALL_DEVICETYPES_TABLE_COLUMNS: TableColumn<IDeviceType>[] = [
   {
     name: "Picture",
     selector: (row: IDeviceType) => (
-      <img src={row.imageURL} alt="Device Picture" />
+      <img
+        width={"48px"}
+        height={"40px"}
+        style={{ border: "1px solid #EFF4FF", borderRadius: "4px" }}
+        src={row.imageURL}
+        alt="Device Picture"
+      />
     ),
     sortable: true,
   },
