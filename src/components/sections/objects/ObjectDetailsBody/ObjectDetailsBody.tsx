@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { isEmpty } from "lodash";
 import { Box, Grid, Stack } from "@mui/material";
 import { KeyValueTable, types } from "@vilocnv/allsetra-core";
@@ -13,24 +13,16 @@ import {
   transformObjectMetaDataForInstallationInformation,
   transformObjectMetaDataForService,
 } from "app/data/helpers";
-import { useAppDispatch, useAppSelector } from "hooks";
-import { getAllSubscriptionsByObjectIdThunk } from "app/features";
-import { selectObjectSubscriptions } from "app/data/selectors";
 
 interface Props {
   activeObject: types.IObject | null;
+  objectSubscriptions: Array<any>;
 }
 
-const ObjectDetailsBody: FC<Props> = ({ activeObject }) => {
-  const dispatch = useAppDispatch();
-
-  const { objectSubscriptions } = useAppSelector(selectObjectSubscriptions);
-
-  useEffect(() => {
-    //@ts-ignore
-    dispatch(getAllSubscriptionsByObjectIdThunk(activeObject?.uniqueId));
-  }, []);
-
+const ObjectDetailsBody: FC<Props> = ({
+  activeObject,
+  objectSubscriptions,
+}) => {
   const {
     objectInformation,
     alarmConfiguration,
@@ -73,7 +65,7 @@ const ObjectDetailsBody: FC<Props> = ({ activeObject }) => {
                 records={installationInformation}
               />
             )}
-            {!isEmpty(serviceInfo) && (
+            {!isEmpty(objectSubscriptions) && (
               <KeyValueTable
                 title="Service & Subscription"
                 records={serviceInfo}

@@ -1,5 +1,5 @@
-import { FC, Fragment } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { FC, Fragment, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 import { Topbar, PageLoader } from "@vilocnv/allsetra-core";
@@ -8,13 +8,23 @@ import ObjectDetailsBody from "components/sections/objects/ObjectDetailsBody/Obj
 import ObjectDetailsTables from "components/sections/objects/ObjectDetailsTables/ObjectDetailsTables";
 
 // Data
-import { useActiveObjectById } from "hooks";
+import { useActiveObjectById, useAppDispatch, useAppSelector } from "hooks";
+import { selectObjectSubscriptions } from "app/data/selectors";
+import { getAllSubscriptionsByObjectIdThunk } from "app/features";
 
 const ObjectDetails: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { activeObject, loading } = useActiveObjectById();
+
+  const { objectSubscriptions } = useAppSelector(selectObjectSubscriptions);
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(getAllSubscriptionsByObjectIdThunk(activeObject?.uniqueId));
+  }, []);
 
   return (
     <Box>
@@ -32,12 +42,15 @@ const ObjectDetails: FC = () => {
         }}
       />
       <Box mx={4} mt={4}>
-        {loading ? (
+        {!(objectSubscriptions.length > 0) ? (
           <PageLoader />
         ) : (
           <Fragment>
             <ObjectDetailsHeader objectName={activeObject?.name || ""} />
-            <ObjectDetailsBody activeObject={activeObject} />
+            <ObjectDetailsBody
+              activeObject={activeObject}
+              objectSubscriptions={objectSubscriptions}
+            />
             <ObjectDetailsTables />
           </Fragment>
         )}
