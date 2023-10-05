@@ -1,25 +1,21 @@
 import { FC, useState, useEffect } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap } from "@react-google-maps/api";
 import { PageLoader } from "@vilocnv/allsetra-core";
-import { MapContainer } from "./Map.styled";
-import Markers from "../Map/children/Markers";
-import Geozone from "../Map/children/Geozone";
+import { MapContainer } from "../Map.styled";
+import Markers from "./children/Markers";
 import { useGoogleMapsLoader } from "app/data/helpers/mapHelpers";
 
-interface MapProps {
+interface AlarmDeskMapProps {
   center: {
     lat: number;
     lng: number;
   };
   zoom: number;
-  radius: number; // Specify the radius around the center for random placement
   objects: Array<any>;
-  geozone: Array<any>;
 }
 
-const Map: FC<MapProps> = ({ center, zoom, objects, geozone, radius }) => {
+const AlarmDeskMap: FC<AlarmDeskMapProps> = ({ center, zoom, objects }) => {
   const [shouldRenderMarkers, setShouldRenderMarkers] = useState(false);
-  const [shouldRenderGeozone, setShouldRenderGeozone] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState<number | null>(null);
 
   const { isLoaded, loadError } = useGoogleMapsLoader();
@@ -28,10 +24,7 @@ const Map: FC<MapProps> = ({ center, zoom, objects, geozone, radius }) => {
     if (objects.length > 0) {
       setShouldRenderMarkers(true);
     }
-    if (geozone.length > 0) {
-      setShouldRenderGeozone(true);
-    }
-  }, [objects, geozone]);
+  }, [objects]);
 
   const handleMarkerClick = (markerIndex: number) => {
     setSelectedMarker(markerIndex);
@@ -45,7 +38,6 @@ const Map: FC<MapProps> = ({ center, zoom, objects, geozone, radius }) => {
           zoom={zoom}
           mapContainerStyle={{ height: "100%", width: "100%" }}
         >
-          {shouldRenderGeozone && <Geozone geozone={geozone} radius={radius} />}
           {shouldRenderMarkers && (
             <Markers
               objects={objects}
@@ -65,4 +57,4 @@ const Map: FC<MapProps> = ({ center, zoom, objects, geozone, radius }) => {
   return isLoaded ? renderMap() : <PageLoader />;
 };
 
-export default Map;
+export default AlarmDeskMap;

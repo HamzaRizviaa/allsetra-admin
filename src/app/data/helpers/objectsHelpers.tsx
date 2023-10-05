@@ -105,10 +105,10 @@ export const transformObjectMetaDataForService = (
 
   const data: any = {};
 
-  const formattedDate = formatDate(objectSubscriptions[0].startDate);
+  const formattedDate = formatDate(objectSubscriptions?.[0].startDate);
 
   const objectData = {
-    "Subscription Name": objectSubscriptions[0].subscription.name,
+    "Subscription Name": objectSubscriptions?.[0].subscription.name,
     "Subscription Start": formattedDate,
   };
 

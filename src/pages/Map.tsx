@@ -11,7 +11,6 @@ import {
   TopRightSection,
 } from "components/common/Map/Map.styled";
 import {
-  Button,
   FilterButton,
   MapDisplaySettingsForm,
   MapFilterForm,
@@ -68,7 +67,7 @@ const MapMain: FC = () => {
           <DisplaySettings onClick={() => setDisplaySettingsOpen(true)} />
         </MiniButton>
       </TopRightSection>
-      <MapFilterForm
+      {/* <MapFilterForm
         open={filterOpen}
         onClose={() => setFilterOpen(false)}
         theme={theme}
@@ -76,7 +75,7 @@ const MapMain: FC = () => {
         type={type}
         state={state}
         accounts={accounts}
-      />
+      /> */}
       <MapDisplaySettingsForm
         open={displaySettingsOpen}
         onClose={() => setDisplaySettingsOpen(false)}
@@ -88,7 +87,7 @@ const MapMain: FC = () => {
         center={{ lat: 52.0, lng: 5.301137 }}
         zoom={10}
         radius={50}
-        objects={temp}
+        objects={allObjects}
         geozone={geozone}
       />
     </MapWrapper>

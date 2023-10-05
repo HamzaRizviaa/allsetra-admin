@@ -18,7 +18,7 @@ import {
 } from "app/features";
 import { selectAlarmDeskState } from "app/data/selectors";
 import { IAlarm } from "app/data/types";
-import Map from "components/common/Map/Map";
+import AlarmDeskMap from "components/common/Map/AlarmDesk/AlarmDeskMap";
 
 const AlarmDesk: FC = () => {
   const theme = useTheme();
@@ -122,12 +122,10 @@ const AlarmDesk: FC = () => {
           />
         </Grid>
         <Grid item xs={12} lg={5}>
-          <Map
+          <AlarmDeskMap
             center={{ lat: 52.0, lng: 5.301137 }}
             zoom={10}
-            radius={50}
             objects={alarms}
-            geozone={[{ lat: 52.150125, lng: 5.4 }]}
           />
         </Grid>
       </Grid>
