@@ -54,7 +54,7 @@ export interface IDeviceType {
 export interface IDeviceTypeProfile {
   isDeleted: boolean;
   uniqueId: string;
-  profileName: string;
+  name: string;
   description: string;
   deviceTypeId: string;
   configurations: [
@@ -75,6 +75,17 @@ export interface IDeviceTypeModule {
 }
 
 export interface IAddDeviceProfileType {
-  profileName: string;
+  name: string;
   description: string;
+  useDriverAuthentication: boolean;
+  useAccelerometerForIgnition: boolean;
+  enableCanbusListening: boolean;
+  reportIntervalInSeconds: number;
+  environment: number;
+  enableInputToOutput: boolean;
+  inputPinId: number;
+  outputPinId: number;
+  triggerMode: number;
+  mappings: any;
+  uniqueId?: string;
 }

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {
@@ -7,16 +7,18 @@ import {
   useDispatchOnParams,
 } from "@vilocnv/allsetra-core";
 import AddDeviceProfileForm from "components/forms/deviceManager/AddDeviceProfileForm/AddDeviceProfileForm";
-import AddMappingForm from "components/forms/common/AddMappingForm/AddMappingForm";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
 import {
   getDeviceTypesProfilesThunk,
+  getSpecificDeviceProfileThunk,
   removeProfileFromDeviceTypeThunk,
 } from "app/features";
 import { ALL_DEVICETYPESPROFILE_TABLE_COLUMNS } from "app/data/constants/deviceTypesConstants";
 import { selectDeviceTypesProfileState } from "app/data/selectors";
+import { isEmpty } from "lodash";
+import { getFormattedDeviceProfileData } from "app/data/helpers";
 
 interface Props {
   deviceTypeId: string | null;
@@ -27,16 +29,18 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
   const theme = useTheme();
 
   // Global State
-  const { loading, totalRecords, deviceTypesProfiles } = useAppSelector(
-    selectDeviceTypesProfileState
-  );
+  const {
+    loading,
+    totalRecords,
+    deviceTypesProfiles,
+    specificDeviceTypeProfile,
+  } = useAppSelector(selectDeviceTypesProfileState);
 
   //Local State
   const [selectedDeviceTypeProfileId, setSelectedDeviceTypeProfileId] =
     useState<string | null>(null); // Current devicetype profile's id
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
   const [open, setOpen] = useState(false); // Used for Add Device profile type Modal
-  const [openMappingModal, setOpenMappingModal] = useState(false); // Used for Add Mapping Modal
 
   useDispatchOnParams(getDeviceTypesProfilesThunk, {
     searchByField: "profileName",
@@ -61,6 +65,26 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
     setOpenDeleteModal(false);
   };
 
+  const formValues = useMemo(
+    () =>
+      selectedDeviceTypeProfileId && !isEmpty(specificDeviceTypeProfile)
+        ? getFormattedDeviceProfileData(specificDeviceTypeProfile)
+        : null,
+    [selectedDeviceTypeProfileId, specificDeviceTypeProfile]
+  );
+
+  const handleUpdateDeviceProfileType = (profile: any) => {
+    profile &&
+      dispatch(
+        getSpecificDeviceProfileThunk({
+          deviceTypeId,
+          deviceTypeProfileId: profile.uniqueId,
+        })
+      );
+    setSelectedDeviceTypeProfileId(profile.uniqueId);
+    setOpen(true);
+  };
+
   return (
     <Box>
       <Table
@@ -74,6 +98,10 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
             name: "Remove device profile",
             onClick: openDeleteConfirmationModal,
           },
+          {
+            name: "Edit device profile",
+            onClick: handleUpdateDeviceProfileType,
+          },
         ]}
         primaryButton={{
           text: "Add device profile type",
@@ -85,15 +113,8 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
       <AddDeviceProfileForm
         open={open}
         onClose={() => setOpen(false)}
-        setOpenMappingModal={setOpenMappingModal}
-      />
-      <AddMappingForm
-        open={openMappingModal}
-        onClose={() => setOpenMappingModal(false)}
-        dataPoints={[]}
-        identifiers={[]}
-        triggerModes={[]}
-        voltageThresholds={[]}
+        deviceTypeId={deviceTypeId}
+        initialValues={formValues}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}

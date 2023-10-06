@@ -8,9 +8,9 @@ export interface IDrawerMenuItem {
 }
 
 export interface IAddDMappingType {
-  dataPoint: string;
-  identifier: string;
-  triggerMode: string;
-  inverted: boolean;
-  voltageThreshold: string;
+  dataPointId: number;
+  identifierId: number;
+  triggerMode: number;
+  isInverted: boolean;
+  dynamicFields: string;
 }

@@ -1,5 +1,5 @@
 import { TableColumn } from "@vilocnv/allsetra-core";
-import { IDevices } from "../types";
+import { IAddDMappingType, IDevices } from "../types";
 
 //
 // TABLE HEADERS
@@ -37,28 +37,40 @@ export const ALL_DEVICES_TABLE_COLUMNS: TableColumn<IDevices>[] = [
   },
 ];
 
-export const DEVICEIOMAPPING__TABLE_COLUMNS: TableColumn<any>[] = [
-  {
-    name: "Data point",
-    selector: (row: any) => row.dataPoint,
-    sortable: true,
-  },
-  {
-    name: "Identifier",
-    selector: (row: IDevices) => "-",
-    sortable: true,
-  },
-  {
-    name: "Trigger Mode",
-    selector: (row: IDevices) => "-",
-    sortable: true,
-  },
-  {
-    name: "Dynamic Fields",
-    selector: (row: IDevices) => "-",
-    sortable: true,
-  },
-];
+export const DEVICEIOMAPPING__TABLE_COLUMNS = (
+  dataPoints: any,
+  identifiers: any,
+  triggerModes: any
+) => {
+  const columns: TableColumn<IAddDMappingType>[] = [
+    {
+      name: "Data point",
+      selector: (row: IAddDMappingType) =>
+        dataPoints.find((point: any) => point.id === row.dataPointId)?.label,
+      sortable: true,
+    },
+    {
+      name: "Identifier",
+      selector: (row: IAddDMappingType) =>
+        identifiers.find((point: any) => point.id === row.identifierId)
+          ?.deviceType,
+      sortable: true,
+    },
+    {
+      name: "Trigger Mode",
+      selector: (row: IAddDMappingType) =>
+        triggerModes.find((point: any) => point.id === row.triggerMode)?.name,
+      sortable: true,
+    },
+    {
+      name: "Dynamic Fields",
+      selector: (row: IAddDMappingType) => row.dynamicFields,
+      sortable: true,
+    },
+  ];
+
+  return columns;
+};
 
 //
 // DEVICE DETAILS

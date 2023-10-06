@@ -25,6 +25,33 @@ export const selectDeviceTypesProfiles = (state: RootState) =>
 export const selectDeviceTypesModules = (state: RootState) =>
   state.rootReducer.deviceManagerReducer.deviceTypesModules;
 
+export const selectDeviceTypesProfilesDataPoints = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesProfilesDataPoints;
+
+export const selectDeviceTypesProfilesIdentifiers = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesProfilesIdentifiers;
+
+export const selectDeviceTypesProfilesTriggerModes = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesProfilesTriggerModes;
+
+export const selectDeviceTypesProfilesEnvironments = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesProfilesEnvironments;
+
+export const selectDeviceTypesProfilesInputPins = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesProfilesInputPins;
+
+export const selectDeviceTypesProfilesOutputPins = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.deviceTypesProfilesOutputPins;
+
+export const selectDeviceTypesProfilesIdentifiersLoading = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.identifierLoading;
+
+export const selectAllIdentifiers = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.allIdentifiers;
+
+export const selectSpecificDeviceTypeProfile = (state: RootState) =>
+  state.rootReducer.deviceManagerReducer.specificDeviceTypeProfile;
+
 export const selectDeviceTypesState = createSelector(
   selectDeviceManagerReducerLoading,
   selectTotalDeviceTypes,
@@ -51,10 +78,45 @@ export const selectDeviceTypesProfileState = createSelector(
   selectDeviceManagerReducerLoading,
   selectDeviceTypesTotalRecords,
   selectDeviceTypesProfiles,
-  (loading, totalRecords, deviceTypesProfiles) => ({
+  selectSpecificDeviceTypeProfile,
+  (loading, totalRecords, deviceTypesProfiles, specificDeviceTypeProfile) => ({
     loading,
     totalRecords,
     deviceTypesProfiles,
+    specificDeviceTypeProfile,
+  })
+);
+
+export const selectAddDeviceTypesProfileState = createSelector(
+  selectDeviceManagerReducerLoading,
+  selectDeviceTypesProfilesIdentifiersLoading,
+  selectDeviceTypesProfilesDataPoints,
+  selectDeviceTypesProfilesIdentifiers,
+  selectDeviceTypesProfilesTriggerModes,
+  selectDeviceTypesProfilesEnvironments,
+  selectDeviceTypesProfilesInputPins,
+  selectDeviceTypesProfilesOutputPins,
+  selectAllIdentifiers,
+  (
+    loading,
+    identifierLoading,
+    deviceTypesProfilesDataPoints,
+    deviceTypesProfilesIdentifiers,
+    deviceTypesProfilesTriggerModes,
+    deviceTypesProfilesEnvironments,
+    deviceTypesProfilesInputPins,
+    deviceTypesProfilesOutputPins,
+    allIdentifiers
+  ) => ({
+    loading,
+    identifierLoading,
+    deviceTypesProfilesDataPoints,
+    deviceTypesProfilesIdentifiers,
+    deviceTypesProfilesTriggerModes,
+    deviceTypesProfilesEnvironments,
+    deviceTypesProfilesInputPins,
+    deviceTypesProfilesOutputPins,
+    allIdentifiers,
   })
 );
 

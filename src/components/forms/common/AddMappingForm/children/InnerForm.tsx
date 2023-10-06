@@ -1,69 +1,84 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { Stack, Typography } from "@mui/material";
-import { FormikSelectField } from "@vilocnv/allsetra-core";
+import { FormikInputField, FormikSelectField } from "@vilocnv/allsetra-core";
+import { useAppDispatch } from "hooks";
+import { getDeviceTypesProfileIdentifiers } from "app/features";
 
 interface Props {
   dataPoints: Array<any>;
   identifiers: Array<any>;
   triggerModes: Array<any>;
-  voltageThresholds: Array<any>;
+  deviceTypeId?: string | null;
+  identifierLoading: boolean | undefined;
 }
 
 const InnerForm: FC<Props> = ({
   dataPoints,
   identifiers,
   triggerModes,
-  voltageThresholds,
+  deviceTypeId,
+  identifierLoading,
 }) => {
+  const dispatch = useAppDispatch();
+
+  const handleDataPointChange = (e: ChangeEvent<{ value: unknown }>) => {
+    dispatch(
+      getDeviceTypesProfileIdentifiers({
+        deviceTypeId,
+        fieldId: e,
+      })
+    );
+  };
+
   return (
     <Stack spacing={2}>
       <FormikSelectField
         label="Select Data Point"
-        name="dataPoint"
+        name="dataPointId"
+        onChange={handleDataPointChange}
         options={dataPoints}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        optionLabelKey={"label"}
+        optionValueKey={"id"}
         required
       />
 
       <FormikSelectField
         label="Select Identifier"
-        name="identifier"
+        name="identifierId"
         options={identifiers}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        optionLabelKey={"deviceType"}
+        optionValueKey={"id"}
         required
+        loading={identifierLoading}
       />
 
       <FormikSelectField
         label="Trigger Mode"
         name="triggerMode"
         options={triggerModes}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        optionLabelKey={"name"}
+        optionValueKey={"id"}
         required
       />
 
       <FormikSelectField
         label="Inverted (if value is boolean)"
-        name="inverted"
+        name="isInverted"
         options={[
-          { key: 1, value: "Yes" },
-          { key: 2, value: "No" },
+          { id: true, value: "Yes" },
+          { id: false, value: "No" },
         ]}
         optionLabelKey={"value"}
-        optionValueKey={"value"}
+        optionValueKey={"id"}
         required
       />
 
       <Typography variant={"h6"}>Dynamic fields</Typography>
-      <FormikSelectField
+      <FormikInputField
         label="Operating Time Voltage Threshold"
-        name="voltageThreshold"
-        options={voltageThresholds}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        name="dynamicFields"
         required
+        fullWidth
       />
     </Stack>
   );

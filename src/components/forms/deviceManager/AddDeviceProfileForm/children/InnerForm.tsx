@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Stack, Typography } from "@mui/material";
 import {
   Button,
@@ -10,16 +10,40 @@ import {
 
 //Data
 import { DEVICEIOMAPPING__TABLE_COLUMNS } from "app/data/constants";
+import { useFormikContext } from "formik";
+import { IAddDeviceProfileType } from "app/data/types";
 
 interface Props {
   setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  triggerModes: Array<any>;
+  environments: Array<any>;
+  inputPins: Array<any>;
+  outputPins: Array<any>;
+  dataPoints: Array<any>;
+  allIdentifiers: Array<any>;
 }
 
-const InnerForm: FC<Props> = ({ setOpenMappingModal }) => {
+const InnerForm: FC<Props> = ({
+  setOpenMappingModal,
+  triggerModes,
+  environments,
+  inputPins,
+  outputPins,
+  dataPoints,
+  allIdentifiers,
+}) => {
+  const { values } = useFormikContext<IAddDeviceProfileType>();
+
+  const deviceIOColumns = useMemo(
+    () =>
+      DEVICEIOMAPPING__TABLE_COLUMNS(dataPoints, allIdentifiers, triggerModes),
+    [dataPoints, allIdentifiers, triggerModes]
+  );
+
   return (
     <Stack spacing={2}>
       <FormikInputField
-        name="profileName"
+        name="name"
         label={"Profile Name"}
         required
         placeholder="Profile Name"
@@ -36,71 +60,67 @@ const InnerForm: FC<Props> = ({ setOpenMappingModal }) => {
       <Typography variant={"h6"}>Profile configuration</Typography>
       <FormikToggleField
         label="Use Driver authentication"
-        name="authentication"
+        name="useDriverAuthentication"
       />
       <FormikToggleField
         label="Use accelerometer for ignition"
-        name="ignition"
+        name="useAccelerometerForIgnition"
       />
-      <FormikToggleField label="Enable Canbus listening" name="listening" />
+      <FormikToggleField
+        label="Enable Canbus listening"
+        name="enableCanbusListening"
+      />
       <FormikSelectField
         label="Unit Report Interval"
-        name="unitReportInterval"
+        name="reportIntervalInSeconds"
         options={[
-          { key: 1, value: "30 seconds" },
-          { key: 2, value: "60 seconds" },
-          { key: 3, value: "120 seconds" },
+          { id: 30, value: "30 seconds" },
+          { id: 60, value: "60 seconds" },
+          { id: 120, value: "120 seconds" },
         ]}
         optionLabelKey={"value"}
-        optionValueKey={"value"}
+        optionValueKey={"id"}
       />
       <FormikSelectField
         label="Environment"
         name="environment"
-        options={[
-          { key: 1, value: "Product" },
-          { key: 2, value: "Develop" },
-        ]}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        options={environments}
+        optionLabelKey={"name"}
+        optionValueKey={"id"}
       />
 
       <Typography variant={"h6"}>Input to Output configuration</Typography>
-      <FormikToggleField label="Enable Input to output" name="enableIO" />
+      <FormikToggleField
+        label="Enable Input to output"
+        name="enableInputToOutput"
+      />
       <FormikSelectField
         label="Input Pin"
-        name="inputPin"
-        options={[{ key: 1, value: "Analog input 1" }]}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        name="inputPinId"
+        options={inputPins}
+        optionLabelKey={"name"}
+        optionValueKey={"id"}
       />
       <FormikSelectField
         label="Output Pin"
-        name="outputPin"
-        options={[{ key: 1, value: "Std Immobilizer" }]}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        name="outputPinId"
+        options={outputPins}
+        optionLabelKey={"name"}
+        optionValueKey={"id"}
       />
       <FormikSelectField
         label="Trigger mode"
         name="triggerMode"
-        options={[
-          { key: 1, value: "Latching" },
-          { key: 2, value: "Non-Latching" },
-        ]}
-        optionLabelKey={"value"}
-        optionValueKey={"value"}
+        options={triggerModes}
+        optionLabelKey={"name"}
+        optionValueKey={"id"}
       />
 
       <Typography variant={"h6"}>Device I/O Mapping</Typography>
       <Table
-        columns={DEVICEIOMAPPING__TABLE_COLUMNS}
-        data={[
-          { dataPoint: "Internal Battery Voltage" },
-          { dataPoint: "External Battery Voltage" },
-          { dataPoint: "Body Temperature" },
-          { dataPoint: "Operating Time" },
-        ]}
+        columns={deviceIOColumns}
+        data={values.mappings}
+        paginationTotalRows={values.mappings.length}
       />
       <Button
         variant={"outlined"}

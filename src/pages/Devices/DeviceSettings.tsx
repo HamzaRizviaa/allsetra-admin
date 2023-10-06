@@ -29,7 +29,6 @@ const DeviceSettings: FC = () => {
             dataPoints={[]}
             identifiers={[]}
             triggerModes={[]}
-            voltageThresholds={[]}
           />
         </Fragment>
       )}

@@ -40,6 +40,67 @@ class DeviceManager {
     );
   };
 
+  static getDeviceTypesProfileDataPoints = async (deviceTypeId: string) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/related-data/data-points`
+    );
+  };
+
+  static getDeviceTypesProfileIdentifiers = async (
+    deviceTypeId: string,
+    fieldId: string
+  ) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/related-data/data-points/${fieldId}`
+    );
+  };
+
+  static getDeviceTypesProfileTriggerModes = async (deviceTypeId: string) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/related-data/trigger-modes`
+    );
+  };
+
+  static getDeviceTypesProfileEnvironments = async (deviceTypeId: string) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/related-data/environments`
+    );
+  };
+
+  static getDeviceTypesProfileInputPins = async (deviceTypeId: string) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/related-data/input-pins`
+    );
+  };
+
+  static getDeviceTypesProfileOutputPins = async (deviceTypeId: string) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/related-data/output-pins`
+    );
+  };
+
+  static createDeviceTypeProfile = async (deviceTypeId: string, data: any) => {
+    return await axiosInstance.post(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles`,
+      data
+    );
+  };
+
+  static updateDeviceTypeProfile = async (deviceTypeId: string, data: any) => {
+    return await axiosInstance.patch(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/${data.uniqueId}`,
+      data
+    );
+  };
+
+  static getSpecificDeviceProfile = async (
+    deviceTypeId: string,
+    deviceTypeProfileId: string
+  ) => {
+    return await axiosInstance.get(
+      `/deviceTypes/${deviceTypeId}/deviceprofiles/${deviceTypeProfileId}`
+    );
+  };
   // Device Types Modules Endpoints
 
   static getDeviceTypesModules = async (

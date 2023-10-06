@@ -114,6 +114,155 @@ export const removeProfileFromDeviceTypeThunk = createAsyncThunk(
   }
 );
 
+export const getDeviceTypesProfileDataPoints = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfileDataPoints",
+  async (deviceTypeId: string) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfileDataPoints(
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getDeviceTypesProfileIdentifiers = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfileIdentifiers",
+  async ({ deviceTypeId, fieldId }: any) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfileIdentifiers(
+        deviceTypeId,
+        fieldId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getDeviceTypesProfileTriggerModes = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfileTriggerModes",
+  async (deviceTypeId: string) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfileTriggerModes(
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getDeviceTypesProfileEnvironments = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfileEnvironments",
+  async (deviceTypeId: string) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfileEnvironments(
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+export const getDeviceTypesProfileInputPins = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfileInputPins",
+  async (deviceTypeId: string) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfileInputPins(
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getDeviceTypesProfileOutputPins = createAsyncThunk(
+  "deviceManager/getDeviceTypesProfileOutputPins",
+  async (deviceTypeId: string) => {
+    try {
+      const response = await DeviceManager.getDeviceTypesProfileOutputPins(
+        deviceTypeId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const createOrUpdateDeviceTypesProfileThunk = createAsyncThunk(
+  "deviceManager/createOrUpdateDeviceTypesProfileThunk",
+  async ({ deviceTypeId, data }: any) => {
+    try {
+      const response = data.uniqueId
+        ? await DeviceManager.updateDeviceTypeProfile(deviceTypeId, data)
+        : await DeviceManager.createDeviceTypeProfile(deviceTypeId, data);
+
+      if (response.status === 202) {
+        data.uniqueId
+          ? toast.success("Device Type Profile has been updated")
+          : toast.success("Device Type Profile has been created");
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
+export const getSpecificDeviceProfileThunk = createAsyncThunk(
+  "deviceManager/getSpecificDeviceProfileThunk",
+  async ({ deviceTypeId, deviceTypeProfileId }: any) => {
+    try {
+      const response = await DeviceManager.getSpecificDeviceProfile(
+        deviceTypeId,
+        deviceTypeProfileId
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 //Device Types Modules
 
 export const getDeviceTypesModulesThunk = createAsyncThunk(

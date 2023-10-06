@@ -1,21 +1,22 @@
 import { FC } from "react";
-import { Modal, ModalProps } from "@vilocnv/allsetra-core";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Modal } from "@vilocnv/allsetra-core";
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
 import { useTheme } from "@mui/material";
 import InnerForm from "./children/InnerForm";
 
 //Data
-import { IAddDMappingType } from "app/data/types";
+import { IAddDMappingType, IAddDeviceProfileType } from "app/data/types";
 import {
   addMappingInitialValues,
   addMappingValidationSchema,
 } from "app/data/helpers";
+import { AddDeviceProfileProps } from "components/forms/deviceManager/AddDeviceProfileForm/AddDeviceProfileForm";
 
-export type AddMappingFormProps = Omit<ModalProps, "title" | "children"> & {
+export type AddMappingFormProps = AddDeviceProfileProps & {
   dataPoints: Array<any>;
   identifiers: Array<any>;
   triggerModes: Array<any>;
-  voltageThresholds: Array<any>;
+  identifierLoading?: boolean;
 };
 
 const AddMappingForm: FC<AddMappingFormProps> = ({
@@ -24,14 +25,22 @@ const AddMappingForm: FC<AddMappingFormProps> = ({
   dataPoints,
   identifiers,
   triggerModes,
-  voltageThresholds,
+  deviceTypeId,
+  loading,
+  identifierLoading,
 }) => {
   const theme = useTheme();
 
+  const { setFieldValue, values } = useFormikContext<IAddDeviceProfileType>();
+
   const addMappingHandler = async (
-    values: IAddDMappingType,
+    valuesMapping: IAddDMappingType,
     formikHelpers: FormikHelpers<IAddDMappingType>
-  ) => {};
+  ) => {
+    setFieldValue("mappings", [...values.mappings, valuesMapping]);
+    onClose();
+    formikHelpers.resetForm();
+  };
 
   return (
     <Formik
@@ -56,12 +65,14 @@ const AddMappingForm: FC<AddMappingFormProps> = ({
             }}
             secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
             theme={theme}
+            loading={loading}
           >
             <InnerForm
               dataPoints={dataPoints}
               identifiers={identifiers}
               triggerModes={triggerModes}
-              voltageThresholds={voltageThresholds}
+              deviceTypeId={deviceTypeId}
+              identifierLoading={identifierLoading}
             />
           </Modal>
         </Form>

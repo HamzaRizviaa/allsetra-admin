@@ -61,7 +61,7 @@ export const ALL_DEVICETYPESPROFILE_TABLE_COLUMNS: TableColumn<IDeviceTypeProfil
   [
     {
       name: "Profile name",
-      selector: (row: IDeviceTypeProfile) => row.profileName,
+      selector: (row: IDeviceTypeProfile) => row.name,
       sortable: true,
     },
     {

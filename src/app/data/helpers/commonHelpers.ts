@@ -41,19 +41,31 @@ export const formatDate = (dateString: string) => {
 //
 
 export const addMappingInitialValues: IAddDMappingType = {
-  dataPoint: "",
-  identifier: "",
-  triggerMode: "",
-  inverted: false,
-  voltageThreshold: "",
+  dataPointId: -1,
+  identifierId: -1,
+  triggerMode: -1,
+  isInverted: false,
+  dynamicFields: "",
 };
 
 export const addMappingValidationSchema = Yup.object({
-  dataPoint: Yup.string().required().label("Data Point"),
-  identifier: Yup.string().trim().required().label("Identifier"),
-  triggerMode: Yup.string().trim().required().label("Trigger Mode"),
-  inverted: Yup.boolean().required().label("Inverted"),
-  voltageThreshold: Yup.string()
+  dataPointId: Yup.number()
+    .integer("Please select the required field")
+    .min(0, "Please select the required field")
+    .required()
+    .label("Data Point"),
+  identifierId: Yup.number()
+    .integer("Please select the required field")
+    .min(0, "Please select the required field")
+    .required()
+    .label("Identifier"),
+  triggerMode: Yup.number()
+    .integer("Please select the required field")
+    .min(0, "Please select the required field")
+    .required()
+    .label("Trigger Mode"),
+  isInverted: Yup.boolean().required().label("Inverted"),
+  dynamicFields: Yup.string()
     .trim()
     .required()
     .label("Operating Time Voltage Threshold"),
