@@ -176,7 +176,8 @@ export const ACCOUNT_OBJECTS_TABLE_COLUMNS: TableColumn<types.IObject>[] = [
   },
   {
     name: "Object Type",
-    selector: (row: types.IObject) => row.objectType.name,
+    //@ts-ignore
+    selector: (row: types.IObject) => row.objectTypeName,
     sortable: true,
   },
   {
