@@ -151,7 +151,8 @@ export const objectDetailsFormatterForSettingsForm = (
   const formattedObject = {
     ...removedUnwantedKeys,
     objectTypeId: object.objectType?.uniqueId ?? "",
-    ownerId: object.owner?.uniqueId ?? "",
+    alarmOwnerId: object.alarmOwner?.uniqueId ?? "",
+    invoiceOwnerId: object.invoiceOwner?.uniqueId ?? "",
     accounts: object.accounts?.map((item) => item.uniqueId),
     users: object.users?.map((item) => item.uniqueId),
     workingHours: {
@@ -168,7 +169,8 @@ export const objectDetailsValidationSchema = Yup.object({
   objectTypeId: Yup.string().required().label("Object Type"),
   accounts: Yup.array().of(Yup.string()).label("Assigned accounts"),
   users: Yup.array().of(Yup.string()).label("Assigned users"),
-  ownerId: Yup.string().required().label("Owner"),
+  alarmOwnerId: Yup.string().required().label("Alarm Owner"),
+  invoiceOwnerId: Yup.string().required().label("Invoice Owner"),
   aNumber: Yup.string().nullable().label("A-Number"),
   multiviewerName: Yup.string().nullable().label("Multiviewer"),
   mileage: Yup.number().nullable().label("Milage"),

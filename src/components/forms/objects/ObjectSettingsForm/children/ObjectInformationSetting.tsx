@@ -78,13 +78,24 @@ const ObjectInformationSetting: FC = () => {
             multiple
             fullWidth
           />
+        </TwoColsLayout>
+        <TwoColsLayout>
           <FormikSelectField
-            label="Owner"
-            name="ownerId"
+            label="Alarm Owner"
+            name="alarmOwnerId"
             options={allAccounts ?? []}
             optionLabelKey={"name"}
             optionValueKey={"uniqueId"}
-            loading={objectTypesLoading}
+            loading={accountsLoading}
+            fullWidth
+          />
+          <FormikSelectField
+            label="Invoice Owner"
+            name="invoiceOwnerId"
+            options={allAccounts ?? []}
+            optionLabelKey={"name"}
+            optionValueKey={"uniqueId"}
+            loading={accountsLoading}
             fullWidth
           />
         </TwoColsLayout>

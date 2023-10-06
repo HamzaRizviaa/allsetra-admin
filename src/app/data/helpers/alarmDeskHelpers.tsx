@@ -110,16 +110,19 @@ export const transformAlarmPersonsForTable = (alarmPersons: Array<any>) => {
 export const transformOwnerForCompanyInformation = (object: types.IObject) => {
   if (isEmpty(object)) return {};
 
-  const { visitingAddress } = object.owner;
+  //@ts-ignore
+  const { visitingAddress } = object.alarmOwner;
 
   const data: any = {
-    "Company name": object.owner?.name || "",
+    "Company name": object.alarmOwner?.name || "",
     Address: `House #: ${visitingAddress.houseNumber}, Street: ${visitingAddress.street}, City: ${visitingAddress.city}, State: ${visitingAddress.state}`,
     Status: (
       <Badge
-        colorScheme={object.owner.status === "ACTIVE" ? "success" : "error"}
+        colorScheme={
+          object.alarmOwner?.status === "ACTIVE" ? "success" : "error"
+        }
       >
-        {object.owner.status}
+        {object.alarmOwner?.status}
       </Badge>
     ),
   };
@@ -134,7 +137,7 @@ export const transformOwnerCountriesForWhitelisted = (
 
   const data: any = {};
 
-  object.owner.countries.map((countryWhitelist: any) => {
+  object.alarmOwner?.countries?.map((countryWhitelist: any) => {
     data[countryWhitelist.name] = "";
   });
 
