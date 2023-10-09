@@ -5,7 +5,7 @@ import { Settings } from "@mui/icons-material";
 import { Topbar, PageLoader } from "@vilocnv/allsetra-core";
 import DeviceDetailsHeader from "components/sections/devices/DeviceDetailsHeader/DeviceDeatilsHeader";
 import DeviceDetailsBody from "components/sections/devices/DeviceDetailsBody/DeviceDetailsBody";
-import DeviceDetailsTables from "components/sections/devices/DeviceDetailsTables/DeviceDetailsTables";
+// import DeviceDetailsTables from "components/sections/devices/DeviceDetailsTables/DeviceDetailsTables";
 
 // Data
 import { useActiveDevice } from "hooks";
@@ -43,7 +43,7 @@ const DeviceDetails: FC = () => {
               deviceType={specificDevice?.deviceType.name || ""}
             />
             <DeviceDetailsBody specificDevice={specificDevice} />
-            <DeviceDetailsTables />
+            {/* <DeviceDetailsTables /> */}
           </Fragment>
         )}
       </Box>

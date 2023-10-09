@@ -3,13 +3,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { Box, Grid, useTheme } from "@mui/material";
 import { PageLoader, Topbar } from "@vilocnv/allsetra-core";
-import { useJsApiLoader, GoogleMap, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import DeviceLocationHistorySection from "components/sections/devices/DeviceLocationHistorySection/DeviceLocationHistorySection";
 
 // Data
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectDevicesState } from "app/data/selectors";
 import { getDeviceLocationHistoryThunk } from "app/features";
+import { useGoogleMapsLoader } from "app/data/helpers";
 
 const DeviceLocationHistory: FC = () => {
   const theme = useTheme();
@@ -20,9 +21,7 @@ const DeviceLocationHistory: FC = () => {
 
   const { deviceLocationHistory } = useAppSelector(selectDevicesState);
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`,
-  });
+  const { isLoaded } = useGoogleMapsLoader();
 
   useEffect(() => {
     if (isEmpty(params.id)) {
@@ -44,11 +43,6 @@ const DeviceLocationHistory: FC = () => {
         breadcrumbTitle="Device Details"
         breadcrumbRedirectTo={() => navigate(-1)}
         theme={theme}
-        primaryButton={{
-          variant: "contained",
-          text: "Save Changes",
-          onClick: () => {},
-        }}
       />
       <Box mx={4} mt={4}>
         {isLoaded ? (

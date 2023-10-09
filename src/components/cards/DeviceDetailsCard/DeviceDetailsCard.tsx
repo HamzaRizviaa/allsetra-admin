@@ -9,6 +9,7 @@ import {
 import { IDevices } from "app/data/types";
 import { Badge, ConnectionBadge } from "@vilocnv/allsetra-core";
 import { CellTowerIcon } from "assets/icons";
+import moment from "moment";
 
 export interface DeviceDetailsCardProps {
   device: IDevices | null;
@@ -32,12 +33,14 @@ const DeviceDetailsCard: FC<DeviceDetailsCardProps> = ({ device }) => (
       >
         <Stack direction={"row"} alignItems={"center"} spacing={1}>
           <StyledAccessTimeIcon />
-          <SmallText>1h 23m ago (March 22, 2023 at 01:25)</SmallText>
+          <SmallText>
+            {moment(device?.lastUpdated || device?.created).format("LLL")}
+          </SmallText>
         </Stack>
-        <Stack direction={"row"} alignItems={"center"} spacing={1}>
+        {/* <Stack direction={"row"} alignItems={"center"} spacing={1}>
           <InfoIcon />
           <SmallText>Object was stationary</SmallText>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Stack>
   </CardContainer>

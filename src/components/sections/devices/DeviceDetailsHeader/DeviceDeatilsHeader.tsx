@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Badge, Button } from "@vilocnv/allsetra-core";
 import { Typography } from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+// import { ExpandMore } from "@mui/icons-material";
 import { PointerHistoryIcon } from "assets/icons";
 import {
   ButtonsWrapper,
@@ -43,7 +43,9 @@ const DeviceDetailsHeader: FC<Props> = ({
           gap={{ xs: "12px", md: "0px" }}
         >
           <Typography variant={"h2"}>{deviceName}</Typography>
-          <Badge colorScheme={colorScheme || "success"}>{status}</Badge>
+          <Badge colorScheme={colorScheme || "success"}>
+            {status === "1" ? "Activated" : "Deactivated"}
+          </Badge>
         </HeadingMainTitleWithBadge>
       </HeadingTitleContainer>
       <ButtonsWrapper>
@@ -57,9 +59,9 @@ const DeviceDetailsHeader: FC<Props> = ({
         >
           Location history
         </Button>
-        <Button variant={"outlined"} endIcon={<ExpandMore />} size={"small"}>
+        {/* <Button variant={"outlined"} endIcon={<ExpandMore />} size={"small"}>
           Configure
-        </Button>
+        </Button> */}
       </ButtonsWrapper>
     </HeaderContainer>
   );

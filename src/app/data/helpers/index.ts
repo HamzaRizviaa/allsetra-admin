@@ -7,3 +7,4 @@ export * from "./objectsHelpers";
 export * from "./signalRHelpers";
 export * from "./commonHelpers";
 export * from "./i18nHelpers";
+export * from "./mapHelpers";
