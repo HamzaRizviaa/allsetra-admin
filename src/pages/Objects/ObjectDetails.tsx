@@ -5,7 +5,7 @@ import { Settings } from "@mui/icons-material";
 import { Topbar, PageLoader } from "@vilocnv/allsetra-core";
 import ObjectDetailsHeader from "components/sections/objects/ObjectDetailsHeader/ObjectDetailsHeader";
 import ObjectDetailsBody from "components/sections/objects/ObjectDetailsBody/ObjectDetailsBody";
-import ObjectDetailsTables from "components/sections/objects/ObjectDetailsTables/ObjectDetailsTables";
+// import ObjectDetailsTables from "components/sections/objects/ObjectDetailsTables/ObjectDetailsTables";
 
 // Data
 import { useActiveObjectById, useAppDispatch, useAppSelector } from "hooks";
@@ -19,7 +19,9 @@ const ObjectDetails: FC = () => {
 
   const { activeObject, loading } = useActiveObjectById();
 
-  const { objectSubscriptions } = useAppSelector(selectObjectSubscriptions);
+  const { objectSubscriptions, objectSubscriptionsLoading } = useAppSelector(
+    selectObjectSubscriptions
+  );
 
   useEffect(() => {
     //@ts-ignore
@@ -42,16 +44,16 @@ const ObjectDetails: FC = () => {
         }}
       />
       <Box mx={4} mt={4}>
-        {!(objectSubscriptions.length > 0) ? (
+        {loading || objectSubscriptionsLoading ? (
           <PageLoader />
         ) : (
           <Fragment>
             <ObjectDetailsHeader objectName={activeObject?.name || ""} />
             <ObjectDetailsBody
               activeObject={activeObject}
-              objectSubscriptions={objectSubscriptions}
+              objectSubscriptions={objectSubscriptions ?? []}
             />
-            <ObjectDetailsTables />
+            {/* <ObjectDetailsTables /> */}
           </Fragment>
         )}
       </Box>

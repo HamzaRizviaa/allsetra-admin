@@ -35,7 +35,7 @@ const SelectedDeviceTypes: FC<Props> = ({ form, deviceTypes }) => {
             label={`${getDeviceNameById(deviceTypeId)} profile`}
             name={`deviceProfiles[${deviceTypeId}].defaultProfileId`}
             options={getAvailableDeviceModulesById(deviceTypeId)}
-            optionLabelKey="profileName"
+            optionLabelKey="name"
             optionValueKey="uniqueId"
           />
         </Stack>

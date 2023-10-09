@@ -63,12 +63,7 @@ const InnerForm: FC = () => {
   const iconRender = (icons: any[]) => {
     return icons.map((icon) => ({
       label: (
-        <img
-          src={`${process.env.REACT_APP_API_BASE_URL}/icons/${icon.uniqueId}/file?X-Subscription=${process.env.REACT_APP_API_HEADER_SUBSCRIPTION}`}
-          key={icon.uniqueId}
-          alt="Icon"
-          width="22.5px"
-        />
+        <img src={icon.url} key={icon.uniqueId} alt="Icon" width="22.5px" />
       ),
       value: icon.uniqueId,
     }));

@@ -1,7 +1,7 @@
 import { types, Badge, helpers } from "@vilocnv/allsetra-core";
 import { isEmpty, omit } from "lodash";
-import * as Yup from "yup";
 import { formatDate } from "./commonHelpers";
+import * as Yup from "yup";
 
 //
 // OBJECT DETAILS PAGE HELPERS
@@ -12,11 +12,11 @@ export const transformObjectForObjectInfoTable = (
   if (!object) return {};
 
   return {
-    "Assigned Accounts": object.accounts.map((acc) => acc.name).join(", "),
-    "Assigned Users": object.users.map((user) => user.email).join(", "),
+    "Assigned Accounts": object.accounts?.map((acc) => acc.name).join(", "),
+    "Assigned Users": object.users?.map((user) => user.email).join(", "),
     "A-Number": object.aNumber,
     "Multiviewer Name": object.multiviewerName,
-    "Object Type": object.objectType.name,
+    "Object Type": object.objectTypeName,
     Comments: object.comments,
     Milage: object.mileage,
   };
@@ -33,7 +33,7 @@ const getBadgeForAlarmConfiguration = (state: boolean) => {
 export const transformObjectForAlarmConfigTable = (
   object: types.IObject | null
 ): any => {
-  if (!object) return {};
+  if (isEmpty(object) || isEmpty(object.alarmsConfiguration)) return {};
 
   return {
     "Land border crossing": getBadgeForAlarmConfiguration(
@@ -98,7 +98,8 @@ export const transformObjectMetaDataForService = (
   object: types.IObject | null,
   objectSubscriptions: any
 ): any => {
-  if (!object) return {};
+  if (isEmpty(object) || isEmpty(objectSubscriptions)) return {};
+
   const serviceFields = object.metadata.filter(
     (item) => item.informationType === "SERVICE"
   );
