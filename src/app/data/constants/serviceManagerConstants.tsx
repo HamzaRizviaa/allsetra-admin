@@ -17,7 +17,7 @@ export const ALL_SERVICES_TABLE_COLUMNS: TableColumn<any>[] = [
     format: (row: any) => (
       <Stack my={1} gap={1} flexWrap={"wrap"}>
         {row.serviceDeviceTypes.map(({ deviceType }: any) => (
-          <Badge colorScheme="info">{deviceType.deviceName}</Badge>
+          <Badge colorScheme="info">{deviceType.name}</Badge>
         ))}
       </Stack>
     ),

@@ -16,21 +16,26 @@ import { selectAccountsState } from "app/data/selectors";
 const ManagementForm: FC = () => {
   const { values } = useFormikContext<types.IAccount>();
 
-  const { allAccounts, loading: allAccountsLoading } =
-    useAppSelector(selectAccountsState);
+  const { allAccounts } = useAppSelector(selectAccountsState);
 
   useDispatchOnMount(
     getAllAccountsThunk,
     allAccounts.length ? undefined : true
   );
 
-  const updatedByAccountName = useMemo(() => {
-    const account = allAccounts.find(
+  const { updatedByName, createdByName } = useMemo(() => {
+    const updatedByName = allAccounts.find(
       (acc: types.IAccount) => acc.uniqueId === values.updatedBy
-    );
+    )?.name;
+    const createdByName = allAccounts.find(
+      (acc: types.IAccount) => acc.uniqueId === values.createdBy
+    )?.name;
 
-    return account ? account.name : "N/A";
-  }, [allAccounts, values.updatedBy]);
+    return {
+      updatedByName: updatedByName ?? "N/A",
+      createdByName: createdByName ?? "N/A",
+    };
+  }, [allAccounts, values.updatedBy, values.createdBy]);
 
   return (
     <ContentSectionLayout
@@ -49,26 +54,14 @@ const ManagementForm: FC = () => {
         <TwoColsLayout>
           <Typography variant={"subtitle2"}>Created by</Typography>
           <Typography variant={"subtitle2"} textAlign={"right"}>
-            {values.createdBy}
+            {createdByName}
           </Typography>
         </TwoColsLayout>
         <TwoColsLayout>
           <Typography variant={"subtitle2"}>Modified by</Typography>
           <Typography variant={"subtitle2"} textAlign={"right"}>
-            {updatedByAccountName}
+            {updatedByName}
           </Typography>
-        </TwoColsLayout>
-        <TwoColsLayout hideDivider>
-          <FormikSelectField
-            label="Account owner"
-            name="accountOwnerUniqueId"
-            optionLabelKey={"name"}
-            optionValueKey={"uniqueId"}
-            options={allAccounts}
-            loading={allAccountsLoading}
-            searchable
-            fullWidth
-          />
         </TwoColsLayout>
       </Box>
     </ContentSectionLayout>

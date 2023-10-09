@@ -34,6 +34,8 @@ const Accounts: FC = () => {
   const { totalAccounts, allAccounts, loading } =
     useAppSelector(selectAccountsState);
 
+    console.log({allAccounts})
+
   // Local State
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(
     null

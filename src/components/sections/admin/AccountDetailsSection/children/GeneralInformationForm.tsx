@@ -11,7 +11,10 @@ import AddressFormSection from "components/forms/common/AddressFormSection/Addre
 
 // Data
 import { useAppSelector, useDispatchOnMount } from "hooks";
-import { selectAccountMetadataState } from "app/data/selectors";
+import {
+  selectAccountMetadataState,
+  selectAccountsState,
+} from "app/data/selectors";
 import {
   getAccountsIndustriesThunk,
   getAccountsTypesThunk,
@@ -24,6 +27,8 @@ const GeneralInformationForm: FC = () => {
     accountsTypesLoading,
     accountsTypes,
   } = useAppSelector(selectAccountMetadataState);
+
+  const { allAccounts } = useAppSelector(selectAccountsState);
 
   useDispatchOnMount(
     getAccountsIndustriesThunk,
@@ -85,10 +90,14 @@ const GeneralInformationForm: FC = () => {
           />
         </TwoColsLayout>
         <TwoColsLayout>
-          <FormikInputField
+          <FormikSelectField
             label="Parent account"
             placeholder="Parent account"
-            name="abc"
+            options={allAccounts}
+            optionLabelKey={"name"}
+            optionValueKey={"uniqueId"}
+            name="parentAccount"
+            searchable
             fullWidth
           />
           <FormikInputField

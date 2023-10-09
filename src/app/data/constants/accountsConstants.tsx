@@ -39,7 +39,7 @@ export const ALL_ACCOUNTS_TABLE_COLUMNS: TableColumn<types.IAccount>[] = [
   { name: "Name", selector: (row: types.IAccount) => row.name, sortable: true },
   {
     name: "Type",
-    selector: (row: types.IAccount) => row.customerType,
+    selector: (row: types.IAccount) => row.customerType || "N/A",
     sortable: true,
   },
   {
