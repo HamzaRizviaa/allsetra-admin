@@ -46,7 +46,7 @@ const InnerForm: FC<Props> = ({
         label="Select Identifier"
         name="identifierId"
         options={identifiers}
-        optionLabelKey={"deviceType"}
+        optionLabelKey={"name"}
         optionValueKey={"id"}
         required
         loading={identifierLoading}

@@ -52,8 +52,7 @@ export const DEVICEIOMAPPING__TABLE_COLUMNS = (
     {
       name: "Identifier",
       selector: (row: IAddDMappingType) =>
-        identifiers.find((point: any) => point.id === row.identifierId)
-          ?.deviceType,
+        identifiers.find((point: any) => point.id === row.identifierId)?.name,
       sortable: true,
     },
     {
