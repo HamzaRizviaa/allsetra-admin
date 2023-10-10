@@ -96,7 +96,7 @@ const GeneralInformationForm: FC = () => {
             options={allAccounts}
             optionLabelKey={"name"}
             optionValueKey={"uniqueId"}
-            name="parentAccount"
+            name="parentId"
             searchable
             fullWidth
           />

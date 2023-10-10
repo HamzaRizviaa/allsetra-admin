@@ -122,11 +122,17 @@ export const accountAssignServiceValidationSchema: Yup.Schema = Yup.object({
 //
 export const accountAssignDeviceTypeInitialValues: IAccountAssignDeviceType = {
   deviceTypeId: "",
+  deviceProfileId: "",
+  currency: 0,
+  price: 0,
 };
 
 export const accountAssignDeviceTypeValidationSchema: Yup.Schema<IAccountAssignDeviceType> =
   Yup.object({
     deviceTypeId: Yup.string().trim().required().label("Device type"),
+    deviceProfileId: Yup.string().trim().required().label("Device profile"),
+    currency: Yup.number().label("Currency").required(),
+    price: Yup.number().label("Price").required(),
   });
 
 //

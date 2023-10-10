@@ -43,6 +43,15 @@ export const selectIconState = createSelector(
   })
 );
 
+export const selectDashboardCurrenciesState = createSelector(
+  selectDashboardReducerLoading,
+  selectAllCurrencies,
+  (loading, currencies) => ({
+    loading,
+    currencies,
+  })
+);
+
 export const selectDashboardCountriesState = createSelector(
   selectDashboardReducerLoading,
   selectAllCountries,

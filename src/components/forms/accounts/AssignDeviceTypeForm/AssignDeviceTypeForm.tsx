@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Box, Stack, useTheme } from "@mui/material";
-import { Modal, ModalProps, FormikSelectField } from "@vilocnv/allsetra-core";
+import { Box, useTheme } from "@mui/material";
+import { Modal, ModalProps } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
 import { DevicetypeBlueIcon } from "assets/icons";
+import InnerForm from "./children/InnerForm";
 
 // DATA
 import { useAppDispatch } from "hooks";
@@ -11,10 +12,7 @@ import {
   accountAssignDeviceTypeInitialValues,
   accountAssignDeviceTypeValidationSchema,
 } from "app/data/helpers";
-import {
-  assignDeviceTypeToAccountThunk,
-  useGetAvailableDeviceTypesForAccountQuery,
-} from "app/features";
+import { assignDeviceTypeToAccountThunk } from "app/features";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
   accountId: string | null;
@@ -23,9 +21,6 @@ export type Props = Omit<ModalProps, "title" | "children"> & {
 const AssignDeviceTypeForm: FC<Props> = ({ open, onClose, accountId }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-
-  const { data, isLoading } =
-    useGetAvailableDeviceTypesForAccountQuery(accountId);
 
   const onSubmitHandler = async (
     values: IAccountAssignDeviceType,
@@ -74,17 +69,7 @@ const AssignDeviceTypeForm: FC<Props> = ({ open, onClose, accountId }) => {
               secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
               theme={theme}
             >
-              <Stack spacing={2}>
-                <FormikSelectField
-                  label="Device type"
-                  name="deviceTypeId"
-                  options={data}
-                  optionLabelKey="name"
-                  optionValueKey="uniqueId"
-                  loading={isLoading}
-                  required
-                />
-              </Stack>
+              <InnerForm accountId={accountId} />
             </Modal>
           </Form>
         )}

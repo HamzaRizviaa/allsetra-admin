@@ -15,6 +15,9 @@ export interface IAccountAssignService {
 
 export interface IAccountAssignDeviceType {
   deviceTypeId: string;
+  deviceProfileId: string;
+  currency: number;
+  price: number;
 }
 
 export interface IAccountAssignObjectType {
