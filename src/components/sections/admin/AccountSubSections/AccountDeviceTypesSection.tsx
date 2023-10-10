@@ -60,11 +60,13 @@ const AccountDeviceTypesSection: FC<Props> = ({ accountId }) => {
     setOpenDeleteModal(false);
   };
 
+  console.log({ accountDeviceTypes });
+
   return (
     <Box>
       <Table
         columns={ACCOUNT_DEVICE_TYPES_TABLE_COLUMNS}
-        data={accountDeviceTypes}
+        data={accountDeviceTypes ?? []}
         progressPending={loading}
         paginationTotalRows={totalRecords}
         cellActions={[

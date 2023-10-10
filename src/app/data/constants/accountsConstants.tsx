@@ -131,8 +131,8 @@ export const ACCOUNT_DEVICE_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
     selector: (row: any) => row.deviceProfiles,
     format: (row: any) => (
       <Stack my={1} gap={1} flexWrap={"wrap"}>
-        {row.deviceProfiles.map(({ profileName }: any) => (
-          <Badge colorScheme="info">{profileName}</Badge>
+        {row.deviceProfiles.map(({ name }: any) => (
+          <Badge colorScheme="info">{name}</Badge>
         ))}
       </Stack>
     ),
