@@ -17,7 +17,7 @@ import {
   SearchField,
 } from "@vilocnv/allsetra-core";
 import { useTheme } from "@mui/material";
-import { DisplaySettings } from "assets/icons";
+import { DisplaySettings, FilterSettings } from "assets/icons";
 
 const MapMain: FC = () => {
   const theme = useTheme();
@@ -59,7 +59,11 @@ const MapMain: FC = () => {
           <SearchField placeholder="Search" />
         </SearchFieldWrapper>
 
-        <FilterButton theme={theme} onClick={() => setFilterOpen(true)} />
+        <FilterButton
+          theme={theme}
+          onClick={() => setFilterOpen(true)}
+          icon={<FilterSettings />}
+        />
       </TopLeftSection>
 
       <TopRightSection>
