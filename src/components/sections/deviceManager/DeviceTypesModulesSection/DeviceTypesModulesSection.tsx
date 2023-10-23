@@ -20,7 +20,7 @@ const DeviceTypesModulesSection: FC<Props> = ({ deviceTypeId }) => {
 
   useDispatchOnParams(getDeviceTypesModulesThunk, {
     searchByField: "deviceModule.moduleName",
-    args: { deviceTypeId },
+    args: { deviceTypeId: deviceTypeId || "" },
   });
 
   return (

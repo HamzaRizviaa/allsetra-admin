@@ -44,7 +44,7 @@ const DeviceTypesProfileSection: FC<Props> = ({ deviceTypeId }) => {
 
   useDispatchOnParams(getDeviceTypesProfilesThunk, {
     searchByField: "profileName",
-    args: { deviceTypeId },
+    args: { deviceTypeId: deviceTypeId || "" },
   });
 
   const openDeleteConfirmationModal = (deviceTypeProfile: any) => {

@@ -38,7 +38,9 @@ const AccountServicesSection: FC<Props> = ({ accountId }) => {
   const [assignServiceModal, setAssignServiceModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
-  useDispatchOnParams(getAccountServicesThunk, { args: { accountId } });
+  useDispatchOnParams(getAccountServicesThunk, {
+    args: { accountId: accountId || "" },
+  });
 
   const toggleAssignServiceModal = () =>
     setAssignServiceModal(!assignServiceModal);

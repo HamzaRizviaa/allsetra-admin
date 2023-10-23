@@ -2,7 +2,12 @@ import { FC, useState } from "react";
 import { FormikHelpers } from "formik";
 import { Box, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Table, AddUserForm, types, useDispatchOnParams } from "@vilocnv/allsetra-core";
+import {
+  Table,
+  AddUserForm,
+  types,
+  useDispatchOnParams,
+} from "@vilocnv/allsetra-core";
 import AssignUserForm from "components/forms/accounts/AssignUserForm/AssignUserForm";
 
 // Data
@@ -33,7 +38,9 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
   const [assignUserModal, setAssignUserModal] = useState(false);
   const [addUserModal, setAddUserModal] = useState(false);
 
-  useDispatchOnParams(getAccountAssociatedUsersThunk, { args: { accountId } });
+  useDispatchOnParams(getAccountAssociatedUsersThunk, {
+    args: { accountId: accountId || "" },
+  });
 
   useDispatchOnMount(getAllRolesThunk, roles.length ? undefined : true);
 
@@ -88,7 +95,6 @@ const AccountUsersSection: FC<Props> = ({ accountId }) => {
           variant: "outlined",
           onClick: toggleAssignUserModal,
         }}
-        
       />
       <AssignUserForm
         open={assignUserModal}

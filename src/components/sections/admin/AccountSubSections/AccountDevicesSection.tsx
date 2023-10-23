@@ -31,7 +31,9 @@ const AccountDevicesSection: FC<Props> = ({ accountId }) => {
   const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
-  useDispatchOnParams(getAccountDevicesThunk, { args: { accountId } });
+  useDispatchOnParams(getAccountDevicesThunk, {
+    args: { accountId: accountId || "" },
+  });
 
   const openDeleteConfirmationModal = (device: any) => {
     setSelectedDeviceId(device.uniqueId);

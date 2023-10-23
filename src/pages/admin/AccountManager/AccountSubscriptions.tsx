@@ -27,7 +27,7 @@ const AccountSubscriptions: FC = () => {
   );
 
   useDispatchOnParams(getAccountSubscriptionsBySearchThunk, {
-    args: { accountId: activeAccountId },
+    args: { accountId: activeAccountId || "" },
   });
 
   return (
