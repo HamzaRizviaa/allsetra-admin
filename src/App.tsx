@@ -14,7 +14,7 @@ import NotFound from "pages/NotFound";
 import Map from "pages/Map";
 import AlarmDesk from "pages/AlarmDesk";
 import Devices from "pages/Devices";
-import DeviceDetailts from "pages/Devices/DeviceDetailts";
+import DeviceDetails from "pages/Devices/DeviceDetails";
 import DeviceLocationHistory from "pages/Devices/DeviceLocationHistory";
 import DeviceSettings from "pages/Devices/DeviceSettings";
 import Objects from "pages/Objects";
@@ -78,7 +78,7 @@ const App: FC = () => {
 
         {/* Devices */}
         <Route path="/dashboard/devices" element={<Devices />} />
-        <Route path="/dashboard/devices/:id" element={<DeviceDetailts />} />
+        <Route path="/dashboard/devices/:id" element={<DeviceDetails />} />
         <Route
           path="/dashboard/devices/:id/location-history"
           element={<DeviceLocationHistory />}

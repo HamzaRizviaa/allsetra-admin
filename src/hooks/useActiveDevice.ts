@@ -17,13 +17,11 @@ const useActiveDevice = () => {
   const { specificDevice, loading } = useAppSelector(selectDevicesState);
 
   const getSpecificDevice = async () => {
-    if (isEmpty(specificDevice) || specificDevice.uniqueId !== params.id) {
-      const { type } = await dispatch(getSpecificDeviceThunk(params.id ?? ""));
+    const { type } = await dispatch(getSpecificDeviceThunk(params.id ?? ""));
 
-      if (type === "devices/getSpecificDeviceThunk/rejected") {
-        navigate(-1);
-        toast.error("Device not found");
-      }
+    if (type === "devices/getSpecificDeviceThunk/rejected") {
+      navigate(-1);
+      toast.error("Device not found");
     }
   };
 

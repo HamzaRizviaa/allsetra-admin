@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import {
   CardContainer,
   InfoIcon,
@@ -7,7 +7,7 @@ import {
   StyledAccessTimeIcon,
 } from "./DeviceDetailsCard.styled";
 import { IDevices } from "app/data/types";
-import { Badge, ConnectionBadge } from "@vilocnv/allsetra-core";
+import { Badge, ChargeBadge, ConnectionBadge } from "@vilocnv/allsetra-core";
 import { CellTowerIcon } from "assets/icons";
 import moment from "moment";
 
@@ -21,8 +21,21 @@ const DeviceDetailsCard: FC<DeviceDetailsCardProps> = ({ device }) => (
       <Stack direction={"row"} spacing={2}>
         <ConnectionBadge status={device?.isOnLine ? "online" : "offline"} />
         <Badge colorScheme={"info"} icon={<CellTowerIcon />}>
-          {device?.lastReceivedNetwork}
+          {device?.lastReceivedNetwork ?? "N/A"}
         </Badge>
+        {device?.lastBatteryValue ? (
+          <ChargeBadge percentage={Number(device.lastBatteryValue)} />
+        ) : (
+          <Typography
+            sx={{
+              fontSize: "14px",
+              fontWeight: "500",
+              color: "#76828F",
+            }}
+          >
+            N/A
+          </Typography>
+        )}
       </Stack>
       <Stack
         direction={"row"}
