@@ -19,8 +19,8 @@ export const selectActiveUserDetails = createSelector(
 export const selectDashboardAccount = (state: RootState) =>
   state.rootReducer.dashboardReducer.account;
 
-export const selectDashboardLocalAccountId = (state: RootState) =>
-  state.rootReducer.dashboardReducer.account?.localAccountId || "";
+export const selectDashboardAccountId = (state: RootState) =>
+  state.rootReducer.dashboardReducer.account?.uniqueId || "";
 
 export const selectIsDrawerCollapsed = (state: RootState) =>
   state.rootReducer.dashboardReducer.isDrawerCollapsed;

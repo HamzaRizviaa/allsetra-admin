@@ -1,4 +1,4 @@
-import { toast, utils } from "@vilocnv/allsetra-core";
+import { toast, utils, types } from "@vilocnv/allsetra-core";
 import {
   getAccountsByQueryThunk,
   getObjectTypesByQueryThunk,
@@ -16,7 +16,6 @@ import {
   setIsLockedOfAlarm,
 } from "app/features";
 import { AppDispatch } from "app/store";
-import { BackendEventsEnum } from "app/data/types";
 import { changeLanguage } from "app/data/helpers";
 
 export const signalRGenerateSuccessToastMessage = (
@@ -35,13 +34,13 @@ export const signalREventsRaisedListener = (
     //
     // Account Events
     //
-    case BackendEventsEnum.AccountCreatedEvent:
+    case types.BackendEventsEnum.AccountCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Account", event.name, "created")
       );
       dispatch(getAccountsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.AccountUpdatedEvent:
+    case types.BackendEventsEnum.AccountUpdatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Account", event.name, "updated")
       );
@@ -49,7 +48,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Services Events
-    case BackendEventsEnum.ServiceAssignedToAccountEvent:
+    case types.BackendEventsEnum.ServiceAssignedToAccountEvent:
       toast.success("Service has been assigned.");
       dispatch(
         getAccountServicesThunk({
@@ -58,7 +57,7 @@ export const signalREventsRaisedListener = (
         })
       );
       break;
-    case BackendEventsEnum.ServiceRemovedFromAccountEvent:
+    case types.BackendEventsEnum.ServiceRemovedFromAccountEvent:
       toast.success("Service has been removed.");
       dispatch(
         getAccountServicesThunk({
@@ -69,7 +68,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Device Types Events
-    case BackendEventsEnum.DeviceTypeAssignedToAccountEvent:
+    case types.BackendEventsEnum.DeviceTypeAssignedToAccountEvent:
       toast.success("Device type has been assigned.");
       dispatch(
         getAccountDeviceTypesThunk({
@@ -78,7 +77,7 @@ export const signalREventsRaisedListener = (
         })
       );
       break;
-    case BackendEventsEnum.DeviceTypeRemovedFromAccountEvent:
+    case types.BackendEventsEnum.DeviceTypeRemovedFromAccountEvent:
       toast.success("Device type has been removed.");
       dispatch(
         getAccountDeviceTypesThunk({
@@ -89,7 +88,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Object Types Events
-    case BackendEventsEnum.ObjectTypeAssignedToAccountEvent:
+    case types.BackendEventsEnum.ObjectTypeAssignedToAccountEvent:
       toast.success("Object type has been assigned.");
       dispatch(
         getAccountObjectTypesThunk({
@@ -98,7 +97,7 @@ export const signalREventsRaisedListener = (
         })
       );
       break;
-    case BackendEventsEnum.ObjectTypeRemovedFromAccountEvent:
+    case types.BackendEventsEnum.ObjectTypeRemovedFromAccountEvent:
       toast.success("Object type has been removed.");
       dispatch(
         getAccountObjectTypesThunk({
@@ -109,7 +108,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Users Events
-    case BackendEventsEnum.UserCreatedEvent:
+    case types.BackendEventsEnum.UserCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("User", event.name, "created")
       );
@@ -120,7 +119,7 @@ export const signalREventsRaisedListener = (
         })
       );
       break;
-    case BackendEventsEnum.UserAssignedToAccountEvent:
+    case types.BackendEventsEnum.UserAssignedToAccountEvent:
       toast.success("User has been assigned.");
       dispatch(
         getAccountAssociatedUsersThunk({
@@ -129,7 +128,7 @@ export const signalREventsRaisedListener = (
         })
       );
       break;
-    case BackendEventsEnum.UserRemovedFromAccountEvent:
+    case types.BackendEventsEnum.UserRemovedFromAccountEvent:
       toast.success("User has been removed.");
       dispatch(
         getAccountAssociatedUsersThunk({
@@ -140,7 +139,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Devices Events
-    case BackendEventsEnum.DeviceRemovedFromAccountEvent:
+    case types.BackendEventsEnum.DeviceRemovedFromAccountEvent:
       toast.success("Device has been removed.");
       dispatch(
         getAccountDevicesThunk({
@@ -151,7 +150,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Object Events
-    case BackendEventsEnum.ObjectRemovedFromAccountEvent:
+    case types.BackendEventsEnum.ObjectRemovedFromAccountEvent:
       toast.success("Object has been removed.");
       dispatch(
         getAccountObjectsThunk({
@@ -162,7 +161,7 @@ export const signalREventsRaisedListener = (
       break;
 
     // Account Installation Events
-    case BackendEventsEnum.InstallationRemovedFromAccountEvent:
+    case types.BackendEventsEnum.InstallationRemovedFromAccountEvent:
       toast.success("Installation has been removed.");
       dispatch(
         getAccountInstallationsThunk({
@@ -175,19 +174,19 @@ export const signalREventsRaisedListener = (
     //
     // Object Types Events
     //
-    case BackendEventsEnum.ObjectTypeCreatedEvent:
+    case types.BackendEventsEnum.ObjectTypeCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Object type", event.name, "created")
       );
       dispatch(getObjectTypesByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.ObjectTypeUpdatedEvent:
+    case types.BackendEventsEnum.ObjectTypeUpdatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Object type", event.name, "updated")
       );
       dispatch(getObjectTypesByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.ObjectTypeActivatedEvent:
+    case types.BackendEventsEnum.ObjectTypeActivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage(
           "Object type",
@@ -197,7 +196,7 @@ export const signalREventsRaisedListener = (
       );
       dispatch(getObjectTypesByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.ObjectTypeDeactivatedEvent:
+    case types.BackendEventsEnum.ObjectTypeDeactivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage(
           "Object type",
@@ -211,25 +210,25 @@ export const signalREventsRaisedListener = (
     //
     // Services Events
     //
-    case BackendEventsEnum.ServiceCreatedEvent:
+    case types.BackendEventsEnum.ServiceCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Service", event.name, "created")
       );
       dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.ServiceUpdatedEvent:
+    case types.BackendEventsEnum.ServiceUpdatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Service", event.name, "updated")
       );
       dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.ServiceActivatedEvent:
+    case types.BackendEventsEnum.ServiceActivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Service", event.name, "activated")
       );
       dispatch(getServicesByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.ServiceDeactivatedEvent:
+    case types.BackendEventsEnum.ServiceDeactivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Service", event.name, "deactivated")
       );
@@ -239,25 +238,25 @@ export const signalREventsRaisedListener = (
     //
     // Fields Events
     //
-    case BackendEventsEnum.FieldCreatedEvent:
+    case types.BackendEventsEnum.FieldCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Field", event.name, "created")
       );
       dispatch(getFieldsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.FieldUpdatedEvent:
+    case types.BackendEventsEnum.FieldUpdatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Field", event.name, "updated")
       );
       dispatch(getFieldsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.FieldActivatedEvent:
+    case types.BackendEventsEnum.FieldActivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Field", event.name, "activated")
       );
       dispatch(getFieldsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.FieldDeactivatedEvent:
+    case types.BackendEventsEnum.FieldDeactivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage("Field", event.name, "deactivated")
       );
@@ -267,7 +266,7 @@ export const signalREventsRaisedListener = (
     //
     // Subscriptions Manager Events
     //
-    case BackendEventsEnum.SubscriptionCreatedEvent:
+    case types.BackendEventsEnum.SubscriptionCreatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage(
           "Subscription",
@@ -277,7 +276,7 @@ export const signalREventsRaisedListener = (
       );
       dispatch(getSubscriptionsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.SubscriptionUpdatedEvent:
+    case types.BackendEventsEnum.SubscriptionUpdatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage(
           "Subscription",
@@ -287,7 +286,7 @@ export const signalREventsRaisedListener = (
       );
       dispatch(getSubscriptionsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.SubscriptionActivatedEvent:
+    case types.BackendEventsEnum.SubscriptionActivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage(
           "Subscription",
@@ -297,7 +296,7 @@ export const signalREventsRaisedListener = (
       );
       dispatch(getSubscriptionsByQueryThunk(utils.getCommonParamsForApi()));
       break;
-    case BackendEventsEnum.SubscriptionDeactivatedEvent:
+    case types.BackendEventsEnum.SubscriptionDeactivatedEvent:
       toast.success(
         signalRGenerateSuccessToastMessage(
           "Subscription",
@@ -311,7 +310,7 @@ export const signalREventsRaisedListener = (
     //
     // Settings Events
     //
-    case BackendEventsEnum.UserUpdatedEvent:
+    case types.BackendEventsEnum.UserUpdatedEvent:
       changeLanguage(event.preferredLanguage || "en");
       toast.success("Settings have been updated.");
       break;
@@ -319,7 +318,7 @@ export const signalREventsRaisedListener = (
     //
     // Alarm Desk Events
     //
-    case BackendEventsEnum.AlarmUpdatedEvent:
+    case types.BackendEventsEnum.AlarmUpdatedEvent:
       dispatch(
         setIsLockedOfAlarm({
           alarmId: event.uniqueId,
@@ -329,8 +328,15 @@ export const signalREventsRaisedListener = (
       );
       break;
 
-    case BackendEventsEnum.AlarmCommentCreatedEvent:
+    case types.BackendEventsEnum.AlarmCommentCreatedEvent:
       console.log(event);
+      break;
+
+    //
+    // Devices Events
+    //
+    case types.BackendEventsEnum.DeviceImmobilizerStatusChangeReportedEvent:
+      console.log({ event });
       break;
   }
 };

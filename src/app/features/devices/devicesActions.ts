@@ -134,8 +134,10 @@ export const disableDeviceImmobilizerThunk = createAsyncThunk(
     try {
       const response = await Devices.disableDeviceImmobilizer(deviceId);
 
-      if (response.status === 400) {
-        console.log("asdfasdf");
+      if (response.status === 202) {
+        toast.success(
+          "Your request is being processed by the backend to disable the immobilizer."
+        );
       }
 
       return response;

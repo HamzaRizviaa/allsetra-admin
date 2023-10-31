@@ -5,6 +5,7 @@ import {
   getAllIconsThunk,
   getAllCountriesThunk,
   getAllPaymentMethodsThunk,
+  getLoggedInUserThunk,
 } from "./dashboardActions";
 
 export interface IDashboardState {
@@ -120,6 +121,20 @@ const dashboardSlice = createSlice({
     });
 
     builder.addCase(getAllPaymentMethodsThunk.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Get getLoggedInUserThunk Action Cases
+    builder.addCase(getLoggedInUserThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getLoggedInUserThunk.fulfilled, (state, action) => {
+      state.account = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getLoggedInUserThunk.rejected, (state) => {
       state.loading = false;
     });
   },

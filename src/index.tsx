@@ -9,7 +9,7 @@ import theme from "app/theme";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Toast } from "@vilocnv/allsetra-core";
-import { setIdToken, setUserEmail, setDashboardAccount } from "app/features";
+import { setIdToken, setUserEmail } from "app/features";
 import "app/integrations/i18n/index";
 
 // Azure AD B2C
@@ -30,7 +30,6 @@ msalInstance.addEventCallback((event: EventMessage) => {
     const account = payload.account;
     store.dispatch(setIdToken(payload.idToken));
     store.dispatch(setUserEmail(payload.account?.username || null));
-    store.dispatch(setDashboardAccount(account));
     msalInstance.setActiveAccount(account);
   }
 });
