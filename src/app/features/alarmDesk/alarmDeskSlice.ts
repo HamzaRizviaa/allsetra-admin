@@ -32,7 +32,11 @@ const alarmDeskSlice = createSlice({
     },
     setIsLockedOfAlarm: (
       state,
-      action: PayloadAction<{ alarmId: string; isLocked: boolean }>
+      action: PayloadAction<{
+        alarmId: string;
+        isLocked: boolean;
+        lockedBy: string;
+      }>
     ) => {
       const alarm = state.alarms.find(
         (item) => item.uniqueId === action.payload.alarmId
@@ -40,6 +44,7 @@ const alarmDeskSlice = createSlice({
 
       if (alarm) {
         alarm.isLocked = action.payload.isLocked;
+        alarm.lockedBy = action.payload.lockedBy;
       }
     },
     setAllAlarmsAsUnlocked: (state) => {

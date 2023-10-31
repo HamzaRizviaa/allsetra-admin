@@ -7,7 +7,7 @@ import { IAlarm } from "../types";
 // TABLE HEADERS
 //
 export const ALL_ALARMS_TABLE_COLUMNS: TableColumn<IAlarm>[] = [
-  { name: "A-NR", sortable: true, selector: (row: IAlarm) => row.aNumber },
+  { name: "A-NR", sortable: true, selector: (row: IAlarm) => row.aNumber || "N/A" },
   {
     name: "Date",
     sortable: true,
@@ -18,7 +18,15 @@ export const ALL_ALARMS_TABLE_COLUMNS: TableColumn<IAlarm>[] = [
     sortable: true,
     selector: (row: IAlarm) => row.alarmType,
   },
-  { name: "SCM", sortable: true, selector: (row: IAlarm) => row.hasScmService },
+  {
+    name: "SCM",
+    sortable: true,
+    selector: (row: IAlarm) => (
+      <Badge colorScheme={row.hasScmService ? "success" : "error"}>
+        {row.hasScmService ? "Yes" : "No"}
+      </Badge>
+    ),
+  },
   {
     name: "Ignition",
     sortable: true,
@@ -28,11 +36,14 @@ export const ALL_ALARMS_TABLE_COLUMNS: TableColumn<IAlarm>[] = [
       </Badge>
     ),
   },
-  { name: "Battery", sortable: true },
   {
     name: "Immobiliser",
     sortable: true,
-    selector: (row: IAlarm) => row.hasImmobilizer,
+    selector: (row: IAlarm) => (
+      <Badge colorScheme={row.hasImmobilizer ? "success" : "error"}>
+        {row.hasImmobilizer ? "Yes" : "No"}
+      </Badge>
+    ),
   },
 ];
 

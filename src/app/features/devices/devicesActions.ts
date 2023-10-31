@@ -127,3 +127,26 @@ export const postUpdateDeviceThunk = createAsyncThunk(
     }
   }
 );
+
+export const disableDeviceImmobilizerThunk = createAsyncThunk(
+  "devices/disableDeviceImmobilizerThunk",
+  async (deviceId: string) => {
+    try {
+      const response = await Devices.disableDeviceImmobilizer(deviceId);
+
+      if (response.status === 400) {
+        console.log("asdfasdf");
+      }
+
+      return response;
+    } catch (e: any) {
+      if (e.response?.status === 400) {
+        toast.error(e.response.data.detail);
+      } else {
+        toast.error(e.message);
+      }
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

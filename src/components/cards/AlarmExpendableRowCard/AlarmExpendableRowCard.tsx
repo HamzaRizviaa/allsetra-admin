@@ -13,6 +13,7 @@ export interface AlarmExpendableRowCardProps extends AlarmActionsProps {
   toggleClearAlarmModal: () => void;
   toggleReportTheftModal: () => void;
   toggleSendSMSModal: () => void;
+  handleDisableImmobilizer: (deviceId: string) => void;
 }
 
 const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
@@ -21,14 +22,19 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
   toggleClearAlarmModal,
   toggleReportTheftModal,
   toggleSendSMSModal,
+  handleDisableImmobilizer,
 }) => {
+  console.log({ data });
+
   return (
     <AlarmCardContainer>
       <AlarmActions
+        data={data}
         toggleSendEmailModal={toggleSendEmailModal}
         toggleClearAlarmModal={toggleClearAlarmModal}
         toggleReportTheftModal={toggleReportTheftModal}
         toggleSendSMSModal={toggleSendSMSModal}
+        handleDisableImmobilizer={handleDisableImmobilizer}
       />
       <AlarmMetadata data={data} />
       <AlarmComments data={data} />

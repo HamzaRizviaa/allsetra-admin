@@ -13,6 +13,7 @@ import {
   getAccountDevicesThunk,
   getAccountInstallationsThunk,
   getSpecificAccountThunk,
+  setIsLockedOfAlarm,
 } from "app/features";
 import { AppDispatch } from "app/store";
 import { BackendEventsEnum } from "app/data/types";
@@ -319,7 +320,13 @@ export const signalREventsRaisedListener = (
     // Alarm Desk Events
     //
     case BackendEventsEnum.AlarmUpdatedEvent:
-      console.log(event);
+      dispatch(
+        setIsLockedOfAlarm({
+          alarmId: event.uniqueId,
+          lockedBy: event.author,
+          isLocked: event.isLocked,
+        })
+      );
       break;
 
     case BackendEventsEnum.AlarmCommentCreatedEvent:

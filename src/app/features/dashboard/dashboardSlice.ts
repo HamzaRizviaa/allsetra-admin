@@ -11,7 +11,9 @@ export interface IDashboardState {
   loading: boolean;
   idToken: string | null;
   userEmail: string | null;
+  account: any;
   isDrawerCollapsed: boolean;
+
   roles: Array<any>;
   currencies: Array<any>;
   icons: Array<any>;
@@ -23,7 +25,9 @@ const initialState: IDashboardState = {
   loading: false,
   idToken: null,
   userEmail: null,
+  account: null,
   isDrawerCollapsed: false,
+
   roles: [],
   currencies: [],
   icons: [],
@@ -40,6 +44,9 @@ const dashboardSlice = createSlice({
     },
     setUserEmail: (state, action: PayloadAction<string | null>) => {
       state.userEmail = action.payload;
+    },
+    setDashboardAccount: (state, action: PayloadAction<any>) => {
+      state.account = action.payload;
     },
     setDrawerCollapseState: (state, action: PayloadAction<boolean>) => {
       state.isDrawerCollapsed = action.payload;
@@ -119,6 +126,10 @@ const dashboardSlice = createSlice({
 });
 
 export * from "./dashboardActions";
-export const { setIdToken, setUserEmail, setDrawerCollapseState } =
-  dashboardSlice.actions;
+export const {
+  setIdToken,
+  setUserEmail,
+  setDrawerCollapseState,
+  setDashboardAccount,
+} = dashboardSlice.actions;
 export default dashboardSlice.reducer;
