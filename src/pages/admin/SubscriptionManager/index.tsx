@@ -92,7 +92,7 @@ const SubscriptionManager: FC = () => {
     [specificSubscription, selectedSubscriptionId]
   );
 
-  const onRowClick = (row: ISubscription) => {
+  const handleEditSubscription = (row: ISubscription) => {
     dispatch(getSpecificSubscriptionThunk(row.uniqueId));
     setSelectedSubscriptionId(row.uniqueId);
     setOpen(true);
@@ -117,8 +117,8 @@ const SubscriptionManager: FC = () => {
           progressPending={totalSubscriptionsLoading}
           paginationTotalRows={totalSubscriptions}
           searchPlaceholder="Search subscription"
-          onRowClicked={onRowClick}
           cellActions={[
+            { name: "Edit Subscription", onClick: handleEditSubscription },
             {
               name: "Activate subscription",
               when: (row: ISubscription) => row.isDeleted === true,

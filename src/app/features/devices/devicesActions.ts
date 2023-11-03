@@ -128,16 +128,32 @@ export const postUpdateDeviceThunk = createAsyncThunk(
   }
 );
 
+export const getAllSubscriptionsByDeviceIdThunk = createAsyncThunk(
+  "objects/getAllSubscriptionsByObjectIdThunk",
+  async (deviceId: string) => {
+    try {
+      const response = await Devices.getAllSubscriptionsByDeviceId(deviceId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const disableDeviceImmobilizerThunk = createAsyncThunk(
   "devices/disableDeviceImmobilizerThunk",
   async (deviceId: string) => {
     try {
       const response = await Devices.disableDeviceImmobilizer(deviceId);
 
-      if (response.status === 202) {
-        toast.success(
-          "Your request is being processed by the backend to disable the immobilizer."
-        );
+      if (response.status === 400) {
+        console.log("asdfasdf");
       }
 
       return response;

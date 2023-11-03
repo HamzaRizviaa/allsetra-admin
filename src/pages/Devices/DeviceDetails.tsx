@@ -9,8 +9,8 @@ import DeviceDetailsBody from "components/sections/devices/DeviceDetailsBody/Dev
 
 // Data
 import { useActiveDevice, useAppDispatch, useAppSelector } from "hooks";
-import { getAllSubscriptionsByObjectIdThunk } from "app/features";
-import { selectObjectSubscriptions } from "app/data/selectors";
+import { getAllSubscriptionsByDeviceIdThunk } from "app/features";
+import { selectDeviceSubscriptionsById } from "app/data/selectors";
 
 const DeviceDetails: FC = () => {
   const theme = useTheme();
@@ -19,17 +19,13 @@ const DeviceDetails: FC = () => {
 
   const { specificDevice, loading } = useActiveDevice();
 
-  const { objectSubscriptions, objectSubscriptionsLoading } = useAppSelector(
-    selectObjectSubscriptions
+  const { deviceSubscriptions, deviceSubscriptionsLoading } = useAppSelector(
+    selectDeviceSubscriptionsById
   );
 
   useEffect(() => {
-    if (specificDevice?.object) {
-      dispatch(
-        getAllSubscriptionsByObjectIdThunk(
-          specificDevice?.object?.uniqueId || ""
-        )
-      );
+    if (specificDevice) {
+      dispatch(getAllSubscriptionsByDeviceIdThunk(specificDevice?.uniqueId));
     }
   }, []);
 
@@ -49,7 +45,7 @@ const DeviceDetails: FC = () => {
         }}
       />
       <Box mx={4} mt={4}>
-        {loading || objectSubscriptionsLoading ? (
+        {loading || deviceSubscriptionsLoading ? (
           <PageLoader />
         ) : (
           <Fragment>
@@ -61,7 +57,7 @@ const DeviceDetails: FC = () => {
             />
             <DeviceDetailsBody
               specificDevice={specificDevice}
-              objectSubscriptions={objectSubscriptions ?? []}
+              objectSubscriptions={deviceSubscriptions ?? []}
             />
             {/* <DeviceDetailsTables /> */}
           </Fragment>

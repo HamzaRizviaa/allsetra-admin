@@ -35,10 +35,12 @@ class Devices {
     return await axiosInstance.patch(`/devices/${deviceId}/activate`);
   };
 
+  static getAllSubscriptionsByDeviceId = async (deviceId: string) => {
+    return await axiosInstance.get(`/devices/${deviceId}/subscriptions`);
+  };
+
   static disableDeviceImmobilizer = async (deviceId: string) => {
-    return await axiosInstance.post(
-      `/devices/${deviceId}/immobilizer/disable`
-    );
+    return await axiosInstance.post(`/devices/${deviceId}/immobilizer/disable`);
   };
 }
 

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllDevicesThunk,
+  getAllSubscriptionsByDeviceIdThunk,
   getDeviceLocationHistoryThunk,
   getDevicesByQueryThunk,
   getSpecificDeviceThunk,
@@ -14,6 +15,9 @@ export interface IDevicesState {
   devices: Array<any>;
   deviceLocationHistory: Array<any>;
   specificDevice: IDevices | null;
+
+  deviceSubscriptions: Array<any>;
+  deviceSubscriptionsLoading: boolean;
 }
 
 const initialState: IDevicesState = {
@@ -22,6 +26,8 @@ const initialState: IDevicesState = {
   devices: [],
   deviceLocationHistory: [],
   specificDevice: null,
+  deviceSubscriptions: [],
+  deviceSubscriptionsLoading: false,
 };
 
 const DevicesSlice = createSlice({
@@ -94,6 +100,23 @@ const DevicesSlice = createSlice({
 
     builder.addCase(getSpecificDeviceThunk.rejected, (state) => {
       state.loading = false;
+    });
+
+    // Get Subscriptions of Device By ID Thunk
+    builder.addCase(getAllSubscriptionsByDeviceIdThunk.pending, (state) => {
+      state.deviceSubscriptionsLoading = true;
+    });
+
+    builder.addCase(
+      getAllSubscriptionsByDeviceIdThunk.fulfilled,
+      (state, action) => {
+        state.deviceSubscriptions = action.payload;
+        state.deviceSubscriptionsLoading = false;
+      }
+    );
+
+    builder.addCase(getAllSubscriptionsByDeviceIdThunk.rejected, (state) => {
+      state.deviceSubscriptionsLoading = false;
     });
   },
 });

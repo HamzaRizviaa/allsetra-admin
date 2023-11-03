@@ -16,6 +16,12 @@ export const selectAllDevices = (state: RootState) =>
 export const selectSpecificDevice = (state: RootState) =>
   state.rootReducer.devicesReducer.specificDevice;
 
+export const selectAllDeviceSubscriptions = (state: RootState) =>
+  state.rootReducer.devicesReducer.deviceSubscriptions;
+
+export const selectDevicesSubscriptionLoading = (state: RootState) =>
+  state.rootReducer.devicesReducer.deviceSubscriptionsLoading;
+
 export const selectDevicesState = createSelector(
   selectDevicesReducerLoading,
   selectDeviceLocationHistory,
@@ -34,5 +40,14 @@ export const selectDevicesState = createSelector(
     totalDevices,
     allDevices,
     specificDevice,
+  })
+);
+
+export const selectDeviceSubscriptionsById = createSelector(
+  selectAllDeviceSubscriptions,
+  selectDevicesSubscriptionLoading,
+  (deviceSubscriptions, deviceSubscriptionsLoading) => ({
+    deviceSubscriptions,
+    deviceSubscriptionsLoading,
   })
 );

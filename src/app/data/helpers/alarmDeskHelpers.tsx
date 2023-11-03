@@ -151,13 +151,13 @@ export const transformOwnerCountriesForWhitelisted = (
 export const transformAlarmForPDFGenralDataTable = (alarm: any) => {
   if (!alarm) return {};
 
-  const { owner } = alarm.object;
-  const { visitingAddress } = owner;
+  const { alarmOwner } = alarm.object;
+  const { visitingAddress } = alarmOwner;
 
   return {
     "ID-nummer": alarm.aNumber ?? "",
-    Bedrijfsnaam: owner?.name ?? "",
-    "KvK-nummer": owner?.kvkcocNumber ?? "",
+    Bedrijfsnaam: alarmOwner?.name ?? "",
+    "KvK-nummer": alarmOwner?.kvkcocNumber ?? "",
     Bezoekadres: visitingAddress
       ? `${visitingAddress.houseNumber}, ${visitingAddress.street}, ${visitingAddress.city}, ${visitingAddress.state}, ${visitingAddress.country?.name}`
       : "",

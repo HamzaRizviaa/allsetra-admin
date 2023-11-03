@@ -14,6 +14,7 @@ import {
 } from "app/features";
 import { selectAccountObjects } from "app/data/selectors";
 import { ACCOUNT_OBJECTS_TABLE_COLUMNS } from "app/data/constants";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   accountId: string | null;
@@ -22,6 +23,7 @@ interface Props {
 const AccountObjectsSection: FC<Props> = ({ accountId }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // Global State
   const { accountObjects, totalRecords, loading } =
@@ -53,10 +55,12 @@ const AccountObjectsSection: FC<Props> = ({ accountId }) => {
     setOpenDeleteModal(false);
   };
 
+  const tableColumns = ACCOUNT_OBJECTS_TABLE_COLUMNS(navigate);
+
   return (
     <Box>
       <Table
-        columns={ACCOUNT_OBJECTS_TABLE_COLUMNS}
+        columns={tableColumns}
         data={accountObjects ?? []}
         progressPending={loading}
         paginationTotalRows={totalRecords}
