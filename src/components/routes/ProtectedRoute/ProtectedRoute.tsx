@@ -16,8 +16,9 @@ import {
   useAppSelector,
   useSignalR,
   useSetLangOnSettingsChange,
+  useDispatchOnMount,
 } from "hooks";
-import { setDrawerCollapseState } from "app/features";
+import { getLoggedInUserThunk, setDrawerCollapseState } from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
 import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
 
@@ -36,6 +37,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   useSignalR();
 
   useSetLangOnSettingsChange();
+
+  // useDispatchOnMount(getLoggedInUserThunk)
 
   const { t } = useTranslation();
 

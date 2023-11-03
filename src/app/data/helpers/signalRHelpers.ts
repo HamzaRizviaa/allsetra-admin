@@ -319,6 +319,11 @@ export const signalREventsRaisedListener = (
     // Alarm Desk Events
     //
     case types.BackendEventsEnum.AlarmUpdatedEvent:
+      console.log({
+        alarmId: event.uniqueId,
+        lockedBy: event.author,
+        isLocked: event.isLocked,
+      });
       dispatch(
         setIsLockedOfAlarm({
           alarmId: event.uniqueId,
