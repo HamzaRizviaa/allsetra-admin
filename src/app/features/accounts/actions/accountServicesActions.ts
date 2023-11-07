@@ -44,6 +44,30 @@ export const assignServiceToAccountThunk = createAsyncThunk(
   }
 );
 
+export const updateServiceForAccountThunk = createAsyncThunk(
+  "accounts/updateServiceForAccountThunk",
+  async ({ accountId, serviceId, data }: any) => {
+    try {
+      const response = await Accounts.updateServiceForAccount(
+        accountId,
+        serviceId,
+        data
+      );
+
+      if (response.status === 202) {
+        toast.success(
+          "Service update request is being processed by the backend."
+        );
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const removeServiceFromAccountThunk = createAsyncThunk(
   "accounts/removeServiceFromAccountThunk",
   async ({ accountId, serviceId }: any) => {

@@ -110,12 +110,46 @@ export const accountAssignUserValidationSchema: Yup.Schema<IAccountAssignUser> =
 export const accountAssignServiceInitialValues: IAccountAssignService = {
   serviceId: "",
   subscriptions: [],
+  subscriptionsPricing: {},
 };
 
 export const accountAssignServiceValidationSchema: Yup.Schema = Yup.object({
   serviceId: Yup.string().trim().required().label("Service"),
   subscriptions: Yup.array().of(Yup.string()).required().label("Subscriptions"),
 });
+
+export const transformAccountServiceDataForForm = (service: any) => {
+  const subscriptionsPricing: any = {};
+
+  const subscriptions = service.subscriptions?.map((subscription: any) => {
+    subscriptionsPricing[subscription.uniqueId] = {
+      currency: subscription.currency,
+      subscriptionPrice: subscription.valuePerMonth,
+    };
+
+    return subscription.uniqueId;
+  });
+
+  return {
+    serviceId: service.uniqueId,
+    subscriptions,
+    subscriptionsPricing,
+  };
+};
+
+export const transformAccountServiceDataForAPI = (
+  data: IAccountAssignService
+) => {
+  const subscriptions = data.subscriptions.map((id) => ({
+    subscriptionUniqueId: id,
+    ...data.subscriptionsPricing[id],
+  }));
+
+  return {
+    serviceId: data.serviceId,
+    subscriptions,
+  };
+};
 
 //
 // Account Device-Types Helpers

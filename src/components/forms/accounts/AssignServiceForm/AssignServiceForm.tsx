@@ -1,40 +1,45 @@
-import { FC, useEffect } from "react";
-import { Box, Stack, useTheme } from "@mui/material";
-import { Modal, ModalProps, FormikSelectField } from "@vilocnv/allsetra-core";
+import { FC, useMemo } from "react";
+import { isEmpty } from "lodash";
+import { Box, useTheme } from "@mui/material";
+import { Modal, ModalProps, types } from "@vilocnv/allsetra-core";
 import { Formik, Form, FormikHelpers } from "formik";
 import { ServiceBlueIcon } from "assets/icons";
+import InnerForm from "./children/InnerForm";
 
 // DATA
-import { useAppDispatch, useAppSelector } from "hooks";
+import { useAppDispatch } from "hooks";
 import { IAccountAssignService } from "app/data/types";
 import {
   accountAssignServiceInitialValues,
   accountAssignServiceValidationSchema,
+  transformAccountServiceDataForAPI,
+  transformAccountServiceDataForForm,
 } from "app/data/helpers";
 import {
   assignServiceToAccountThunk,
-  getAllSubscriptionsThunk,
-  useGetAvailableServicesForAccountQuery,
+  updateServiceForAccountThunk,
 } from "app/features";
-import { selectSubscriptionsState } from "app/data/selectors";
 
 export type Props = Omit<ModalProps, "title" | "children"> & {
   accountId: string | null;
+  service?: types.IAdminService | null;
 };
 
-const AssignServiceForm: FC<Props> = ({ open, onClose, accountId }) => {
+const AssignServiceForm: FC<Props> = ({
+  open,
+  onClose,
+  accountId,
+  service,
+}) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const isEdit = !isEmpty(service);
 
-  const { allSubscriptions, loading: subscriptionsLoading } = useAppSelector(
-    selectSubscriptionsState
-  );
-
-  const { data, isLoading } = useGetAvailableServicesForAccountQuery(accountId);
-
-  useEffect(() => {
-    dispatch(getAllSubscriptionsThunk());
-  }, []);
+  const initialValues = useMemo(() => {
+    return isEmpty(service)
+      ? accountAssignServiceInitialValues
+      : transformAccountServiceDataForForm(service);
+  }, [service]);
 
   const onSubmitHandler = async (
     values: IAccountAssignService,
@@ -42,13 +47,30 @@ const AssignServiceForm: FC<Props> = ({ open, onClose, accountId }) => {
   ) => {
     formikHelpers.setSubmitting(true);
 
-    const { type } = await dispatch(
-      assignServiceToAccountThunk({ accountId, data: values })
-    );
+    const data = transformAccountServiceDataForAPI(values);
 
-    if (type === "accounts/assignServiceToAccountThunk/fulfilled") {
-      onClose();
-      formikHelpers.resetForm();
+    if (!isEdit) {
+      const { type } = await dispatch(
+        assignServiceToAccountThunk({ accountId, data })
+      );
+
+      if (type === "accounts/assignServiceToAccountThunk/fulfilled") {
+        onClose();
+        formikHelpers.resetForm();
+      }
+    } else {
+      const { type } = await dispatch(
+        updateServiceForAccountThunk({
+          accountId,
+          serviceId: service.uniqueId,
+          data,
+        })
+      );
+
+      if (type === "accounts/updateServiceForAccountThunk/fulfilled") {
+        onClose();
+        formikHelpers.resetForm();
+      }
     }
 
     formikHelpers.setSubmitting(false);
@@ -57,54 +79,39 @@ const AssignServiceForm: FC<Props> = ({ open, onClose, accountId }) => {
   return (
     <Box>
       <Formik
-        initialValues={accountAssignServiceInitialValues}
+        initialValues={initialValues}
         validationSchema={accountAssignServiceValidationSchema}
         onSubmit={onSubmitHandler}
         enableReinitialize
         validateOnMount
       >
-        {({ handleSubmit, isSubmitting, isValid }) => (
+        {({ handleSubmit, isSubmitting, isValid, resetForm, dirty }) => (
           <Form>
             <Modal
               open={open}
               onClose={onClose}
-              title="Assign service"
+              title={isEdit ? "Edit Assigned Service" : "Assign Service"}
               subTitle={"Some description if needed."}
               headerIcon={<ServiceBlueIcon />}
               headerIconBgColor={theme.palette.primary.light}
               primaryBtnProps={{
                 type: "submit",
-                text: "Assign service",
+                text: isEdit ? "Edit Assigned Service" : "Assign Service",
                 loading: isSubmitting,
-                disabled: !isValid,
+                disabled: isEdit ? (!dirty ? isValid : !isValid) : !isValid,
                 // @ts-ignore
                 onClick: handleSubmit,
               }}
-              secondaryBtnProps={{ text: "Cancel", onClick: onClose }}
+              secondaryBtnProps={{
+                text: "Cancel",
+                onClick: () => {
+                  onClose();
+                  resetForm();
+                },
+              }}
               theme={theme}
             >
-              <Stack spacing={2}>
-                <FormikSelectField
-                  label="Service type"
-                  name="serviceId"
-                  options={data || []}
-                  optionLabelKey="name"
-                  optionValueKey="uniqueId"
-                  loading={isLoading}
-                  required
-                />
-                <FormikSelectField
-                  label="Subscriptions"
-                  name="subscriptions"
-                  options={allSubscriptions || []}
-                  optionLabelKey="name"
-                  optionValueKey="uniqueId"
-                  loading={subscriptionsLoading}
-                  multiple
-                  searchable
-                  required
-                />
-              </Stack>
+              <InnerForm service={service} accountId={accountId} />
             </Modal>
           </Form>
         )}

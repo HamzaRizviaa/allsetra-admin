@@ -93,6 +93,17 @@ class Accounts {
     return await axiosInstance.post(`/accounts/${accountId}/services`, data);
   };
 
+  static updateServiceForAccount = async (
+    accountId: string,
+    serviceId: string,
+    data: any
+  ) => {
+    return await axiosInstance.patch(
+      `/accounts/${accountId}/services/${serviceId}`,
+      data
+    );
+  };
+
   static removeServiceFromAccount = async (
     accountId: string,
     serviceId: string

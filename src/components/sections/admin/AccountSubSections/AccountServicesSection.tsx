@@ -32,9 +32,8 @@ const AccountServicesSection: FC<Props> = ({ accountId }) => {
   );
 
   // Local State
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
-    null
-  );
+  const [selectedService, setSelectedService] =
+    useState<types.IAdminService | null>(null);
   const [assignServiceModal, setAssignServiceModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
@@ -45,17 +44,22 @@ const AccountServicesSection: FC<Props> = ({ accountId }) => {
   const toggleAssignServiceModal = () =>
     setAssignServiceModal(!assignServiceModal);
 
+  const editServiceActionHandler = (service: types.IAdminService) => {
+    setSelectedService(service);
+    toggleAssignServiceModal();
+  };
+
   const openDeleteConfirmationModal = (service: types.IAdminService) => {
-    setSelectedServiceId(service.uniqueId);
+    setSelectedService(service);
     setOpenDeleteModal(true);
   };
 
   const removeServiceHandler = () => {
-    if (selectedServiceId && accountId) {
+    if (selectedService && accountId) {
       dispatch(
         removeServiceFromAccountThunk({
           accountId,
-          serviceId: selectedServiceId,
+          serviceId: selectedService.uniqueId,
         })
       );
     }
@@ -71,6 +75,7 @@ const AccountServicesSection: FC<Props> = ({ accountId }) => {
         progressPending={loading}
         paginationTotalRows={totalRecords}
         cellActions={[
+          { name: "Edit service", onClick: editServiceActionHandler },
           { name: "Remove service", onClick: openDeleteConfirmationModal },
         ]}
         searchPlaceholder="Search service"
@@ -78,13 +83,17 @@ const AccountServicesSection: FC<Props> = ({ accountId }) => {
           text: "Assign service",
           variant: "outlined",
           startIcon: <AddIcon />,
-          onClick: toggleAssignServiceModal,
+          onClick: () => {
+            setSelectedService(null);
+            toggleAssignServiceModal();
+          },
         }}
       />
       <AssignServiceForm
         open={assignServiceModal}
         onClose={toggleAssignServiceModal}
         accountId={accountId}
+        service={selectedService}
       />
       <DeleteConfirmationModal
         open={openDeleteModal}
