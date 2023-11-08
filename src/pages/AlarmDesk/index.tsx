@@ -40,7 +40,6 @@ const AlarmDesk: FC = () => {
 
   // Local State
   const [selectedAlarmId, setSelectedAlarmId] = useState<string | null>(null);
-  const [expandedRowsId, setExpandedRowsId] = useState<string[]>([]);
 
   // Form Modals States
   const [openSendEmailModal, setOpenSendEmailModal] = useState<boolean>(false);
@@ -86,21 +85,7 @@ const AlarmDesk: FC = () => {
     dispatch(disableDeviceImmobilizerThunk(deviceId));
   };
 
-  // const isRowExpended = useCallback(
-  //   (alarmId: string) => {
-  //     return expandedRowsId.some((id) => id === alarmId);
-  //   },
-  //   [expandedRowsId]
-  // );
-
   const handleExpandableRowDisabled = (row: types.IAlarm) => {
-    // row.isLocked && !isRowExpended(row.uniqueId)
-    // return (
-    //   row.isLocked &&
-    //   row.lockedBy !== localAccountId &&
-    //   !isRowExpended(row.uniqueId)
-    // );
-
     return row.isLocked && row.lockedBy !== accountId;
   };
 
@@ -112,17 +97,11 @@ const AlarmDesk: FC = () => {
 
       if (expanded) {
         dispatch(postLockAlarmThunk(payload));
-        setExpandedRowsId([...expandedRowsId, row.uniqueId]);
       } else {
         dispatch(postUnlockAlarmThunk(payload));
-
-        const filteredExpandedRowsId = expandedRowsId.filter(
-          (id) => id !== row.uniqueId
-        );
-        setExpandedRowsId(filteredExpandedRowsId);
       }
     },
-    [expandedRowsId]
+    []
   );
 
   return (

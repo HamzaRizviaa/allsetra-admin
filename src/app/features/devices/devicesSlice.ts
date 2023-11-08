@@ -5,6 +5,7 @@ import {
   getDeviceLocationHistoryThunk,
   getDevicesByQueryThunk,
   getSpecificDeviceThunk,
+  disableDeviceImmobilizerThunk,
 } from "./devicesActions";
 import { IDevices } from "app/data/types";
 
@@ -18,16 +19,20 @@ export interface IDevicesState {
 
   deviceSubscriptions: Array<any>;
   deviceSubscriptionsLoading: boolean;
+  deviceDisableImmobilizerSubmitting: boolean;
 }
 
 const initialState: IDevicesState = {
   loading: false,
   totalDevices: null,
+
   devices: [],
   deviceLocationHistory: [],
   specificDevice: null,
+
   deviceSubscriptions: [],
   deviceSubscriptionsLoading: false,
+  deviceDisableImmobilizerSubmitting: false,
 };
 
 const DevicesSlice = createSlice({
@@ -117,6 +122,19 @@ const DevicesSlice = createSlice({
 
     builder.addCase(getAllSubscriptionsByDeviceIdThunk.rejected, (state) => {
       state.deviceSubscriptionsLoading = false;
+    });
+
+    // Disable Device Immobilizer Thunk Action Cases
+    builder.addCase(disableDeviceImmobilizerThunk.pending, (state) => {
+      state.deviceDisableImmobilizerSubmitting = true;
+    });
+
+    builder.addCase(disableDeviceImmobilizerThunk.fulfilled, (state) => {
+      state.deviceDisableImmobilizerSubmitting = false;
+    });
+
+    builder.addCase(disableDeviceImmobilizerThunk.rejected, (state) => {
+      state.deviceDisableImmobilizerSubmitting = false;
     });
   },
 });

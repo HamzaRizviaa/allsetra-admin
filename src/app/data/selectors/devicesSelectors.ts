@@ -22,6 +22,9 @@ export const selectAllDeviceSubscriptions = (state: RootState) =>
 export const selectDevicesSubscriptionLoading = (state: RootState) =>
   state.rootReducer.devicesReducer.deviceSubscriptionsLoading;
 
+export const selectDeviceDisableImmobilizerSubmitting = (state: RootState) =>
+  state.rootReducer.devicesReducer.deviceDisableImmobilizerSubmitting;
+
 export const selectDevicesState = createSelector(
   selectDevicesReducerLoading,
   selectDeviceLocationHistory,

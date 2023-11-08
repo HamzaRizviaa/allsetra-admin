@@ -4,6 +4,8 @@ import { Stack } from "@mui/material";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import LockIcon from "@mui/icons-material/Lock";
+import { useAppSelector } from "hooks";
+import { selectDeviceDisableImmobilizerSubmitting } from "app/data/selectors";
 
 export interface AlarmActionsProps {
   data: types.IAlarm;
@@ -22,6 +24,10 @@ const AlarmActions: FC<AlarmActionsProps> = ({
   toggleSendSMSModal,
   handleDisableImmobilizer,
 }) => {
+  const deviceDisableImmobilizerSubmitting = useAppSelector(
+    selectDeviceDisableImmobilizerSubmitting
+  );
+
   return (
     <Stack
       direction={"row"}
@@ -68,11 +74,12 @@ const AlarmActions: FC<AlarmActionsProps> = ({
             variant={"contained"}
             color={"error"}
             size={"small"}
-            startIcon={<LockIcon />}
+            startIcon={deviceDisableImmobilizerSubmitting ? null : <LockIcon />}
             onClick={() =>
               handleDisableImmobilizer(data.device?.uniqueId || "")
             }
             onHoverBgColor={"#CC1010"}
+            loading={deviceDisableImmobilizerSubmitting}
           >
             Disable Immobilizer
           </Button>

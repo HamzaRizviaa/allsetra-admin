@@ -24,8 +24,6 @@ const AlarmExpendableRowCard: FC<AlarmExpendableRowCardProps> = ({
   toggleSendSMSModal,
   handleDisableImmobilizer,
 }) => {
-  console.log({ data });
-
   return (
     <AlarmCardContainer>
       <AlarmActions
