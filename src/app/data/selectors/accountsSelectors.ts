@@ -29,6 +29,12 @@ export const selectAccountsTypesLoading = (state: RootState) =>
 export const selectAccountsTypes = (state: RootState) =>
   state.rootReducer.accountsReducer.accountsTypes;
 
+export const selectAllUsersWithRoleDrivers = (state: RootState) =>
+  state.rootReducer.accountsReducer.usersWithRoleDriver;
+
+export const selectAllUsersWithRoleDriverLoading = (state: RootState) =>
+  state.rootReducer.accountsReducer.usersWithRoleDriverLoading;
+
 export const selectAccountMetadataState = createSelector(
   selectAccountsIndustriesLoading,
   selectAccountsIndustries,
@@ -65,11 +71,22 @@ export const selectAccountsState = createSelector(
   selectTotalAccounts,
   selectActiveAccount,
   selectAllAccounts,
-  (loading, totalAccounts, account, allAccounts) => ({
+  selectAllUsersWithRoleDrivers,
+  selectAllUsersWithRoleDriverLoading,
+  (
     loading,
     totalAccounts,
     account,
     allAccounts,
+    usersWithRoleDriver,
+    usersWithRoleDriverLoading
+  ) => ({
+    loading,
+    totalAccounts,
+    account,
+    allAccounts,
+    usersWithRoleDriver,
+    usersWithRoleDriverLoading,
   })
 );
 

@@ -57,6 +57,7 @@ export { ReactComponent as PointerHistoryIcon } from "./common/PointerHistoryIco
 export { ReactComponent as Alarm } from "./common/Alarm.svg";
 export { ReactComponent as FilterSettings } from "./common/FilterSettings.svg";
 export { ReactComponent as DisplaySettings } from "./common/DisplaySettings.svg";
+export { ReactComponent as FilterIcon } from "./common/FilterIcon.svg";
 
 // Badges Icons
 export { ReactComponent as CellTowerIcon } from "./badges/CellTowerIcon.svg";

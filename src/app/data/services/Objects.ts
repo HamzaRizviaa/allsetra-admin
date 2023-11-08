@@ -30,6 +30,16 @@ class Objects {
   static getAllSubscriptionsByObjectId = async (objectId: string) => {
     return await axiosInstance.get(`/objects/${objectId}/subscriptions`);
   };
+
+  static getObjectsLocations = async (
+    accountId: string,
+    data: types.IMapFilter
+  ) => {
+    return await axiosInstance.post(
+      `/accounts/${accountId}/objects/locations`,
+      data
+    );
+  };
 }
 
 export default Objects;

@@ -12,13 +12,20 @@ const GEOZONE_OPTIONS = {
 interface GeozoneProps {
   geozone: Array<any>;
   radius: number;
+  objectsMarker?: boolean;
 }
 
-const Geozone: FC<GeozoneProps> = ({ geozone, radius }) => {
+const Geozone: FC<GeozoneProps> = ({
+  geozone,
+  radius,
+  objectsMarker = false,
+}) => {
   const center = geozone[0]; // Assuming the first point in the geozone array is the center
 
   // Calculate the radius based on the specified radius prop
-  const circleRadius = Math.sqrt(radius) * 1000 * 2; // Adjust the multiplier as needed
+  const circleRadius = objectsMarker
+    ? radius / 2
+    : Math.sqrt(radius) * 1000 * 2; // Adjust the multiplier as needed
 
   return (
     <CircleF center={center} radius={circleRadius} options={GEOZONE_OPTIONS} />

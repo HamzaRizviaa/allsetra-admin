@@ -15,6 +15,7 @@ import {
   getSpecificAccountThunk,
   getAccountSubscriptionsBySearchThunk,
   getDeviceSubscriptionsConnectedtoObjectAndAccountThunk,
+  getUsersWithRoleDriverThunk,
 } from "./actions";
 import { getAllAccountGroupsThunk } from "./actions/accountGroupsActions";
 
@@ -45,6 +46,8 @@ export interface IAccountsState {
   accountGroups: Array<any>;
   accountSubscriptions: Array<any>;
   accountDeviceSubscriptions: Array<any>;
+  usersWithRoleDriver: Array<any>;
+  usersWithRoleDriverLoading: boolean;
 }
 
 const initialState: IAccountsState = {
@@ -72,6 +75,8 @@ const initialState: IAccountsState = {
   accountGroups: [],
   accountSubscriptions: [],
   accountDeviceSubscriptions: [],
+  usersWithRoleDriver: [],
+  usersWithRoleDriverLoading: false,
 };
 
 const accountsSlice = createSlice({
@@ -326,6 +331,20 @@ const accountsSlice = createSlice({
         state.loading = false;
       }
     );
+
+    // Get Account Users With Role Driver
+    builder.addCase(getUsersWithRoleDriverThunk.pending, (state) => {
+      state.usersWithRoleDriverLoading = true;
+    });
+
+    builder.addCase(getUsersWithRoleDriverThunk.fulfilled, (state, action) => {
+      state.usersWithRoleDriver = action.payload;
+      state.usersWithRoleDriverLoading = false;
+    });
+
+    builder.addCase(getUsersWithRoleDriverThunk.rejected, (state) => {
+      state.usersWithRoleDriverLoading = false;
+    });
   },
 });
 
