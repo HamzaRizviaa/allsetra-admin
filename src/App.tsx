@@ -22,6 +22,7 @@ import ObjectDetails from "pages/Objects/ObjectDetails";
 import ObjectSettings from "pages/Objects/ObjectSettings";
 import ObjectTripsHistory from "pages/Objects/ObjectTripsHistory";
 import ObjectLocationHistory from "pages/Objects/ObjectLocationHistory";
+import Subscriptions from "pages/Subscriptions";
 
 // ADMIN PROTECTED ROUTES
 import AccountManager from "pages/admin/AccountManager";
@@ -103,6 +104,8 @@ const App: FC = () => {
           path="/dashboard/objects/:id/location-history"
           element={<ObjectLocationHistory />}
         />
+
+        <Route path="/dashboard/subscriptions" element={<Subscriptions />} />
 
         {/* Admin Manager Routes */}
         <Route path="/dashboard/account-manager" element={<AccountManager />} />

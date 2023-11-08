@@ -38,6 +38,8 @@ export { ReactComponent as FieldsActiveIcon } from "./drawer/fieldsActiveIcon.sv
 export { ReactComponent as AccountActiveIcon } from "./drawer/accountActiveIcon.svg";
 export { ReactComponent as ObjectTypesActiveIcon } from "./drawer/objectTypesActiveIcon.svg";
 export { ReactComponent as DeviceProfileFormIcon } from "./drawer/deviceProfileForm-icon.svg";
+export { ReactComponent as SubscriptionsIcon } from "./drawer/subscriptions.svg";
+export { ReactComponent as SubscriptionsInactiveIcon } from "./drawer/subscriptionsInactive.svg";
 
 // Common Icons
 export { ReactComponent as Add } from "./common/Add.svg";

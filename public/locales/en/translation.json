@@ -3,6 +3,7 @@
     "map": "Map",
     "alarmDesk": "Alarm desk",
     "devices": "Devices",
-    "objects": "Objects"
+    "objects": "Objects",
+    "subscriptions": "Subscriptions"
   }
 }
