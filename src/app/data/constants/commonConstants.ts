@@ -20,6 +20,8 @@ import {
   ServiceActiveIcon,
   AccountActiveIcon,
   ObjectTypesActiveIcon,
+  SubscriptionsIcon,
+  SubscriptionsInactiveIcon,
 } from "assets/icons";
 
 export const getDrawerMenuItems = (t: any): Array<IDrawerMenuItem> => [
@@ -46,6 +48,12 @@ export const getDrawerMenuItems = (t: any): Array<IDrawerMenuItem> => [
     icon: ObjectsSvg,
     activeIcon: ObjectsActiveIcon,
     path: "/dashboard/objects",
+  },
+  {
+    name: t("drawerMenuLinks.subscriptions"),
+    icon: SubscriptionsInactiveIcon,
+    activeIcon: SubscriptionsIcon,
+    path: "/dashboard/subscriptions",
   },
 ];
 

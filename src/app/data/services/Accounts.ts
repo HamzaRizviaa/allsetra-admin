@@ -31,6 +31,10 @@ class Accounts {
     return await axiosInstance.patch(`/accounts/${accountId}/activate`);
   };
 
+  static getUsersWithRoleDriver = async (accountId: string) => {
+    return await axiosInstance.get(`/accounts/${accountId}/users/drivers`);
+  };
+
   // Account Users Endpoints
   static getAccountAssociatedUsers = async (
     accountId: string,

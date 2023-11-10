@@ -1,7 +1,19 @@
-import { FC, useState } from "react";
-import { useAppSelector, useDispatchOnMount } from "hooks";
-import { selectObjectsState } from "app/data/selectors";
-import { getAllObjectsThunk } from "app/features";
+import { FC, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
+import {
+  selectAccountGroups,
+  selectAccountsState,
+  selectDashboardAccountId,
+  selectObjectTypesState,
+  selectObjectsState,
+} from "app/data/selectors";
+import {
+  getAllObjectTypesThunk,
+  getAllObjectsThunk,
+  getLoggedInUserThunk,
+  getObjectsLocationsThunk,
+  getUsersWithRoleDriverThunk,
+} from "app/features";
 import Map from "components/common/Map/Map";
 import {
   MapWrapper,
@@ -15,42 +27,67 @@ import {
   MapDisplaySettingsForm,
   MapFilterForm,
   SearchField,
+  types,
 } from "@vilocnv/allsetra-core";
 import { useTheme } from "@mui/material";
 import { DisplaySettings, FilterSettings } from "assets/icons";
+import { FormikHelpers } from "formik";
+import { isEmpty, omit } from "lodash";
+import { getAllAccountGroupsThunk } from "app/features/accounts/actions/accountGroupsActions";
 
 const MapMain: FC = () => {
   const theme = useTheme();
-  const temp = [{}];
-  const type = [
-    { name: "Tags", id: 1 },
-    { name: "Tags 2", id: 2 },
-    { name: "Tags 3", id: 3 },
-  ];
-  const state = [
-    { name: "Moving", id: 1 },
-    { name: "Ignition off", id: 2 },
-    { name: "Stopped", id: 3 },
-  ];
-  const accounts = [
-    { name: "Any account", id: 1 },
-    { name: "Skoda", id: 2 },
-    { name: "Mahindra", id: 3 },
-  ];
-  const geozones = [
-    { name: "Geozone 1", id: 1 },
-    { name: "Geozone 2", id: 2 },
-    { name: "Geozone 3", id: 3 },
-  ];
+  const dispatch = useAppDispatch();
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [displaySettingsOpen, setDisplaySettingsOpen] = useState(false);
 
   const { allObjects } = useAppSelector(selectObjectsState);
+  const accountId = useAppSelector(selectDashboardAccountId);
+  const { accountGroups } = useAppSelector(selectAccountGroups);
+  const { usersWithRoleDriver, usersWithRoleDriverLoading } =
+    useAppSelector(selectAccountsState);
+  const { allObjectTypes, objectTypesLoading } = useAppSelector(
+    selectObjectTypesState
+  );
 
+  useEffect(() => {
+    if (!isEmpty(accountId)) {
+      dispatch(getAllAccountGroupsThunk(accountId));
+      dispatch(getAllObjectTypesThunk());
+      dispatch(getUsersWithRoleDriverThunk(accountId));
+    }
+  }, [accountId]);
+
+  useDispatchOnMount(getLoggedInUserThunk);
   useDispatchOnMount(getAllObjectsThunk, allObjects.length ? undefined : true);
 
-  const geozone = [{ lat: 52.150125, lng: 5.4 }];
+  const mapFiltersSubmitHanlder = async (
+    values: types.IMapFilter,
+    formikHelpers: FormikHelpers<types.IMapFilter>
+  ) => {
+    formikHelpers.setSubmitting(true);
+
+    const payload = {
+      accountId: accountId ?? "",
+      values: {
+        ...values,
+        driverId: [values.driverId],
+      },
+    };
+
+    if (values.driverId) {
+      payload.values.driverId = [values.driverId];
+    } else {
+      // @ts-ignore
+      payload.values = omit(values, "driverId");
+    }
+
+    await dispatch(getObjectsLocationsThunk(payload));
+
+    formikHelpers.setSubmitting(false);
+    setFilterOpen(false);
+  };
 
   return (
     <MapWrapper>
@@ -67,32 +104,32 @@ const MapMain: FC = () => {
       </TopLeftSection>
 
       <TopRightSection>
-        <MiniButton disableRipple>
+        {/* <MiniButton disableRipple>
           <DisplaySettings onClick={() => setDisplaySettingsOpen(true)} />
-        </MiniButton>
+        </MiniButton> */}
       </TopRightSection>
-      {/* <MapFilterForm
+      <MapFilterForm
         open={filterOpen}
         onClose={() => setFilterOpen(false)}
+        onSubmit={mapFiltersSubmitHanlder}
+        groups={accountGroups}
+        types={allObjectTypes}
+        drivers={usersWithRoleDriver}
+        dataLoading={usersWithRoleDriverLoading || objectTypesLoading}
         theme={theme}
-        onSubmit={() => {}}
-        type={type}
-        state={state}
-        accounts={accounts}
-      /> */}
+      />
       <MapDisplaySettingsForm
         open={displaySettingsOpen}
         onClose={() => setDisplaySettingsOpen(false)}
         theme={theme}
         onSubmit={() => {}}
-        geozones={geozones}
+        geozones={[]}
       />
       <Map
-        center={{ lat: 52.0, lng: 5.301137 }}
-        zoom={10}
-        radius={50}
         objects={allObjects}
-        geozone={geozone}
+        showSearch
+        showFilter
+        onFilterClick={() => setFilterOpen(true)}
       />
     </MapWrapper>
   );

@@ -110,3 +110,22 @@ export const getAllSubscriptionsByObjectIdThunk = createAsyncThunk(
     }
   }
 );
+
+export const getObjectsLocationsThunk = createAsyncThunk(
+  "objects/getObjectsLocationsThunk",
+  async ({ accountId, values }: { accountId: string; values: any }) => {
+    try {
+      const response = await Objects.getObjectsLocations(accountId, values);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      toast.error(e.message);
+      throw new Error(e);
+    }
+  }
+);

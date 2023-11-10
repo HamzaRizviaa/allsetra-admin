@@ -3,6 +3,7 @@
     "map": "Karte",
     "alarmDesk": "Alarmschalter",
     "devices": "Geräte",
-    "objects": "Objekte"
+    "objects": "Objekte",
+    "subscriptions": "Abonnements"
   }
 }

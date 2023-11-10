@@ -107,3 +107,21 @@ export const createUserAndAssociateToAccountThunk = createAsyncThunk(
     }
   }
 );
+
+export const getUsersWithRoleDriverThunk = createAsyncThunk(
+  "accounts/getUsersWithRoleDriverThunk",
+  async (accountId: string) => {
+    try {
+      const response = await Accounts.getUsersWithRoleDriver(accountId);
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

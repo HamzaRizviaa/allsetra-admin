@@ -19,7 +19,7 @@ const ObjectDetailsMap: FC<Props> = ({ activeObject }) => {
         zoom={10}
         radius={50}
         objects={[activeObject]}
-        geozone={[objectLocation]}
+        geozones={[objectLocation]}
       />
     </ObjectMapContainer>
   );

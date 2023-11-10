@@ -70,6 +70,39 @@ export const getAllSubscriptionsTableColumns = (
   },
 ];
 
+export const getAllSubscriptionsPageTableColumns =
+  (): TableColumn<ISubscription>[] => [
+    {
+      name: "Subscription Name",
+      selector: (row: ISubscription) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Service Name",
+      selector: (row: ISubscription) => row.service.name,
+      sortable: true,
+    },
+    {
+      name: "Duration",
+      selector: (row: ISubscription) => `${row.prolongationInMonths} months`,
+      sortable: true,
+    },
+    {
+      name: "Monthly Price",
+      selector: (row: ISubscription) => (
+        <Box color={theme.palette.primary.main}>$ {row.valuePerMonth}</Box>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Status",
+      cell: (row: ISubscription) => (
+        <StatusBadge isDeactivated={row.isDeleted} />
+      ),
+      sortable: true,
+    },
+  ];
+
 export const CONTRACT_TERMS = [
   {
     id: 0,

@@ -18,7 +18,7 @@ const DeviceDetailsMap: FC<Props> = ({ specificDevice }) => {
         zoom={10}
         radius={50}
         objects={[specificDevice?.object]}
-        geozone={[
+        geozones={[
           {
             lat: specificDevice?.object?.location?.latitude || 0,
             lng: specificDevice?.object?.location?.longitude || 0,
