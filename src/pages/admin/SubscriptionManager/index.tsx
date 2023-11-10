@@ -34,7 +34,6 @@ const SubscriptionManager: FC = () => {
   const {
     totalSubscriptions,
     allSubscriptions,
-    loading,
     specificSubscription,
     subscriptionTypes,
     totalSubscriptionsLoading,
@@ -113,7 +112,7 @@ const SubscriptionManager: FC = () => {
       <Box mx={4}>
         <Table
           columns={getAllSubscriptionsTableColumns(subscriptionTypes)}
-          data={allSubscriptions}
+          data={allSubscriptions ?? []}
           progressPending={totalSubscriptionsLoading}
           paginationTotalRows={totalSubscriptions}
           searchPlaceholder="Search subscription"

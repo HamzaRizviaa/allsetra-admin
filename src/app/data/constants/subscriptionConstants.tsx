@@ -16,7 +16,7 @@ export const getAllSubscriptionsTableColumns = (
   },
   {
     name: "Service Name",
-    selector: (row: ISubscription) => row.service.name,
+    selector: (row: ISubscription) => row.service?.name ?? "N/A",
     sortable: true,
   },
   {
