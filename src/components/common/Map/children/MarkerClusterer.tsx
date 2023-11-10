@@ -41,33 +41,22 @@ const MarkerClusterer: React.FC<CustomMarkerClustererProps> = ({
   useEffect(() => {
     if (map) {
       const updateVisibleMarkers = () => {
-        const mapBounds = map.getBounds();
-        const defaultBounds = { lat: 52.0, lng: 5.301137 };
+        let newVisibleMarkers = markers;
+        let mapBounds = map.getBounds();
 
-        const newVisibleMarkers = markers.filter((marker) => {
-          if (mapBounds) {
+        if (map.zoom > 13) {
+          newVisibleMarkers = markers.filter((marker) => {
             return mapBounds.contains(
               new window.google.maps.LatLng(marker.lat, marker.lng)
             );
-          } else {
-            // Use default bounds if mapBounds is undefined
-            return (
-              defaultBounds.lat === marker.lat &&
-              defaultBounds.lng === marker.lng
-            );
-          }
-        });
-
+          });
+        }
         setVisibleMarkers(newVisibleMarkers);
       };
 
       window.google.maps.event.addListener(map, "idle", updateVisibleMarkers);
 
       updateVisibleMarkers();
-
-      return () => {
-        window.google.maps.event.clearListeners(map, "idle");
-      };
     }
   }, [map, markers]);
 
