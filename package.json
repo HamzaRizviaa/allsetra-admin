@@ -1,6 +1,6 @@
 {
   "name": "allsetra-admin-portal",
-  "version": "0.1.0",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
     "@azure/msal-browser": "^2.37.0",
