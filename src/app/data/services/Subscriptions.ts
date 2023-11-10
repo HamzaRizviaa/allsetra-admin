@@ -13,6 +13,10 @@ class Subscriptions {
     return await axiosInstance.post("/subscriptions/search", data);
   };
 
+  static getDeviceSubscriptionsByQuery = async (data: any) => {
+    return await axiosInstance.post("/deviceSubscriptions/search", data);
+  };
+
   static createSubscription = async (data: any) => {
     return await axiosInstance.post("/subscriptions", data);
   };

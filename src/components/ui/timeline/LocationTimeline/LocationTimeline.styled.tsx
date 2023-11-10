@@ -9,7 +9,8 @@ export const LocationTimelineContainer = styled(Box)(() => ({
 export const LocationTimelineWrapper = styled(Box)<{
   color: string;
   color2?: string;
-}>(({ color, color2 }) => ({
+  height?: string;
+}>(({ color, color2, height }) => ({
   "& .MuiTimelineDot-root": {
     backgroundColor: color,
     color: "#FFF",
@@ -30,7 +31,7 @@ export const LocationTimelineWrapper = styled(Box)<{
   },
 
   "& .MuiTimelineConnector-root": {
-    height: "200px",
+    height: height || "130px",
     background: `linear-gradient(180deg, ${color}, ${color2})`,
   },
 
@@ -45,7 +46,7 @@ export const TimelineContentWrapper = styled(Box)({
   alignItems: "flex-start",
   flexDirection: "column",
   gap: "14px",
-  marginLeft: "24px",
+  marginLeft: "4px",
 
   "& h3": {
     fontFamily: "Gilroy",
@@ -84,7 +85,7 @@ export const TimelineContentDetail = styled(Box)({
   "& p": {
     color: "#323946",
     fontFamily: "Gilroy",
-    fontSize: "16px",
+    fontSize: "14px",
     fontStyle: "normal",
     fontWeight: "400",
     lineHeight: "115%",

@@ -151,19 +151,19 @@ export const transformOwnerCountriesForWhitelisted = (
 export const transformAlarmForPDFGenralDataTable = (alarm: any) => {
   if (!alarm) return {};
 
-  const { alarmOwner } = alarm.object;
+  const { alarmOwner } = alarm?.object;
   const { visitingAddress } = alarmOwner;
 
   return {
-    "ID-nummer": alarm.aNumber ?? "",
+    "ID-nummer": alarm?.aNumber ?? "",
     Bedrijfsnaam: alarmOwner?.name ?? "",
     "KvK-nummer": alarmOwner?.kvkcocNumber ?? "",
     Bezoekadres: visitingAddress
-      ? `${visitingAddress.houseNumber}, ${visitingAddress.street}, ${visitingAddress.city}, ${visitingAddress.state}, ${visitingAddress.country?.name}`
+      ? `${visitingAddress?.houseNumber}, ${visitingAddress?.street}, ${visitingAddress?.city}, ${visitingAddress?.state}, ${visitingAddress?.country?.name}`
       : "",
-    Postcode: visitingAddress.postalCode ?? "",
-    Vestigingsplaats: visitingAddress.city ?? "",
-    Land: visitingAddress.country?.name ?? "",
+    Postcode: visitingAddress?.postalCode ?? "",
+    Vestigingsplaats: visitingAddress?.city ?? "",
+    Land: visitingAddress?.country?.name ?? "",
     Telefoonnummer: visitingAddress?.phoneNumber ?? "",
   };
 };
@@ -175,12 +175,12 @@ export const transformAlarmForPDFWarningAddressesTable = (
 
   const data: any = {};
 
-  alarmPersons.forEach((person, ind) => {
+  alarmPersons?.forEach((person, ind) => {
     data[`Warning Address ${ind + 1}`] = {
-      Voornaam: person.firstName ?? "",
-      Achternaam: person.lastName ?? "",
-      "Mobiele nummer": person.phone ?? "",
-      Emailadres: person.email ?? "",
+      Voornaam: person?.firstName ?? "",
+      Achternaam: person?.lastName ?? "",
+      "Mobiele nummer": person?.phone ?? "",
+      Emailadres: person?.email ?? "",
     };
   });
 
@@ -194,11 +194,11 @@ export const transformAlarmForPDFEquipmentTable = (alarm: any) => {
 
   const equipmentData: any = {};
 
-  !isEmpty(object.metadata)
-    ? object.metadata.map((meta: any) => {
+  !isEmpty(object?.metadata)
+    ? object?.metadata.map((meta: any) => {
         const { field } = meta;
 
-        equipmentData[field.label] = meta.value;
+        equipmentData[field?.label] = meta?.value;
       })
     : (equipmentData["Data"] = "No Metadata Available");
 
@@ -251,17 +251,17 @@ export const transformAlarmForPDFLocationNotificationTable = async (
   if (!alarm) return {};
 
   const { street, city, country } = await getFullAddress(
-    alarm.location?.latitude ?? 0,
-    alarm.location?.longitude ?? 0
+    alarm?.location?.latitude ?? 0,
+    alarm?.location?.longitude ?? 0
   );
   return {
     [street]: "",
     [city]: "",
     [country]: "",
-    Coördinaten: alarm.location
-      ? `${alarm.location?.latitude},${alarm.location?.longitude}`
+    Coördinaten: alarm?.location
+      ? `${alarm?.location?.latitude},${alarm.location?.longitude}`
       : "0,0",
-    Tijdstip: alarm.location.date ?? "Not Available",
+    Tijdstip: alarm?.location?.date ?? "Not Available",
   };
 };
 
@@ -269,29 +269,29 @@ export const transformAlarmForPDFLastGoodGpsTable = async (alarm: any) => {
   if (!alarm) return {};
 
   const { street, city, country } = await getFullAddress(
-    alarm.object?.location?.latitude ?? 0,
-    alarm.object?.location?.longitude ?? 0
+    alarm?.object?.location?.latitude ?? 0,
+    alarm?.object?.location?.longitude ?? 0
   );
 
   return {
     [street]: "",
     [city]: "",
     [country]: "",
-    Coördinaten: alarm.object?.location
-      ? `${alarm.object?.location?.latitude},${alarm.object?.location?.longitude}`
+    Coördinaten: alarm?.object?.location
+      ? `${alarm?.object?.location?.latitude},${alarm?.object?.location?.longitude}`
       : "0,0",
-    Tijdstip: alarm.object?.location?.date ?? "Not Available",
+    Tijdstip: alarm?.object?.location?.date ?? "Not Available",
   };
 };
 
 export const transformAlarmForPDFMapImages = (alarm: any) => {
   if (!alarm) return {};
 
-  const locationNotificationCoordinates = alarm.location
-    ? `${alarm.location?.latitude},${alarm.location?.longitude}`
+  const locationNotificationCoordinates = alarm?.location
+    ? `${alarm?.location?.latitude},${alarm?.location?.longitude}`
     : "0,0";
-  const lastGoodGpsCoordinates = alarm.object?.location
-    ? `${alarm.object?.location?.latitude},${alarm.object?.location?.longitude}`
+  const lastGoodGpsCoordinates = alarm?.object?.location
+    ? `${alarm?.object?.location?.latitude},${alarm?.object?.location?.longitude}`
     : "0,0";
 
   return {

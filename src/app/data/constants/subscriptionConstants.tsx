@@ -1,6 +1,6 @@
 import { TableColumn, StatusBadge, Badge } from "@vilocnv/allsetra-core";
 import { ISubscription } from "../types/subscriptionManagerTypes";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import theme from "app/theme";
 
 //
@@ -73,32 +73,45 @@ export const getAllSubscriptionsTableColumns = (
 export const getAllSubscriptionsPageTableColumns =
   (): TableColumn<ISubscription>[] => [
     {
-      name: "Subscription Name",
-      selector: (row: ISubscription) => row.name,
-      sortable: true,
-    },
-    {
-      name: "Service Name",
-      selector: (row: ISubscription) => row.service.name,
-      sortable: true,
-    },
-    {
-      name: "Duration",
-      selector: (row: ISubscription) => `${row.prolongationInMonths} months`,
-      sortable: true,
-    },
-    {
-      name: "Monthly Price",
-      selector: (row: ISubscription) => (
-        <Box color={theme.palette.primary.main}>$ {row.valuePerMonth}</Box>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Status",
+      name: "State",
       cell: (row: ISubscription) => (
         <StatusBadge isDeactivated={row.isDeleted} />
       ),
+      sortable: true,
+    },
+    {
+      name: "Subscription ID",
+      selector: (row: ISubscription) => row?.uniqueId,
+      sortable: true,
+    },
+    {
+      name: "Device ID",
+      selector: (row: any) => row?.device?.serialNumber || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Device Type",
+      selector: (row: any) => row?.device?.deviceType?.name || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Subscription (Type)",
+      cell: (row: any) => (
+        <Stack spacing={1}>
+          {row?.subscription?.name ? (
+            <Box>
+              <Badge colorScheme="info">{row?.subscription?.name}</Badge>
+            </Box>
+          ) : (
+            "N/A"
+          )}
+        </Stack>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Invoice Owner",
+      selector: (row: any) => row?.invoiceOwnerName || "N/A",
       sortable: true,
     },
   ];

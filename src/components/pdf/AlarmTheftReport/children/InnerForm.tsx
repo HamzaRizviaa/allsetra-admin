@@ -45,11 +45,11 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
   useEffect(() => {
     const updatedMapImages = Object.fromEntries(
       Object.keys(mapImages).map((mapImage) => {
-        const markerLocation = `${mapImages[mapImage].location}`;
+        const markerLocation = `${mapImages[mapImage]?.location}`;
         const markerColor = "red";
-        const mapType = mapImages[mapImage].type;
+        const mapType = mapImages[mapImage]?.type;
 
-        const imageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${mapImages[mapImage].location}&zoom=${mapImages[mapImage].zoom}&size=450x450&markers=color:${markerColor}|${markerLocation}&maptype=${mapType}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`;
+        const imageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${mapImages[mapImage]?.location}&zoom=${mapImages[mapImage]?.zoom}&size=450x450&markers=color:${markerColor}|${markerLocation}&maptype=${mapType}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`;
         console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY, "KEY");
 
         return [mapImage, { ...mapImages[mapImage], imageUrl }];

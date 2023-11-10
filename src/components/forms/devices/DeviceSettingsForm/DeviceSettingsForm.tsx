@@ -10,15 +10,18 @@ import { useAppDispatch } from "hooks";
 import { postUpdateDeviceThunk } from "app/features";
 import { IDevices } from "app/data/types";
 import { deviceDetailsFormatterForSettingsForm } from "app/data/helpers/devicesHelpers";
+import AddMappingForm from "components/forms/common/AddMappingForm/AddMappingForm";
 
 interface Props {
   specificDevice: IDevices | null;
   setOpenMappingModal: React.Dispatch<React.SetStateAction<boolean>>;
+  openMappingModal: boolean;
 }
 
 const DeviceSettingsForm: FC<Props> = ({
   specificDevice,
   setOpenMappingModal,
+  openMappingModal,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -49,10 +52,19 @@ const DeviceSettingsForm: FC<Props> = ({
       enableReinitialize
       validateOnMount
     >
-      <InnerForm
-        specificDevice={specificDevice}
-        setOpenMappingModal={setOpenMappingModal}
-      />
+      <>
+        <InnerForm
+          specificDevice={specificDevice}
+          setOpenMappingModal={setOpenMappingModal}
+        />
+        <AddMappingForm
+          open={openMappingModal}
+          onClose={() => setOpenMappingModal(false)}
+          dataPoints={[]}
+          identifiers={[]}
+          triggerModes={[]}
+        />
+      </>
     </Formik>
   );
 };

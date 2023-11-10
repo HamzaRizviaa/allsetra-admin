@@ -19,9 +19,11 @@ import { CalendarIcon, TrackingIcon } from "assets/icons";
 export interface TimeLineItemProps {
   color: string;
   title: string;
-  location: string;
-  dateAndTime: string;
-  deviceNumber: string;
+  location?: string;
+  dateAndTime?: string;
+  timelineDotDetails?: any;
+  address?: string;
+  height: string;
 }
 export interface LocationTimelineProps {
   timeLineItems: Array<TimeLineItemProps>;
@@ -36,25 +38,36 @@ const LocationTimeline: FC<LocationTimelineProps> = ({ timeLineItems }) => {
             <LocationTimelineWrapper
               color={item.color}
               color2={array[index + 1]?.color}
+              height={item.height}
             >
               <TimelineItem>
                 <TimelineSeparator>
-                  <TimelineDot>{item.deviceNumber}</TimelineDot>
+                  <TimelineDot>{item.timelineDotDetails}</TimelineDot>
                   {!(index + 1 === array.length) && <TimelineConnector />}
                 </TimelineSeparator>
                 <TimelineContent>
                   <TimelineContentWrapper>
                     <h3>{item.title}</h3>
                     <TimelineContentDetailsWrapper>
-                      <TimelineContentDetail>
-                        <CalendarIcon />
-                        <p>{item.dateAndTime}</p>
-                      </TimelineContentDetail>
+                      {item.dateAndTime && (
+                        <TimelineContentDetail>
+                          <CalendarIcon />
+                          <p>{item.dateAndTime}</p>
+                        </TimelineContentDetail>
+                      )}
 
-                      <TimelineContentDetail>
-                        <TrackingIcon />
-                        <p>{item.location}</p>
-                      </TimelineContentDetail>
+                      {item.location && (
+                        <TimelineContentDetail>
+                          <TrackingIcon />
+                          <p>{item.location}</p>
+                        </TimelineContentDetail>
+                      )}
+
+                      {item.address && (
+                        <TimelineContentDetail>
+                          <p>{item.address}</p>
+                        </TimelineContentDetail>
+                      )}
                     </TimelineContentDetailsWrapper>
                   </TimelineContentWrapper>
                 </TimelineContent>
