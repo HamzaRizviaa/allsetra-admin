@@ -20,6 +20,10 @@ class Dashboard {
   static getAllPaymentMethods = async () => {
     return await axiosInstance.get("/PaymentMethods");
   };
+
+  static getLoggedInUser = async () => {
+    return await axiosInstance.get("/users/me");
+  };
 }
 
 export default Dashboard;

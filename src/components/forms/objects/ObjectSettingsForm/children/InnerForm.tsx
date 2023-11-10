@@ -11,6 +11,7 @@ import ReminderSetting from "./ReminderSetting";
 import AlarmConfigurationFormSection from "components/forms/common/AlarmConfigurationFormSection/AlarmConfigurationFormSection";
 import NotificationsSetting from "./NotificationsSetting";
 import ObjectWorkingHoursSetting from "./ObjectWorkingHoursSetting";
+import DynamicFieldsSetting from "./DynamicFieldsSetting";
 
 interface Props {
   activeObject: types.IObject | null;
@@ -49,6 +50,7 @@ const InnerForm: FC<Props> = ({ activeObject }) => {
           objectId={activeObject?.uniqueId || ""}
           devices={activeObject?.devices ?? []}
         />
+        <DynamicFieldsSetting activeObject={activeObject} />
         <ObjectWorkingHoursSetting />
         <CorrectionSetting />
         <ReminderSetting />

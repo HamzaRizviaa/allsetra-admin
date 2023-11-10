@@ -45,11 +45,11 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
   useEffect(() => {
     const updatedMapImages = Object.fromEntries(
       Object.keys(mapImages).map((mapImage) => {
-        const markerLocation = `${mapImages[mapImage].location}`;
+        const markerLocation = `${mapImages[mapImage]?.location}`;
         const markerColor = "red";
-        const mapType = mapImages[mapImage].type;
+        const mapType = mapImages[mapImage]?.type;
 
-        const imageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${mapImages[mapImage].location}&zoom=${mapImages[mapImage].zoom}&size=450x450&markers=color:${markerColor}|${markerLocation}&maptype=${mapType}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`;
+        const imageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${mapImages[mapImage]?.location}&zoom=${mapImages[mapImage]?.zoom}&size=450x450&markers=color:${markerColor}|${markerLocation}&maptype=${mapType}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`;
         console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY, "KEY");
 
         return [mapImage, { ...mapImages[mapImage], imageUrl }];
@@ -96,7 +96,7 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         <Text style={styles.pageTitle}>Locatie melding</Text>
         <View style={styles.mapImageContainer}>
           <Image
-            src={mapImages.locationNotification.imageUrl}
+            src={mapImages.locationNotification?.imageUrl}
             style={styles.mapImage}
           />
         </View>
@@ -116,7 +116,7 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         </Text>
         <View style={styles.mapImageContainer}>
           <Image
-            src={mapImages.lastGoodGpsZoomedOut.imageUrl}
+            src={mapImages.lastGoodGpsZoomedOut?.imageUrl}
             style={styles.mapImage}
           />
         </View>
@@ -133,7 +133,7 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         <Text style={styles.pageTitle}>Locatie laatste goede GPS (Kaart)</Text>
         <View style={styles.mapImageContainer}>
           <Image
-            src={mapImages.lastGoodGpsMap.imageUrl}
+            src={mapImages.lastGoodGpsMap?.imageUrl}
             style={styles.mapImage}
           />
         </View>
@@ -152,7 +152,7 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         </Text>
         <View style={styles.mapImageContainer}>
           <Image
-            src={mapImages.lastGoodGpsZoomed.imageUrl}
+            src={mapImages.lastGoodGpsZoomed?.imageUrl}
             style={styles.mapImage}
           />
         </View>
@@ -171,7 +171,7 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         </Text>
         <View style={styles.mapImageContainer}>
           <Image
-            src={mapImages.lastGoodGpsSatZoomedOut.imageUrl}
+            src={mapImages.lastGoodGpsSatZoomedOut?.imageUrl}
             style={styles.mapImage}
           />
         </View>
@@ -190,7 +190,7 @@ const InnerForm: FC<PDFDataProps> = ({ specificAlarm, alarmPersonsData }) => {
         </Text>
         <View style={styles.mapImageContainer}>
           <Image
-            src={mapImages.lastGoodGpsSat.imageUrl}
+            src={mapImages.lastGoodGpsSat?.imageUrl}
             style={styles.mapImage}
           />
         </View>

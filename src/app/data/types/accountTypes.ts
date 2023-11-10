@@ -1,7 +1,3 @@
-//
-// Account Details Interfaces
-//
-
 export interface IAccountAssignUser {
   userEmail: string;
   role: string;
@@ -11,6 +7,12 @@ export interface IAccountAssignUser {
 export interface IAccountAssignService {
   serviceId: string;
   subscriptions: string[];
+  subscriptionsPricing: {
+    [x: string]: {
+      currency: number;
+      subscriptionPrice: number;
+    };
+  };
 }
 
 export interface IAccountAssignDeviceType {

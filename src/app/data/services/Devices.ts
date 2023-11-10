@@ -34,6 +34,14 @@ class Devices {
   static reactivateDevice = async (deviceId: string) => {
     return await axiosInstance.patch(`/devices/${deviceId}/activate`);
   };
+
+  static getAllSubscriptionsByDeviceId = async (deviceId: string) => {
+    return await axiosInstance.get(`/devices/${deviceId}/subscriptions`);
+  };
+
+  static disableDeviceImmobilizer = async (deviceId: string) => {
+    return await axiosInstance.post(`/devices/${deviceId}/immobilizer/disable`);
+  };
 }
 
 export default Devices;

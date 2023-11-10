@@ -84,3 +84,21 @@ export const getAllPaymentMethodsThunk = createAsyncThunk(
     }
   }
 );
+
+export const getLoggedInUserThunk = createAsyncThunk(
+  "dashboard/getLoggedInUserThunk",
+  async () => {
+    try {
+      const response = await Dashboard.getLoggedInUser();
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      return response;
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);

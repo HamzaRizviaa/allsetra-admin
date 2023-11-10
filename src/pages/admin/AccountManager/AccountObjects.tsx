@@ -25,7 +25,7 @@ const AccountObjects: FC = () => {
         theme={theme}
         title="Account"
         breadcrumbTitle={capitalize(activeAccount?.name) ?? "Go Back"}
-        breadcrumbRedirectTo={() => navigate(-1)}
+        breadcrumbRedirectTo={() => navigate("/dashboard/account-manager")}
       />
       <AccountTabLayout>
         <AccountObjectsSection accountId={activeAccountId} />

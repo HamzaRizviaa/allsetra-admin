@@ -31,6 +31,10 @@ class Accounts {
     return await axiosInstance.patch(`/accounts/${accountId}/activate`);
   };
 
+  static getUsersWithRoleDriver = async (accountId: string) => {
+    return await axiosInstance.get(`/accounts/${accountId}/users/drivers`);
+  };
+
   // Account Users Endpoints
   static getAccountAssociatedUsers = async (
     accountId: string,
@@ -91,6 +95,17 @@ class Accounts {
 
   static assignServiceToAccount = async (accountId: string, data: any) => {
     return await axiosInstance.post(`/accounts/${accountId}/services`, data);
+  };
+
+  static updateServiceForAccount = async (
+    accountId: string,
+    serviceId: string,
+    data: any
+  ) => {
+    return await axiosInstance.patch(
+      `/accounts/${accountId}/services/${serviceId}`,
+      data
+    );
   };
 
   static removeServiceFromAccount = async (

@@ -16,11 +16,11 @@ import {
   useAppSelector,
   useSignalR,
   useSetLangOnSettingsChange,
+  useDispatchOnMount,
 } from "hooks";
-import { setDrawerCollapseState } from "app/features";
+import { getLoggedInUserThunk, setDrawerCollapseState } from "app/features";
 import { selectIsDrawerCollapsed } from "app/data/selectors";
 import { getDrawerMenuItems, getDrawerSubMenuLists } from "app/data/constants";
-import { persistor } from "app/store";
 
 export interface ProtectedRouteProps {
   redirectTo: string;
@@ -38,6 +38,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
 
   useSetLangOnSettingsChange();
 
+  // useDispatchOnMount(getLoggedInUserThunk)
+
   const { t } = useTranslation();
 
   const toggleDrawerCollapseState = () => {
@@ -45,8 +47,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ redirectTo }) => {
   };
 
   const handleLogout = () => {
-    persistor.purge();
     instance.logoutRedirect({ postLogoutRedirectUri: "/" });
+    window.localStorage.clear();
   };
 
   const { drawerMenuItems, drawerSubMenuLists } = {

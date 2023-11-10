@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 import { useTheme } from "@mui/material";
-import { Topbar, types } from "@vilocnv/allsetra-core";
+import { Topbar, types, PageLoader } from "@vilocnv/allsetra-core";
 import { capitalize, isEmpty } from "lodash";
 import AccountTabLayout from "components/common/AccountTabLayout/AccountTabLayout";
 import AccountDetailsSection from "components/sections/admin/AccountDetailsSection/AccountDetailsSection";
@@ -22,7 +22,7 @@ const AccountDetails: FC = () => {
   const dispatch = useAppDispatch();
 
   // Global State
-  const { activeAccount, activeAccountId } = useAppSelector(
+  const { activeAccount, activeAccountId, loading } = useAppSelector(
     selectActiveAccountState
   );
 
@@ -63,7 +63,9 @@ const AccountDetails: FC = () => {
               theme={theme}
               title="Account"
               breadcrumbTitle={capitalize(activeAccount?.name) ?? "Go Back"}
-              breadcrumbRedirectTo={() => navigate(-1)}
+              breadcrumbRedirectTo={() =>
+                navigate("/dashboard/account-manager")
+              }
               primaryButton={{
                 variant: "contained",
                 text: "Save Changes",
@@ -78,7 +80,7 @@ const AccountDetails: FC = () => {
               }}
             />
             <AccountTabLayout>
-              <AccountDetailsSection />
+              {loading ? <PageLoader /> : <AccountDetailsSection />}
             </AccountTabLayout>
           </Form>
         )}

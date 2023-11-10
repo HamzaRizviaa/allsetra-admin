@@ -14,7 +14,7 @@ import NotFound from "pages/NotFound";
 import Map from "pages/Map";
 import AlarmDesk from "pages/AlarmDesk";
 import Devices from "pages/Devices";
-import DeviceDetailts from "pages/Devices/DeviceDetailts";
+import DeviceDetails from "pages/Devices/DeviceDetails";
 import DeviceLocationHistory from "pages/Devices/DeviceLocationHistory";
 import DeviceSettings from "pages/Devices/DeviceSettings";
 import Objects from "pages/Objects";
@@ -22,6 +22,7 @@ import ObjectDetails from "pages/Objects/ObjectDetails";
 import ObjectSettings from "pages/Objects/ObjectSettings";
 import ObjectTripsHistory from "pages/Objects/ObjectTripsHistory";
 import ObjectLocationHistory from "pages/Objects/ObjectLocationHistory";
+import Subscriptions from "pages/Subscriptions";
 
 // ADMIN PROTECTED ROUTES
 import AccountManager from "pages/admin/AccountManager";
@@ -78,7 +79,7 @@ const App: FC = () => {
 
         {/* Devices */}
         <Route path="/dashboard/devices" element={<Devices />} />
-        <Route path="/dashboard/devices/:id" element={<DeviceDetailts />} />
+        <Route path="/dashboard/devices/:id" element={<DeviceDetails />} />
         <Route
           path="/dashboard/devices/:id/location-history"
           element={<DeviceLocationHistory />}
@@ -103,6 +104,8 @@ const App: FC = () => {
           path="/dashboard/objects/:id/location-history"
           element={<ObjectLocationHistory />}
         />
+
+        <Route path="/dashboard/subscriptions" element={<Subscriptions />} />
 
         {/* Admin Manager Routes */}
         <Route path="/dashboard/account-manager" element={<AccountManager />} />

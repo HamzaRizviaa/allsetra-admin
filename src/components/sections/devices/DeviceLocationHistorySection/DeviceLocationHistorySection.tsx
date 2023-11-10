@@ -12,7 +12,10 @@ import {
 import { DateRangePicker } from "@vilocnv/allsetra-core";
 
 //Data
-import { timelineItems } from "app/data/helpers/devicesHelpers";
+import {
+  objectRideItems,
+  timelineItems,
+} from "app/data/helpers/devicesHelpers";
 import { useActiveDevice } from "hooks";
 
 const DeviceLocationHistorySection: FC = () => {

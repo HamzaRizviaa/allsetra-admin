@@ -37,7 +37,9 @@ const AccountDeviceTypesSection: FC<Props> = ({ accountId }) => {
   const [assignDeviceTypeModal, setAssignDeviceTypeModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
-  useDispatchOnParams(getAccountDeviceTypesThunk, { args: { accountId } });
+  useDispatchOnParams(getAccountDeviceTypesThunk, {
+    args: { accountId: accountId || "" },
+  });
 
   const toggleAssignDeviceTypeModal = () =>
     setAssignDeviceTypeModal(!assignDeviceTypeModal);

@@ -89,7 +89,7 @@ const InnerForm: FC = () => {
       });
     } else {
       setFieldValue(
-        "deviceModules",
+        "deviceProfilesData",
         omit(values.deviceProfilesData, [deviceTypeId])
       );
     }

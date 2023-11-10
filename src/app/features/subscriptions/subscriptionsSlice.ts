@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllSubscriptionTypesThunk,
   getAllSubscriptionsThunk,
+  getDeviceSubscriptionsByQueryThunk,
   getSpecificSubscriptionThunk,
   getSubscriptionsByQueryThunk,
 } from "./subscriptionsActions";
@@ -15,6 +16,9 @@ export interface ISubscriptionState {
   subscriptionTypes: Array<any>;
   specificSubscription: ISubscription | null;
   totalSubscriptionsLoading: boolean;
+  deviceSubscriptions: Array<any>;
+  totalDeviceSubscriptions: number | null;
+  totalDeviceSubscriptionsLoading: boolean;
 }
 
 const initialState: ISubscriptionState = {
@@ -25,6 +29,9 @@ const initialState: ISubscriptionState = {
   subscriptionTypes: [],
   specificSubscription: null,
   totalSubscriptionsLoading: false,
+  deviceSubscriptions: [],
+  totalDeviceSubscriptions: null,
+  totalDeviceSubscriptionsLoading: false,
 };
 
 const subscriptionsSlice = createSlice({
@@ -63,6 +70,24 @@ const subscriptionsSlice = createSlice({
 
     builder.addCase(getSubscriptionsByQueryThunk.rejected, (state) => {
       state.totalSubscriptionsLoading = false;
+    });
+
+    // Get Device Subscriptions By Querying Action Cases
+    builder.addCase(getDeviceSubscriptionsByQueryThunk.pending, (state) => {
+      state.totalDeviceSubscriptionsLoading = true;
+    });
+
+    builder.addCase(
+      getDeviceSubscriptionsByQueryThunk.fulfilled,
+      (state, action) => {
+        state.deviceSubscriptions = action.payload?.results || [];
+        state.totalDeviceSubscriptions = action.payload?.rowCount || 0;
+        state.totalDeviceSubscriptionsLoading = false;
+      }
+    );
+
+    builder.addCase(getDeviceSubscriptionsByQueryThunk.rejected, (state) => {
+      state.totalDeviceSubscriptionsLoading = false;
     });
 
     // Get Subscriptions By Querying Action Cases

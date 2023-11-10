@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllDevicesThunk,
+  getAllSubscriptionsByDeviceIdThunk,
   getDeviceLocationHistoryThunk,
   getDevicesByQueryThunk,
   getSpecificDeviceThunk,
+  disableDeviceImmobilizerThunk,
 } from "./devicesActions";
 import { IDevices } from "app/data/types";
 
@@ -14,14 +16,23 @@ export interface IDevicesState {
   devices: Array<any>;
   deviceLocationHistory: Array<any>;
   specificDevice: IDevices | null;
+
+  deviceSubscriptions: Array<any>;
+  deviceSubscriptionsLoading: boolean;
+  deviceDisableImmobilizerSubmitting: boolean;
 }
 
 const initialState: IDevicesState = {
   loading: false,
   totalDevices: null,
+
   devices: [],
   deviceLocationHistory: [],
   specificDevice: null,
+
+  deviceSubscriptions: [],
+  deviceSubscriptionsLoading: false,
+  deviceDisableImmobilizerSubmitting: false,
 };
 
 const DevicesSlice = createSlice({
@@ -94,6 +105,36 @@ const DevicesSlice = createSlice({
 
     builder.addCase(getSpecificDeviceThunk.rejected, (state) => {
       state.loading = false;
+    });
+
+    // Get Subscriptions of Device By ID Thunk
+    builder.addCase(getAllSubscriptionsByDeviceIdThunk.pending, (state) => {
+      state.deviceSubscriptionsLoading = true;
+    });
+
+    builder.addCase(
+      getAllSubscriptionsByDeviceIdThunk.fulfilled,
+      (state, action) => {
+        state.deviceSubscriptions = action.payload;
+        state.deviceSubscriptionsLoading = false;
+      }
+    );
+
+    builder.addCase(getAllSubscriptionsByDeviceIdThunk.rejected, (state) => {
+      state.deviceSubscriptionsLoading = false;
+    });
+
+    // Disable Device Immobilizer Thunk Action Cases
+    builder.addCase(disableDeviceImmobilizerThunk.pending, (state) => {
+      state.deviceDisableImmobilizerSubmitting = true;
+    });
+
+    builder.addCase(disableDeviceImmobilizerThunk.fulfilled, (state) => {
+      state.deviceDisableImmobilizerSubmitting = false;
+    });
+
+    builder.addCase(disableDeviceImmobilizerThunk.rejected, (state) => {
+      state.deviceDisableImmobilizerSubmitting = false;
     });
   },
 });

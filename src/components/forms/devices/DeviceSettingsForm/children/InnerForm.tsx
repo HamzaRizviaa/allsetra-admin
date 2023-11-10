@@ -39,7 +39,7 @@ const InnerForm: FC<Props> = ({ specificDevice, setOpenMappingModal }) => {
         <GeneralSettings />
         <ProfileConfigurationSettings />
         <InputToOutputConfigSettings />
-        <DeviceIOMappingSettings setOpenMappingModal={setOpenMappingModal} />
+        {/* <DeviceIOMappingSettings setOpenMappingModal={setOpenMappingModal} /> */}
       </Box>
     </Form>
   );

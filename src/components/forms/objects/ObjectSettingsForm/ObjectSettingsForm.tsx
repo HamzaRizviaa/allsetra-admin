@@ -9,6 +9,7 @@ import InnerForm from "./children/InnerForm";
 // DATA
 import { useAppDispatch } from "hooks";
 import {
+  getFormattedPayload,
   objectDetailsFormatterForSettingsForm,
   objectDetailsValidationSchema,
 } from "app/data/helpers";
@@ -35,7 +36,7 @@ const ObjectSettingsForm: FC<Props> = ({ activeObject }) => {
   ) => {
     formikHelpers.setSubmitting(true);
 
-    await dispatch(postUpdateObjectThunk(values));
+    await dispatch(postUpdateObjectThunk(getFormattedPayload(values)));
 
     formikHelpers.setSubmitting(false);
   };

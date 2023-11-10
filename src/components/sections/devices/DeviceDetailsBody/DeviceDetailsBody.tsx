@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { Box, Grid, Stack } from "@mui/material";
 import { KeyValueTable } from "@vilocnv/allsetra-core";
 import DeviceDetailsCard from "components/cards/DeviceDetailsCard/DeviceDetailsCard";
@@ -13,15 +13,28 @@ import DeviceDetailsMap from "./children/DeviceDetailsMap";
 
 interface Props {
   specificDevice: IDevices | null;
+  objectSubscriptions: Array<any>;
 }
 
-const DeviceDetailsBody: FC<Props> = ({ specificDevice }) => {
-  const { generalInformation, objectInformation } = useMemo(() => {
-    return {
-      generalInformation: transformDeviceForGeneralInfoTable(specificDevice),
-      objectInformation: transformDeviceForObjectInfoTable(specificDevice),
-    };
-  }, [specificDevice]);
+const DeviceDetailsBody: FC<Props> = ({
+  specificDevice,
+  objectSubscriptions,
+}) => {
+  // const { generalInformation, objectInformation } = useMemo(() => {
+  //   return {
+  //     generalInformation: transformDeviceForGeneralInfoTable(specificDevice),
+  //     objectInformation: transformDeviceForObjectInfoTable(
+  //       specificDevice,
+  //       objectSubscriptions
+  //     ),
+  //   };
+  // }, [specificDevice]);
+
+  const generalInformation = transformDeviceForGeneralInfoTable(specificDevice);
+  const objectInformation = transformDeviceForObjectInfoTable(
+    specificDevice,
+    objectSubscriptions
+  );
 
   return (
     <Box mt={4}>
@@ -29,6 +42,7 @@ const DeviceDetailsBody: FC<Props> = ({ specificDevice }) => {
         <Grid item xs={12} lg={6}>
           <Stack spacing={5}>
             <DeviceDetailsCard device={specificDevice} />
+
             <KeyValueTable
               title="General Information"
               records={generalInformation}
@@ -38,7 +52,7 @@ const DeviceDetailsBody: FC<Props> = ({ specificDevice }) => {
 
         <Grid item xs={12} lg={6}>
           <KeyValueTable
-            title="Object Information"
+            title="Device Information"
             records={objectInformation}
           />
         </Grid>

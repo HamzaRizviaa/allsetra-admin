@@ -10,7 +10,10 @@ import {
   StyledAccessTimeIcon,
 } from "components/cards/DeviceDetailsCard/DeviceDetailsCard.styled";
 import { isEmpty, omit } from "lodash";
-
+import moment from "moment";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import NearMeRoundedIcon from "@mui/icons-material/NearMeRounded";
+import SquareIcon from "@mui/icons-material/Square";
 //
 // DEVICE DETAILS PAGE HELPERS
 //
@@ -25,7 +28,7 @@ const GetValueForObjectNameGenInfo = (name: string, objectId: string) => {
       justifyContent={"space-between"}
       spacing={4}
     >
-      <Box>{name}</Box>
+      <Box>{name ?? "N/A"}</Box>
       <DetailsButtonText
         onClick={() =>
           navigate({
@@ -45,7 +48,7 @@ export const transformDeviceForGeneralInfoTable = (
   if (!device) return {};
 
   return {
-    "Device type": device.deviceType?.name,
+    "Device type": device.deviceType?.name ?? "N/A",
     Account: "-",
     "Object name": GetValueForObjectNameGenInfo(
       device.object?.name || "-",
@@ -82,36 +85,100 @@ const getValueForObjectInformation = ({
   </Stack>
 );
 
+export const getTimeDifference = (lastUpdated: string) => {
+  const lastUpdatedDate = new Date(lastUpdated);
+  const currentTime = new Date();
+
+  const timeDifference = currentTime.getTime() - lastUpdatedDate.getTime();
+
+  const seconds = Math.floor(timeDifference / 1000) % 60;
+  const minutes = Math.floor(timeDifference / (1000 * 60)) % 60;
+  const hours = Math.floor(timeDifference / (1000 * 60 * 60)) % 24;
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  const monthsDiff =
+    (currentTime.getFullYear() - lastUpdatedDate.getFullYear()) * 12 +
+    (currentTime.getMonth() - lastUpdatedDate.getMonth());
+
+  return { seconds, minutes, hours, days, months: monthsDiff };
+};
+
 export const transformDeviceForObjectInfoTable = (
-  device: IDevices | null
+  device: any | null,
+  objectSubscriptions: Array<any>
 ): any => {
   if (!device) return {};
+  const { days, months } = getTimeDifference(device.installationDate);
+  const currency: any = {
+    1: "$",
+    0: "€",
+  };
 
   return {
     LOCATION: getValueForObjectInformation({
-      heading: device.object?.location?.locationProvider?.provider || "-",
-      subitems: [{ text: `GPS Location, ± -km, - sats` }],
-      timeStamp: "1h 23m ago (March 22, 2023 at 01:25)",
+      heading: device.location?.resolvedAddress || "-",
+      subitems: [
+        {
+          text: `GPS Location, ± ${
+            device.location?.accuracy || "-"
+          } km, - sats`,
+        },
+      ],
+      timeStamp: device.location?.date
+        ? moment(device.location?.date).format("LLL")
+        : "N/A",
     }),
     NETWORK: getValueForObjectInformation({
       heading: `RSSI: - dBm    SNR: - dBm`,
       subitems: [
-        { text: `Network: ${device.lastReceivedNetwork}` },
+        { text: `Network: ${device.lastReceivedNetwork ?? "-"}` },
         { text: `ICCID: -` },
       ],
-      timeStamp: "1h 23m ago (March 22, 2023 at 01:25)",
+      timeStamp: "N/A",
     }),
     "INSTALL DATE": getValueForObjectInformation({
-      heading: `-`,
-      timeStamp: "1h 23m ago (March 22, 2023 at 01:25)",
+      heading: device?.installationDate
+        ? `${(days > 30 ? `${months} months` : `${days} days`) || "-"} ago`
+        : "-",
+      timeStamp: device?.installationDate
+        ? moment(device?.installationDate).format("LLL")
+        : "N/A",
     }),
-    SUBSCRIPTION: getValueForObjectInformation({
-      heading: `-`,
-      subitems: [
-        { text: `Contract duration: - months` },
-        { text: `Plan price: -` },
-      ],
-    }),
+    SUBSCRIPTION: objectSubscriptions.length
+      ? objectSubscriptions.map((subscription: any) => {
+          const { days, months } = getTimeDifference(
+            subscription.invoicingEndDate
+          );
+
+          return getValueForObjectInformation({
+            heading: subscription?.invoicingEndDate
+              ? `${
+                  (days > 30 ? `${months} months` : `${days} days`) || "-"
+                } ago`
+              : "-",
+            subitems: [
+              {
+                text: `Contract duration: ${
+                  subscription.subscription?.contractTerm > -1
+                    ? subscription.subscription.contractTerm + 1 * 12
+                    : "-"
+                } months`,
+              },
+              {
+                text: `Plan price: ${
+                  subscription.subscription?.currency > -1
+                    ? currency[subscription.subscription.currency]
+                    : ""
+                }${
+                  subscription.subscription?.valuePerMonth > -1
+                    ? subscription.subscription.valuePerMonth
+                    : "-"
+                } `,
+              },
+            ],
+          });
+        })
+      : "No Subscriptions available",
   };
 };
 
@@ -149,35 +216,78 @@ export const timelineItems = [
     title: "Lageweg 5a, 7056 CA, Netherlands",
     dateAndTime: "21:50:53, 16/09/2022",
     location: "51.8926, 4.37519",
-    deviceNumber: "28",
+    timelineDotDetails: "28",
     color: "#1CA0BD",
+    height: "130px",
   },
   {
     title: "Lageweg 5a, 7056 CA, Netherlands",
     dateAndTime: "21:50:53, 16/09/2022",
     location: "51.8926, 4.37519",
-    deviceNumber: "28",
+    timelineDotDetails: "28",
     color: "#4560E4",
+    height: "130px",
   },
   {
     title: "Lageweg 5a, 7056 CA, Netherlands",
     dateAndTime: "21:50:53, 16/09/2022",
     location: "51.8926, 4.37519",
-    deviceNumber: "28",
+    timelineDotDetails: "28",
     color: "#3E34C1",
+    height: "130px",
   },
   {
     title: "Lageweg 5a, 7056 CA, Netherlands",
     dateAndTime: "21:50:53, 16/09/2022",
     location: "51.8926, 4.37519",
-    deviceNumber: "28",
+    timelineDotDetails: "28",
     color: "#6E44A8",
+    height: "130px",
   },
   {
     title: "Lageweg 5a, 7056 CA, Netherlands",
     dateAndTime: "21:50:53, 16/09/2022",
     location: "51.8926, 4.37519",
-    deviceNumber: "28",
+    timelineDotDetails: "28",
     color: "#BC3FB7",
+    height: "130px",
+  },
+];
+
+export const objectRideItems = [
+  {
+    title: "Start of the ride",
+    address: "Lageweg 2a, 7047 CA Braamt, Netherlands",
+    timelineDotDetails: <LocationOnIcon />,
+    color: "#1CA0BD",
+    height: "90px",
+  },
+  {
+    title: "Moving",
+    address: "Lageweg 2a, 7047 CA Braamt, Netherlands",
+    timelineDotDetails: <NearMeRoundedIcon />,
+    color: "#4560E4",
+    height: "90px",
+  },
+  {
+    title: "Stopped",
+    address: "Lageweg 2a, 7047 CA Braamt, Netherlands",
+    timelineDotDetails: <SquareIcon />,
+    color: "red",
+    height: "90px",
+  },
+  {
+    title: "Moving",
+    address: "Lageweg 2a, 7047 CA Braamt, Netherlands",
+    timelineDotDetails: <NearMeRoundedIcon />,
+    color: "#6E44A8",
+    height: "90px",
+  },
+  {
+    title: "End of the ride",
+    address: "Lageweg 2a, 7047 CA Braamt, Netherlands",
+    timelineDotDetails: <LocationOnIcon />,
+    color: "#BC3FB7",
+    height: "90px",
   },
 ];

@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { Settings } from "@mui/icons-material";
@@ -8,13 +8,26 @@ import DeviceDetailsBody from "components/sections/devices/DeviceDetailsBody/Dev
 // import DeviceDetailsTables from "components/sections/devices/DeviceDetailsTables/DeviceDetailsTables";
 
 // Data
-import { useActiveDevice } from "hooks";
+import { useActiveDevice, useAppDispatch, useAppSelector } from "hooks";
+import { getAllSubscriptionsByDeviceIdThunk } from "app/features";
+import { selectDeviceSubscriptionsById } from "app/data/selectors";
 
 const DeviceDetails: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { specificDevice, loading } = useActiveDevice();
+
+  const { deviceSubscriptions, deviceSubscriptionsLoading } = useAppSelector(
+    selectDeviceSubscriptionsById
+  );
+
+  useEffect(() => {
+    if (specificDevice) {
+      dispatch(getAllSubscriptionsByDeviceIdThunk(specificDevice?.uniqueId));
+    }
+  }, []);
 
   return (
     <Box>
@@ -32,7 +45,7 @@ const DeviceDetails: FC = () => {
         }}
       />
       <Box mx={4} mt={4}>
-        {loading ? (
+        {loading || deviceSubscriptionsLoading ? (
           <PageLoader />
         ) : (
           <Fragment>
@@ -42,7 +55,10 @@ const DeviceDetails: FC = () => {
               deviceId={specificDevice?.uniqueId || ""}
               deviceType={specificDevice?.deviceType.name || ""}
             />
-            <DeviceDetailsBody specificDevice={specificDevice} />
+            <DeviceDetailsBody
+              specificDevice={specificDevice}
+              objectSubscriptions={deviceSubscriptions ?? []}
+            />
             {/* <DeviceDetailsTables /> */}
           </Fragment>
         )}

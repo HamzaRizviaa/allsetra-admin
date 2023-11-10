@@ -168,39 +168,54 @@ export const ACCOUNT_OBJECT_TYPES_TABLE_COLUMNS: TableColumn<any>[] = [
   },
 ];
 
-export const ACCOUNT_OBJECTS_TABLE_COLUMNS: TableColumn<types.IObject>[] = [
-  {
-    name: "Name",
-    selector: (row: types.IObject) => row.name,
-    sortable: true,
-  },
-  {
-    name: "Object Type",
-    //@ts-ignore
-    selector: (row: types.IObject) => row.objectTypeName,
-    sortable: true,
-  },
-  {
-    name: "A-NR",
-    selector: (row: types.IObject) => row.aNumber,
-    sortable: true,
-  },
-  {
-    name: "Multiviewer  Name",
-    selector: (row: types.IObject) => row.multiviewerName,
-    sortable: true,
-  },
-  {
-    name: "Mileage",
-    selector: (row: types.IObject) => row.mileage,
-    sortable: true,
-  },
-  {
-    name: "Status",
-    cell: (row: types.IObject) => <StatusBadge isDeactivated={row.isDeleted} />,
-    sortable: true,
-  },
-];
+const handleObjectNameClick = (navigate: any, row: any) => {
+  navigate({
+    pathname: `/dashboard/objects/${row.uniqueId}`,
+  });
+};
+
+export const ACCOUNT_OBJECTS_TABLE_COLUMNS = (navigate: any) => {
+  const columns: TableColumn<types.IObject>[] = [
+    {
+      name: "Name",
+      selector: (row: types.IObject) => (
+        <div onClick={() => handleObjectNameClick(navigate, row)}>
+          {row.name}
+        </div>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Object Type",
+      //@ts-ignore
+      selector: (row: types.IObject) => row.objectTypeName,
+      sortable: true,
+    },
+    {
+      name: "A-NR",
+      selector: (row: types.IObject) => row.aNumber,
+      sortable: true,
+    },
+    {
+      name: "Multiviewer  Name",
+      selector: (row: types.IObject) => row.multiviewerName,
+      sortable: true,
+    },
+    {
+      name: "Mileage",
+      selector: (row: types.IObject) => row.mileage,
+      sortable: true,
+    },
+    {
+      name: "Status",
+      cell: (row: types.IObject) => (
+        <StatusBadge isDeactivated={row.isDeleted} />
+      ),
+      sortable: true,
+    },
+  ];
+  return columns;
+};
 
 export const ACCOUNT_DEVICES_TABLE_COLUMNS: TableColumn<types.IDevice>[] = [
   {

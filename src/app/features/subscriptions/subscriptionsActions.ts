@@ -34,6 +34,24 @@ export const getSubscriptionsByQueryThunk = createAsyncThunk(
   }
 );
 
+export const getDeviceSubscriptionsByQueryThunk = createAsyncThunk(
+  "subscriptions/getDeviceSubscriptionsByQueryThunk",
+  async (params: types.IRecordsAggregationBody) => {
+    try {
+      const response = await Subscriptions.getDeviceSubscriptionsByQuery(
+        params
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (e: any) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+);
+
 export const deactivateSubscriptionThunk = createAsyncThunk(
   "subscriptions/deactivateSubscriptionThunk",
   async (subscriptionId: string) => {

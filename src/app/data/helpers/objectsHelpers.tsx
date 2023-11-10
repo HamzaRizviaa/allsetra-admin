@@ -126,9 +126,7 @@ export const transformObjectMetaDataForService = (
 //
 // OBJECT SETTINGS PAGE HELPERS
 //
-export const objectDetailsFormatterForSettingsForm = (
-  object: types.IObject | null
-) => {
+export const objectDetailsFormatterForSettingsForm = (object: any | null) => {
   if (isEmpty(object)) return {};
 
   const removedUnwantedKeys = omit(object, [
@@ -140,7 +138,6 @@ export const objectDetailsFormatterForSettingsForm = (
     "isDeleted",
     "lastUpdated",
     "location",
-    "metadata",
     "status",
     "updatedBy",
     "objectType",
@@ -149,18 +146,25 @@ export const objectDetailsFormatterForSettingsForm = (
     "isWorkingHoursOverriden",
   ]);
 
-  const formattedObject = {
+  const formattedObject: any = {
     ...removedUnwantedKeys,
     objectTypeId: object.objectType?.uniqueId ?? "",
     alarmOwnerId: object.alarmOwner?.uniqueId ?? "",
     invoiceOwnerId: object.invoiceOwner?.uniqueId ?? "",
-    accounts: object.accounts?.map((item) => item.uniqueId),
-    users: object.users?.map((item) => item.uniqueId),
+    accounts: object.accounts?.map((item: any) => item.uniqueId),
+    users: object.users?.map((item: any) => item.uniqueId),
+    groups: object.groups?.map((item: any) => item.uniqueId),
+
     workingHours: {
       // @ts-ignore
       workingHoursSchedule: object.workingHours,
     },
   };
+
+  object.metadata.length &&
+    object.metadata.forEach((metadata: any) => {
+      formattedObject[metadata.field.label] = metadata.value || "";
+    });
 
   return formattedObject;
 };
@@ -192,3 +196,18 @@ export const objectDetailsValidationSchema = Yup.object({
   }),
   uniqueId: Yup.string(),
 });
+
+export const getFormattedPayload = (values: any) => {
+  const transformedMetadata: any = [];
+
+  values.metadata.length &&
+    values.metadata.forEach((item: any) => {
+      if (item.field.label in values)
+        transformedMetadata.push({
+          fieldUniqueId: item.field.uniqueId,
+          value: values[item.field.label],
+        });
+    });
+
+  return { ...values, metadata: transformedMetadata };
+};

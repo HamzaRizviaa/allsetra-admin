@@ -27,12 +27,15 @@ export const getAlarmsByQueryThunk = createAsyncThunk(
 
 export const postLockAlarmThunk = createAsyncThunk(
   "alarmDesk/postLockAlarmThunk",
-  async (alarmId: string, { dispatch }) => {
+  async (
+    { alarmId, lockedBy }: { alarmId: string; lockedBy: string },
+    { dispatch }
+  ) => {
     try {
       const response = await AlarmDesk.postLockAlarm(alarmId);
 
       if (response.status === 202) {
-        dispatch(setIsLockedOfAlarm({ alarmId, isLocked: true }));
+        dispatch(setIsLockedOfAlarm({ alarmId, isLocked: true, lockedBy }));
       }
     } catch (e: any) {
       console.error(e);
@@ -43,12 +46,15 @@ export const postLockAlarmThunk = createAsyncThunk(
 
 export const postUnlockAlarmThunk = createAsyncThunk(
   "alarmDesk/postUnlockAlarmThunk",
-  async (alarmId: string, { dispatch }) => {
+  async (
+    { alarmId, lockedBy }: { alarmId: string; lockedBy: string },
+    { dispatch }
+  ) => {
     try {
       const response = await AlarmDesk.postUnlockAlarm(alarmId);
 
       if (response.status === 202) {
-        dispatch(setIsLockedOfAlarm({ alarmId, isLocked: false }));
+        dispatch(setIsLockedOfAlarm({ alarmId, isLocked: false, lockedBy }));
       }
     } catch (e: any) {
       console.error(e);

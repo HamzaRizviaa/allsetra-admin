@@ -1,22 +1,33 @@
 import { FC } from "react";
-import { Button } from "@vilocnv/allsetra-core";
+import { Button, types } from "@vilocnv/allsetra-core";
 import { Stack } from "@mui/material";
 import NotificationsOffIcon from "@mui/icons-material/NotificationsOff";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import LockIcon from "@mui/icons-material/Lock";
+import { useAppSelector } from "hooks";
+import { selectDeviceDisableImmobilizerSubmitting } from "app/data/selectors";
 
 export interface AlarmActionsProps {
+  data: types.IAlarm;
   toggleSendEmailModal: () => void;
   toggleClearAlarmModal: () => void;
   toggleReportTheftModal: () => void;
   toggleSendSMSModal: () => void;
+  handleDisableImmobilizer: (deviceId: string) => void;
 }
 
 const AlarmActions: FC<AlarmActionsProps> = ({
+  data,
   toggleSendEmailModal,
   toggleClearAlarmModal,
   toggleReportTheftModal,
   toggleSendSMSModal,
+  handleDisableImmobilizer,
 }) => {
+  const deviceDisableImmobilizerSubmitting = useAppSelector(
+    selectDeviceDisableImmobilizerSubmitting
+  );
+
   return (
     <Stack
       direction={"row"}
@@ -54,9 +65,25 @@ const AlarmActions: FC<AlarmActionsProps> = ({
           size={"small"}
           startIcon={<ReportProblemIcon />}
           onClick={toggleReportTheftModal}
+          onHoverBgColor={"#CC1010"}
         >
           Report Theft
         </Button>
+        {data.hasImmobilizer && (
+          <Button
+            variant={"contained"}
+            color={"error"}
+            size={"small"}
+            startIcon={deviceDisableImmobilizerSubmitting ? null : <LockIcon />}
+            onClick={() =>
+              handleDisableImmobilizer(data.device?.uniqueId || "")
+            }
+            onHoverBgColor={"#CC1010"}
+            loading={deviceDisableImmobilizerSubmitting}
+          >
+            Disable Immobilizer
+          </Button>
+        )}
       </Stack>
     </Stack>
   );

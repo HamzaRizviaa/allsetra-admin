@@ -34,7 +34,9 @@ const AccountInstallationsSection: FC<Props> = ({ accountId }) => {
   >(null);
   const [openDeleteModal, setOpenDeleteModal] = useState(false); // Boolean state for DeleteConfirmationModal Modal
 
-  useDispatchOnParams(getAccountInstallationsThunk, { args: { accountId } });
+  useDispatchOnParams(getAccountInstallationsThunk, {
+    args: { accountId: accountId || "" },
+  });
 
   const openDeleteConfirmationModal = (installation: any) => {
     setSelectedInstallationId(installation.uniqueId);
