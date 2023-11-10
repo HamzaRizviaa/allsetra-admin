@@ -4,6 +4,7 @@ import {
   getAllObjectsThunk,
   getAllSubscriptionsByObjectIdThunk,
   getObjectsByQueryThunk,
+  getObjectsLocationsThunk,
   getSpecificObjectByIdThunk,
 } from "./objectsActions";
 
@@ -94,6 +95,20 @@ const objectsSlice = createSlice({
 
     builder.addCase(getAllSubscriptionsByObjectIdThunk.rejected, (state) => {
       state.objectSubscriptionsLoading = false;
+    });
+
+    // Get Specifc Object By ID Thunk
+    builder.addCase(getObjectsLocationsThunk.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getObjectsLocationsThunk.fulfilled, (state, action) => {
+      state.allObjects = action.payload;
+      state.loading = false;
+    });
+
+    builder.addCase(getObjectsLocationsThunk.rejected, (state) => {
+      state.loading = false;
     });
   },
 });

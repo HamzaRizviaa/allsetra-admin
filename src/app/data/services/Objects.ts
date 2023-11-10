@@ -33,7 +33,7 @@ class Objects {
 
   static getObjectsLocations = async (
     accountId: string,
-    data: types.IMapFilter
+    data: types.IAdminMapFilter
   ) => {
     return await axiosInstance.post(
       `/accounts/${accountId}/objects/locations`,

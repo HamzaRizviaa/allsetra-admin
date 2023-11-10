@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector, useDispatchOnMount } from "hooks";
 import {
   selectAccountGroups,
   selectAccountsState,
-  selectDashboardAccountId,
   selectObjectTypesState,
   selectObjectsState,
 } from "app/data/selectors";
 import {
+  getAllAccountsThunk,
   getAllObjectTypesThunk,
   getAllObjectsThunk,
   getLoggedInUserThunk,
@@ -23,9 +23,9 @@ import {
   TopRightSection,
 } from "components/common/Map/Map.styled";
 import {
+  AdminMapFilterForm,
   FilterButton,
   MapDisplaySettingsForm,
-  MapFilterForm,
   SearchField,
   types,
 } from "@vilocnv/allsetra-core";
@@ -41,35 +41,48 @@ const MapMain: FC = () => {
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [displaySettingsOpen, setDisplaySettingsOpen] = useState(false);
+  const [mapFilterSelectedId, setMapFilterSelectedID] = useState<string | null>(
+    null
+  );
 
   const { allObjects } = useAppSelector(selectObjectsState);
-  const accountId = useAppSelector(selectDashboardAccountId);
   const { accountGroups } = useAppSelector(selectAccountGroups);
   const { usersWithRoleDriver, usersWithRoleDriverLoading } =
     useAppSelector(selectAccountsState);
   const { allObjectTypes, objectTypesLoading } = useAppSelector(
     selectObjectTypesState
   );
+  const { allAccounts } = useAppSelector(selectAccountsState);
 
   useEffect(() => {
-    if (!isEmpty(accountId)) {
-      dispatch(getAllAccountGroupsThunk(accountId));
+    dispatch(getAllAccountsThunk());
+  }, []);
+
+  useEffect(() => {
+    if (!isEmpty(mapFilterSelectedId)) {
+      //@ts-ignore
+      dispatch(getAllAccountGroupsThunk(mapFilterSelectedId));
       dispatch(getAllObjectTypesThunk());
-      dispatch(getUsersWithRoleDriverThunk(accountId));
+      //@ts-ignore
+      dispatch(getUsersWithRoleDriverThunk(mapFilterSelectedId));
     }
-  }, [accountId]);
+  }, [mapFilterSelectedId]);
 
   useDispatchOnMount(getLoggedInUserThunk);
   useDispatchOnMount(getAllObjectsThunk, allObjects.length ? undefined : true);
 
+  const handleAccountIDChange = (filterSelectedId: string | null) => {
+    setMapFilterSelectedID(filterSelectedId);
+  };
+
   const mapFiltersSubmitHanlder = async (
-    values: types.IMapFilter,
-    formikHelpers: FormikHelpers<types.IMapFilter>
+    values: types.IAdminMapFilter,
+    formikHelpers: FormikHelpers<types.IAdminMapFilter>
   ) => {
     formikHelpers.setSubmitting(true);
 
     const payload = {
-      accountId: accountId ?? "",
+      accountId: values.accountId ?? "",
       values: {
         ...values,
         driverId: [values.driverId],
@@ -108,15 +121,17 @@ const MapMain: FC = () => {
           <DisplaySettings onClick={() => setDisplaySettingsOpen(true)} />
         </MiniButton> */}
       </TopRightSection>
-      <MapFilterForm
+      <AdminMapFilterForm
         open={filterOpen}
         onClose={() => setFilterOpen(false)}
         onSubmit={mapFiltersSubmitHanlder}
+        users={allAccounts}
         groups={accountGroups}
         types={allObjectTypes}
         drivers={usersWithRoleDriver}
         dataLoading={usersWithRoleDriverLoading || objectTypesLoading}
         theme={theme}
+        handleAccountIDChange={handleAccountIDChange}
       />
       <MapDisplaySettingsForm
         open={displaySettingsOpen}
